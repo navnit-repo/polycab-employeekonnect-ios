@@ -1,0 +1,25 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "75c6cae6-c059-4171-bdcb-e34b1b087550++3637",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+    "75c6cae6-c059-4171-bdcb-e34b1b087550++3637" : {
+
+    }
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "75c6cae6-c059-4171-bdcb-e34b1b087550++3637" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "4D0A21AE-5F51-4D28-AA14-39810AA62BE4",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "75c6cae6-c059-4171-bdcb-e34b1b087550++3637" : "ios\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "QCMSProject",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "dealerKonnect\/QCMSProject.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "http:\/\/dev.dotvik.com\/svn\/xmw",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "75c6cae6-c059-4171-bdcb-e34b1b087550++3637"
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+{
+    "Reports": [
+        "06-reports.png",
+        "06-reports_L.png"
+    ],
+    "Create Order": [
+        "03-order.png",
+        "03-order_L.png"
+    ],
+    "Request for Return Material": [
+        "05-requestforetain.png",
+        "05-requestforetain_L.png"
+    ],
+    "My Details": [
+        "02-mydetails.png",
+        "02-mydetails_L.png"
+    ],
+    "Logout": [
+        "14-logout.png",
+        "14-logout.png"
+    ],
+
+    "File Explorer": [
+            "file_explorer.png",
+            "file_explorer_L.png"
+    ],
+
+    "Proof of Delivery": [
+            "07-proofofdelivery.png",
+            "07-proofofdelivery_L.png"
+    ],
+    "Statutory Requirements": [
+                          "09-statutoryrequirement.png",
+                          "09-statutoryrequirement.png"
+                          ],
+    
+    "Policies": [
+                               "11-policies.png",
+                               "11-policies.png"
+                               ],
+    "My Sub Users": [
+                 "12-subusers.png",
+                 "12-subusers.png"
+                 ],
+    
+    
+    "Customer Queries": [
+                     "13-feedback.png",
+                     "13-feedback.png"
+                     ],
+    
+    "Feedback from Customer": [
+                         "15-feedbackfromcustomer.png",
+                         "15-feedbackfromcustomer.png"
+                         ],
+    
+    "Balance Confirmation": [
+                         "16-balanceconfirmation.png",
+                         "16-balanceconfirmation.png"
+                         ]
+    
+   
+}

@@ -1,0 +1,36 @@
+//
+// Prefix header for all source files of the 'XMWClient' target in the 'XMWClient' project
+//
+
+#import <Availability.h>
+
+#ifndef __IPHONE_3_0
+#warning "This project uses features only available in iOS SDK 3.0 and later."
+#endif
+
+#ifdef __OBJC__
+    #import <UIKit/UIKit.h>
+    #import <Foundation/Foundation.h>
+#endif
+
+#define isIphone UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone
+#define isLandscape [UIScreen mainScreen].bounds.size.width > [UIScreen mainScreen].bounds.size.height
+
+#define REPORTVC (([[UIScreen mainScreen] bounds].size.height-568)?@"ReportVC":@"ReportVC4")
+#define MENUVC (([[UIScreen mainScreen] bounds].size.height-568)?@"MenuVC":@"MenuVC4")
+#define FORMVC (([[UIScreen mainScreen] bounds].size.height-568)?@"FormVC":@"FormVC4")
+
+#define isiPhone5  ([[UIScreen mainScreen] bounds].size.height == 568)?TRUE:FALSE
+#define isiPhone6  ([[UIScreen mainScreen] bounds].size.height == 667)?TRUE:FALSE
+#define isiPhone6Plus  ([[UIScreen mainScreen] bounds].size.height == 736)?TRUE:FALSE
+#define isiPhone10  ([[UIScreen mainScreen] bounds].size.height == 812)?TRUE:FALSE
+
+
+
+#define RELATIVE_FINANCIAL_YEAR @"RELATIVE_FINANCIAL_YEAR"
+
+
+#define XCODE_6
+
+
+// #define IS_IPHONE (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)

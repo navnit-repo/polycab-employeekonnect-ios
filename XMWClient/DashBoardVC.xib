@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+    <device id="retina4_0" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DashBoardVC">
+            <connections>
+                <outlet property="tabBar" destination="PS6-r8-p5l" id="YrC-eq-cPt"/>
+                <outlet property="tabbarBottomConstraint" destination="YDO-qh-bgL" id="9Kl-gy-aUR"/>
+                <outlet property="tableView" destination="XAx-93-AVo" id="cXh-Tf-XVt"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="XAx-93-AVo">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="452"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </tableView>
+                <tabBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PS6-r8-p5l">
+                    <rect key="frame" x="0.0" y="455" width="320" height="49"/>
+                    <color key="backgroundColor" red="0.97647058819999999" green="0.97647058819999999" blue="0.97647058819999999" alpha="1" colorSpace="calibratedRGB"/>
+                    <items>
+                        <tabBarItem tag="2" title="My Details" image="02-mydetails.png" id="k20-8g-bfb"/>
+                        <tabBarItem tag="1" title="Create Order" image="03-order.png" id="msz-ry-rD2"/>
+                        <tabBarItem tag="4" title="Request for Return" image="05-requestforetain.png" id="pdi-Bh-fVV"/>
+                        <tabBarItem tag="3" title="Feedback" image="13-feedback.png" id="jxe-LE-ERI"/>
+                    </items>
+                    <color key="tintColor" red="0.80000000000000004" green="0.16862745100000001" blue="0.16862745100000001" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="barTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="selectedImageTintColor" red="0.80000000000000004" green="0.16862745100000001" blue="0.16862745100000001" alpha="1" colorSpace="calibratedRGB"/>
+                </tabBar>
+            </subviews>
+            <color key="backgroundColor" red="0.86274509803921573" green="0.86274509803921573" blue="0.86274509803921573" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="PS6-r8-p5l" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="1nf-zV-Cw7"/>
+                <constraint firstItem="PS6-r8-p5l" firstAttribute="top" secondItem="XAx-93-AVo" secondAttribute="bottom" constant="3" id="6Xy-6m-xXa"/>
+                <constraint firstItem="XAx-93-AVo" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="Box-Ot-rVA"/>
+                <constraint firstAttribute="trailing" secondItem="XAx-93-AVo" secondAttribute="trailing" id="XCw-CV-9UU"/>
+                <constraint firstAttribute="bottom" secondItem="PS6-r8-p5l" secondAttribute="bottom" id="YDO-qh-bgL"/>
+                <constraint firstAttribute="trailing" secondItem="PS6-r8-p5l" secondAttribute="trailing" id="bZv-hd-a01"/>
+                <constraint firstItem="XAx-93-AVo" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="x2k-vt-kCM"/>
+            </constraints>
+            <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <point key="canvasLocation" x="37" y="111"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="02-mydetails.png" width="20" height="15"/>
+        <image name="03-order.png" width="20" height="21"/>
+        <image name="05-requestforetain.png" width="20" height="17"/>
+        <image name="13-feedback.png" width="20" height="18"/>
+    </resources>
+</document>
