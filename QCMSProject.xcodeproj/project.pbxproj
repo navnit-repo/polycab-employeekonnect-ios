@@ -644,6 +644,8 @@
 		F04D564F21006F3900FF6CA8 /* RightVC.h in Headers */ = {isa = PBXBuildFile; fileRef = F04D564C21006F3900FF6CA8 /* RightVC.h */; };
 		F04D565021006F3900FF6CA8 /* RightVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F04D564D21006F3900FF6CA8 /* RightVC.m */; };
 		F04D565121006F3900FF6CA8 /* RightVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = F04D564E21006F3900FF6CA8 /* RightVC.xib */; };
+		F055728521AE86EF00D1160C /* DependentDropDownClass.h in Headers */ = {isa = PBXBuildFile; fileRef = F055728321AE86EF00D1160C /* DependentDropDownClass.h */; };
+		F055728621AE86EF00D1160C /* DependentDropDownClass.m in Sources */ = {isa = PBXBuildFile; fileRef = F055728421AE86EF00D1160C /* DependentDropDownClass.m */; };
 		F059CC8E214F70D000E303F6 /* cart.png in Resources */ = {isa = PBXBuildFile; fileRef = F059CC69214F70CF00E303F6 /* cart.png */; };
 		F059CC8F214F70D000E303F6 /* crossicon.png in Resources */ = {isa = PBXBuildFile; fileRef = F059CC6A214F70CF00E303F6 /* crossicon.png */; };
 		F059CC90214F70D000E303F6 /* calendar.png in Resources */ = {isa = PBXBuildFile; fileRef = F059CC6C214F70CF00E303F6 /* calendar.png */; };
@@ -897,6 +899,9 @@
 		F0B2FB5521885145006A7C6B /* LayoutClass.h in Headers */ = {isa = PBXBuildFile; fileRef = F0B2FB5321885144006A7C6B /* LayoutClass.h */; };
 		F0B2FB5621885145006A7C6B /* LayoutClass.m in Sources */ = {isa = PBXBuildFile; fileRef = F0B2FB5421885145006A7C6B /* LayoutClass.m */; };
 		F0B2FB58218851E1006A7C6B /* user_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = F0B2FB57218851E1006A7C6B /* user_icon.png */; };
+		F0C4A10121B4F8FF00D7DF53 /* EmployeeCreateOrderVC.h in Headers */ = {isa = PBXBuildFile; fileRef = F0C4A0FE21B4F8FF00D7DF53 /* EmployeeCreateOrderVC.h */; };
+		F0C4A10221B4F8FF00D7DF53 /* EmployeeCreateOrderVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C4A0FF21B4F8FF00D7DF53 /* EmployeeCreateOrderVC.m */; };
+		F0C4A10321B4F8FF00D7DF53 /* EmployeeCreateOrderVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = F0C4A10021B4F8FF00D7DF53 /* EmployeeCreateOrderVC.xib */; };
 		F0C76ED820DD0BF700390528 /* CustomerClaimInvoiceFetchDetailsVC.h in Headers */ = {isa = PBXBuildFile; fileRef = F0C76ED520DD0BF700390528 /* CustomerClaimInvoiceFetchDetailsVC.h */; };
 		F0C76ED920DD0BF700390528 /* CustomerClaimInvoiceFetchDetailsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C76ED620DD0BF700390528 /* CustomerClaimInvoiceFetchDetailsVC.m */; };
 		F0C76EDA20DD0BF700390528 /* CustomerClaimInvoiceFetchDetailsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = F0C76ED720DD0BF700390528 /* CustomerClaimInvoiceFetchDetailsVC.xib */; };
@@ -1647,6 +1652,8 @@
 		F04D564C21006F3900FF6CA8 /* RightVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RightVC.h; sourceTree = "<group>"; };
 		F04D564D21006F3900FF6CA8 /* RightVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RightVC.m; sourceTree = "<group>"; };
 		F04D564E21006F3900FF6CA8 /* RightVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RightVC.xib; sourceTree = "<group>"; };
+		F055728321AE86EF00D1160C /* DependentDropDownClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DependentDropDownClass.h; sourceTree = "<group>"; };
+		F055728421AE86EF00D1160C /* DependentDropDownClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DependentDropDownClass.m; sourceTree = "<group>"; };
 		F059CC69214F70CF00E303F6 /* cart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cart.png; sourceTree = "<group>"; };
 		F059CC6A214F70CF00E303F6 /* crossicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = crossicon.png; sourceTree = "<group>"; };
 		F059CC6C214F70CF00E303F6 /* calendar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = calendar.png; sourceTree = "<group>"; };
@@ -1900,6 +1907,9 @@
 		F0B2FB5321885144006A7C6B /* LayoutClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LayoutClass.h; path = "autolayout class/LayoutClass.h"; sourceTree = SOURCE_ROOT; };
 		F0B2FB5421885145006A7C6B /* LayoutClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LayoutClass.m; path = "autolayout class/LayoutClass.m"; sourceTree = SOURCE_ROOT; };
 		F0B2FB57218851E1006A7C6B /* user_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = user_icon.png; path = "Polycab Assests/assests/user_icon.png"; sourceTree = SOURCE_ROOT; };
+		F0C4A0FE21B4F8FF00D7DF53 /* EmployeeCreateOrderVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EmployeeCreateOrderVC.h; sourceTree = "<group>"; };
+		F0C4A0FF21B4F8FF00D7DF53 /* EmployeeCreateOrderVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EmployeeCreateOrderVC.m; sourceTree = "<group>"; };
+		F0C4A10021B4F8FF00D7DF53 /* EmployeeCreateOrderVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmployeeCreateOrderVC.xib; sourceTree = "<group>"; };
 		F0C76ED520DD0BF700390528 /* CustomerClaimInvoiceFetchDetailsVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomerClaimInvoiceFetchDetailsVC.h; sourceTree = "<group>"; };
 		F0C76ED620DD0BF700390528 /* CustomerClaimInvoiceFetchDetailsVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomerClaimInvoiceFetchDetailsVC.m; sourceTree = "<group>"; };
 		F0C76ED720DD0BF700390528 /* CustomerClaimInvoiceFetchDetailsVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomerClaimInvoiceFetchDetailsVC.xib; sourceTree = "<group>"; };
@@ -3377,6 +3387,15 @@
 			name = "Reveal VIew Controller Class";
 			sourceTree = "<group>";
 		};
+		F055728221AE862A00D1160C /* Dependent DropDown Class */ = {
+			isa = PBXGroup;
+			children = (
+				F055728321AE86EF00D1160C /* DependentDropDownClass.h */,
+				F055728421AE86EF00D1160C /* DependentDropDownClass.m */,
+			);
+			name = "Dependent DropDown Class";
+			sourceTree = "<group>";
+		};
 		F059CC65214F6DA600E303F6 /* 1x */ = {
 			isa = PBXGroup;
 			children = (
@@ -3739,6 +3758,7 @@
 		F088F5E42105DB3A000E26F4 /* SideBar Menus */ = {
 			isa = PBXGroup;
 			children = (
+				F0C4A0FD21B4F8BE00D7DF53 /* Employee Create Order */,
 				F01D9C0421A3F65800D41B2A /* Payment Outstanding report */,
 				F0A8EA76211D69BE001C4FAD /* Create Order */,
 				F064410C21102080005C5540 /* Statutory Requriements */,
@@ -3802,6 +3822,7 @@
 		F0A358E820FC9EC300CE34AC /* Polycab */ = {
 			isa = PBXGroup;
 			children = (
+				F055728221AE862A00D1160C /* Dependent DropDown Class */,
 				F0B2FADC21885074006A7C6B /* Delete Mapping Files */,
 				F02903E821491F16007D2B2D /* Progress Bar Class */,
 				F0EAC5B621426403007D694C /* SelectedTableVC */,
@@ -3898,6 +3919,16 @@
 				F0B2FB16218850F5006A7C6B /* TravellerController.xib */,
 			);
 			name = "Delete Mapping Files";
+			sourceTree = "<group>";
+		};
+		F0C4A0FD21B4F8BE00D7DF53 /* Employee Create Order */ = {
+			isa = PBXGroup;
+			children = (
+				F0C4A0FE21B4F8FF00D7DF53 /* EmployeeCreateOrderVC.h */,
+				F0C4A0FF21B4F8FF00D7DF53 /* EmployeeCreateOrderVC.m */,
+				F0C4A10021B4F8FF00D7DF53 /* EmployeeCreateOrderVC.xib */,
+			);
+			name = "Employee Create Order";
 			sourceTree = "<group>";
 		};
 		F0EAC5B621426403007D694C /* SelectedTableVC */ = {
@@ -4046,6 +4077,7 @@
 				F0B2FB21218850F5006A7C6B /* CompareReportTableCell.h in Headers */,
 				F0B2FB44218850F5006A7C6B /* SalesComparisonVC.h in Headers */,
 				F031562C2126931C005DE7F2 /* SearchProductBYNameVC.h in Headers */,
+				F055728521AE86EF00D1160C /* DependentDropDownClass.h in Headers */,
 				F07CC79E20E0EB41005917AC /* InvoiceView.h in Headers */,
 				F0224DFC21411CAA00D9A6E2 /* PolycabFooter.h in Headers */,
 				856DC9DC1D06613700B7F48E /* EditOrderTableFormDelegate.h in Headers */,
@@ -4106,6 +4138,7 @@
 				F0C76ED820DD0BF700390528 /* CustomerClaimInvoiceFetchDetailsVC.h in Headers */,
 				F04B2F3320FF22CB00E6120A /* SWRevealViewController.h in Headers */,
 				857A3EFA1A6CFC3500279931 /* ThirdDashView.h in Headers */,
+				F0C4A10121B4F8FF00D7DF53 /* EmployeeCreateOrderVC.h in Headers */,
 				85E245FD19D98CB90052A4D5 /* NotificationRequestStorage.h in Headers */,
 				901F6E2E180277B400293AB9 /* XMWAbout.h in Headers */,
 				856DC9DE1D06613700B7F48E /* EditOrderVC.h in Headers */,
@@ -4449,6 +4482,7 @@
 				857A3EF91A6CFC3500279931 /* SixDashView.xib in Resources */,
 				85F9D7E019E8AEF7000413B0 /* plus_normal@2x.png in Resources */,
 				90E064481758B9DC00C13B78 /* ReportVC.xib in Resources */,
+				F0C4A10321B4F8FF00D7DF53 /* EmployeeCreateOrderVC.xib in Resources */,
 				85DB6ABC1E6337C00018710B /* zbar-back.png in Resources */,
 				F059CD1F214F710600E303F6 /* polycab_notification@3x.png in Resources */,
 				857F8C601A828CBD0018A54C /* report_L.png in Resources */,
@@ -4785,7 +4819,9 @@
 				90272F27174DD11200115D7B /* MXButton.m in Sources */,
 				857A3EEA1A6CFC3500279931 /* HamBurgerMenuView.m in Sources */,
 				90272F2A174DD13000115D7B /* MXTextField.m in Sources */,
+				F055728621AE86EF00D1160C /* DependentDropDownClass.m in Sources */,
 				850FCE171D12E0A200896090 /* OrderListVC.m in Sources */,
+				F0C4A10221B4F8FF00D7DF53 /* EmployeeCreateOrderVC.m in Sources */,
 				85AC9668198FFDDF00AC0338 /* ReportTabularDataSection.m in Sources */,
 				F0B2FB1D218850F5006A7C6B /* SalesComparisonVC.m in Sources */,
 				90272F2D174DD14100115D7B /* MXLabel.m in Sources */,

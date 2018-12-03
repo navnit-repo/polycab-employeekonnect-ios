@@ -614,6 +614,8 @@ int uiViewStartIdx = 1001;
     id masterValues = [DotFormDraw getMasterValueForComponent:[dotFormElement elementId] : [dotFormElement masterValueMapping]];
     // NSMutableDictionary *masterkey = masterValues[0];
     
+    
+    
     if(masterValues != nil) {
         
         NSMutableDictionary*  cellDropDownDictionary = masterValues[1];
@@ -676,10 +678,74 @@ int uiViewStartIdx = 1001;
             return subContainer;
         }
     } else {
-        return [self drawTextField : formController : dotFormElement : false];
+        
+        return [self dependentDrawDropDown:formController :dotFormElement];
+        
+        //return [self drawTextField : formController : dotFormElement : false];
     }
 }
 
+
+-(UIView*)dependentDrawDropDown : (FormVC *) formController :(DotFormElement*) dotFormElement
+{
+    
+    
+    UIView *subContainer = [[UIView alloc]initWithFrame:CGRectMake(0, yArguForDrawComp, screenWidth, formLineHeight)];
+    
+    NSString *currentCompName = dotFormElement.elementId;
+    DropDownTableViewCell *dropDownCell;
+            
+            if (dropDownCell == nil)
+                dropDownCell = [[DropDownTableViewCell alloc]initWithFrame:CGRectMake(0, 0, screenWidth, formLineHeight)];
+            
+            if([dotFormElement isOptionalBool])
+                dropDownCell.mandatoryLabel.hidden    = YES;
+            else
+                dropDownCell.mandatoryLabel.hidden    = NO;
+            
+            dropDownCell.dropDownField.delegate        = formController;
+            dropDownCell.dropDownField.tag            = 101;//indexPath.row + 101;
+            dropDownCell.dropDownField.elementId = currentCompName;
+            
+            
+            
+            // patch for sorted division listing in the dropdown
+            if( ([dotFormElement masterValueMapping] != nil) && ([ [dotFormElement masterValueMapping] compare:@"DIVISION" options: NSCaseInsensitiveSearch ] == NSOrderedSame ))
+            {
+                NSArray* sortedMasterValues = [DotFormDraw getSortedMasterValueForComponent:[dotFormElement elementId] : [dotFormElement masterValueMapping]];
+                // hook for division_wise sale report form 'DOT_FORM_26', 23, 24 and elementId = SPART, we need to add "All"  "".
+                if( ([formController.dotForm.formId isEqualToString:@"DOT_FORM_26"] ||
+                     [formController.dotForm.formId isEqualToString:@"DOT_FORM_23"] ||
+                     [formController.dotForm.formId isEqualToString:@"DOT_FORM_24"]) &&
+                   [currentCompName isEqualToString:@"SPART"])
+                {
+                    NSMutableArray* keysArray = [sortedMasterValues objectAtIndex:0];
+                    NSMutableArray* valuesArray = [sortedMasterValues objectAtIndex:1];
+                    [keysArray insertObject:@"" atIndex:0];
+                    [valuesArray insertObject:@"All" atIndex:0];
+                    dropDownCell.dropDownField.text = @"All";
+                    dropDownCell.dropDownField.keyvalue = @"";
+                }
+                
+                dropDownCell.dropDownButton.attachedData = sortedMasterValues;
+            }
+    
+            
+            dropDownCell.titleLabel.text = dotFormElement.displayText;
+            
+            [dropDownCell.dropDownButton addTarget:formController action:@selector(dropDownPressed:) forControlEvents:UIControlEventTouchUpInside];
+            
+            //button elementId = currentCompName + _button
+            dropDownCell.dropDownButton.elementId    = [currentCompName stringByAppendingString:@"_button"];
+            
+            [formController putToDataIdMap : dropDownCell.dropDownField : currentCompName];
+            [formController putToDataIdMap : dropDownCell.dropDownButton : [currentCompName stringByAppendingString:@"_button"]];
+            
+            
+            [subContainer addSubview: dropDownCell];
+            yArguForDrawComp =yArguForDrawComp+formLineHeight;
+            return subContainer;
+}
 
 -(UIView*)drawCheckBoxGroup : (FormVC *) formController :(DotFormElement*) dotFormElement
 {
@@ -923,8 +989,12 @@ int uiViewStartIdx = 1001;
     style.firstLineHeadIndent = 8.0f;
     style.headIndent = 10.0f;
     style.tailIndent = -10.0f;
-    
-    NSAttributedString *attrText = [[NSAttributedString alloc] initWithString:formCell.valueLabel.text attributes:@{ NSParagraphStyleAttributeName : style}];
+    NSString *text= @"";
+    if (formCell.valueLabel.text.length !=0) {
+        text = formCell.valueLabel.text;
+    }
+
+    NSAttributedString *attrText = [[NSAttributedString alloc] initWithString:text attributes:@{ NSParagraphStyleAttributeName : style}];
     formCell.valueLabel.attributedText = attrText;
     
     

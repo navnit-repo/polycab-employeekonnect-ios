@@ -59,6 +59,8 @@
 
     NSString *check = [dataArray objectAtIndex:5];
     NSLog(@"overduew :%@",check);
+  
+    
     if (check==NULL) {
         NSString *overdue = [self formateCurrency:@"0"];
         overdueLbl.text = [[NSString stringWithFormat:@"%@",rupee]stringByAppendingString:overdue];
@@ -97,7 +99,6 @@
     
     //Method to display the pie chart with values.
     [self.pieChart reloadData];
-    
     
     
 }

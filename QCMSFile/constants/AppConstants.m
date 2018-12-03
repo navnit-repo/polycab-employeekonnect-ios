@@ -16,7 +16,7 @@ NSString *const AppConst_SERVICE_URL = @"http://localhost:8080/xmwcs/feed";
 
 
 NSString *const AppConst_LANGUAGE_DEFAULT = @"en";
-NSString *const AppConst_MOBILET_ID_DEFAULT = @"xmwpcdealer";
+NSString *const AppConst_MOBILET_ID_DEFAULT = @"xmwpolycab";
  NSString *const AppConst_STORAGE_CLIENT_ID = @"XmwClient";
  NSString *const AppConst_STORAGE_MAX_DOC_ID = @"MAX_DOC_ID";
  NSString *const AppConst_STORAGE_KEY_XML = @"XML_";

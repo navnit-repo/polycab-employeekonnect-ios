@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "SWRevealViewController.h"
+extern NSMutableDictionary *masterDataForEmployee;
 @interface LogInVC : UIViewController<UITextFieldDelegate>
 {
     NSMutableDictionary* menuDetailsDict;

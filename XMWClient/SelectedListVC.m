@@ -161,7 +161,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     static NSString *simpleTableIdentifier = @"SimpleTableItem";
-    
+
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:simpleTableIdentifier];
     
     if (cell == nil) {
@@ -176,7 +176,19 @@
         cell.accessoryType = UITableViewCellAccessoryNone;
     }
         //return [dropDownList objectAtIndex:row];
-    cell.textLabel.text = [dropDownList objectAtIndex:indexPath.row];
+    
+    //NSNULL Class check my code
+    NSString *text;
+    NSLog(@"%@",dropDownList );
+    if ([[dropDownList objectAtIndex:indexPath.row] isKindOfClass:[NSNull class]]) {
+        text = @"";
+    }
+    else{
+    text = [dropDownList objectAtIndex:indexPath.row];
+    }
+    cell.textLabel.text =text;
+    ////
+    
     return cell;
 }
 

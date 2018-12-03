@@ -71,7 +71,7 @@
 #import "AttachmentViewCell.h"
 #import "ProgressBarView.h"
 #import "SimpleEditForm.h"
-
+#import "LogInVC.h"
 #if 0
 #import "ZBarSDK.h"
 #endif
@@ -989,14 +989,44 @@ UITextField* activeTextField = nil;
 }
 -(void) done:(SelectedListVC*) selectedListVC context:(NSString*) context code:(NSString*) code display:(NSString*) display;
 {
-    
    
     
     //for polycab chnage some handling
     NSString *search= [self.mxButton.elementId stringByReplacingOccurrencesOfString:@"_button" withString:@""];
     MXTextField *dropDownField = (MXTextField *) [self getDataFromId:search];
+
     
- //   MXTextField *dropDownField = (MXTextField *) [self getDataFromId:self.mxButton.elementId];
+   //// for employee dependent drop down add code
+    MXButton *customerAccountButton = (MXButton*)[self getDataFromId:@"CUSTOMER_ACCOUNT_button"];
+    if (customerAccountButton !=nil) {
+        NSMutableArray *key = [[NSMutableArray alloc]init];
+        NSMutableArray *value = [[NSMutableArray alloc]init];
+        NSMutableArray *customerAccountButtonDropDownArray = [[NSMutableArray alloc]init];
+        
+        NSString *selectKey = [@"BUSINESS_VERTICAL_" stringByAppendingString:code];
+        NSMutableArray *getDataArray = [[NSMutableArray alloc]init];
+        [getDataArray addObjectsFromArray:[masterDataForEmployee  valueForKey:selectKey]];
+        NSLog(@"%@",getDataArray);
+        
+        for (int i=0; i<getDataArray.count; i++) {
+            [key addObject: [[getDataArray objectAtIndex:i] objectAtIndex:0]];
+            [value addObject: [[getDataArray objectAtIndex:i] objectAtIndex:1]];
+        }
+        
+    
+        [customerAccountButtonDropDownArray addObject:key];
+        [customerAccountButtonDropDownArray addObject:value];
+        
+        if (getDataArray.count !=0) {
+            MXTextField *customerAccountdropDownField = (MXTextField *) [self getDataFromId:@"CUSTOMER_ACCOUNT"];
+            customerAccountdropDownField.text = @"";
+            customerAccountButton.attachedData = customerAccountButtonDropDownArray;
+        }
+    }
+    NSLog(@"accessoryView details %@",   [customerAccountButton description]);
+    /////  for employee add new code 999 to 1027
+    
+    
     dropDownField.keyvalue = code;
     dropDownField.text = display;
     

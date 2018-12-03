@@ -293,6 +293,8 @@ return pickerData[row];
     NSMutableDictionary *data = [[NSMutableDictionary alloc ]init];
     [data setObject:self.invoiceTextField.text forKey:@"invoice_number"];
     [data setObject:[[NSUserDefaults standardUserDefaults] valueForKey:@"USERNAME"] forKey:@"registry_id"];
+    [data setObject:[[NSUserDefaults standardUserDefaults] valueForKey:@"USERNAME"] forKey:@"customer_number"];
+    
     NSMutableDictionary * json = [[NSMutableDictionary  alloc]init];
     [json setObject:data forKey:@"data"];
     [json setObject:[[NSUserDefaults standardUserDefaults] valueForKey:@"AUTH_TOKEN"] forKey:@"authToken"];

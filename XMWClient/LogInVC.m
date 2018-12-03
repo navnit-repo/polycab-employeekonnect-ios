@@ -45,10 +45,11 @@
 #import <QuartzCore/QuartzCore.h>
 #import "TermsVC.h"
 #import "PaymentOutstandingReportView.h"
+#import "EmployeeCreateOrderVC.h"
 @interface LogInVC ()
 
 @end
-
+NSMutableDictionary *masterDataForEmployee;
 @implementation LogInVC
 {
     NetworkHelper *networkHelper;
@@ -82,6 +83,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    masterDataForEmployee = [[NSMutableDictionary alloc]init];
     self.constant4.layer.masksToBounds = YES;
     self.constant4.layer.cornerRadius = 2.33f;
    
@@ -270,9 +272,10 @@
         
                     } else {
                         
-                        if([clientLoginResponse.userLoginStatus isEqualToString:@"1"])
+                        if([clientLoginResponse.userLoginStatus isEqualToString:@"1"]) //successfully login
                         {
                        
+                            [masterDataForEmployee setDictionary:clientLoginResponse.clientMasterDetail.masterDataRefresh];
                            NSString *tncStatus = [[clientLoginResponse.clientMasterDetail.masterDataRefresh valueForKey:@"ACCEPT_TERMS_CONDITION"]valueForKey:@"Terms_Condition"]; // check term and condition value  true or false
                             
                             if (tncStatus!= NULL && [tncStatus isEqualToString:@"false"]) {
@@ -286,6 +289,8 @@
                             }
                             else{
                             //save user Detalis is sucessfully login
+                                
+                                
                             [[NSUserDefaults standardUserDefaults] setObject:[[clientLoginResponse.clientMasterDetail.masterDataRefresh valueForKey:@"USER_PROFILE"]valueForKey:@"customer_name"]  forKey:@"customer_name"];
                             [[NSUserDefaults standardUserDefaults] setObject:m_username forKey:@"USERNAME"];
                             [[NSUserDefaults standardUserDefaults] setObject:self.password.text forKey:@"PASSWORD"];
@@ -377,7 +382,7 @@
    [clientVariables registerFormVCClass:@"FeedbackFormCustomerVC" forId:@"DOT_FORM_FEEDBACK_FROM_CUSTOMER"];
     
     // for Create Order
-    [clientVariables registerFormVCClass:@"CreateOrderVC1" forId:@"DOT_FORM_3"];
+    [clientVariables registerFormVCClass:@"EmployeeCreateOrderVC" forId:@"DOT_FORM_3"];
    
   // for BusinessVerticalVC
   [clientVariables registerFormVCClass:@"BusinessVerticalVC" forId:@"DOT_REPORT_5_BUSINESS_VERTICAL_SALES_REPORT"];
