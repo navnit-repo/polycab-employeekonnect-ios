@@ -1,36 +1,35 @@
 //
-//  CreditDetailsCollectionView.m
+//  OverDueCollectionView.m
 //  XMWClient
 //
-//  Created by dotvikios on 09/08/18.
+//  Created by dotvikios on 13/12/18.
 //  Copyright © 2018 dotvik. All rights reserved.
 //
 
-#import "CreditDetailsCollectionView.h"
+#import "OverDueCollectionView.h"
 #import "DotFormPost.h"
 #import "LoadingView.h"
 #import "AppConstants.h"
 #import "ClientVariable.h"
 #import "XmwReportService.h"
-#import "CreateDetailsCell.h"
+#import "OverDueCell.h"
 #import "LayoutClass.h"
 #import "DVAppDelegate.h"
 #import "ProgressBarView.h"
 #import "detailsTableView.h"
-@implementation CreditDetailsCollectionView
+@implementation OverDueCollectionView
 {
-   // DotFormPost *chartPostRqst;
+    // DotFormPost *chartPostRqst;
     LoadingView *loadingView;
     NSMutableArray *numberOfCell;
-  //  ReportPostResponse* chartResponseData;
-  //  NSMutableArray *dataArray;
-    CreateDetailsCell *createDetailsCell;
+    //  ReportPostResponse* chartResponseData;
+    //  NSMutableArray *dataArray;
+    OverDueCell *overdueCell;
     ProgressBarView *progressBarView;
     UIView *blankView;
 }
 @synthesize collectionView;
 @synthesize pageIndicator;
-
 -(void)autoLayout{
     [LayoutClass setLayoutForIPhone6:self.mainView];
     [LayoutClass setLayoutForIPhone6:self.collectionView];
@@ -44,9 +43,9 @@
     dataArray = [[NSMutableArray alloc]init];
     self.collectionView.delegate= self;
     self.collectionView.dataSource= self;
-   [collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cellIdentifier"];
-   collectionView.backgroundColor = [UIColor clearColor];
-   collectionView.bounces = NO;
+    [collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cellIdentifier"];
+    collectionView.backgroundColor = [UIColor clearColor];
+    collectionView.bounces = NO;
     
     [self addLoadingView];
     
@@ -54,9 +53,9 @@
     
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(networkCAll) object:nil];
     [self performSelector:@selector(networkCAll) withObject:nil afterDelay:4.0];
-     //.... add 3 second delay
+    //.... add 3 second delay
     
-//    [self networkCAll]; comment this code for add 3 sec delay
+    //    [self networkCAll]; comment this code for add 3 sec delay
 }
 
 -(void)addLoadingView
@@ -66,7 +65,7 @@
     blankView.backgroundColor = [UIColor clearColor];
     
     UILabel *lbl = [[UILabel alloc]initWithFrame:CGRectMake(10, 8, 150*deviceWidthRation, 15*deviceHeightRation)];
-    lbl.text = @"Payment Outstanding";
+    lbl.text = @"Overdue";
     lbl.font = [UIFont fontWithName:@"Helvetica-Bold" size:12];
     [blankView addSubview:lbl];
     
@@ -106,33 +105,32 @@
     
     // *** Set shadowOpacity to full (1) ***
     self.mainView.layer.shadowOpacity = 5.0f;
-
+    
     
 }
 
 -(void)networkCAll{
-    chartPostRqst = [[DotFormPost alloc]init];    
-    [chartPostRqst setAdapterId:@"EMP_PORTAL_PAYMENT_OUTSTANDING"];
+    chartPostRqst = [[DotFormPost alloc]init];
+    [chartPostRqst setAdapterId:@"DOT_REPORT_EMP_PORTAL_OVER_DUE"];
     [chartPostRqst setAdapterType:@"CLASSLOADER"];
-    [chartPostRqst setDocId:@"EMP_PORTAL_PAYMENT_OUTSTANDING"];
     [chartPostRqst setReportCacheRefresh:@"true"];
     [chartPostRqst setModuleId:AppConst_MOBILET_ID_DEFAULT];
     
     XmwReportService* reportService = [[XmwReportService alloc] initWithPostData:chartPostRqst withContext:@"chartPostRqst"];
-   
- 
+    
+    
     [reportService fetchReportUsingSuccess:^(DotFormPost* formPosted, ReportPostResponse* reportResponse) {
         
-      
+        
         // we should receive report response data here
         chartResponseData = reportResponse;
         [dataArray addObjectsFromArray:chartResponseData.tableData];
         NSLog(@"Payment Outstanding Data: %@",dataArray);
-    
-            [self.collectionView reloadData];
         
-       
-      
+        [self.collectionView reloadData];
+        
+        
+        
     }   fail:^(DotFormPost* formPosted, NSString* message) {
         // we should receive error response here
         
@@ -143,10 +141,10 @@
     
 }
 
-+(CreditDetailsCollectionView*) createInstance
++(OverDueCollectionView*) createInstance
 
 {
-    CreditDetailsCollectionView *view = (CreditDetailsCollectionView *)[[[NSBundle mainBundle] loadNibNamed:@"CreditDetailsCollectionView" owner:self options:nil] objectAtIndex:0];
+    OverDueCollectionView *view = (OverDueCollectionView *)[[[NSBundle mainBundle] loadNibNamed:@"OverDueCollectionView" owner:self options:nil] objectAtIndex:0];
     
     return view;
 }
@@ -171,28 +169,29 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     UICollectionViewCell *cell=[collectionView dequeueReusableCellWithReuseIdentifier:@"cellIdentifier" forIndexPath:indexPath];
-
-//        for (int i=0;i<dataArray.count; i++ ) {
-//
-//            [blankView removeFromSuperview];
-//
-//            if (indexPath.row ==i) {
-//                createDetailsCell = [CreateDetailsCell createInstance];
-//                [createDetailsCell configure:[dataArray objectAtIndex:i]];
-//                [cell addSubview:createDetailsCell];
-//                cell.clipsToBounds = YES;
-//            }
-//
-//        }
-//    pageIndicator.numberOfPages = [dataArray count];
+    
+    //        for (int i=0;i<dataArray.count; i++ ) {
+    //
+    //            [blankView removeFromSuperview];
+    //
+    //            if (indexPath.row ==i) {
+    //                createDetailsCell = [CreateDetailsCell createInstance];
+    //                [createDetailsCell configure:[dataArray objectAtIndex:i]];
+    //                [cell addSubview:createDetailsCell];
+    //                cell.clipsToBounds = YES;
+    //            }
+    //
+    //        }
+    //    pageIndicator.numberOfPages = [dataArray count];
     
     if (dataArray.count !=0) {
-        [blankView removeFromSuperview];
+       
         if (indexPath.row==0) {
             
-            createDetailsCell = [CreateDetailsCell createInstance];
-            [createDetailsCell configure:dataArray];
-            [cell addSubview:createDetailsCell];
+            overdueCell = [OverDueCell createInstance];
+            [overdueCell configure:dataArray];
+            [cell addSubview:overdueCell];
+             [blankView removeFromSuperview];
             cell.clipsToBounds = YES;
             
         }
@@ -204,7 +203,6 @@
     
     return cell;
 }
-
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     detailsTableView *vc = [[detailsTableView alloc]init];

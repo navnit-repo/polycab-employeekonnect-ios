@@ -157,7 +157,7 @@
     
     
     ftdPost = [[DotFormPost alloc]init];
-    [ftdPost setAdapterId:@"DOT_REPORT_5_SALES_COMPARISON_DASHBOARD"];
+    [ftdPost setAdapterId:@"DOT_REPORT_CUSTOMER_WISE_SALE"];
     [ftdPost setAdapterType:@"CLASSLOADER"];
     [ftdPost setModuleId:AppConst_MOBILET_ID_DEFAULT];
     
@@ -217,7 +217,7 @@
     
     // sesond request mtd
     mtdPost = [[DotFormPost alloc]init];
-    [mtdPost setAdapterId:@"DOT_REPORT_5_SALES_COMPARISON_DASHBOARD"];
+    [mtdPost setAdapterId:@"DOT_REPORT_CUSTOMER_WISE_SALE"];
     [mtdPost setAdapterType:@"CLASSLOADER"];
     [mtdPost setModuleId:AppConst_MOBILET_ID_DEFAULT];
     
@@ -308,7 +308,7 @@
 
     // third request mtd
     ytdPost = [[DotFormPost alloc]init];
-    [ytdPost setAdapterId:@"DOT_REPORT_5_SALES_COMPARISON_DASHBOARD"];
+    [ytdPost setAdapterId:@"DOT_REPORT_CUSTOMER_WISE_SALE"];
     [ytdPost setAdapterType:@"CLASSLOADER"];
     [ytdPost setModuleId:AppConst_MOBILET_ID_DEFAULT];
     

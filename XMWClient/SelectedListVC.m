@@ -179,7 +179,7 @@
     
     //NSNULL Class check my code
     NSString *text;
-    NSLog(@"%@",dropDownList );
+  //  NSLog(@"%@",dropDownList );
     if ([[dropDownList objectAtIndex:indexPath.row] isKindOfClass:[NSNull class]]) {
         text = @"";
     }

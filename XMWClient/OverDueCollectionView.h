@@ -1,19 +1,18 @@
 //
-//  CreditDetailsCollectionView.h
+//  OverDueCollectionView.h
 //  XMWClient
 //
-//  Created by dotvikios on 09/08/18.
+//  Created by dotvikios on 13/12/18.
 //  Copyright © 2018 dotvik. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 #import "DotFormPost.h"
 #import "ReportPostResponse.h"
-
-@interface CreditDetailsCollectionView : UIView<UICollectionViewDelegate,UICollectionViewDataSource>
+@interface OverDueCollectionView : UIView<UICollectionViewDelegate,UICollectionViewDataSource>
 {
-     DotFormPost *chartPostRqst;
-     NSMutableArray *dataArray;
+    DotFormPost *chartPostRqst;
+    NSMutableArray *dataArray;
     ReportPostResponse* chartResponseData;
     UICollectionView *collectionView;
 }
@@ -22,11 +21,12 @@
 @property  DotFormPost *chartPostRqst;
 @property  NSMutableArray *dataArray;
 @property ReportPostResponse* chartResponseData;
-+(CreditDetailsCollectionView*) createInstance;
++(OverDueCollectionView*) createInstance;
 @property (weak, nonatomic) IBOutlet UIView *mainView;
 - (void)configure;
 -(void)networkCAll;
 -(void)autoLayout;
 -(void)shadowView;
 -(void)addLoadingView;
+
 @end

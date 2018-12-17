@@ -1,15 +1,14 @@
 //
-//  CreateDetailsCell.m
+//  OverDueCell.m
 //  XMWClient
 //
-//  Created by dotvikios on 24/08/18.
+//  Created by dotvikios on 13/12/18.
 //  Copyright © 2018 dotvik. All rights reserved.
 //
 
-#import "CreateDetailsCell.h"
+#import "OverDueCell.h"
 #import "LayoutClass.h"
-#import "detailsTableView.h"
-@implementation CreateDetailsCell
+@implementation OverDueCell
 {
     float creditLimit;
     float remaining;
@@ -26,10 +25,10 @@
     
 }
 @synthesize creditDetailsDisplayNameLbl;
-+(CreateDetailsCell*) createInstance
++(OverDueCell*) createInstance
 
 {
-    CreateDetailsCell *view = (CreateDetailsCell *)[[[NSBundle mainBundle] loadNibNamed:@"CreateDetailsCell" owner:self options:nil] objectAtIndex:0];
+    OverDueCell *view = (OverDueCell *)[[[NSBundle mainBundle] loadNibNamed:@"OverDueCell" owner:self options:nil] objectAtIndex:0];
     
     return view;
 }
@@ -61,7 +60,7 @@
     
     
     
- 
+    
 }
 - (void)configure:(NSArray *)dataArray{
     
@@ -72,7 +71,7 @@
     NSString *allData = [self formateCurrency:[[dataArray objectAtIndex:0]objectAtIndex:2]];
     creditDetailsDisplayNameLbl.text = [[NSString stringWithFormat:@"%@",rupee]stringByAppendingString:allData];
     
-
+    
     
     
     user1 = [[[dataArray objectAtIndex:1]objectAtIndex:2] floatValue];
@@ -80,10 +79,10 @@
     user3 = [[[dataArray objectAtIndex:3]objectAtIndex:2] floatValue];
     user4 = [[[dataArray objectAtIndex:4]objectAtIndex:2] floatValue];
     user5 = [[[dataArray objectAtIndex:5]objectAtIndex:2] floatValue];
-        totalAmmount = user1+user2+user3+user4+user5;
+    totalAmmount = user1+user2+user3+user4+user5;
     
-
-
+    
+    
     self.user1.text = [@"RegID "stringByAppendingString:[[dataArray objectAtIndex:1]objectAtIndex:0]];
     self.user2.text = [@"RegID "stringByAppendingString:[[dataArray objectAtIndex:2]objectAtIndex:0]];
     self.user3.text = [@"RegID "stringByAppendingString:[[dataArray objectAtIndex:3]objectAtIndex:0]];
@@ -114,7 +113,7 @@
     [self.pieChart setUserInteractionEnabled:NO];
     [self.pieChart setPieBackgroundColor:[UIColor whiteColor]];
     
- 
+    
     //To make the chart at the center of view
     [self.pieChart setPieCenter:CGPointMake(self.pieChart.bounds.origin.x + viewWidth, self.pieChart.bounds.origin.y + viewHeight)];
     self.pieChart.clipsToBounds = YES;
@@ -130,20 +129,20 @@
     float shortenedAmount = [actualAmount floatValue];
     NSString *suffix = @"";
     float currency = [actualAmount floatValue];
-//    if(currency >= 10000000.0f) {
-//        suffix = @"Cr";
-//        shortenedAmount /= 10000000.0f;
-//    }
-  //  else
-        if(currency >= 100000.0f) {
+    //    if(currency >= 10000000.0f) {
+    //        suffix = @"Cr";
+    //        shortenedAmount /= 10000000.0f;
+    //    }
+    //  else
+    if(currency >= 100000.0f) {
         suffix = @"L";
         shortenedAmount /= 100000.0f;
     }
-//    else if(currency >= 1000.0f) {
-//        suffix = @"K";
-//        shortenedAmount /= 1000.0f;
-//    }
-//    
+    //    else if(currency >= 1000.0f) {
+    //        suffix = @"K";
+    //        shortenedAmount /= 1000.0f;
+    //    }
+    //
     NSString *requiredString = [NSString stringWithFormat:@"%0.2f%@", shortenedAmount, suffix];
     return requiredString;
     
@@ -163,22 +162,22 @@
     if (totalAmmount!=0) {
         if(index%5 == 0)
         {   value = ((user1 /totalAmmount) * 100);
-           
             
-//            NSString *rupee=@"\u20B9";
-//            NSString *used = [self formateCurrency:[NSString stringWithFormat:@"%f",(creditLimit - remaining)]];
-//            displayUsedLbl.text = [[NSString stringWithFormat:@"%@",rupee]stringByAppendingString:used];
+            
+            //            NSString *rupee=@"\u20B9";
+            //            NSString *used = [self formateCurrency:[NSString stringWithFormat:@"%f",(creditLimit - remaining)]];
+            //            displayUsedLbl.text = [[NSString stringWithFormat:@"%@",rupee]stringByAppendingString:used];
             
             
             
         }
         if(index%5 == 1)
         {
-           
+            
             value = ((user2 /totalAmmount) * 100);
-//            NSString *rupee=@"\u20B9";
-//            NSString *remain = [self formateCurrency:[NSString stringWithFormat:@"%f",(creditLimit-payable)]];
-//            displayRemainingLbl.text = [[NSString stringWithFormat:@"%@",rupee]stringByAppendingString:remain];
+            //            NSString *rupee=@"\u20B9";
+            //            NSString *remain = [self formateCurrency:[NSString stringWithFormat:@"%f",(creditLimit-payable)]];
+            //            displayRemainingLbl.text = [[NSString stringWithFormat:@"%@",rupee]stringByAppendingString:remain];
         }
         
         
@@ -214,32 +213,32 @@
     
     
     
-//    else{
-//        UILabel *label = [[UILabel alloc] initWithFrame: CGRectMake(0, self.pieChart.frame.size.height/2, self.pieChart.frame.size.width, 0)];
-//        [label setBackgroundColor:[UIColor clearColor]];
-//        [label setTextColor: [UIColor colorWithRed:(204.0/255) green:(43.0/255) blue:(43.0/255) alpha:(1)]];
-//        [label setFont:[UIFont fontWithName:@"Helvetica-Light" size:14.0]];
-//        [label setText: @"No Data Available"];
-//
-//        [label setNumberOfLines: 0];
-//        [label sizeToFit];
-//        [label setCenter: CGPointMake(self.pieChart.center.x, label.center.y)];
-//        [self.pieChart addSubview:label];
-//
-////        [creditDetailsPriceLbl removeFromSuperview];
-////        [overdueLbl removeFromSuperview];
-////        [self.creditHideAccordingTOCondition removeFromSuperview];
-////        [self.overDueHideAccordingTOCondition removeFromSuperview];
-//
-//
-//        [displayRemainingLbl removeFromSuperview];
-//        [displayUsedLbl removeFromSuperview];
-//        [self.used removeFromSuperview];
-//        [self.usedView1 removeFromSuperview];
-//        [self.remaining removeFromSuperview];
-//        [self.remainingView1 removeFromSuperview];
-//
-//    }
+    //    else{
+    //        UILabel *label = [[UILabel alloc] initWithFrame: CGRectMake(0, self.pieChart.frame.size.height/2, self.pieChart.frame.size.width, 0)];
+    //        [label setBackgroundColor:[UIColor clearColor]];
+    //        [label setTextColor: [UIColor colorWithRed:(204.0/255) green:(43.0/255) blue:(43.0/255) alpha:(1)]];
+    //        [label setFont:[UIFont fontWithName:@"Helvetica-Light" size:14.0]];
+    //        [label setText: @"No Data Available"];
+    //
+    //        [label setNumberOfLines: 0];
+    //        [label sizeToFit];
+    //        [label setCenter: CGPointMake(self.pieChart.center.x, label.center.y)];
+    //        [self.pieChart addSubview:label];
+    //
+    ////        [creditDetailsPriceLbl removeFromSuperview];
+    ////        [overdueLbl removeFromSuperview];
+    ////        [self.creditHideAccordingTOCondition removeFromSuperview];
+    ////        [self.overDueHideAccordingTOCondition removeFromSuperview];
+    //
+    //
+    //        [displayRemainingLbl removeFromSuperview];
+    //        [displayUsedLbl removeFromSuperview];
+    //        [self.used removeFromSuperview];
+    //        [self.usedView1 removeFromSuperview];
+    //        [self.remaining removeFromSuperview];
+    //        [self.remainingView1 removeFromSuperview];
+    //
+    //    }
     
     return value;
 }
@@ -256,29 +255,28 @@
     }
     if(index%5 == 1)
     {
-      //  color =[UIColor colorWithRed:(79.0/255) green:(121.0/255) blue:(219.0/255) alpha:(1)];
+        //  color =[UIColor colorWithRed:(79.0/255) green:(121.0/255) blue:(219.0/255) alpha:(1)];
         color = [UIColor yellowColor];
     }
     
     if(index%5 == 2)
     {
-     //   color = [UIColor colorWithRed:(90.0/255) green:(221.0/255) blue:(179.0/255) alpha:(1)];
+        //   color = [UIColor colorWithRed:(90.0/255) green:(221.0/255) blue:(179.0/255) alpha:(1)];
         color = [UIColor blueColor];
     }
     if(index%5 == 3)
     {
-       // color = [UIColor colorWithRed:(160.0/255) green:(221.0/255) blue:(179.0/255) alpha:(1)];
+        // color = [UIColor colorWithRed:(160.0/255) green:(221.0/255) blue:(179.0/255) alpha:(1)];
         color = [UIColor darkGrayColor];
     }
     if(index%5 == 4)
     {
-       // color = [UIColor colorWithRed:(106.0/255) green:(221.0/255) blue:(179.0/255) alpha:(1)];
+        // color = [UIColor colorWithRed:(106.0/255) green:(221.0/255) blue:(179.0/255) alpha:(1)];
         color = [UIColor brownColor];
     }
     
     
     return color;
 }
-
 
 @end

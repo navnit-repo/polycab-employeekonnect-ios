@@ -270,10 +270,37 @@ NSMutableDictionary *masterDataForEmployee;
                         UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Authentication!" message:@"Incorrect username or password" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil , nil];
                         [myAlertView show];
         
-                    } else {
+                    }
+                    else {
                         
-                        if([clientLoginResponse.userLoginStatus isEqualToString:@"1"]) //successfully login
+                        if([clientLoginResponse.passwrdState isEqualToString:@"1"])
                         {
+                            [LoginUtils setClientVariables:clientLoginResponse : m_username];
+                            // we need to show password change screen
+                            DotMenuObject *obj = [[DotMenuObject alloc]init];
+                            obj.FORM_ID =@"DOT_FORM_1" ;
+                            
+                            NSMutableDictionary*  attachedData = [[NSMutableDictionary alloc]init];
+                            [attachedData setObject:@"DOT_FORM_1" forKey:XmwcsConst_MENU_CONSTANT_FORM_ID];
+                            NSMutableDictionary* forwardedDataDisplay = [[NSMutableDictionary alloc]init];
+                            NSMutableDictionary* forwardedDataPost = [[NSMutableDictionary alloc]init];
+                            DotFormPost* dotFormPost = [[DotFormPost alloc]init];
+                            
+                            FormVC* formController = [[FormVC alloc] initWithData : obj
+                                                                                  : dotFormPost
+                                                                                  : false
+                                                                                  : forwardedDataDisplay
+                                                                                  : forwardedDataPost];
+                            
+                            [[self navigationController] pushViewController:formController  animated:YES];
+                            formController.headerStr    = @"Change Password";
+                        }
+                        
+                        
+                        
+//                        else if([clientLoginResponse.userLoginStatus isEqualToString:@"1"]) //successfully login
+                    else
+                    {
                        
                             [masterDataForEmployee setDictionary:clientLoginResponse.clientMasterDetail.masterDataRefresh];
                            NSString *tncStatus = [[clientLoginResponse.clientMasterDetail.masterDataRefresh valueForKey:@"ACCEPT_TERMS_CONDITION"]valueForKey:@"Terms_Condition"]; // check term and condition value  true or false

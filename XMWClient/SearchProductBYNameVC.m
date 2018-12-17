@@ -665,8 +665,8 @@
     }
     
     
-    [formPost.postData setObject:[ClientVariable getInstance].CLIENT_USER_LOGIN.userName forKey:@"USERNAME"];
-    
+   // [formPost.postData setObject:[ClientVariable getInstance].CLIENT_USER_LOGIN.userName forKey:@"USERNAME"];
+      [formPost.postData setObject:[[NSUserDefaults standardUserDefaults] valueForKey:@"REGISTRY_ID"]  forKey:@"USERNAME"]; //for employee changes
     [formPost setModuleId: [DVAppDelegate currentModuleContext]];
     [formPost setDocId: inMasterValueMapping];
     

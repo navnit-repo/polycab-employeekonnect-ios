@@ -101,6 +101,8 @@
     NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
     [nc postNotificationName:@"setButtonHandler" object:self userInfo:buttonTag];
     
+    [[NSUserDefaults standardUserDefaults] setObject:[forwardedDataPost valueForKey:@"REGISTRY_ID"] forKey:@"REGISTRY_ID"];
+    
    
 }
 - (IBAction)searchProductsButton:(id)sender {
@@ -115,7 +117,7 @@
 
     NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
     [nc postNotificationName:@"setButtonHandler" object:self userInfo:buttonTag];
-    
+     [[NSUserDefaults standardUserDefaults] setObject:[forwardedDataPost valueForKey:@"REGISTRY_ID"] forKey:@"REGISTRY_ID"];
 
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -224,8 +226,8 @@
     if ([array count] != 0) {
         
         NSMutableDictionary *header = [[NSMutableDictionary alloc]init];
-        [header setObject:[[NSUserDefaults standardUserDefaults] valueForKey:@"USERNAME"] forKey:@"USERNAME"];
-        [header setObject:[[NSUserDefaults standardUserDefaults] valueForKey:@"CUSTOMER_NAME"] forKey:@"CUSTOMER_NAME"];
+        [header setObject:[[NSUserDefaults standardUserDefaults] valueForKey:@"REGISTRY_ID"] forKey:@"USERNAME"];
+        [header setObject:[NSString stringWithFormat:@"%@", [forwardedDataPost valueForKey:@"BUSINESS_VERTICAL"]]forKey:@"CUSTOMER_NAME"];
         [header setObject:[NSString stringWithFormat:@"%@", [forwardedDataPost valueForKey:@"BUSINESS_VERTICAL"]] forKey:@"ACCOUNT_NUMBER"];
         [header setObject:[NSString stringWithFormat:@"%@", [forwardedDataPost valueForKey:@"BILL_TO"]] forKey:@"BILL_TO"];
         [header setObject:[NSString stringWithFormat:@"%@", [forwardedDataPost valueForKey:@"SHIP_TO"]] forKey:@"SHIP_TO"];

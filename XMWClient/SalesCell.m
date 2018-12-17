@@ -46,7 +46,7 @@
     NSString *ytd = [self formateCurrency:[ytdData objectAtIndex:2]];
     
     
-    self.displayName.text   = [ytdData objectAtIndex:0];
+    self.displayName.text   = [[[ytdData objectAtIndex:0]stringByAppendingString:@"-"]stringByAppendingString:[ytdData objectAtIndex:1]];
     self.ftdDataSetLbl.text = [[NSString stringWithFormat:@"%@",rupee]stringByAppendingString:ftd];
     self.mtdDataSetLbl.text = [[NSString stringWithFormat:@"%@",rupee]stringByAppendingString:mtd];
     self.ytdDataSetLbl.text = [[NSString stringWithFormat:@"%@",rupee]stringByAppendingString:ytd];

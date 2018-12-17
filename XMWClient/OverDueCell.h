@@ -1,15 +1,16 @@
 //
-//  CreateDetailsCell.h
+//  OverDueCell.h
 //  XMWClient
 //
-//  Created by dotvikios on 24/08/18.
+//  Created by dotvikios on 13/12/18.
 //  Copyright © 2018 dotvik. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 #import "XYPieChart.h"
-@interface CreateDetailsCell : UIView<XYPieChartDataSource, XYPieChartDelegate>
-+(CreateDetailsCell*) createInstance;
+
+@interface OverDueCell : UIView<XYPieChartDataSource, XYPieChartDelegate>
++(OverDueCell*) createInstance;
 @property (weak, nonatomic) IBOutlet XYPieChart *pieChart;
 @property (weak, nonatomic) IBOutlet UILabel *creditDetailsDisplayNameLbl;
 @property (weak, nonatomic) IBOutlet UIView *mainView;
@@ -36,4 +37,5 @@
 @property (weak, nonatomic) IBOutlet UILabel *value3;
 @property (weak, nonatomic) IBOutlet UILabel *value4;
 @property (weak, nonatomic) IBOutlet UILabel *value5;
+
 @end

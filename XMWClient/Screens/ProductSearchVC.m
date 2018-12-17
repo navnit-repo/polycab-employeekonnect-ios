@@ -18,7 +18,7 @@
 #import "CategoryResponse.h"
 #import "ProductResponse.h"
 #import "PolycabProductCatObject.h"
-
+#import "CreateOrderVC2.h"
 
 #define DotSearchConst_SEARCH_TEXT @"SEARCH_TEXT"
 #define DotSearchConst_SEARCH_BY @"SEARCH_BY"
@@ -133,7 +133,9 @@
         
         [catalogQuery setObject:self.productDivision forKey:@"BUSINESS_VERTICAL"];
         [catalogQuery setObject:self.productDivision forKey:@"CUSTOMER_NUMBER"];
-        [catalogQuery setObject:[ClientVariable getInstance].CLIENT_USER_LOGIN.userName forKey:@"USERNAME"];
+        [catalogQuery setObject:[[NSUserDefaults standardUserDefaults] valueForKey:@"REGISTRY_ID"]  forKey:@"USERNAME"]; //for employee changes
+
+    //    [catalogQuery setObject:[ClientVariable getInstance].CLIENT_USER_LOGIN.userName forKey:@"USERNAME"];
         
         // sample division fan, 45
     } else {
@@ -154,7 +156,8 @@
     
     
     NSMutableDictionary* catalogQuery = [[NSMutableDictionary alloc] init];
-    [catalogQuery setObject:[ClientVariable getInstance].CLIENT_USER_LOGIN.userName forKey:@"USERNAME"];
+   // [catalogQuery setObject:[ClientVariable getInstance].CLIENT_USER_LOGIN.userName forKey:@"USERNAME"];
+    [catalogQuery setObject:[[NSUserDefaults standardUserDefaults] valueForKey:@"REGISTRY_ID"]  forKey:@"USERNAME"]; //for employee changes
     [catalogQuery setObject:category.lobCode  forKey:@"BUSINESS_VERTICAL"];
     [catalogQuery setObject:self.productDivision forKey:@"CUSTOMER_NUMBER"];
     [catalogQuery setObject:category.primaryCategory forKey:@"PRIMARY_CATEGORY"];
@@ -452,8 +455,8 @@
         }
     }
     
-    
-    [formPost.postData setObject:[ClientVariable getInstance].CLIENT_USER_LOGIN.userName forKey:@"USERNAME"];
+ 
+   [formPost.postData setObject:[ClientVariable getInstance].CLIENT_USER_LOGIN.userName forKey:@"USERNAME"];
     
     [formPost setModuleId: [DVAppDelegate currentModuleContext]];
     [formPost setDocId: inMasterValueMapping];

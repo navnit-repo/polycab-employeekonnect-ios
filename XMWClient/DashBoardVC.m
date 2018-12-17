@@ -32,7 +32,7 @@
 #import "OrderPendencyCollectionView.h"
 #import "ProgressBarView.h"
 #import "MarqueeLabel.h"
-
+#import "OverDueCollectionView.h"
 
 #define TAG_LOGOUT_DIALOG 1000
 @interface DashBoardVC ()
@@ -45,6 +45,7 @@
     SalesAggregateCollectionView *salesAggregateSliderView;
     CreditDetailsCollectionView * creditDetailsSliderView;
     OrderPendencyCollectionView *orderPendencyCollectionView;
+    OverDueCollectionView *overdue;
     //UITableView *tableView;
     ProgressBarView *progressBarView;
     
@@ -199,9 +200,9 @@
     creditDetailsSliderView =[CreditDetailsCollectionView createInstance];
     [creditDetailsSliderView configure];
     
-    
-    orderPendencyCollectionView = [OrderPendencyCollectionView createInstance];
-    [orderPendencyCollectionView configure];
+   
+    overdue = [OverDueCollectionView createInstance];
+    [overdue configure];
     
     
     
@@ -275,13 +276,14 @@
     }
     if (indexPath.section==3) {
         
-        UIView *currentView= [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 330)];
+        UIView *currentView= [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 271)];
         CGRect viewFrame=currentView.frame;
         viewFrame.origin.x=deviceWidthRation*currentView.frame.origin.x;
         viewFrame.origin.y=deviceHeightRation*currentView.frame.origin.y;
         viewFrame.size.width=deviceWidthRation*currentView.frame.size.width;
         viewFrame.size.height=deviceHeightRation*currentView.frame.size.height;
         currentView.frame=viewFrame;
+        
         height=currentView.frame.size.height;
     }
     if (indexPath.section==4) {
@@ -365,10 +367,10 @@
         
         cell.backgroundColor = [UIColor clearColor];
         
-        cell.frame=CGRectMake(10, 0,orderPendencyCollectionView.bounds.size.width-5 ,orderPendencyCollectionView.bounds.size.height-5);
+       cell.frame=CGRectMake(10, 0,creditDetailsSliderView.bounds.size.width-5 ,creditDetailsSliderView.bounds.size.height-5);
         cell.layer.cornerRadius = 5;
         cell.layer.masksToBounds = true;
-        [cell addSubview:orderPendencyCollectionView];
+        [cell addSubview:overdue];
         cell.clipsToBounds = YES;
         
     }

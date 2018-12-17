@@ -813,6 +813,16 @@
 		F088F61D21060C6D000E26F4 /* CreateSubUserVC.h in Headers */ = {isa = PBXBuildFile; fileRef = F088F61A21060C6D000E26F4 /* CreateSubUserVC.h */; };
 		F088F61E21060C6D000E26F4 /* CreateSubUserVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F088F61B21060C6D000E26F4 /* CreateSubUserVC.m */; };
 		F088F61F21060C6D000E26F4 /* CreateSubUserVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = F088F61C21060C6D000E26F4 /* CreateSubUserVC.xib */; };
+		F08F14D221C2588B00B48A04 /* OverDueCollectionView.h in Headers */ = {isa = PBXBuildFile; fileRef = F08F14D021C2588B00B48A04 /* OverDueCollectionView.h */; };
+		F08F14D321C2588B00B48A04 /* OverDueCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = F08F14D121C2588B00B48A04 /* OverDueCollectionView.m */; };
+		F08F14D521C2592C00B48A04 /* OverDueCollectionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F08F14D421C2592C00B48A04 /* OverDueCollectionView.xib */; };
+		F08F14D821C259B900B48A04 /* OverDueCell.h in Headers */ = {isa = PBXBuildFile; fileRef = F08F14D621C259B900B48A04 /* OverDueCell.h */; };
+		F08F14D921C259B900B48A04 /* OverDueCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F08F14D721C259B900B48A04 /* OverDueCell.m */; };
+		F08F14DB21C259CE00B48A04 /* OverDueCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F08F14DA21C259CE00B48A04 /* OverDueCell.xib */; };
+		F08F14DF21C25FAD00B48A04 /* detailsTableView.h in Headers */ = {isa = PBXBuildFile; fileRef = F08F14DC21C25FAD00B48A04 /* detailsTableView.h */; };
+		F08F14E021C25FAD00B48A04 /* detailsTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = F08F14DD21C25FAD00B48A04 /* detailsTableView.m */; };
+		F08F14E121C25FAD00B48A04 /* detailsTableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F08F14DE21C25FAD00B48A04 /* detailsTableView.xib */; };
+		F08F14E521C2618400B48A04 /* dataTableViewHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = F08F14E421C2618400B48A04 /* dataTableViewHeader.xib */; };
 		F09B7B35213024B7006D9372 /* CreateDetailsCell.h in Headers */ = {isa = PBXBuildFile; fileRef = F09B7B33213024B7006D9372 /* CreateDetailsCell.h */; };
 		F09B7B36213024B7006D9372 /* CreateDetailsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F09B7B34213024B7006D9372 /* CreateDetailsCell.m */; };
 		F09B7B38213024C8006D9372 /* CreateDetailsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F09B7B37213024C8006D9372 /* CreateDetailsCell.xib */; };
@@ -1821,6 +1831,16 @@
 		F088F61A21060C6D000E26F4 /* CreateSubUserVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CreateSubUserVC.h; sourceTree = "<group>"; };
 		F088F61B21060C6D000E26F4 /* CreateSubUserVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CreateSubUserVC.m; sourceTree = "<group>"; };
 		F088F61C21060C6D000E26F4 /* CreateSubUserVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreateSubUserVC.xib; sourceTree = "<group>"; };
+		F08F14D021C2588B00B48A04 /* OverDueCollectionView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OverDueCollectionView.h; sourceTree = "<group>"; };
+		F08F14D121C2588B00B48A04 /* OverDueCollectionView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OverDueCollectionView.m; sourceTree = "<group>"; };
+		F08F14D421C2592C00B48A04 /* OverDueCollectionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OverDueCollectionView.xib; sourceTree = "<group>"; };
+		F08F14D621C259B900B48A04 /* OverDueCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OverDueCell.h; sourceTree = "<group>"; };
+		F08F14D721C259B900B48A04 /* OverDueCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OverDueCell.m; sourceTree = "<group>"; };
+		F08F14DA21C259CE00B48A04 /* OverDueCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OverDueCell.xib; sourceTree = "<group>"; };
+		F08F14DC21C25FAD00B48A04 /* detailsTableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = detailsTableView.h; sourceTree = "<group>"; };
+		F08F14DD21C25FAD00B48A04 /* detailsTableView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = detailsTableView.m; sourceTree = "<group>"; };
+		F08F14DE21C25FAD00B48A04 /* detailsTableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = detailsTableView.xib; sourceTree = "<group>"; };
+		F08F14E421C2618400B48A04 /* dataTableViewHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = dataTableViewHeader.xib; sourceTree = "<group>"; };
 		F09B7B33213024B7006D9372 /* CreateDetailsCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CreateDetailsCell.h; sourceTree = "<group>"; };
 		F09B7B34213024B7006D9372 /* CreateDetailsCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CreateDetailsCell.m; sourceTree = "<group>"; };
 		F09B7B37213024C8006D9372 /* CreateDetailsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreateDetailsCell.xib; sourceTree = "<group>"; };
@@ -3300,12 +3320,30 @@
 			path = "Progress Bar Class";
 			sourceTree = "<group>";
 		};
+		F02CA95C21C244FB005168C8 /* Overdue cell */ = {
+			isa = PBXGroup;
+			children = (
+				F08F14D021C2588B00B48A04 /* OverDueCollectionView.h */,
+				F08F14D121C2588B00B48A04 /* OverDueCollectionView.m */,
+				F08F14D421C2592C00B48A04 /* OverDueCollectionView.xib */,
+				F08F14D621C259B900B48A04 /* OverDueCell.h */,
+				F08F14D721C259B900B48A04 /* OverDueCell.m */,
+				F08F14DA21C259CE00B48A04 /* OverDueCell.xib */,
+			);
+			name = "Overdue cell";
+			sourceTree = "<group>";
+		};
 		F02D1415211970C2001B1967 /* Dash Board */ = {
 			isa = PBXGroup;
 			children = (
 				F02786C520FDC2CD00096AFB /* DashBoardVC.h */,
 				F02786C620FDC2CD00096AFB /* DashBoardVC.m */,
 				F02786C720FDC2CD00096AFB /* DashBoardVC.xib */,
+				F08F14DC21C25FAD00B48A04 /* detailsTableView.h */,
+				F08F14DD21C25FAD00B48A04 /* detailsTableView.m */,
+				F08F14DE21C25FAD00B48A04 /* detailsTableView.xib */,
+				F08F14E421C2618400B48A04 /* dataTableViewHeader.xib */,
+				F02CA95C21C244FB005168C8 /* Overdue cell */,
 				F023B790211C1BC100D54B38 /* Order Pendency Cell */,
 				F023B783211C1B3C00D54B38 /* Credit Details Cell */,
 				F023B772211C16A000D54B38 /* Hamper Scheme Cell */,
@@ -4005,10 +4043,12 @@
 				855A2A831A851C68003888ED /* SecondDashDataView.h in Headers */,
 				8508D9691E9B716F00C7D67F /* ScanController.h in Headers */,
 				857A3EE61A6CFC3500279931 /* ForthDashView.h in Headers */,
+				F08F14D221C2588B00B48A04 /* OverDueCollectionView.h in Headers */,
 				8530E06C1AC11CA3001E5E79 /* CategoryResponse.h in Headers */,
 				90F47D741796A6B000C6B76C /* DVAppDelegate.h in Headers */,
 				85CC34FF1DFA67900016F65C /* DVCheckBoxCell.h in Headers */,
 				F0E1A0D5213E4E5D005F4435 /* HamperSchemeCell.h in Headers */,
+				F08F14D821C259B900B48A04 /* OverDueCell.h in Headers */,
 				858F05001DEEC27A00398D46 /* EditSearchField.h in Headers */,
 				90F47F531796B47500C6B76C /* HavellsMenuScreenVC.h in Headers */,
 				85E1D88C1B8DFFAE0034D949 /* BidirectionCollectionLayout.h in Headers */,
@@ -4020,6 +4060,7 @@
 				857A3EDD1A6CFC3500279931 /* FifthDashView.h in Headers */,
 				F088F5FF2105E587000E26F4 /* SalesIncentiveLegend.h in Headers */,
 				856DC9DA1D06613700B7F48E /* EditOrderSubFormVC.h in Headers */,
+				F08F14DF21C25FAD00B48A04 /* detailsTableView.h in Headers */,
 				852A941218F9974100F5DB5F /* DVCheckbox.h in Headers */,
 				8500DCF11A794D45002B534F /* XYPieChart.h in Headers */,
 				858082B31A5D8A8A00207EAB /* DotLIneChart.h in Headers */,
@@ -4347,6 +4388,7 @@
 				857F8C551A828CBD0018A54C /* file_explorer_L@2x.png in Resources */,
 				857F8C501A828CBD0018A54C /* contact_us_L@2x.png in Resources */,
 				F039CAE820F49B00005CEC02 /* Records.xib in Resources */,
+				F08F14DB21C259CE00B48A04 /* OverDueCell.xib in Resources */,
 				F0B2FB26218850F5006A7C6B /* RMAVC2.xib in Resources */,
 				85BBB0091E710CD500169952 /* arrow_up@1x.png in Resources */,
 				85B6A6D61E0E0DF500E0183E /* goods_return@3x.png in Resources */,
@@ -4360,6 +4402,7 @@
 				F05D9A6220F332A3007BB9A8 /* MyClaimResponseView.xib in Resources */,
 				85CBEA51195AD1F6004D0050 /* top_banner@2x.png in Resources */,
 				F059CD33214F710600E303F6 /* blackeyeicon@3x.png in Resources */,
+				F08F14E121C25FAD00B48A04 /* detailsTableView.xib in Resources */,
 				F059CCD8214F70F600E303F6 /* polycab_notification@2x.png in Resources */,
 				85CC35041DFA67900016F65C /* MultiSelectPopup.xib in Resources */,
 				F07B39E520CE519600740DF4 /* CustomerClaimVC.xib in Resources */,
@@ -4472,6 +4515,7 @@
 				F059CD1E214F710600E303F6 /* polycab_menu@3x.png in Resources */,
 				F059CCA6214F70D000E303F6 /* blackeyeicon.png in Resources */,
 				F022CA2C211AFCEC0048DEAD /* SalesAggregateCollectionView.xib in Resources */,
+				F08F14D521C2592C00B48A04 /* OverDueCollectionView.xib in Resources */,
 				F03F2F48212BE0BC0023A2D3 /* CreateOrderDisplayCell.xib in Resources */,
 				F059CCE5214F70F600E303F6 /* polycab_image@2x.png in Resources */,
 				857F8C791A828D210018A54C /* my_details@2x.png in Resources */,
@@ -4538,6 +4582,7 @@
 				F059CCEE214F70F600E303F6 /* 09-statutoryrequirement@2x.png in Resources */,
 				85D5DA6C18E6F60700BE344F /* havells_76x76.png in Resources */,
 				F02C1EE720EE25D3002ABF27 /* DVPeriodCalendar.xib in Resources */,
+				F08F14E521C2618400B48A04 /* dataTableViewHeader.xib in Resources */,
 				F059CCA7214F70D000E303F6 /* businessveritical.png in Resources */,
 				90001757180D45600002F464 /* TimePickerViewController.xib in Resources */,
 				F059CD1B214F710600E303F6 /* calendar@3x.png in Resources */,
@@ -4822,6 +4867,7 @@
 				F055728621AE86EF00D1160C /* DependentDropDownClass.m in Sources */,
 				850FCE171D12E0A200896090 /* OrderListVC.m in Sources */,
 				F0C4A10221B4F8FF00D7DF53 /* EmployeeCreateOrderVC.m in Sources */,
+				F08F14E021C25FAD00B48A04 /* detailsTableView.m in Sources */,
 				85AC9668198FFDDF00AC0338 /* ReportTabularDataSection.m in Sources */,
 				F0B2FB1D218850F5006A7C6B /* SalesComparisonVC.m in Sources */,
 				90272F2D174DD14100115D7B /* MXLabel.m in Sources */,
@@ -4837,6 +4883,7 @@
 				9000C6AC1753413B00A1DAF4 /* OperationManagerUtil.m in Sources */,
 				905FFDBD1999EEBB00E95BFB /* iToast.m in Sources */,
 				F0B2FB4F218850F5006A7C6B /* TravellerController.m in Sources */,
+				F08F14D321C2588B00B48A04 /* OverDueCollectionView.m in Sources */,
 				F0B2FB33218850F5006A7C6B /* RMACardCell.m in Sources */,
 				856B3E201DCA0F1E00096100 /* SimpleEditForm.m in Sources */,
 				F088F60E2105F683000E26F4 /* ManageSubUserScrennFlow2nd.m in Sources */,
@@ -4921,6 +4968,7 @@
 				F088F5D22105C38D000E26F4 /* ManageSubUserVC.m in Sources */,
 				902FD753177874FC00C4BD89 /* CheckBoxButton.m in Sources */,
 				F09B7B36213024B7006D9372 /* CreateDetailsCell.m in Sources */,
+				F08F14D921C259B900B48A04 /* OverDueCell.m in Sources */,
 				902FD754177874FC00C4BD89 /* CheckBoxGroup.m in Sources */,
 				90EC5A6D1779A426004A2E3C /* RadioButton.m in Sources */,
 				8508D96A1E9B716F00C7D67F /* ScanController.m in Sources */,
