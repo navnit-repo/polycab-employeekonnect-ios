@@ -70,22 +70,18 @@
     [blankView addSubview:lbl];
     
     
-    UIActivityIndicatorView *activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    UIActivityIndicatorView *  activityIndicatorView = [[UIActivityIndicatorView alloc]
+                                                        initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
     
-    activityIndicatorView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin |    UIViewAutoresizingFlexibleRightMargin |
-    UIViewAutoresizingFlexibleTopMargin |    UIViewAutoresizingFlexibleBottomMargin;
+    activityIndicatorView.center=blankView.center;
     [activityIndicatorView startAnimating];
-    
+    activityIndicatorView.color = [UIColor redColor];
+    activityIndicatorView.hidesWhenStopped = NO;
+    activityIndicatorView.hidden = NO;
     [blankView addSubview:activityIndicatorView];
     
     [self.mainView addSubview:blankView];
-    
-    
-    CGRect activityIndicatorRect = activityIndicatorView.frame;
-    activityIndicatorRect.origin.x = blankView.frame.size.width/2;
-    activityIndicatorRect.origin.y = blankView.frame.size.height/2;
-    activityIndicatorView.frame = activityIndicatorRect;
-    activityIndicatorView.color = [UIColor redColor];
+
     
 }
 -(void)shadowView{

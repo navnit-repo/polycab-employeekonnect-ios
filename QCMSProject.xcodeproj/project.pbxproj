@@ -223,7 +223,6 @@
 		857A3EEC1A6CFC3500279931 /* contact_us.png in Resources */ = {isa = PBXBuildFile; fileRef = 857A3EAD1A6CFC3500279931 /* contact_us.png */; };
 		857A3EED1A6CFC3500279931 /* create_order.png in Resources */ = {isa = PBXBuildFile; fileRef = 857A3EAE1A6CFC3500279931 /* create_order.png */; };
 		857A3EEE1A6CFC3500279931 /* forgot_password.png in Resources */ = {isa = PBXBuildFile; fileRef = 857A3EAF1A6CFC3500279931 /* forgot_password.png */; };
-		857A3EEF1A6CFC3500279931 /* logout.png in Resources */ = {isa = PBXBuildFile; fileRef = 857A3EB01A6CFC3500279931 /* logout.png */; };
 		857A3EF01A6CFC3500279931 /* my_details.png in Resources */ = {isa = PBXBuildFile; fileRef = 857A3EB11A6CFC3500279931 /* my_details.png */; };
 		857A3EF11A6CFC3500279931 /* popular_scheme.png in Resources */ = {isa = PBXBuildFile; fileRef = 857A3EB21A6CFC3500279931 /* popular_scheme.png */; };
 		857A3EF21A6CFC3500279931 /* report.png in Resources */ = {isa = PBXBuildFile; fileRef = 857A3EB31A6CFC3500279931 /* report.png */; };
@@ -526,7 +525,6 @@
 		90E810B7174F451D003BDF77 /* Icon-Cal.png in Resources */ = {isa = PBXBuildFile; fileRef = 90E810AB174F451D003BDF77 /* Icon-Cal.png */; };
 		90E810B8174F451D003BDF77 /* Icon-CSV.png in Resources */ = {isa = PBXBuildFile; fileRef = 90E810AC174F451D003BDF77 /* Icon-CSV.png */; };
 		90E810B9174F451D003BDF77 /* login_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 90E810AD174F451D003BDF77 /* login_background.png */; };
-		90E810BA174F451D003BDF77 /* logout.png in Resources */ = {isa = PBXBuildFile; fileRef = 90E810AE174F451D003BDF77 /* logout.png */; };
 		90E810BB174F451D003BDF77 /* VerticalSeparator.png in Resources */ = {isa = PBXBuildFile; fileRef = 90E810AF174F451D003BDF77 /* VerticalSeparator.png */; };
 		90EC5A6D1779A426004A2E3C /* RadioButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 90EC5A6A1779A426004A2E3C /* RadioButton.m */; };
 		90EC5A6E1779A426004A2E3C /* RadioGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 90EC5A6C1779A426004A2E3C /* RadioGroup.m */; };
@@ -1194,7 +1192,6 @@
 		857A3EAD1A6CFC3500279931 /* contact_us.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = contact_us.png; sourceTree = "<group>"; };
 		857A3EAE1A6CFC3500279931 /* create_order.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = create_order.png; sourceTree = "<group>"; };
 		857A3EAF1A6CFC3500279931 /* forgot_password.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = forgot_password.png; sourceTree = "<group>"; };
-		857A3EB01A6CFC3500279931 /* logout.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logout.png; sourceTree = "<group>"; };
 		857A3EB11A6CFC3500279931 /* my_details.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = my_details.png; sourceTree = "<group>"; };
 		857A3EB21A6CFC3500279931 /* popular_scheme.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = popular_scheme.png; sourceTree = "<group>"; };
 		857A3EB31A6CFC3500279931 /* report.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = report.png; sourceTree = "<group>"; };
@@ -1544,7 +1541,6 @@
 		90E810AB174F451D003BDF77 /* Icon-Cal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Cal.png"; path = "Images/Icon-Cal.png"; sourceTree = "<group>"; };
 		90E810AC174F451D003BDF77 /* Icon-CSV.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-CSV.png"; path = "Images/Icon-CSV.png"; sourceTree = "<group>"; };
 		90E810AD174F451D003BDF77 /* login_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = login_background.png; path = Images/login_background.png; sourceTree = "<group>"; };
-		90E810AE174F451D003BDF77 /* logout.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logout.png; path = Images/logout.png; sourceTree = "<group>"; };
 		90E810AF174F451D003BDF77 /* VerticalSeparator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = VerticalSeparator.png; path = Images/VerticalSeparator.png; sourceTree = "<group>"; };
 		90EC5A691779A426004A2E3C /* RadioButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RadioButton.h; path = UITableViewCell/RadioButton.h; sourceTree = "<group>"; };
 		90EC5A6A1779A426004A2E3C /* RadioButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RadioButton.m; path = UITableViewCell/RadioButton.m; sourceTree = "<group>"; };
@@ -2298,7 +2294,6 @@
 				857A3EAD1A6CFC3500279931 /* contact_us.png */,
 				857A3EAE1A6CFC3500279931 /* create_order.png */,
 				857A3EAF1A6CFC3500279931 /* forgot_password.png */,
-				857A3EB01A6CFC3500279931 /* logout.png */,
 				857A3EB11A6CFC3500279931 /* my_details.png */,
 				857A3EB21A6CFC3500279931 /* popular_scheme.png */,
 				857A3EB31A6CFC3500279931 /* report.png */,
@@ -3168,7 +3163,6 @@
 				90E810AB174F451D003BDF77 /* Icon-Cal.png */,
 				90E810AC174F451D003BDF77 /* Icon-CSV.png */,
 				90E810AD174F451D003BDF77 /* login_background.png */,
-				90E810AE174F451D003BDF77 /* logout.png */,
 				90E810AF174F451D003BDF77 /* VerticalSeparator.png */,
 			);
 			name = Images;
@@ -4469,7 +4463,6 @@
 				857F8C7C1A828D210018A54C /* report@2x.png in Resources */,
 				85F9D7E419E8AF3F000413B0 /* radio-on@2x.png in Resources */,
 				858082D11A61708200207EAB /* DotHBarChart.xib in Resources */,
-				90E810BA174F451D003BDF77 /* logout.png in Resources */,
 				85BBB00E1E710CD500169952 /* arrow_down@3x.png in Resources */,
 				857F8C4F1A828CBD0018A54C /* contact_us_L.png in Resources */,
 				857A3EC61A6CFC3500279931 /* categoryJson.json in Resources */,
@@ -4557,7 +4550,6 @@
 				F059CCF2214F70F600E303F6 /* 13-feedback@2x.png in Resources */,
 				F059CCD5214F70F600E303F6 /* downarrow_right_arrow@2x.png in Resources */,
 				F059CCA1214F70D000E303F6 /* 12-subusers.png in Resources */,
-				857A3EEF1A6CFC3500279931 /* logout.png in Resources */,
 				F032191D2107068800C24A34 /* RoleList.xib in Resources */,
 				856D15AD1D322CAA00C62CDF /* save-pdf@2x.png in Resources */,
 				90EDB2A11769AAB600B1574C /* checkbox-checked.png in Resources */,

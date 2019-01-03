@@ -8,7 +8,7 @@
 
 #import "NetworkHelper.h"
 
-#import <JSONNetworkRequestData.h>
+#import "JSONNetworkRequestData.h"
 #import "JSONDataExchange.h"
 #import "SBJson.h"
 #import "XmwcsConstant.h"

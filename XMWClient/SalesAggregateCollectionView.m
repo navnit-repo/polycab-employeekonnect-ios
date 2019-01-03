@@ -107,7 +107,7 @@
 -(void)loadingView{
     // add loading View
     blankView = [[UIView alloc]initWithFrame:CGRectMake(self.bounds.origin.x, self.bounds.origin.y, self.bounds.size.width-20, self.bounds.size.height)];
-    blankView.backgroundColor = [UIColor whiteColor];
+    blankView.backgroundColor = [UIColor clearColor];
     
     UILabel *lbl = [[UILabel alloc]initWithFrame:CGRectMake(10, 8, 150*deviceWidthRation, 15*deviceHeightRation)];
     lbl.text = @"Sales Aggregate";
@@ -116,21 +116,14 @@
     
 
 
-     activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    activityIndicatorView = [[UIActivityIndicatorView alloc]
+                             initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
     
-    activityIndicatorView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin |    UIViewAutoresizingFlexibleRightMargin |
-    UIViewAutoresizingFlexibleTopMargin |    UIViewAutoresizingFlexibleBottomMargin;
+    activityIndicatorView.center=blankView.center;
     [activityIndicatorView startAnimating];
+    activityIndicatorView.color = [UIColor redColor];
     activityIndicatorView.hidesWhenStopped = NO;
     activityIndicatorView.hidden = NO;
-    CGRect activityIndicatorRect = activityIndicatorView.frame;
-    activityIndicatorRect.origin.x = blankView.bounds.size.width/2;
-    activityIndicatorRect.origin.y = blankView.bounds.size.height/2;
-    activityIndicatorView.frame = activityIndicatorRect;
-    activityIndicatorView.color = [UIColor redColor];
-    
-    
-    
     [blankView addSubview:activityIndicatorView];
     [self.mainView addSubview:blankView];
 
