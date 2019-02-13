@@ -23,6 +23,8 @@
 #import "AttachmentViewCell.h"
 #import "JSONStructureConstant.h"
 #import "JSONDataExchange.h"
+#import "FormVC.h"
+
 
 
 @implementation UIView (DVTFVDelegate)
@@ -613,9 +615,7 @@ int uiViewStartIdx = 1001;
     //  NSMutableDictionary*  cellDropDownDictionary = [self getDropDownList: dotFormElement];
     id masterValues = [DotFormDraw getMasterValueForComponent:[dotFormElement elementId] : [dotFormElement masterValueMapping]];
     // NSMutableDictionary *masterkey = masterValues[0];
-    
-    
-    
+ 
     if(masterValues != nil) {
         
         NSMutableDictionary*  cellDropDownDictionary = masterValues[1];
@@ -663,7 +663,14 @@ int uiViewStartIdx = 1001;
             }
            
             dropDownCell.titleLabel.text = dotFormElement.displayText;
-           
+            
+            //this code for set selected regid
+            if ([dropDownCell.dropDownField.elementId isEqualToString:@"REGISTRY_ID"] && regIDCheck ==YES) {
+                NSString *selectedRegisterID= [[NSUserDefaults standardUserDefaults] valueForKey:@"selectedRegisterID"];
+                dropDownCell.dropDownField.text = selectedRegisterID;
+               
+            }
+            
             [dropDownCell.dropDownButton addTarget:formController action:@selector(dropDownPressed:) forControlEvents:UIControlEventTouchUpInside];
             
             //button elementId = currentCompName + _button
@@ -744,6 +751,64 @@ int uiViewStartIdx = 1001;
             
             [subContainer addSubview: dropDownCell];
             yArguForDrawComp =yArguForDrawComp+formLineHeight;
+    
+    //this code for set selected regid according customer account data
+    
+    if ([dropDownCell.dropDownField.elementId isEqualToString:@"CUSTOMER_ACCOUNT"] &&regIDCheck ==YES) {
+        NSMutableArray *key = [[NSMutableArray alloc]init];
+        NSMutableArray *value = [[NSMutableArray alloc]init];
+        NSMutableArray *customerAccountButtonDropDownArray = [[NSMutableArray alloc]init];
+        
+        NSString *selectKey = [@"BUSINESS_VERTICAL_" stringByAppendingString:[[NSUserDefaults standardUserDefaults] valueForKey:@"selectedRegisterIDCode"]];
+        NSMutableArray *getDataArray = [[NSMutableArray alloc]init];
+        [getDataArray addObjectsFromArray:[masterDataForEmployee  valueForKey:selectKey]];
+        NSLog(@"%@",getDataArray);
+        
+        for (int i=0; i<getDataArray.count; i++) {
+            [key addObject: [[getDataArray objectAtIndex:i] objectAtIndex:0]];
+            [value addObject: [[getDataArray objectAtIndex:i] objectAtIndex:1]];
+        }
+        
+        
+        [customerAccountButtonDropDownArray addObject:key];
+        [customerAccountButtonDropDownArray addObject:value];
+        
+        if (getDataArray.count !=0) {
+            dropDownCell.dropDownButton.attachedData = customerAccountButtonDropDownArray;
+          //  dropDownCell.dropDownField.text = [value objectAtIndex:0];
+        }
+    }
+    
+    
+    if ([dropDownCell.dropDownField.elementId isEqualToString:@"BUSINESS_VERTICAL"] &&regIDCheck ==YES) {
+        NSMutableArray *key = [[NSMutableArray alloc]init];
+        NSMutableArray *value = [[NSMutableArray alloc]init];
+        NSMutableArray *customerAccountButtonDropDownArray = [[NSMutableArray alloc]init];
+        
+        NSString *selectKey = [@"BUSINESS_VERTICAL_" stringByAppendingString:[[NSUserDefaults standardUserDefaults] valueForKey:@"selectedRegisterIDCode"]];
+        NSMutableArray *getDataArray = [[NSMutableArray alloc]init];
+        [getDataArray addObjectsFromArray:[masterDataForEmployee  valueForKey:selectKey]];
+        NSLog(@"%@",getDataArray);
+        
+        for (int i=0; i<getDataArray.count; i++) {
+            [key addObject: [[getDataArray objectAtIndex:i] objectAtIndex:0]];
+            [value addObject: [[getDataArray objectAtIndex:i] objectAtIndex:1]];
+        }
+        
+        
+        [customerAccountButtonDropDownArray addObject:key];
+        [customerAccountButtonDropDownArray addObject:value];
+        
+        if (getDataArray.count !=0) {
+            dropDownCell.dropDownButton.attachedData = customerAccountButtonDropDownArray;
+            //dropDownCell.dropDownField.text = [value objectAtIndex:0];
+        }
+    }
+    
+   
+    
+    
+    
             return subContainer;
 }
 

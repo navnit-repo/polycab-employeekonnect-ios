@@ -30,7 +30,7 @@
         self.displayData = [[NSMutableDictionary alloc] init];
         self.postData = [[NSMutableDictionary alloc] init];
         self.maxDocId = [[NSNumber alloc] initWithInt:0];
-        self.reportCacheRefresh = @"false";
+        self.reportCacheRefresh = @"true";
     }
     return self;
 }

@@ -65,44 +65,7 @@
     dropDownField.keyvalue = code;
     dropDownField.text = display;
     
-    
-    
-    
-    
-    
-//    //// for employee dependent drop down add code
-//    MXButton *customerAccountButton = (MXButton*)[self getDataFromId:@"BUSINESS_VERTICAL_button"];
-//    if (customerAccountButton !=nil) {
-//        NSMutableArray *key = [[NSMutableArray alloc]init];
-//        NSMutableArray *value = [[NSMutableArray alloc]init];
-//        NSMutableArray *customerAccountButtonDropDownArray = [[NSMutableArray alloc]init];
-//
-//        NSString *selectKey = [@"BUSINESS_VERTICAL_" stringByAppendingString:code];
-//        NSMutableArray *getDataArray = [[NSMutableArray alloc]init];
-//        [getDataArray addObjectsFromArray:[masterDataForEmployee  valueForKey:selectKey]];
-//        NSLog(@"%@",getDataArray);
-//
-//        for (int i=0; i<getDataArray.count; i++) {
-//            [key addObject: [[getDataArray objectAtIndex:i] objectAtIndex:0]];
-//            [value addObject: [[getDataArray objectAtIndex:i] objectAtIndex:1]];
-//        }
-//
-//
-//        [customerAccountButtonDropDownArray addObject:key];
-//        [customerAccountButtonDropDownArray addObject:value];
-//
-//        if (getDataArray.count !=0) {
-//            MXTextField *customerAccountdropDownField = (MXTextField *) [self getDataFromId:@"BUSINESS_VERTICAL"];
-//            customerAccountdropDownField.text = @"";
-//            customerAccountButton.attachedData = customerAccountButtonDropDownArray;
-//        }
-//    }
-//    NSLog(@"accessoryView details %@",   [customerAccountButton description]);
-//    /////  for employee add new code 73 to 101
-    
-    
-    
-    
+
     
     if ([dropDownField.elementId isEqualToString:@"BUSINESS_VERTICAL"]) {
         NSString *selectDropDownValue;

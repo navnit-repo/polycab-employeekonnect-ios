@@ -69,7 +69,7 @@
                 MXLabel* labelField = (MXLabel*)formComponent;
                 
                 NSString *value =[preFillData objectForKey:formElement.elementId];
-                if (value==nil) {
+                if (value==nil || [value isKindOfClass:[NSNull class]]) {
                     value = @"";
                 }
                 

@@ -80,6 +80,23 @@
     user3 = [[[dataArray objectAtIndex:3]objectAtIndex:2] floatValue];
     user4 = [[[dataArray objectAtIndex:4]objectAtIndex:2] floatValue];
     user5 = [[[dataArray objectAtIndex:5]objectAtIndex:2] floatValue];
+    
+//    if (user1<=0) {
+//        user1=0.0;
+//    }
+//    if (user2<=0) {
+//        user2=0.0;
+//    }
+//    if (user3<=0) {
+//        user3=0.0;
+//    }
+//    if (user4<=0) {
+//        user4=0.0;
+//    }
+//    if (user5<=0) {
+//        user5=0.0;
+//    }
+    
         totalAmmount = user1+user2+user3+user4+user5;
     
 

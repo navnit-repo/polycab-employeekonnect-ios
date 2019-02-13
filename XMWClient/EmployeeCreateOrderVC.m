@@ -14,6 +14,7 @@
 #import "LoadingView.h"
 #import "DotFormPost.h"
 #import "SearchResponse.h"
+#import "DVAppDelegate.h"
 
 @interface EmployeeCreateOrderVC ()
 
@@ -28,7 +29,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    registryID = @"";
+    registryID = [[NSUserDefaults standardUserDefaults]valueForKey:@"selectedRegisterIDCode"];
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -38,8 +39,12 @@
     MXTextField *dropDownField = (MXTextField *) [self getDataFromId:search];
     dropDownField.keyvalue = code;
     dropDownField.text = display;
+    
     if ([dropDownField.elementId isEqualToString:@"REGISTRY_ID"]) {
+        regIDCheck = YES;
         
+         [[NSUserDefaults standardUserDefaults ] setObject:display forKey:@"selectedRegisterID"];
+         [[NSUserDefaults standardUserDefaults ] setObject:code forKey:@"selectedRegisterIDCode"];
         //blank field code
         MXTextField *BUSINESS_VERTICAL = (MXTextField *) [self getDataFromId:@"BUSINESS_VERTICAL"];
         BUSINESS_VERTICAL.text = @"";

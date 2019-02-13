@@ -989,11 +989,18 @@ UITextField* activeTextField = nil;
 }
 -(void) done:(SelectedListVC*) selectedListVC context:(NSString*) context code:(NSString*) code display:(NSString*) display;
 {
-   
-    
     //for polycab chnage some handling
     NSString *search= [self.mxButton.elementId stringByReplacingOccurrencesOfString:@"_button" withString:@""];
     MXTextField *dropDownField = (MXTextField *) [self getDataFromId:search];
+    
+    
+    
+    // this code for set selected reg id
+    if ([dropDownField.elementId isEqualToString:@"REGISTRY_ID"]) {
+        regIDCheck = YES;
+        [[NSUserDefaults standardUserDefaults ] setObject:display forKey:@"selectedRegisterID"];
+        [[NSUserDefaults standardUserDefaults ] setObject:code forKey:@"selectedRegisterIDCode"];
+    }
 
     
    //// for employee dependent drop down add code

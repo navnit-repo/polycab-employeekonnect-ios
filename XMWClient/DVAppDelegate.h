@@ -13,6 +13,7 @@
 extern CGFloat deviceWidthRation;
 extern CGFloat deviceHeightRation;
 extern CGFloat bottomBarHeight;
+extern BOOL regIDCheck;
 @interface DVAppDelegate : UIResponder <UIApplicationDelegate, HttpEventListener>
 {
      NSString *launchUrlString;

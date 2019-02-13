@@ -3279,7 +3279,7 @@
 			name = "Hamper Scheme Cell";
 			sourceTree = "<group>";
 		};
-		F023B783211C1B3C00D54B38 /* Credit Details Cell */ = {
+		F023B783211C1B3C00D54B38 /* Payment Outstanding Cell */ = {
 			isa = PBXGroup;
 			children = (
 				F023B78A211C1B9500D54B38 /* CreditDetailsCollectionView.h */,
@@ -3289,7 +3289,7 @@
 				F09B7B34213024B7006D9372 /* CreateDetailsCell.m */,
 				F09B7B37213024C8006D9372 /* CreateDetailsCell.xib */,
 			);
-			name = "Credit Details Cell";
+			name = "Payment Outstanding Cell";
 			sourceTree = "<group>";
 		};
 		F023B790211C1BC100D54B38 /* Order Pendency Cell */ = {
@@ -3339,7 +3339,7 @@
 				F08F14E421C2618400B48A04 /* dataTableViewHeader.xib */,
 				F02CA95C21C244FB005168C8 /* Overdue cell */,
 				F023B790211C1BC100D54B38 /* Order Pendency Cell */,
-				F023B783211C1B3C00D54B38 /* Credit Details Cell */,
+				F023B783211C1B3C00D54B38 /* Payment Outstanding Cell */,
 				F023B772211C16A000D54B38 /* Hamper Scheme Cell */,
 				F02D14162119712B001B1967 /* Sales Aggregate Cell */,
 			);
@@ -4720,7 +4720,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "./Crashlytics.framework/run cc9f075af7ebdd5493d67c5fc8b720e55f346463 98517ace9775b4439aaeaa5a456544d1178a09c4b0ceeea6499db4f1aa90edfc";
+			shellScript = "./Crashlytics.framework/run ba515076b4ea66dcf76ab3ffb7c31aa6fabf9258 47f4597abcbdde998736bf1f0a1ab5511c77f221fc3138b1772b294a563bc01c\n";
 		};
 		D26F507405F90DB31C36D692 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;

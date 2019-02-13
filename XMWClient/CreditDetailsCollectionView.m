@@ -206,6 +206,7 @@
 {
     detailsTableView *vc = [[detailsTableView alloc]init];
     vc.dataArray = dataArray;
+    vc.headerName = @"Payment Outstanding";
     
     UIViewController *root;
     root = [[[[UIApplication sharedApplication]windows]objectAtIndex:0]rootViewController];

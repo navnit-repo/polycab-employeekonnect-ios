@@ -203,7 +203,7 @@
 {
     detailsTableView *vc = [[detailsTableView alloc]init];
     vc.dataArray = dataArray;
-    
+    vc.headerName = @"Overdue";
     UIViewController *root;
     root = [[[[UIApplication sharedApplication]windows]objectAtIndex:0]rootViewController];
     

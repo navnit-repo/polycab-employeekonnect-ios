@@ -36,6 +36,7 @@
 CGFloat deviceWidthRation;
 CGFloat deviceHeightRation;
 CGFloat bottomBarHeight;
+BOOL regIDCheck;
 static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
 
 #define LOCAL_PLAY_ALERT_TAG 9001
@@ -132,6 +133,7 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
     
     deviceWidthRation = self.window.frame.size.width/320;
     deviceHeightRation = self.window.frame.size.width/320;
+    
     
     NSArray *versionCompatibility = [[UIDevice currentDevice].systemVersion componentsSeparatedByString:@"."];
     if ( 11 == [[versionCompatibility objectAtIndex:0] intValue] || [[versionCompatibility objectAtIndex:0] intValue] > 11 )

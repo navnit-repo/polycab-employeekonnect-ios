@@ -11,7 +11,9 @@
 @interface detailsTableView : UIViewController<UITableViewDelegate,UITableViewDataSource>
 {
     NSArray *dataArray;
+    NSString *headerName;
 }
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property NSArray *dataArray;
+@property NSString *headerName;
 @end

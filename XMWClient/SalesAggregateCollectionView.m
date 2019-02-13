@@ -261,15 +261,21 @@
     
     // for month condition check
     NSDateFormatter *checkMonth = [[NSDateFormatter alloc] init];
-    [checkMonth setDateFormat:@"01/04/yyyy"];
+    [checkMonth setDateFormat:@"02/04/yyyy"];
     NSLog(@"%@",[checkMonth stringFromDate:[NSDate date]]);
     NSString *date1=[checkMonth stringFromDate:[NSDate date]]; //01-04-current year
     NSString *date2=[dateFormatterToDate stringFromDate:[NSDate date]]; //current to date
+    NSLog(@"Date1: %@ Date2: %@",date1,date2);
+    NSDateFormatter *compareFormat = [[NSDateFormatter alloc] init];
+    [compareFormat setDateFormat:@"dd/MM/yyyy"];
+    NSDate *dtOne = [[NSDate alloc] init];
+    NSDate *dtTwo = [[NSDate alloc] init];
     
-    NSDateFormatter *format = [[NSDateFormatter alloc] init];
-    [format setDateFormat:@"dd/MM/yyyy"];
-    NSDate *dtOne=[format dateFromString:date1];
-    NSDate *dtTwo=[format dateFromString:date2];
+    dtOne=[compareFormat dateFromString:date1];
+    dtTwo=[compareFormat dateFromString:date2];
+    
+    
+    
     NSComparisonResult result;
     result = [dtOne compare:dtTwo];
     
@@ -279,7 +285,7 @@
         // or @"yyyy-MM-dd hh:mm:ss a" if you prefer the time with AM/PM
         NSLog(@"%@",[dateFormatterFormDate stringFromDate:[NSDate date]]);
         fromDate =[dateFormatterFormDate stringFromDate:[NSDate date]];
-       
+        
     }
     else{
         NSDate *date = [NSDate date];
@@ -290,7 +296,7 @@
         NSLog(@"newDate -> %@",newDate);
         
         NSDateFormatter *dateFormatterFormDate=[[NSDateFormatter alloc] init];
-        [dateFormatterFormDate setDateFormat:@"dd/MM/yyyy"];
+        [dateFormatterFormDate setDateFormat:@"01/04/yyyy"];
         NSLog(@"%@",[dateFormatterFormDate stringFromDate:newDate]);
         fromDate =[dateFormatterFormDate stringFromDate:newDate];
     }
@@ -563,6 +569,7 @@
     NSInteger moveToPage = page;
     moveToPage = moveToPage % [ftdDataArray count];
     pageIndicator.currentPage = moveToPage;
+    
 
     
 }
@@ -616,6 +623,7 @@
     
     
     pageIndicator.numberOfPages = numberOfCell;
+    pageIndicator.transform = CGAffineTransformMakeScale(0.7, 0.7);
     return cell;
 }
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
