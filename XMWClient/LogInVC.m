@@ -46,6 +46,7 @@
 #import "TermsVC.h"
 #import "PaymentOutstandingReportView.h"
 #import "EmployeeCreateOrderVC.h"
+#import "NationalDashboardVC.h"
 @interface LogInVC ()
 
 @end
@@ -163,8 +164,19 @@ NSMutableDictionary *masterDataForEmployee;
 
 -(void)revealViewControllConfig{
     //for SWRevealViewController
+    UIViewController *frontViewController;
+    NSString *roleName =[NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] valueForKey:@"ROLE_NAME"]];
     
-    DashBoardVC *frontViewController = [[DashBoardVC alloc] init];
+    if ([roleName isEqualToString:@"NATIONAL_ALL"]) {
+        NSLog(@"role name -: NATIONAL_ALL");
+        
+      frontViewController = [[NationalDashboardVC alloc] initWithNibName:@"DashBoardVC" bundle:nil];
+    }
+    
+    else{
+       frontViewController = [[DashBoardVC alloc] init];
+    }
+    
     LeftViewVC *rearViewController = [[LeftViewVC alloc] init];
     rearViewController.delegate = frontViewController;
     rearViewController.menuDetailsDict = menuDetailsDict;
@@ -246,9 +258,12 @@ NSMutableDictionary *masterDataForEmployee;
                     ClientLoginResponse* clientLoginResponse = (ClientLoginResponse*)respondedObject;
                 [LoginUtils setClientVariables :  clientLoginResponse : m_username];
         customer_name = [[clientLoginResponse.clientMasterDetail.masterDataRefresh valueForKey:@"USER_PROFILE"] valueForKey:@"customer_name"];
-    
+        NSString *userRole = [[[clientLoginResponse.clientMasterDetail.masterDataRefresh valueForKey:@"LEVEL_WISE_ROLES"]objectAtIndex:0] valueForKey:@"rolename"];
         
-        [[NSUserDefaults standardUserDefaults ]setObject:customer_name forKey:@"CUSTOMER_NAME"];
+        
+        [[NSUserDefaults standardUserDefaults ]setObject:userRole forKey:@"ROLE_NAME"];
+         [[NSUserDefaults standardUserDefaults ]setObject:customer_name forKey:@"CUSTOMER_NAME"];
+        
         
                     [[NSUserDefaults standardUserDefaults] setObject:m_username forKey:@"USERNAME"];
                     authToken = clientLoginResponse.authToken;

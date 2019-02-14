@@ -59,12 +59,11 @@
     float shortenedAmount = [actualAmount floatValue];
     NSString *suffix = @"";
     float currency = [actualAmount floatValue];
-//    if(currency >= 10000000.0f) {
-//        suffix = @"Cr";
-//        shortenedAmount /= 10000000.0f;
-//    }
-//    else
-    if(currency >= 100000.0f) {
+    if(currency >= 10000000.0f) {
+        suffix = @"Cr";
+        shortenedAmount /= 10000000.0f;
+    }
+    else if(currency >= 100000.0f) {
         suffix = @"L";
         shortenedAmount /= 100000.0f;
     }

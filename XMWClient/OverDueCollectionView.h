@@ -9,15 +9,21 @@
 #import <UIKit/UIKit.h>
 #import "DotFormPost.h"
 #import "ReportPostResponse.h"
+#import "AppConstants.h"
+#import "ClientVariable.h"
+#import "XmwReportService.h"
+#import "DVAppDelegate.h"
 @interface OverDueCollectionView : UIView<UICollectionViewDelegate,UICollectionViewDataSource>
 {
     DotFormPost *chartPostRqst;
     NSMutableArray *dataArray;
     ReportPostResponse* chartResponseData;
     UICollectionView *collectionView;
+    UIPageControl *pageIndicator;
+    UIView *blankView;
 }
 @property (strong, nonatomic) IBOutlet UICollectionView *collectionView;
-@property (weak, nonatomic) IBOutlet UIPageControl *pageIndicator;
+@property (strong, nonatomic) IBOutlet UIPageControl *pageIndicator;
 @property  DotFormPost *chartPostRqst;
 @property  NSMutableArray *dataArray;
 @property ReportPostResponse* chartResponseData;
@@ -28,5 +34,5 @@
 -(void)autoLayout;
 -(void)shadowView;
 -(void)addLoadingView;
-
+-(void)addLoadingView;
 @end

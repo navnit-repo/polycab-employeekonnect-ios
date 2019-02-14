@@ -10,6 +10,7 @@
 #import "SWRevealViewController.h"
 #import "LeftViewVC.h"
 #import "MarqueeLabel.h"
+#import "DVAppDelegate.h"
 
 @interface DashBoardVC : UIViewController <SlideBarDelegate,UITableViewDelegate,UITableViewDataSource,UITabBarDelegate>
 {
@@ -22,6 +23,6 @@
 @property (strong, nonatomic) SWRevealViewController *viewController;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *tabbarBottomConstraint;
-
+-(void)loadCellView;
 @end
 

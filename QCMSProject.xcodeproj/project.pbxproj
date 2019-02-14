@@ -587,6 +587,35 @@
 		F02D142021197235001B1967 /* PolycabHeader.h in Headers */ = {isa = PBXBuildFile; fileRef = F02D141E21197235001B1967 /* PolycabHeader.h */; };
 		F02D142121197235001B1967 /* PolycabHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = F02D141F21197235001B1967 /* PolycabHeader.m */; };
 		F02D14232119724D001B1967 /* PolycabHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = F02D14222119724D001B1967 /* PolycabHeader.xib */; };
+		F02E3526221542A70007573D /* NationalDashboardVC.h in Headers */ = {isa = PBXBuildFile; fileRef = F02E3523221542A70007573D /* NationalDashboardVC.h */; };
+		F02E3527221542A70007573D /* NationalDashboardVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F02E3524221542A70007573D /* NationalDashboardVC.m */; };
+		F02E3528221542A70007573D /* NationalDashboardVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = F02E3525221542A70007573D /* NationalDashboardVC.xib */; };
+		F02E3533221555440007573D /* NationalSalesAggregateCollectionView.h in Headers */ = {isa = PBXBuildFile; fileRef = F02E3531221555440007573D /* NationalSalesAggregateCollectionView.h */; };
+		F02E3534221555440007573D /* NationalSalesAggregateCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = F02E3532221555440007573D /* NationalSalesAggregateCollectionView.m */; };
+		F02E353622155AB10007573D /* NationalSalesAggregateCollectionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F02E353522155AB10007573D /* NationalSalesAggregateCollectionView.xib */; };
+		F02E353922155EBD0007573D /* NationalSalesAggregatePieView.h in Headers */ = {isa = PBXBuildFile; fileRef = F02E353722155EBD0007573D /* NationalSalesAggregatePieView.h */; };
+		F02E353A22155EBD0007573D /* NationalSalesAggregatePieView.m in Sources */ = {isa = PBXBuildFile; fileRef = F02E353822155EBD0007573D /* NationalSalesAggregatePieView.m */; };
+		F02E353E22156E1D0007573D /* NationalSalesAggregatePieView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F02E353D22156E1D0007573D /* NationalSalesAggregatePieView.xib */; };
+		F02E3542221573530007573D /* PaymentOutstandingPieView.h in Headers */ = {isa = PBXBuildFile; fileRef = F02E3540221573530007573D /* PaymentOutstandingPieView.h */; };
+		F02E3543221573530007573D /* PaymentOutstandingPieView.m in Sources */ = {isa = PBXBuildFile; fileRef = F02E3541221573530007573D /* PaymentOutstandingPieView.m */; };
+		F02E3545221573F60007573D /* PaymentOutstandingPieView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F02E3544221573F60007573D /* PaymentOutstandingPieView.xib */; };
+		F02E35492215757D0007573D /* OverduePieView.h in Headers */ = {isa = PBXBuildFile; fileRef = F02E35472215757D0007573D /* OverduePieView.h */; };
+		F02E354A2215757D0007573D /* OverduePieView.m in Sources */ = {isa = PBXBuildFile; fileRef = F02E35482215757D0007573D /* OverduePieView.m */; };
+		F02E354C221576040007573D /* OverduePieView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F02E354B221576040007573D /* OverduePieView.xib */; };
+		F02E355322157A870007573D /* NationalSalesAggregateCellView.h in Headers */ = {isa = PBXBuildFile; fileRef = F02E355122157A870007573D /* NationalSalesAggregateCellView.h */; };
+		F02E355422157A870007573D /* NationalSalesAggregateCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = F02E355222157A870007573D /* NationalSalesAggregateCellView.m */; };
+		F02E355622157ABF0007573D /* NationalSalesAggregateCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F02E355522157ABF0007573D /* NationalSalesAggregateCellView.xib */; };
+		F02E355922157E3A0007573D /* NationalSalesAggregatePieCellView.h in Headers */ = {isa = PBXBuildFile; fileRef = F02E355722157E3A0007573D /* NationalSalesAggregatePieCellView.h */; };
+		F02E355A22157E3A0007573D /* NationalSalesAggregatePieCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = F02E355822157E3A0007573D /* NationalSalesAggregatePieCellView.m */; };
+		F02E355C22157E550007573D /* NationalSalesAggregatePieCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F02E355B22157E550007573D /* NationalSalesAggregatePieCellView.xib */; };
+		F02E355F221583340007573D /* PaymentOutstandingPieViewCellView.h in Headers */ = {isa = PBXBuildFile; fileRef = F02E355D221583340007573D /* PaymentOutstandingPieViewCellView.h */; };
+		F02E3560221583340007573D /* PaymentOutstandingPieViewCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = F02E355E221583340007573D /* PaymentOutstandingPieViewCellView.m */; };
+		F02E35622215837E0007573D /* PaymentOutstandingPieViewCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F02E35612215837E0007573D /* PaymentOutstandingPieViewCellView.xib */; };
+		F02E35652215848F0007573D /* OverduePieCellView.h in Headers */ = {isa = PBXBuildFile; fileRef = F02E35632215848F0007573D /* OverduePieCellView.h */; };
+		F02E35662215848F0007573D /* OverduePieCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = F02E35642215848F0007573D /* OverduePieCellView.m */; };
+		F02E3568221584DE0007573D /* OverduePieCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F02E3567221584DD0007573D /* OverduePieCellView.xib */; };
+		F02E356B22159E7D0007573D /* NationalWisePolycabSalesComparisonChat.h in Headers */ = {isa = PBXBuildFile; fileRef = F02E356922159E7D0007573D /* NationalWisePolycabSalesComparisonChat.h */; };
+		F02E356C22159E7D0007573D /* NationalWisePolycabSalesComparisonChat.m in Sources */ = {isa = PBXBuildFile; fileRef = F02E356A22159E7D0007573D /* NationalWisePolycabSalesComparisonChat.m */; };
 		F03029642101B0280089A4E4 /* 01_splash.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F03029632101B0280089A4E4 /* 01_splash.jpg */; };
 		F030296F2101F4010089A4E4 /* hide.png in Resources */ = {isa = PBXBuildFile; fileRef = F030296D2101F4000089A4E4 /* hide.png */; };
 		F03029702101F4010089A4E4 /* show.png in Resources */ = {isa = PBXBuildFile; fileRef = F030296E2101F4000089A4E4 /* show.png */; };
@@ -1603,6 +1632,35 @@
 		F02D141E21197235001B1967 /* PolycabHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PolycabHeader.h; sourceTree = "<group>"; };
 		F02D141F21197235001B1967 /* PolycabHeader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PolycabHeader.m; sourceTree = "<group>"; };
 		F02D14222119724D001B1967 /* PolycabHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PolycabHeader.xib; sourceTree = "<group>"; };
+		F02E3523221542A70007573D /* NationalDashboardVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NationalDashboardVC.h; sourceTree = "<group>"; };
+		F02E3524221542A70007573D /* NationalDashboardVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NationalDashboardVC.m; sourceTree = "<group>"; };
+		F02E3525221542A70007573D /* NationalDashboardVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NationalDashboardVC.xib; sourceTree = "<group>"; };
+		F02E3531221555440007573D /* NationalSalesAggregateCollectionView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NationalSalesAggregateCollectionView.h; sourceTree = "<group>"; };
+		F02E3532221555440007573D /* NationalSalesAggregateCollectionView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NationalSalesAggregateCollectionView.m; sourceTree = "<group>"; };
+		F02E353522155AB10007573D /* NationalSalesAggregateCollectionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NationalSalesAggregateCollectionView.xib; sourceTree = "<group>"; };
+		F02E353722155EBD0007573D /* NationalSalesAggregatePieView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NationalSalesAggregatePieView.h; sourceTree = "<group>"; };
+		F02E353822155EBD0007573D /* NationalSalesAggregatePieView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NationalSalesAggregatePieView.m; sourceTree = "<group>"; };
+		F02E353D22156E1D0007573D /* NationalSalesAggregatePieView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NationalSalesAggregatePieView.xib; sourceTree = "<group>"; };
+		F02E3540221573530007573D /* PaymentOutstandingPieView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PaymentOutstandingPieView.h; sourceTree = "<group>"; };
+		F02E3541221573530007573D /* PaymentOutstandingPieView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PaymentOutstandingPieView.m; sourceTree = "<group>"; };
+		F02E3544221573F60007573D /* PaymentOutstandingPieView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PaymentOutstandingPieView.xib; sourceTree = "<group>"; };
+		F02E35472215757D0007573D /* OverduePieView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OverduePieView.h; sourceTree = "<group>"; };
+		F02E35482215757D0007573D /* OverduePieView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OverduePieView.m; sourceTree = "<group>"; };
+		F02E354B221576040007573D /* OverduePieView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OverduePieView.xib; sourceTree = "<group>"; };
+		F02E355122157A870007573D /* NationalSalesAggregateCellView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NationalSalesAggregateCellView.h; sourceTree = "<group>"; };
+		F02E355222157A870007573D /* NationalSalesAggregateCellView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NationalSalesAggregateCellView.m; sourceTree = "<group>"; };
+		F02E355522157ABF0007573D /* NationalSalesAggregateCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NationalSalesAggregateCellView.xib; sourceTree = "<group>"; };
+		F02E355722157E3A0007573D /* NationalSalesAggregatePieCellView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NationalSalesAggregatePieCellView.h; sourceTree = "<group>"; };
+		F02E355822157E3A0007573D /* NationalSalesAggregatePieCellView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NationalSalesAggregatePieCellView.m; sourceTree = "<group>"; };
+		F02E355B22157E550007573D /* NationalSalesAggregatePieCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NationalSalesAggregatePieCellView.xib; sourceTree = "<group>"; };
+		F02E355D221583340007573D /* PaymentOutstandingPieViewCellView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PaymentOutstandingPieViewCellView.h; sourceTree = "<group>"; };
+		F02E355E221583340007573D /* PaymentOutstandingPieViewCellView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PaymentOutstandingPieViewCellView.m; sourceTree = "<group>"; };
+		F02E35612215837E0007573D /* PaymentOutstandingPieViewCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PaymentOutstandingPieViewCellView.xib; sourceTree = "<group>"; };
+		F02E35632215848F0007573D /* OverduePieCellView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OverduePieCellView.h; sourceTree = "<group>"; };
+		F02E35642215848F0007573D /* OverduePieCellView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OverduePieCellView.m; sourceTree = "<group>"; };
+		F02E3567221584DD0007573D /* OverduePieCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OverduePieCellView.xib; sourceTree = "<group>"; };
+		F02E356922159E7D0007573D /* NationalWisePolycabSalesComparisonChat.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NationalWisePolycabSalesComparisonChat.h; sourceTree = "<group>"; };
+		F02E356A22159E7D0007573D /* NationalWisePolycabSalesComparisonChat.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NationalWisePolycabSalesComparisonChat.m; sourceTree = "<group>"; };
 		F03029632101B0280089A4E4 /* 01_splash.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 01_splash.jpg; sourceTree = "<group>"; };
 		F030296D2101F4000089A4E4 /* hide.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hide.png; sourceTree = "<group>"; };
 		F030296E2101F4000089A4E4 /* show.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = show.png; sourceTree = "<group>"; };
@@ -3333,6 +3391,9 @@
 				F02786C520FDC2CD00096AFB /* DashBoardVC.h */,
 				F02786C620FDC2CD00096AFB /* DashBoardVC.m */,
 				F02786C720FDC2CD00096AFB /* DashBoardVC.xib */,
+				F02E3523221542A70007573D /* NationalDashboardVC.h */,
+				F02E3524221542A70007573D /* NationalDashboardVC.m */,
+				F02E3525221542A70007573D /* NationalDashboardVC.xib */,
 				F08F14DC21C25FAD00B48A04 /* detailsTableView.h */,
 				F08F14DD21C25FAD00B48A04 /* detailsTableView.m */,
 				F08F14DE21C25FAD00B48A04 /* detailsTableView.xib */,
@@ -3342,6 +3403,8 @@
 				F023B783211C1B3C00D54B38 /* Payment Outstanding Cell */,
 				F023B772211C16A000D54B38 /* Hamper Scheme Cell */,
 				F02D14162119712B001B1967 /* Sales Aggregate Cell */,
+				F02E353F2215729B0007573D /* Employee Payment Outstanding Pie View */,
+				F02E35462215753E0007573D /* Employee Overdue Pie View */,
 			);
 			name = "Dash Board";
 			sourceTree = "<group>";
@@ -3355,6 +3418,20 @@
 				F0E1A0CD213E48C2005F4435 /* SalesCell.h */,
 				F0E1A0CE213E48C2005F4435 /* SalesCell.m */,
 				F0E1A0D1213E48DD005F4435 /* SalesCell.xib */,
+				F02E3531221555440007573D /* NationalSalesAggregateCollectionView.h */,
+				F02E3532221555440007573D /* NationalSalesAggregateCollectionView.m */,
+				F02E353522155AB10007573D /* NationalSalesAggregateCollectionView.xib */,
+				F02E355122157A870007573D /* NationalSalesAggregateCellView.h */,
+				F02E355222157A870007573D /* NationalSalesAggregateCellView.m */,
+				F02E355522157ABF0007573D /* NationalSalesAggregateCellView.xib */,
+				F02E353722155EBD0007573D /* NationalSalesAggregatePieView.h */,
+				F02E353822155EBD0007573D /* NationalSalesAggregatePieView.m */,
+				F02E353D22156E1D0007573D /* NationalSalesAggregatePieView.xib */,
+				F02E355722157E3A0007573D /* NationalSalesAggregatePieCellView.h */,
+				F02E355822157E3A0007573D /* NationalSalesAggregatePieCellView.m */,
+				F02E355B22157E550007573D /* NationalSalesAggregatePieCellView.xib */,
+				F02E356922159E7D0007573D /* NationalWisePolycabSalesComparisonChat.h */,
+				F02E356A22159E7D0007573D /* NationalWisePolycabSalesComparisonChat.m */,
 			);
 			name = "Sales Aggregate Cell";
 			sourceTree = "<group>";
@@ -3370,6 +3447,32 @@
 				F0224E0021411CCF00D9A6E2 /* PolycabFooter.xib */,
 			);
 			name = "Polycab Header & Footer View";
+			sourceTree = "<group>";
+		};
+		F02E353F2215729B0007573D /* Employee Payment Outstanding Pie View */ = {
+			isa = PBXGroup;
+			children = (
+				F02E3540221573530007573D /* PaymentOutstandingPieView.h */,
+				F02E3541221573530007573D /* PaymentOutstandingPieView.m */,
+				F02E3544221573F60007573D /* PaymentOutstandingPieView.xib */,
+				F02E355D221583340007573D /* PaymentOutstandingPieViewCellView.h */,
+				F02E355E221583340007573D /* PaymentOutstandingPieViewCellView.m */,
+				F02E35612215837E0007573D /* PaymentOutstandingPieViewCellView.xib */,
+			);
+			name = "Employee Payment Outstanding Pie View";
+			sourceTree = "<group>";
+		};
+		F02E35462215753E0007573D /* Employee Overdue Pie View */ = {
+			isa = PBXGroup;
+			children = (
+				F02E35472215757D0007573D /* OverduePieView.h */,
+				F02E35482215757D0007573D /* OverduePieView.m */,
+				F02E354B221576040007573D /* OverduePieView.xib */,
+				F02E35632215848F0007573D /* OverduePieCellView.h */,
+				F02E35642215848F0007573D /* OverduePieCellView.m */,
+				F02E3567221584DD0007573D /* OverduePieCellView.xib */,
+			);
+			name = "Employee Overdue Pie View";
 			sourceTree = "<group>";
 		};
 		F031562F21269362005DE7F2 /* Product Search */ = {
@@ -4044,6 +4147,7 @@
 				F0E1A0D5213E4E5D005F4435 /* HamperSchemeCell.h in Headers */,
 				F08F14D821C259B900B48A04 /* OverDueCell.h in Headers */,
 				858F05001DEEC27A00398D46 /* EditSearchField.h in Headers */,
+				F02E356B22159E7D0007573D /* NationalWisePolycabSalesComparisonChat.h in Headers */,
 				90F47F531796B47500C6B76C /* HavellsMenuScreenVC.h in Headers */,
 				85E1D88C1B8DFFAE0034D949 /* BidirectionCollectionLayout.h in Headers */,
 				8558B3361D0730960017FA3A /* GoldCardSubFormVC.h in Headers */,
@@ -4058,6 +4162,7 @@
 				852A941218F9974100F5DB5F /* DVCheckbox.h in Headers */,
 				8500DCF11A794D45002B534F /* XYPieChart.h in Headers */,
 				858082B31A5D8A8A00207EAB /* DotLIneChart.h in Headers */,
+				F02E35492215757D0007573D /* OverduePieView.h in Headers */,
 				8502702419064648003A7E01 /* DotNotificationSend.h in Headers */,
 				F02C1EE520EE25D3002ABF27 /* DVPeriodCalendar.h in Headers */,
 				852689581A74AE6A0052DE42 /* DotHBar.h in Headers */,
@@ -4076,6 +4181,8 @@
 				8530E0701AC11CEA001E5E79 /* ProductResponse.h in Headers */,
 				F0EAC5BC2142641D007D694C /* SelectedListVC.h in Headers */,
 				F09C074F20DA8B3F00477176 /* CustomerClaimInvoiceDetailsVC.h in Headers */,
+				F02E35652215848F0007573D /* OverduePieCellView.h in Headers */,
+				F02E3533221555440007573D /* NationalSalesAggregateCollectionView.h in Headers */,
 				90EDF1B5179FC5E700948F6D /* DotReportDraw.h in Headers */,
 				F04D56492100622000FF6CA8 /* MyDetailsVC.h in Headers */,
 				F031563521269F92005DE7F2 /* SearchProductByCatalogVC.h in Headers */,
@@ -4117,6 +4224,7 @@
 				F0224DFC21411CAA00D9A6E2 /* PolycabFooter.h in Headers */,
 				856DC9DC1D06613700B7F48E /* EditOrderTableFormDelegate.h in Headers */,
 				85162FDE1E8E477E003B05C8 /* PODFormVC.h in Headers */,
+				F02E355922157E3A0007573D /* NationalSalesAggregatePieCellView.h in Headers */,
 				F0B2FB4A218850F5006A7C6B /* PolycabSalesComparisonChat.h in Headers */,
 				F023B79F211C1C5300D54B38 /* OrderPendencyCollectionView.h in Headers */,
 				8530E0751AC23D88001E5E79 /* ProductCatObject.h in Headers */,
@@ -4131,9 +4239,11 @@
 				F0A8EA7A211D6A2C001C4FAD /* CreateOrderVC1.h in Headers */,
 				F0E1A0DB213E4E90005F4435 /* OrderPendencyCell.h in Headers */,
 				F0B2FB2A218850F5006A7C6B /* TravellerController.h in Headers */,
+				F02E3526221542A70007573D /* NationalDashboardVC.h in Headers */,
 				856B3E1F1DCA0F1E00096100 /* SimpleEditForm.h in Headers */,
 				90023D8517FD685100DA0C31 /* RecentRequestStorage.h in Headers */,
 				F01FCBF920F5F941001B0C4E /* ShowInvoice.h in Headers */,
+				F02E355F221583340007573D /* PaymentOutstandingPieViewCellView.h in Headers */,
 				859EEDA01E9D43DA006D3D9C /* MTBScanController.h in Headers */,
 				90023D8617FD685600DA0C31 /* RecentRequestItem.h in Headers */,
 				850357AD1E8B77EE005500B9 /* PODTableViewCell.h in Headers */,
@@ -4141,6 +4251,7 @@
 				8516FEDA1B60697500E605A6 /* SelectServerVC.h in Headers */,
 				F0B2FB3D218850F5006A7C6B /* CustomCompareFormVC.h in Headers */,
 				F0A8EA80211D6C8F001C4FAD /* CreateOrderVC2.h in Headers */,
+				F02E353922155EBD0007573D /* NationalSalesAggregatePieView.h in Headers */,
 				851F3AF51A768B7500B08BD8 /* DotHAxis.h in Headers */,
 				85AC9667198FFDDF00AC0338 /* ReportTabularDataSection.h in Headers */,
 				85AC965D198FFDDF00AC0338 /* ReportFooterSection.h in Headers */,
@@ -4156,8 +4267,10 @@
 				8558B3391D0730960017FA3A /* GoldCardTableFormDelegate.h in Headers */,
 				9000175A180D64860002F464 /* TimeTableViewCell.h in Headers */,
 				857A3ECA1A6CFC3500279931 /* DotMenuTreeCell.h in Headers */,
+				F02E3542221573530007573D /* PaymentOutstandingPieView.h in Headers */,
 				F07B39E820CEAE2B00740DF4 /* XmwSearchService.h in Headers */,
 				F088F6162105FBB7000E26F4 /* Data.h in Headers */,
+				F02E355322157A870007573D /* NationalSalesAggregateCellView.h in Headers */,
 				8595B4E9190FCB790010C685 /* DVDateCell.h in Headers */,
 				8500DCEB1A78FE10002B534F /* ChartSlider.h in Headers */,
 				85162FDA1E8E435C003B05C8 /* PODFormUpdateSection.h in Headers */,
@@ -4340,12 +4453,14 @@
 				F059CD1D214F710600E303F6 /* polycab_logo@3x.png in Resources */,
 				85B6A6D51E0E0DF500E0183E /* goods_return@2x.png in Resources */,
 				F059CD21214F710600E303F6 /* 02-mydetails@3x.png in Resources */,
+				F02E3528221542A70007573D /* NationalDashboardVC.xib in Resources */,
 				85EC4150191A0D8900B2ACD1 /* PageViewController~ipad.xib in Resources */,
 				F04D564B2100622000FF6CA8 /* MyDetailsVC.xib in Resources */,
 				F088F5F92105E587000E26F4 /* SalesComparisonChart.xib in Resources */,
 				F059CCED214F70F600E303F6 /* 08-stockmovement@2x.png in Resources */,
 				90E810B3174F451D003BDF77 /* closeButton.png in Resources */,
 				F081178E21916CFF00149035 /* 15-feedbackfromcustomer@2x.png in Resources */,
+				F02E3568221584DE0007573D /* OverduePieCellView.xib in Resources */,
 				85E738A81A8B9E2C00FADD4C /* popup_close.png in Resources */,
 				F059CC9B214F70D000E303F6 /* 06-reports.png in Resources */,
 				85B6A6D41E0E0DF500E0183E /* goods_return.png in Resources */,
@@ -4454,6 +4569,7 @@
 				85D7DA9F18F749CB00CF7D94 /* minus_normal.png in Resources */,
 				857A3ED91A6CFC3500279931 /* category-menu@2x.png in Resources */,
 				902B4B6418E0352A00797225 /* XmwWebViewController.xib in Resources */,
+				F02E353622155AB10007573D /* NationalSalesAggregateCollectionView.xib in Resources */,
 				F059CD2E214F710600E303F6 /* cart@3x.png in Resources */,
 				857A3ED01A6CFC3500279931 /* arrow_closed2@2x.png in Resources */,
 				F059CCDB214F70F600E303F6 /* black-showpasswordicon@2x.png in Resources */,
@@ -4490,6 +4606,7 @@
 				90E810BB174F451D003BDF77 /* VerticalSeparator.png in Resources */,
 				857A3ED71A6CFC3500279931 /* category-menu-selected@2x.png in Resources */,
 				F088F5D32105C38D000E26F4 /* ManageSubUserVC.xib in Resources */,
+				F02E353E22156E1D0007573D /* NationalSalesAggregatePieView.xib in Resources */,
 				851D93BA1A82087A00C61982 /* dashAccsryIcon.png in Resources */,
 				857A3ECF1A6CFC3500279931 /* arrow_closed2.png in Resources */,
 				857F8C621A828CBD0018A54C /* special_offer_L.png in Resources */,
@@ -4556,10 +4673,12 @@
 				F059CD2F214F710600E303F6 /* crossicon@3x.png in Resources */,
 				F0B2FB42218850F5006A7C6B /* CompareReportTableHeader.xib in Resources */,
 				F059CCE2214F70F600E303F6 /* reporticon@2x.png in Resources */,
+				F02E355C22157E550007573D /* NationalSalesAggregatePieCellView.xib in Resources */,
 				F059CD24214F710600E303F6 /* 05-requestforetain@3x.png in Resources */,
 				F0B2FB18218850F5006A7C6B /* ReportQuantityValueTableHeader.xib in Resources */,
 				F059CCF0214F70F600E303F6 /* 11-policies@2x.png in Resources */,
 				857F8C761A828D210018A54C /* file_explorer@2x.png in Resources */,
+				F02E35622215837E0007573D /* PaymentOutstandingPieViewCellView.xib in Resources */,
 				85D9926C1D2B9894003AEBBE /* edit_order_L.png in Resources */,
 				F0B2FB2B218850F5006A7C6B /* CustomCompareReportVC.xib in Resources */,
 				852A941818F997D700F5DB5F /* checkbox.png in Resources */,
@@ -4606,6 +4725,7 @@
 				F0B2FB2C218850F5006A7C6B /* BusinessVerticalVC.xib in Resources */,
 				F059CD2C214F710600E303F6 /* 13-feedback@3x.png in Resources */,
 				857A3ED51A6CFC3500279931 /* arrow_open@2x.png in Resources */,
+				F02E355622157ABF0007573D /* NationalSalesAggregateCellView.xib in Resources */,
 				857A3EDF1A6CFC3500279931 /* FifthDashView.xib in Resources */,
 				857F8C531A828CBD0018A54C /* default_L.png in Resources */,
 				F0B2FB48218850F5006A7C6B /* DispatchDetailsMapVC.xib in Resources */,
@@ -4624,6 +4744,7 @@
 				F04B2F4620FF2B3D00E6120A /* LeftViewVC.xib in Resources */,
 				85D5DA6D18E6F60700BE344F /* havells_120x120.png in Resources */,
 				857F8C5A1A828CBD0018A54C /* my_details_L.png in Resources */,
+				F02E354C221576040007573D /* OverduePieView.xib in Resources */,
 				90F5F4E4179D55E7003BCA61 /* WorkFlowLoginScreen.xib in Resources */,
 				F0B2FB58218851E1006A7C6B /* user_icon.png in Resources */,
 				85CC35011DFA67900016F65C /* DVCheckBoxCell.xib in Resources */,
@@ -4642,6 +4763,7 @@
 				F0A3590220FCC6FD00CE34AC /* TermsVC.xib in Resources */,
 				857F8C7A1A828D210018A54C /* notification@2x.png in Resources */,
 				85C4AD951D0FB30100D69383 /* undo_normal@3x.png in Resources */,
+				F02E3545221573F60007573D /* PaymentOutstandingPieView.xib in Resources */,
 				85BBB0111E710CD500169952 /* arrow_up@3x.png in Resources */,
 				85D9926D1D2B9894003AEBBE /* edit_order_L@2x.png in Resources */,
 				857A3ED31A6CFC3500279931 /* arrow_open2.png in Resources */,
@@ -4774,6 +4896,7 @@
 				8579E725174CD43100D7945F /* PageViewController.m in Sources */,
 				F088F5F82105E587000E26F4 /* SalesComparisonChart.m in Sources */,
 				8579E73F174CDBDC00D7945F /* SBJsonParser.m in Sources */,
+				F02E356C22159E7D0007573D /* NationalWisePolycabSalesComparisonChat.m in Sources */,
 				F01FCBFA20F5F941001B0C4E /* ShowInvoice.m in Sources */,
 				F031562D2126931C005DE7F2 /* SearchProductBYNameVC.m in Sources */,
 				F0EAC5BA2142641D007D694C /* SelectedListVC.m in Sources */,
@@ -4797,6 +4920,7 @@
 				85900FD418E00B280052067B /* UIView+XMW.m in Sources */,
 				8579E751174CDBDC00D7945F /* SBJsonWriter.m in Sources */,
 				F07B39E420CE519600740DF4 /* CustomerClaimVC.m in Sources */,
+				F02E35662215848F0007573D /* OverduePieCellView.m in Sources */,
 				8579E75B174CDC3600D7945F /* JSONStructureConstant.m in Sources */,
 				854DC1A21E6D6D16002225EC /* ProofOfDeliveryVC.m in Sources */,
 				F0E474402147EA6F00AEB3FA /* AttachmentViewCell.m in Sources */,
@@ -4843,6 +4967,7 @@
 				F031563621269F92005DE7F2 /* SearchProductByCatalogVC.m in Sources */,
 				851D93B71A81F9B100C61982 /* DualAxisHorizontalBarCell.m in Sources */,
 				8579E798174CDCC000D7945F /* DocPostResponse.m in Sources */,
+				F02E3560221583340007573D /* PaymentOutstandingPieViewCellView.m in Sources */,
 				8579E79A174CDCC000D7945F /* DotClientXmlMeta.m in Sources */,
 				852689591A74AE6A0052DE42 /* DotHBar.m in Sources */,
 				F0B2FB3E218850F5006A7C6B /* RMAVC2.m in Sources */,
@@ -4885,6 +5010,7 @@
 				F0A358F420FC9ECF00CE34AC /* LogInVC.m in Sources */,
 				8500DCF71A794D69002B534F /* CreditLimitPieChart.m in Sources */,
 				8502702119064625003A7E01 /* CommonRequestStruct.m in Sources */,
+				F02E355422157A870007573D /* NationalSalesAggregateCellView.m in Sources */,
 				850357AE1E8B77EE005500B9 /* PODTableViewCell.m in Sources */,
 				8502701D19064604003A7E01 /* NotificationDeviceRegister.m in Sources */,
 				857A3EDE1A6CFC3500279931 /* FifthDashView.m in Sources */,
@@ -4913,6 +5039,7 @@
 				902D3F681755E92200E079AB /* FormTableViewCell.m in Sources */,
 				85CA0B6B1E8012CA00B8ED30 /* FormBaseSection.m in Sources */,
 				85284F6D19D5FC600010ED87 /* XmwNotificationViewController.m in Sources */,
+				F02E353A22155EBD0007573D /* NationalSalesAggregatePieView.m in Sources */,
 				F0B2FB2F218850F5006A7C6B /* CompareReportTableCell.m in Sources */,
 				902D3F691755E92200E079AB /* LabelTableViewCell.m in Sources */,
 				85804F2D1A69087E0093CDBB /* DotVBarChart.m in Sources */,
@@ -4921,6 +5048,7 @@
 				F088F5F72105E587000E26F4 /* SalesComparisonLegend.m in Sources */,
 				F0E1A0D6213E4E5D005F4435 /* HamperSchemeCell.m in Sources */,
 				857A3EE11A6CFC3500279931 /* FirstDashMTDView.m in Sources */,
+				F02E355A22157E3A0007573D /* NationalSalesAggregatePieCellView.m in Sources */,
 				902D3F6A1755E92200E079AB /* MessageTableViewCell.m in Sources */,
 				8595B4F4190FCB790010C685 /* DVTwoWeekView.m in Sources */,
 				F088F6022105E587000E26F4 /* SalesIncentiveLegend.m in Sources */,
@@ -4948,6 +5076,7 @@
 				90182A351767287100B401E5 /* DotFormDraw.m in Sources */,
 				857A3EF81A6CFC3500279931 /* SixDashView.m in Sources */,
 				F022CA29211AFCCB0048DEAD /* SalesAggregateCollectionView.m in Sources */,
+				F02E354A2215757D0007573D /* OverduePieView.m in Sources */,
 				F0B2FB49218850F5006A7C6B /* CustomCompareFormVC.m in Sources */,
 				8501CAB719837D25002E9E1C /* DownloadRequestStorage.m in Sources */,
 				90182A3817673FD700B401E5 /* MXBarButton.m in Sources */,
@@ -4986,6 +5115,7 @@
 				900573A41787EC7C003288B3 /* DotDropDownPicker.m in Sources */,
 				F02C1EE020EDFEEB002ABF27 /* MyClaimVC.m in Sources */,
 				9036FD98178A8DA2009DB2F2 /* LoginUtils.m in Sources */,
+				F02E3534221555440007573D /* NationalSalesAggregateCollectionView.m in Sources */,
 				9036FDA4178A9017009DB2F2 /* BaseDAO.m in Sources */,
 				F0AFB6562126CA12005801B9 /* PolycabProductCatObject.m in Sources */,
 				9036FDA6178A9017009DB2F2 /* ObjectStorage.m in Sources */,
@@ -5010,6 +5140,7 @@
 				90082D2B178FC48000C79212 /* MandatoryAlertDelegate.m in Sources */,
 				F0FE2BA71F7141A600D8FCEF /* DivisionVC.m in Sources */,
 				90F47F541796B47500C6B76C /* HavellsMenuScreenVC.m in Sources */,
+				F02E3527221542A70007573D /* NationalDashboardVC.m in Sources */,
 				902B4B6318E0352A00797225 /* XmwWebViewController.m in Sources */,
 				90F5F4E3179D55E7003BCA61 /* WorkFlowLoginScreen.m in Sources */,
 				85804F3C1A69166F0093CDBB /* DotVerticalBarCell.m in Sources */,
@@ -5038,6 +5169,7 @@
 				857A3EDB1A6CFC3500279931 /* DashBoardMenuViewController.m in Sources */,
 				901F6E2F180277B400293AB9 /* XMWAbout.m in Sources */,
 				8595B4EC190FCB790010C685 /* DVDateStruct.m in Sources */,
+				F02E3543221573530007573D /* PaymentOutstandingPieView.m in Sources */,
 				901F6E3C180282E500293AB9 /* XMWFaqWebViewController.m in Sources */,
 				F0B2FB4C218850F5006A7C6B /* BusinessVerticalReportVC.m in Sources */,
 				85D5DA6218E6F51200BE344F /* Styles.m in Sources */,

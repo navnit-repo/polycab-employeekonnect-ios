@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "SalesComparisonChart.h"
+#import "AppConstants.h"
 @interface PolycabSalesComparisonChat : SalesComparisonChart
 
 @end

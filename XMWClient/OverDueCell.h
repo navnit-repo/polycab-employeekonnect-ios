@@ -10,12 +10,30 @@
 #import "XYPieChart.h"
 
 @interface OverDueCell : UIView<XYPieChartDataSource, XYPieChartDelegate>
+{
+    UILabel *creditDetailsDisplayNameLbl;
+    float creditLimit;
+    float remaining;
+    float payable;
+    
+    float user1;
+    float user2;
+    float user3;
+    float user4;
+    float user5;
+    
+    float totalAmmount;
+    
+    
+}
 +(OverDueCell*) createInstance;
 @property (weak, nonatomic) IBOutlet XYPieChart *pieChart;
-@property (weak, nonatomic) IBOutlet UILabel *creditDetailsDisplayNameLbl;
+@property (strong, nonatomic) IBOutlet UILabel *creditDetailsDisplayNameLbl;
 @property (weak, nonatomic) IBOutlet UIView *mainView;
 @property (weak, nonatomic) IBOutlet UILabel *constantLbl1;
 -(void)configure :(NSArray *)dataArray;
+-(void)autoLayout;
+-(NSString*)formateCurrency:(NSString *)actualAmount;
 
 @property (weak, nonatomic) IBOutlet UIView *constantView1;
 @property (weak, nonatomic) IBOutlet UIView *constantView2;

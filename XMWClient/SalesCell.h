@@ -23,4 +23,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *constantLbl3;
 @property (weak, nonatomic) IBOutlet UILabel *constantLbl4;
 -(void)configure:(NSArray*)ftdData :(NSArray*)mtdData :(NSArray*)ytdData;
+-(void)autoLayout;
+-(NSString*)formateCurrency:(NSString *)actualAmount;
 @end

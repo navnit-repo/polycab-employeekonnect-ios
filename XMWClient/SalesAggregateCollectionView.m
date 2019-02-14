@@ -24,24 +24,24 @@
 #define CELL_SPACING 10
 @implementation SalesAggregateCollectionView
 {
-    DotFormPost *ftdPost;
-    DotFormPost *mtdPost;
-    DotFormPost *ytdPost;
+//    DotFormPost *ftdPost;
+//    DotFormPost *mtdPost;
+//    DotFormPost *ytdPost;
     LoadingView *loadingView;
-    int numberOfCell;
+ //   int numberOfCell;
     NSMutableArray *maxCellArray;
-    ReportPostResponse* ftdResponseData;
-    ReportPostResponse* mtdResponseData;
-    ReportPostResponse* ytdResponseData;
-    NSMutableArray *ftdDataArray;
-    NSMutableArray *mtdDataArray;
-    NSMutableArray *ytdDataArray;
+//    ReportPostResponse* ftdResponseData;
+//    ReportPostResponse* mtdResponseData;
+//    ReportPostResponse* ytdResponseData;
+//    NSMutableArray *ftdDataArray;
+//    NSMutableArray *mtdDataArray;
+//    NSMutableArray *ytdDataArray;
     SalesCell *salesCell;
     
-    UIView *blankView;
-    BOOL sortDone;
+   // UIView *blankView;
+   // BOOL sortDone;
     
-    UIActivityIndicatorView *activityIndicatorView;
+   // UIActivityIndicatorView *activityIndicatorView;
     
 }
 @synthesize collectionView;
@@ -78,14 +78,9 @@
 
     // *** Set shadowOpacity to full (1) ***
     self.mainView.layer.shadowOpacity = 5.0f;
-    
 
-    
-    
-    
-    
 }
-- (void)configure{
+-(void)configure{
     [self autoLayout];
     [self shadowView];
     sortDone = false;
