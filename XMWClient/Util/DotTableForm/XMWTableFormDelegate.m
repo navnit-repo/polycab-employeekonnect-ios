@@ -181,7 +181,7 @@
         
         
         //my code
-    
+        
         [[NSNotificationCenter defaultCenter ]addObserver:self selector:@selector(polycabButtonHandler:) name:@"setButtonHandler" object:nil];
         
     }
@@ -348,7 +348,7 @@
     for(int i=0; i< [formElementsArray count]; i++) {
         DotFormElement* dotFormElement = [formElementsArray objectAtIndex:i];
         
-         NSLog(@"rowDataForSubmit dotFormElement id = %@", dotFormElement.elementId);
+        NSLog(@"rowDataForSubmit dotFormElement id = %@", dotFormElement.elementId);
         
         if([dotFormElement.componentType isEqualToString:XmwcsConst_DE_COMPONENT_TEXTFIELD]) {
             MXTextField* cellTextField = [componentsMap objectForKey:[NSString stringWithFormat:@"%d:%d", rowIdx, i]];
@@ -409,7 +409,7 @@
     [cellTextField addTarget:self action:@selector(textFieldDone:) forControlEvents:UIControlEventEditingDidEndOnExit];
     cellTextField.adjustsFontSizeToFitWidth = YES;
     cellTextField.keyboardType = UIKeyboardTypeDefault;
-    cellTextField.delegate	= formViewController;
+    cellTextField.delegate    = formViewController;
     
     cellTextField.tvfColIndex = [[NSNumber alloc] initWithInt:colIdx];
     cellTextField.tvfRowIndex = [[NSNumber alloc] initWithInt:rowIdx];
@@ -499,9 +499,13 @@
 
 -(void)polycabButtonHandler:(NSNotification*)notification {
     
+    NSString *bill_to;
+    bill_to =[ NSString stringWithFormat:@"%@",[notification.userInfo valueForKey:@"BILL_TO"]];
+    NSLog(@"%@",bill_to);
     
     NSString *buttonTag = [NSString stringWithFormat:@"%@",[notification.userInfo valueForKey:@"ButtonTag"]];
     NSLog(@"%@",buttonTag);
+    
     
     NSString *item = [NSString stringWithFormat:@"%@",[notification.userInfo valueForKey:@"BUSINESS_VERTICAL"]];
     NSLog(@"%@",item);
@@ -511,15 +515,15 @@
     NSString *elementId                  = searchFormComponent.elementId;
     
     NSString *itemName =[NSString stringWithFormat:@"%@",[notification.userInfo valueForKey:@"itemName"]];
-
+    
     DotFormElement* formElement = [formElementsArray objectAtIndex:0];
-
+    
     DotSearchComponent *searchObject = [[DotSearchComponent alloc]init];
     NSMutableArray *searchValues = [searchObject getRadioGroupData: groupName];
-//for Search Product
+    //for Search Product
     if ([buttonTag isEqualToString:@"101"]) {
         
-        SearchProductBYNameVC *searchProductBYNameVC = [[SearchProductBYNameVC alloc]initWithNibName:@"SearchProductBYNameVC" bundle:nil parentForm:formViewController formElement:elementId elementData:masterValueMapping radioGroupData:searchValues :buttonTag :itemName];
+        SearchProductBYNameVC *searchProductBYNameVC = [[SearchProductBYNameVC alloc]initWithNibName:@"SearchProductBYNameVC" bundle:nil parentForm:formViewController formElement:elementId elementData:masterValueMapping radioGroupData:searchValues :buttonTag :itemName :bill_to];
         
         NSMutableDictionary* dependentValueMap = nil;
         if(formElement.dependedCompValue !=nil   && ![formElement.dependedCompValue isEqualToString:@""]){
@@ -539,11 +543,11 @@
     
     // for add to catalog
     else if ([buttonTag isEqualToString:@"100"]){
-        SearchProductByCatalogVC * searchProductByCatalogVC = [[SearchProductByCatalogVC alloc]initWithNibName:@"SearchProductByCatalogVC" bundle:nil parentForm:formViewController formElement:elementId elementData:masterValueMapping radioGroupData:searchValues :buttonTag];
+        SearchProductByCatalogVC * searchProductByCatalogVC = [[SearchProductByCatalogVC alloc]initWithNibName:@"SearchProductByCatalogVC" bundle:nil parentForm:formViewController formElement:elementId elementData:masterValueMapping radioGroupData:searchValues :buttonTag :item :bill_to] ;
         
         
         
-            
+        
         
         
         NSMutableDictionary* dependentValueMap = nil;
@@ -563,20 +567,20 @@
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(onKeyboardHide:) name:UIKeyboardWillHideNotification object:nil];
         
     }
-   
-
-
+    
+    
+    
 }
 
 -(IBAction)labelTapHandling:(UITapGestureRecognizer*)sender
 {
-   MXLabel* labelField = (MXLabel*)sender.view;
+    MXLabel* labelField = (MXLabel*)sender.view;
     
     _currentCtx =  [NSString stringWithFormat:@"%d:%d", labelField.tvfRowIndex.intValue, labelField.tvfColIndex.intValue];
     
     DotFormElement *searchFormComponent = [formElementsArray objectAtIndex:labelField.tvfColIndex.intValue];
     
-    NSString *groupName					= searchFormComponent.dependedCompName;
+    NSString *groupName                    = searchFormComponent.dependedCompName;
     NSString *masterValueMapping        = searchFormComponent.masterValueMapping;
     NSString *elementId                  = searchFormComponent.elementId;
     
@@ -616,7 +620,7 @@
     ProductSearchVC* productSearchVC = [[ProductSearchVC alloc] initWithNibName:@"ProductSearchVC" bundle:nil parentForm:formViewController formElement:elementId elementData:masterValueMapping radioGroupData:searchValues];
     
     
-
+    
     
     
     NSMutableDictionary* dependentValueMap = nil;
@@ -634,7 +638,7 @@
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(onKeyboardHide:) name:UIKeyboardWillHideNotification object:nil];
     
-   
+    
     
 }
 
@@ -643,7 +647,7 @@
 
 -(void) drawLabelField:(UIView*) view :(int) rowIdx :(int) colIdx
 {
-
+    
     DotFormElement* formElement = [formElementsArray objectAtIndex:colIdx];
     
     MXLabel* labelField = [[MXLabel alloc] initWithFrame:CGRectMake( 1.0f, 1.0f, view.frame.size.width-2, view.frame.size.height-2)];
@@ -918,7 +922,7 @@
     
     // Check for Drop Down Constraints
     //  NSMutableDictionary*  cellDropDwnDictionary = [self getDropDownList: dotFormElement];
-
+    
     id masterValues = [DotFormDraw getMasterValueForComponent:[formElement elementId] : [formElement masterValueMapping]];
     // NSMutableDictionary *masterkey = masterValues[0];
     
@@ -960,7 +964,7 @@
         
         [dropDownButton addTarget:self action:@selector(dropDownLaunch:) forControlEvents:UIControlEventTouchUpInside];
         
-        dropDownButton.elementId	= formElement.elementId;
+        dropDownButton.elementId    = formElement.elementId;
         
         [view addSubview:dropDownField];
         
@@ -990,9 +994,9 @@
     
     dotDropDownPicker.dropDownList = [[NSMutableArray alloc] initWithArray: ((MXButton*)sender).attachedData[1]];
     dotDropDownPicker.dropDownListKey = [[NSMutableArray alloc] initWithArray: ((MXButton*)sender).attachedData[0]];
-    dotDropDownPicker.tag			= ((MXButton *)sender).tag;
-    dotDropDownPicker.delegate		= dotDropDownPicker;
-    dotDropDownPicker.dataSource	= dotDropDownPicker;
+    dotDropDownPicker.tag            = ((MXButton *)sender).tag;
+    dotDropDownPicker.delegate        = dotDropDownPicker;
+    dotDropDownPicker.dataSource    = dotDropDownPicker;
     [dotDropDownPicker setShowsSelectionIndicator:YES];
     dotDropDownPicker.backgroundColor = [UIColor whiteColor];
     
@@ -1131,14 +1135,14 @@
     view.backgroundColor = [Styles formBackgroundColor];
     
     
-    // dropDownField.delegate		= formController;
+    // dropDownField.delegate        = formController;
     dropDownButton.attachedData = masterValues;
     dropDownField.tag = 101;
     
     
     [dropDownButton addTarget:self action:@selector(dropDownSearchPressed:) forControlEvents:UIControlEventTouchUpInside];
     
-    dropDownButton.elementId	= formElement.elementId;
+    dropDownButton.elementId    = formElement.elementId;
     
     [view addSubview:dropDownField];
     
@@ -1167,9 +1171,9 @@
     
     dotDropDownPicker.dropDownList = [[NSMutableArray alloc] initWithArray: ((MXButton*)sender).attachedData[1]];
     dotDropDownPicker.dropDownListKey = [[NSMutableArray alloc] initWithArray: ((MXButton*)sender).attachedData[0]];
-    dotDropDownPicker.tag			= ((MXButton *)sender).tag;
-    dotDropDownPicker.delegate		= dotDropDownPicker;
-    dotDropDownPicker.dataSource	= dotDropDownPicker;
+    dotDropDownPicker.tag            = ((MXButton *)sender).tag;
+    dotDropDownPicker.delegate        = dotDropDownPicker;
+    dotDropDownPicker.dataSource    = dotDropDownPicker;
     [dotDropDownPicker setShowsSelectionIndicator:YES];
     dotDropDownPicker.backgroundColor = [UIColor whiteColor];
     
@@ -1237,7 +1241,7 @@
     NSString *elementId;
     
     
-    groupName					= searchFormComponent.dependedCompName;
+    groupName                    = searchFormComponent.dependedCompName;
     masterValueMapping        = searchFormComponent.masterValueMapping;
     elementId                  =searchFormComponent.elementId;
     
@@ -1343,7 +1347,7 @@
 
 -(void) multipleItemsSelected:(NSArray*) headerData   :(NSArray*) selectedRows
 {
-  
+    
     
     
     if([formViewController.dotForm.formId isEqualToString:@"DOT_FORM_31"]) {

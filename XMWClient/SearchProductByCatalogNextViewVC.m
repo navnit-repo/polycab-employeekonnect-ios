@@ -1,82 +1,48 @@
 //
-//  SearchProductBYNameVC.m
+//  SearchProductByCatalogNextViewVC.m
 //  XMWClient
 //
-//  Created by dotvikios on 17/08/18.
-//  Copyright © 2018 dotvik. All rights reserved.
+//  Created by dotvikios on 21/01/19.
+//  Copyright © 2019 dotvik. All rights reserved.
 //
 
-#import "SearchProductBYNameVC.h"
-#import "Styles.h"
+#import "SearchProductByCatalogNextViewVC.h"
+#import "MXTextField.h"
+#import "MXButton.h"
+#define DotSearchConst_SEARCH_TEXT @"SEARCH_TEXT"
+#define DotSearchConst_SEARCH_BY @"SEARCH_BY"
+#import "SearchProductListVC.h"
 #import "DVAppDelegate.h"
 #import "LoadingView.h"
 #import "NetworkHelper.h"
+#import "Styles.h"
 #import "ClientVariable.h"
-#import "SearchProductListVC.h"
-#import "MXTextField.h"
-#define DotSearchConst_SEARCH_TEXT @"SEARCH_TEXT"
-#define DotSearchConst_SEARCH_BY @"SEARCH_BY"
-@interface SearchProductBYNameVC ()
+#import "PolycabSearchViewController.h"
+@interface SearchProductByCatalogNextViewVC ()
 
 @end
 
-@implementation SearchProductBYNameVC
+@implementation SearchProductByCatalogNextViewVC
 {
-    NSString *searchButtonClickTag;
-    NSArray* radioGroupData;
-    RadioGroup *radioGroup;
-    NetworkHelper* networkHelper;
-    LoadingView* loadingView;
-    UITextField*  searchInputField;
+    UITableView *mainTableView;
+    int count;
     SearchProductListVC *searchProductListVC;
+    
     NSMutableDictionary *componentMap;
     BOOL isOpenPicker;
-    NSString *item;
-    int count;
-    NSString *billTo;
+    NetworkHelper* networkHelper;
+    LoadingView* loadingView;
 }
+@synthesize billTo;
+@synthesize itemNameString;
+@synthesize catalogReqstData;
 @synthesize coreTextField,colorTextField,squareTextField,uomDescriptionTextField;
 @synthesize coreButton,colorButton,squareButton,uomDescriptionButton;
-@synthesize itemNameString;
-
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil parentForm:(FormVC *)parent formElement:(NSString *)formElementId elementData:(NSString *)masterValueMapping radioGroupData:(NSMutableArray *)keyValueDoubleArray :(NSString *)buttonSender :(NSString *)itemName :(NSString*)bill_To{
-    
-    
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    
-    if(self!=nil) {
-        self.parentController = parent;
-        self.elementId = formElementId;
-        self.inMasterValueMapping = masterValueMapping;
-        radioGroupData = keyValueDoubleArray;
-        searchButtonClickTag = buttonSender;
-        NSLog(@"Button Tag %@ ",searchButtonClickTag);
-        billTo = bill_To;
-        
-        
-        item= itemName;
-        
-        
-        itemNameString = nil;
-        
-        NSCharacterSet *numbersSet = [NSCharacterSet characterSetWithCharactersInString:@"-0123456789"];
-        itemNameString = [item stringByTrimmingCharactersInSet:numbersSet];
-        NSLog(@"%@",itemNameString);
-    }
-    
-    return self;
-    
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    
-    
-    
-    // Do any additional setup after loading the view from its nib.
     componentMap =[[NSMutableDictionary alloc]init];
+    NSLog(@"Selected Data %@",catalogReqstData);
+    NSLog(@"Selected Item %@",itemNameString);
     UIBarButtonItem* backButton = [[UIBarButtonItem alloc] initWithImage:[UIImage
                                                                           imageNamed:@"back-button.png"] style:UIBarButtonItemStylePlain target:self
                                                                   action:@selector(backHandler:)];
@@ -88,11 +54,18 @@
     self.navigationItem.titleView = polycabLogo;
     [self.navigationItem setLeftBarButtonItem:backButton];
     
+    mainTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) style:UITableViewStylePlain];
     
-    self.mainTableView.delegate = self;
-    self.mainTableView.dataSource = self;
-    self.mainTableView.bounces = NO;
+    mainTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    mainTableView.delegate = self;
+    mainTableView.dataSource = self;
+    mainTableView.bounces = NO;
+
+    [self.view addSubview:mainTableView];
+    
+   
 }
+
 
 - (void) backHandler : (id) sender {
     if(multiSelectDelegate !=nil && [multiSelectDelegate respondsToSelector:@selector(selectionCancelled)]) {
@@ -101,18 +74,13 @@
     [ [self navigationController]  popViewControllerAnimated:YES];
 }
 
--(void) fetchProductCatalogTree
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    // not requried
+    return 1;
 }
--(UITextField*) addSearchTextField
+-(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    searchInputField = [[UITextField alloc]initWithFrame:CGRectMake(20, 3, 280, 35)];
-    searchInputField.placeholder = @"Search product";
-    [searchInputField setBackgroundColor:[UIColor whiteColor]];
-    searchInputField.borderStyle = UITextBorderStyleRoundedRect;
-    [searchInputField setDelegate:self];
-    return searchInputField;
+    return 5;
 }
 -(IBAction)extraDropDown:(id)sender{
     MXButton* button = (MXButton*) sender;
@@ -169,13 +137,15 @@
         
         
         DotFormPost *formPost = [[DotFormPost alloc]init];
-        [formPost.postData setObject:searchInputField.text forKey:DotSearchConst_SEARCH_TEXT];
-        [formPost.postData setObject:@"SBN" forKey:DotSearchConst_SEARCH_BY];
+        [formPost.postData setObject:@""forKey:DotSearchConst_SEARCH_TEXT];
+        [formPost.postData setObject: @"SBN"forKey:DotSearchConst_SEARCH_BY];
         [formPost.postData setObject:billTo forKey:@"SHIP_TO"];
         [formPost.postData setObject:[ClientVariable getInstance].CLIENT_USER_LOGIN.userName forKey:@"USERNAME"];
-        [formPost.postData setObject:self.productDivision forKey:@"BUSINESS_VERTICAL"];
-        
-        
+        [formPost.postData setObject:[catalogReqstData valueForKey:@"CUSTOMER_NUMBER"] forKey:@"BUSINESS_VERTICAL"];
+        [formPost.postData setObject:[catalogReqstData valueForKey:@"PRIMARY_CATEGORY"] forKey:@"PRY_ITEMCATEGORY"];
+        [formPost.postData setObject:[catalogReqstData valueForKey:@"PRIMARY_SUBCATEGORY"] forKey:@"PRY_SUBITEMCATEGORY"];
+        [formPost.postData setObject:[catalogReqstData valueForKey:@"secondaryItemCategory"] forKey:@"SECOND_ITEMCATEGORY"];
+        [formPost.postData setObject:[catalogReqstData valueForKey:@"secondaryItemSubCategory"] forKey:@"SECOND_SUBITEMCATEGORY"];
         [formPost.postData setObject:self.coreTextField.text forKey:@"CORE"];
         [formPost setModuleId: [DVAppDelegate currentModuleContext]];
         [formPost setDocId: @"SQAUREMM_BY_WNC_CORE"];
@@ -205,13 +175,15 @@
         
         
         DotFormPost *formPost = [[DotFormPost alloc]init];
-        [formPost.postData setObject:searchInputField.text forKey:DotSearchConst_SEARCH_TEXT];
+        [formPost.postData setObject:@"" forKey:DotSearchConst_SEARCH_TEXT];
         [formPost.postData setObject:@"SBN" forKey:DotSearchConst_SEARCH_BY];
         [formPost.postData setObject:billTo forKey:@"SHIP_TO"];
         [formPost.postData setObject:[ClientVariable getInstance].CLIENT_USER_LOGIN.userName forKey:@"USERNAME"];
-        [formPost.postData setObject:self.productDivision forKey:@"BUSINESS_VERTICAL"];
-        
-        
+        [formPost.postData setObject:[catalogReqstData valueForKey:@"CUSTOMER_NUMBER"] forKey:@"BUSINESS_VERTICAL"];
+        [formPost.postData setObject:[catalogReqstData valueForKey:@"PRIMARY_CATEGORY"] forKey:@"PRY_ITEMCATEGORY"];
+        [formPost.postData setObject:[catalogReqstData valueForKey:@"PRIMARY_SUBCATEGORY"] forKey:@"PRY_SUBITEMCATEGORY"];
+        [formPost.postData setObject:[catalogReqstData valueForKey:@"secondaryItemCategory"] forKey:@"SECOND_ITEMCATEGORY"];
+        [formPost.postData setObject:[catalogReqstData valueForKey:@"secondaryItemSubCategory"] forKey:@"SECOND_SUBITEMCATEGORY"];
         [formPost.postData setObject:self.coreTextField.text forKey:@"CORE"];
         //        [formPost.postData setObject:self.colorTextField.text forKey:@"COLOR"];
         [formPost.postData setObject:self.squareTextField.text forKey:@"SQAUREMM"];
@@ -240,13 +212,15 @@
         self.uomDescriptionTextField.text = @"";
         
         DotFormPost *formPost = [[DotFormPost alloc]init];
-        [formPost.postData setObject:searchInputField.text forKey:DotSearchConst_SEARCH_TEXT];
+        [formPost.postData setObject:@"" forKey:DotSearchConst_SEARCH_TEXT];
         [formPost.postData setObject:@"SBN" forKey:DotSearchConst_SEARCH_BY];
         [formPost.postData setObject:billTo forKey:@"SHIP_TO"];
         [formPost.postData setObject:[ClientVariable getInstance].CLIENT_USER_LOGIN.userName forKey:@"USERNAME"];
-        [formPost.postData setObject:self.productDivision forKey:@"BUSINESS_VERTICAL"];
-        
-        
+        [formPost.postData setObject:[catalogReqstData valueForKey:@"CUSTOMER_NUMBER"] forKey:@"BUSINESS_VERTICAL"];
+        [formPost.postData setObject:[catalogReqstData valueForKey:@"PRIMARY_CATEGORY"] forKey:@"PRY_ITEMCATEGORY"];
+        [formPost.postData setObject:[catalogReqstData valueForKey:@"PRIMARY_SUBCATEGORY"] forKey:@"PRY_SUBITEMCATEGORY"];
+        [formPost.postData setObject:[catalogReqstData valueForKey:@"secondaryItemCategory"] forKey:@"SECOND_ITEMCATEGORY"];
+        [formPost.postData setObject:[catalogReqstData valueForKey:@"secondaryItemSubCategory"] forKey:@"SECOND_SUBITEMCATEGORY"];     
         [formPost.postData setObject:self.coreTextField.text forKey:@"CORE"];
         [formPost.postData setObject:self.squareTextField.text forKey:@"SQAUREMM"];
         [formPost.postData setObject:self.colorTextField.text forKey:@"COLOR"];
@@ -260,11 +234,7 @@
         [networkHelper makeXmwNetworkCall:formPost :self : nil :  @"FOR_SEARCH_IGNORE_SESSION"];
         
     }
-    
-    
-    
-    
-    
+
 }
 -(UIView*) coreDropDown
 {
@@ -326,19 +296,28 @@
     coreButton.attachedData = attachDataArray;
     
     //network call for core
+//    "PRY_ITEMCATEGORY": "WRE",
+//    "PRY_SUBITEMCATEGORY": "COMPUTER CABLE",
+//    "SECOND_ITEMCATEGORY": "COPPER",
+//    "SECOND_SUBITEMCATEGORY": "FRLS"
     
     DotFormPost *formPost = [[DotFormPost alloc]init];
-    [formPost.postData setObject:searchInputField.text forKey:DotSearchConst_SEARCH_TEXT];
+    [formPost.postData setObject:@"" forKey:DotSearchConst_SEARCH_TEXT];
     [formPost.postData setObject:@"SBN" forKey:DotSearchConst_SEARCH_BY];
     [formPost.postData setObject:billTo forKey:@"SHIP_TO"];
     [formPost.postData setObject:[ClientVariable getInstance].CLIENT_USER_LOGIN.userName forKey:@"USERNAME"];
-    [formPost.postData setObject:self.productDivision forKey:@"BUSINESS_VERTICAL"];
+    [formPost.postData setObject:[catalogReqstData valueForKey:@"CUSTOMER_NUMBER"] forKey:@"BUSINESS_VERTICAL"];
+    [formPost.postData setObject:[catalogReqstData valueForKey:@"PRIMARY_CATEGORY"] forKey:@"PRY_ITEMCATEGORY"];
+      [formPost.postData setObject:[catalogReqstData valueForKey:@"PRIMARY_SUBCATEGORY"] forKey:@"PRY_SUBITEMCATEGORY"];
+      [formPost.postData setObject:[catalogReqstData valueForKey:@"secondaryItemCategory"] forKey:@"SECOND_ITEMCATEGORY"];
+      [formPost.postData setObject:[catalogReqstData valueForKey:@"secondaryItemSubCategory"] forKey:@"SECOND_SUBITEMCATEGORY"];
     [formPost setModuleId: [DVAppDelegate currentModuleContext]];
     [formPost setDocId: @"CORES_BY_CAT_TREE"];
     [formPost setReportCacheRefresh:@"false"];
     
+
     loadingView = [LoadingView loadingViewInView:self.view];
-    
+
     networkHelper = [[NetworkHelper alloc] init];
     [networkHelper makeXmwNetworkCall:formPost :self : nil :  @"FOR_SEARCH_IGNORE_SESSION"];
     
@@ -559,34 +538,60 @@
     
     return uomDescriptionDropDown;
 }
+-(UIButton*) addSearchButton
+{
+    UIImage *blueImage          = [UIImage imageNamed:@"blueButton.png"];
+    UIImage *blueButtonImage    = [blueImage stretchableImageWithLeftCapWidth:8 topCapHeight:0];
+    
+    
+    UIButton *searchButton       = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    
+    [searchButton setFrame:CGRectMake(16, 0,self.view.frame.size.width-32, 36)];
+    
+    [searchButton setBackgroundImage:blueButtonImage forState:UIControlStateNormal];
+    
+    [searchButton setTitleColor:[Styles buttonTextColor] forState: UIControlStateNormal];
+    
+    [searchButton setTitle:@"Search" forState:UIControlStateNormal];
+    
+    [searchButton addTarget:self action:@selector(buttonEvent:) forControlEvents:UIControlEventTouchUpInside];
+    
+    return searchButton;
+}
 -(void) httpResponseObjectHandler:(NSString *)callName :(id)respondedObject :(id)requestedObject
 {
-    [loadingView removeFromSuperview];
+      [loadingView removeFromSuperview];
+    
     if([callName isEqualToString:@"GET_CATEGORY_FROM_CATALOG"]) {
-        
+      
         [self handleCatalogResults:respondedObject];
         
     }
     else if([callName isEqualToString:@"GET_PRODUCTS"]) {
-        
+       
         
         [self handleCategoryProducts:respondedObject];
         
-    } else if([callName isEqualToString:XmwcsConst_CALL_NAME_FOR_SEARCH]) {
-        
+    }
+    else if([callName isEqualToString:XmwcsConst_CALL_NAME_FOR_SEARCH]) {
+       
         [self handleSearchResult:respondedObject];
     }
     else if ([callName isEqualToString:@"FOR_SEARCH_IGNORE_SESSION"])
     {
+
         [self core_color_square_umo:respondedObject docID:[requestedObject docId]];
-        // [self core_color_square_umo:respondedObject];
+        
         
     }
     
 }
 - (void)core_color_square_umo:(id)jsonresponse docID:(NSString*)ID
 {
+    
+  
     if ([ID isEqualToString:@"CORES_BY_CAT_TREE"]) {
+     
         SearchResponse* searchResponse  = (SearchResponse*)jsonresponse;
         NSMutableArray *data  = [[NSMutableArray alloc]init];
         [data addObjectsFromArray:[searchResponse searchRecord]];
@@ -609,6 +614,7 @@
     
     
     if ([ID isEqualToString:@"COLORS_BY_WNC_CORE_SQAUREMM"]) {
+     
         SearchResponse* searchResponse  = (SearchResponse*)jsonresponse;
         NSMutableArray *data  = [[NSMutableArray alloc]init];
         [data addObjectsFromArray:[searchResponse searchRecord]];
@@ -627,6 +633,7 @@
         colorButton.attachedData = attachDataArray;
     }
     if ([ID isEqualToString:@"SQAUREMM_BY_WNC_CORE"]) {
+       
         SearchResponse* searchResponse  = (SearchResponse*)jsonresponse;
         NSMutableArray *data  = [[NSMutableArray alloc]init];
         [data addObjectsFromArray:[searchResponse searchRecord]];
@@ -646,6 +653,7 @@
     }
     
     if ([ID isEqualToString:@"UOMDESC_BY_WNC_CORE_SQAUREMM_COLOR"]) {
+      
         SearchResponse* searchResponse  = (SearchResponse*)jsonresponse;
         NSMutableArray *data  = [[NSMutableArray alloc]init];
         [data addObjectsFromArray:[searchResponse searchRecord]];
@@ -663,33 +671,41 @@
         [attachDataArray addObject:value];
         uomDescriptionButton.attachedData = attachDataArray;
     }
-}
--(RadioGroup*) addRadioGroup
-{
-    radioGroup = [[RadioGroup alloc]initWithFrame: CGRectMake(20, 0 , 300, [radioGroupData[1] count]*40) : radioGroupData[1] :self.defaultSelectionRadio :radioGroupData[0]];
     
-    return radioGroup;
-}
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 1;
-}
-
--(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    
-    if ([itemNameString isEqualToString:@"Cables"] || [itemNameString isEqualToString:@"Wires"] ||[itemNameString isEqualToString:@"PP & Flexibles"] )
-    {
-        count= 7;
-    }
-    
-    else{
+      if ([ID isEqualToString:@"MATERIAL_LOB_TREE_JDBC"]) {
+     
         
-        count= 3;
-    }
+          [self handleSearchResult:jsonresponse];
+                
+      }
+}
+-(void) handleSearchResult:(id) xmwResponse
+{
     
-    return count;
+    SearchResponse *searchResponse = (SearchResponse*)xmwResponse;
     
+    PolycabSearchViewController* searchVC = [[PolycabSearchViewController alloc] initWithNibName:@"SearchViewController" bundle:nil];
+    NSMutableArray *viewControllers = [NSMutableArray arrayWithArray:self.navigationController.viewControllers];
+    [viewControllers replaceObjectAtIndex:([viewControllers count]-1) withObject:searchVC];
+  
+   
+    searchVC.screenId = XmwcsConst_SCREEN_ID_SEARCH_RESULT;
+    searchVC.searchResponse = searchResponse;
+    
+    searchVC.elementId = elementId;
+    searchVC.masterValueMapping = inMasterValueMapping;
+    searchVC.parentController = [viewControllers objectAtIndex:2];
+    searchVC.multiSelect = YES;
+    searchVC.multiSelectDelegate = [viewControllers objectAtIndex:2];
+    searchVC.headerTitle = @"Product Search Results";
+    searchVC.primaryCat = primarayCat;
+    searchVC.subCat = subCat;
+    [self.navigationController setViewControllers:viewControllers animated:YES ];
+    
+
+    
+    
+   
 }
 
 -(UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -701,36 +717,7 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     
-    
-    if (count ==7 ) {
-        // this section is for search control
-        if(indexPath.row==0) {
-            // add search text field here
-            cell = [tableView dequeueReusableCellWithIdentifier:@"textField"];
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            if(cell==nil) {
-                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:@"textField"];
-                cell.selectionStyle = UITableViewCellSelectionStyleNone;
-                [cell.contentView addSubview:[self addSearchTextField]];
-                
-            }
-        }
-        
-        else if(indexPath.row==1) {
-            // add radio group here
-            
-            cell = [tableView dequeueReusableCellWithIdentifier:@"radioGroup"];
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            if(cell==nil) {
-                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:@"radioGroup"];
-                cell.selectionStyle = UITableViewCellSelectionStyleNone;
-                [cell.contentView addSubview:[self addRadioGroup]];
-            }
-        }
-        
-        
-        
-        else if(indexPath.row==2) {
+       if(indexPath.row==0) {
             
             
             // add search button here
@@ -743,7 +730,7 @@
                 cell.tag = 500;
             }
         }
-        else if(indexPath.row==3) {
+        else if(indexPath.row==1) {
             // add search button here
             
             cell = [tableView dequeueReusableCellWithIdentifier:@"squareMMDropDown"];
@@ -755,7 +742,7 @@
                 cell.tag = 501;
             }
         }
-        else if(indexPath.row==4) {
+        else if(indexPath.row==2) {
             // add search button here
             
             
@@ -770,7 +757,7 @@
             
             
         }
-        else if(indexPath.row==5) {
+        else if(indexPath.row==3) {
             // add search button here
             cell = [tableView dequeueReusableCellWithIdentifier:@"uomDescriptionDropDown"];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -783,7 +770,7 @@
         }
         
         
-        else if(indexPath.row==6) {
+        else if(indexPath.row==4) {
             // add search button here
             cell = [tableView dequeueReusableCellWithIdentifier:@"searchButton"];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -793,85 +780,46 @@
                 [cell.contentView addSubview:[self addSearchButton]];
             }
         }
-    }
-    
-    
-    
-    
-    if(count ==3) {
-        
-        if(indexPath.row==0) {
-            // add search text field here
-            cell = [tableView dequeueReusableCellWithIdentifier:@"textField"];
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            if(cell==nil) {
-                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:@"textField"];
-                cell.selectionStyle = UITableViewCellSelectionStyleNone;
-                [cell.contentView addSubview:[self addSearchTextField]];
-                
-            }
-        }
-        
-        else if(indexPath.row==1) {
-            // add radio group here
-            
-            cell = [tableView dequeueReusableCellWithIdentifier:@"radioGroup"];
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            if(cell==nil) {
-                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:@"radioGroup"];
-                cell.selectionStyle = UITableViewCellSelectionStyleNone;
-                [cell.contentView addSubview:[self addRadioGroup]];
-            }
-        }
-        
-        else if(indexPath.row==2) {
-            // add search button here
-            cell = [tableView dequeueReusableCellWithIdentifier:@"searchButton"];
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            if(cell==nil) {
-                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:@"searchButton"];
-                cell.selectionStyle = UITableViewCellSelectionStyleNone;
-                [cell.contentView addSubview:[self addSearchButton]];
-            }
-        }
-    }
-    
-    
+
     
     return cell;
 }
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 10;
+}
+
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    if(indexPath.row==0) {
-        return 44.0f;
-    } else if(indexPath.row==1) {
-        return [radioGroupData[1] count]*44;
-    } else if(indexPath.row==2) {
+     if(indexPath.row==0) {
         return 44.0f;
     }
-    
+    else if(indexPath.row==1) {
+        return 44.0f;
+    }
+    else if(indexPath.row==2) {
+        return 44.0f;
+    }
     else if(indexPath.row==3) {
         return 44.0f;
     }
     else if(indexPath.row==4) {
         return 44.0f;
     }
-    else if(indexPath.row==5) {
-        return 44.0f;
-    }
-    else if(indexPath.row==6) {
-        return 44.0f;
-    }
     
-    
-    return 0.0f;
+    else
+       return 0.0f;
 }
 - (void) buttonEvent : (id) sender
 {
+    
+    MXButton *button = (MXButton*) sender;
+    button.userInteractionEnabled = NO;// this code for resolve button crashes due to next screen load delay handlling
+    
     DotFormPost *formPost = [[DotFormPost alloc]init];
-    [formPost.postData setObject:searchInputField.text forKey:DotSearchConst_SEARCH_TEXT];
-    [formPost.postData setObject:radioGroup.selectedKey forKey:DotSearchConst_SEARCH_BY];
+    [formPost.postData setObject:@"" forKey:DotSearchConst_SEARCH_TEXT];
+    [formPost.postData setObject:@"SBN" forKey:DotSearchConst_SEARCH_BY];
     
     if (self.coreTextField.text.length !=0) {
         
@@ -908,14 +856,20 @@
     
     
     [formPost.postData setObject:[ClientVariable getInstance].CLIENT_USER_LOGIN.userName forKey:@"USERNAME"];
-    [formPost.postData setObject:billTo forKey:@"SHIP_TO"];
-    [formPost.postData setObject:self.productDivision forKey:@"BUSINESS_VERTICAL"];
     [formPost setModuleId: [DVAppDelegate currentModuleContext]];
-    [formPost setDocId: @"MATERIAL_LOB_JDBC"];
+    [formPost setDocId: @"MATERIAL_LOB_TREE_JDBC"];
+     [formPost.postData setObject:[catalogReqstData valueForKey:@"CUSTOMER_NUMBER"] forKey:@"BUSINESS_VERTICAL"];
+     [formPost.postData setObject:billTo forKey:@"SHIP_TO"];
+    [formPost.postData setObject:[catalogReqstData valueForKey:@"PRIMARY_CATEGORY"] forKey:@"PRY_ITEMCATEGORY"];
+    [formPost.postData setObject:[catalogReqstData valueForKey:@"PRIMARY_SUBCATEGORY"] forKey:@"PRY_SUBITEMCATEGORY"];
+    [formPost.postData setObject:[catalogReqstData valueForKey:@"secondaryItemCategory"] forKey:@"SECOND_ITEMCATEGORY"];
+    [formPost.postData setObject:[catalogReqstData valueForKey:@"secondaryItemSubCategory"] forKey:@"SECOND_SUBITEMCATEGORY"];
+    
+ 
     loadingView = [LoadingView loadingViewInView:self.view];
     
     networkHelper = [[NetworkHelper alloc] init];
-    [networkHelper makeXmwNetworkCall:formPost :self : nil :  XmwcsConst_CALL_NAME_FOR_SEARCH];
+    [networkHelper makeXmwNetworkCall:formPost :self : nil :  @"FOR_SEARCH_IGNORE_SESSION"];
     
 }
 
@@ -924,13 +878,6 @@
 {
     
     return nil;
-}
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
-{
-    [searchInputField resignFirstResponder];
-    
-    return YES;
 }
 
 

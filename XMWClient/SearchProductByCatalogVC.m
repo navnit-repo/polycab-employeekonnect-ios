@@ -7,6 +7,10 @@
 //
 
 #import "SearchProductByCatalogVC.h"
+#import "SearchProductByCatalogNextViewVC.h"
+#import "ClientVariable.h"
+#import "LoadingView.h"
+#import "NetworkHelper.h"
 @interface SearchProductByCatalogVC ()
 
 @end
@@ -15,10 +19,14 @@
 {
     NSString *searchButtonClickTag;
     NSArray* radioGroupData;
+    NSString *item;
+    NetworkHelper* networkHelper;
+    LoadingView* loadingView;
+    NSString *billTO;
     
 }
 @synthesize itmeName;
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil parentForm:(FormVC *)parent formElement:(NSString *)formElementId elementData:(NSString *)masterValueMapping radioGroupData:(NSMutableArray *)keyValueDoubleArray :(NSString *)buttonSender{
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil parentForm:(FormVC *)parent formElement:(NSString *)formElementId elementData:(NSString *)masterValueMapping radioGroupData:(NSMutableArray *)keyValueDoubleArray :(NSString *)buttonSender :(NSString*)itemName :(NSString*)bill_To{
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     
     if(self!=nil) {
@@ -28,6 +36,15 @@
         radioGroupData = keyValueDoubleArray;
         searchButtonClickTag = buttonSender;
         NSLog(@"Button Tag %@ ",searchButtonClickTag);
+        billTO = bill_To;
+        item= itemName;
+        
+        
+        itemNameString = nil;
+        
+        NSCharacterSet *numbersSet = [NSCharacterSet characterSetWithCharactersInString:@"-0123456789"];
+        itemNameString = [item stringByTrimmingCharactersInSet:numbersSet];
+        NSLog(@"%@",itemNameString);
     }
     
     return self;
@@ -36,6 +53,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    
     // Do any additional setup after loading the view from its nib.
     
     
@@ -56,7 +75,33 @@
     self.mainTableView.bounces = NO;
     
     
-
+    
+}
+-(void) fetchProductCatalogTree
+{
+    
+    loadingView = [LoadingView loadingViewInView:self.view];
+    
+    NSMutableDictionary* catalogQuery = [[NSMutableDictionary alloc] init];
+    
+    if(self.productDivision!=nil) {
+        
+        [catalogQuery setObject:self.productDivision forKey:@"BUSINESS_VERTICAL"];
+        [catalogQuery setObject:self.productDivision forKey:@"CUSTOMER_NUMBER"];
+        [catalogQuery setObject:[ClientVariable getInstance].CLIENT_USER_LOGIN.userName forKey:@"USERNAME"];
+        
+        [catalogQuery setObject:billTO forKey:@"SHIP_TO"];
+        
+        // sample division fan, 45
+    } else {
+        [catalogQuery setObject:@"" forKey:@"CATALOGID"];
+    }
+    
+    
+    networkHelper = [[NetworkHelper alloc] init];
+    networkHelper.serviceURLString = XmwcsConst_PRODUCT_TREE_SERVICE_URL;
+    [networkHelper makeXmwNetworkCall:catalogQuery :self :nil :@"GET_CATEGORY_FROM_CATALOG"];
+    
 }
 - (void) backHandler : (id) sender {
     if(multiSelectDelegate !=nil && [multiSelectDelegate respondsToSelector:@selector(selectionCancelled)]) {
@@ -92,7 +137,7 @@
         browserSectionLabel.textAlignment = UITextAlignmentCenter;
         browserSectionLabel.backgroundColor = [UIColor whiteColor];
         
-         NSLog(@"%@",itmeName);
+        NSLog(@"%@",itmeName);
         
         UILabel* itemValue = [[UILabel alloc] initWithFrame:CGRectMake(0, 23, self.view.frame.size.width , 21)];
         itemValue.text = [[@"FOR"stringByAppendingString:@" "]stringByAppendingString:itmeName];
@@ -117,15 +162,15 @@
 -(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if(section==0) {
-    // search section
-    return 0;
-    
-}
+        // search section
+        return 0;
+        
+    }
     else if(section==1) {
-    // catalog tree section
-    return [self.myCatTableDataArray count];
-    
-}
+        // catalog tree section
+        return [self.myCatTableDataArray count];
+        
+    }
     return 0;
     
 }
@@ -144,14 +189,62 @@
 {
     if(indexPath.section==0) {
         return 0.0f;
-        }
-        
-     else if(indexPath.section==1) {
+    }
+    
+    else if(indexPath.section==1) {
         return 40.0f;
     }
     return 0.0f;
 }
 
-
+-(void) fetchProductsForCatalog:(PolycabProductCatObject *)category
+{
+    
+    NSMutableDictionary* catalogQuery = [[NSMutableDictionary alloc] init];
+    [catalogQuery setObject:[ClientVariable getInstance].CLIENT_USER_LOGIN.userName forKey:@"USERNAME"];
+    [catalogQuery setObject:category.lobCode  forKey:@"BUSINESS_VERTICAL"];
+    [catalogQuery setObject:self.productDivision forKey:@"CUSTOMER_NUMBER"];
+    [catalogQuery setObject:category.primaryCategory forKey:@"PRIMARY_CATEGORY"];
+    [catalogQuery setObject:category.primarySubCategory forKey:@"PRIMARY_SUBCATEGORY"];
+    [catalogQuery setObject:category.secondaryItemCategory forKey:@"secondaryItemCategory"];
+    [catalogQuery setObject:category.secondaryItemSubCategory forKey:@"secondaryItemSubCategory"];
+    
+    if ([itemNameString isEqualToString:@"Cables"] || [itemNameString isEqualToString:@"Wires"] ||[itemNameString isEqualToString:@"PP & Flexibles"] )
+    {
+        SearchProductByCatalogNextViewVC *vc = [[SearchProductByCatalogNextViewVC alloc]init];
+        //  [vc.catalogReqstData setDictionary:catalogQuery];
+        vc.catalogReqstData = catalogQuery;
+        vc.itemNameString = itemNameString;
+        vc.billTo = billTO;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+    else{
+        loadingView = [LoadingView loadingViewInView:self.view];
+        networkHelper = [[NetworkHelper alloc] init];
+        networkHelper.serviceURLString = XmwcsConst_PRODUCT_TREE_SERVICE_URL;
+        [catalogQuery setObject:billTO forKey:@"SHIP_TO"];
+        [networkHelper makeXmwNetworkCall:catalogQuery :self :nil :@"GET_PRODUCTS"];
+    }
+    
+}
+-(void) httpResponseObjectHandler:(NSString *)callName :(id)respondedObject :(id)requestedObject
+{
+    [loadingView removeFromSuperview];
+    if([callName isEqualToString:@"GET_CATEGORY_FROM_CATALOG"]) {
+        
+        [self handleCatalogResults:respondedObject];
+        
+    }
+    else if([callName isEqualToString:@"GET_PRODUCTS"]) {
+        
+        
+        [self handleCategoryProducts:respondedObject];
+        
+    } else if([callName isEqualToString:XmwcsConst_CALL_NAME_FOR_SEARCH]) {
+        
+        [self handleSearchResult:respondedObject];
+    }
+    
+}
 
 @end

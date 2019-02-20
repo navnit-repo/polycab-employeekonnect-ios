@@ -658,7 +658,6 @@
 		F03D424520F75EC4008E0B08 /* OTPVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = F03D424220F75EC4008E0B08 /* OTPVC.xib */; };
 		F03F2F45212BE0AE0023A2D3 /* CreateOrderDisplayCell.h in Headers */ = {isa = PBXBuildFile; fileRef = F03F2F43212BE0AE0023A2D3 /* CreateOrderDisplayCell.h */; };
 		F03F2F46212BE0AE0023A2D3 /* CreateOrderDisplayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F03F2F44212BE0AE0023A2D3 /* CreateOrderDisplayCell.m */; };
-		F03F2F48212BE0BC0023A2D3 /* CreateOrderDisplayCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F03F2F47212BE0BC0023A2D3 /* CreateOrderDisplayCell.xib */; };
 		F04B2F3320FF22CB00E6120A /* SWRevealViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = F04B2F3120FF22CB00E6120A /* SWRevealViewController.h */; };
 		F04B2F3420FF22CB00E6120A /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F04B2F3220FF22CB00E6120A /* SWRevealViewController.m */; };
 		F04B2F3A20FF2AAE00E6120A /* SWReavelViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F04B2F3920FF2AAE00E6120A /* SWReavelViewController.xib */; };
@@ -673,6 +672,18 @@
 		F04D565121006F3900FF6CA8 /* RightVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = F04D564E21006F3900FF6CA8 /* RightVC.xib */; };
 		F055728521AE86EF00D1160C /* DependentDropDownClass.h in Headers */ = {isa = PBXBuildFile; fileRef = F055728321AE86EF00D1160C /* DependentDropDownClass.h */; };
 		F055728621AE86EF00D1160C /* DependentDropDownClass.m in Sources */ = {isa = PBXBuildFile; fileRef = F055728421AE86EF00D1160C /* DependentDropDownClass.m */; };
+		F05801FB221D2DB600682D07 /* CreateOrderDisplayCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F05801FA221D2DB500682D07 /* CreateOrderDisplayCell.xib */; };
+		F0580202221D2DE000682D07 /* CreateOrderStatusVC.h in Headers */ = {isa = PBXBuildFile; fileRef = F05801FC221D2DDE00682D07 /* CreateOrderStatusVC.h */; };
+		F0580203221D2DE000682D07 /* CreateOrderStatusVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F05801FD221D2DDF00682D07 /* CreateOrderStatusVC.m */; };
+		F0580204221D2DE000682D07 /* CreateOrderStatusCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F05801FE221D2DDF00682D07 /* CreateOrderStatusCell.xib */; };
+		F0580205221D2DE000682D07 /* CreateOrderStatusCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F05801FF221D2DDF00682D07 /* CreateOrderStatusCell.m */; };
+		F0580206221D2DE000682D07 /* CreateOrderStatusVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = F0580200221D2DDF00682D07 /* CreateOrderStatusVC.xib */; };
+		F0580207221D2DE000682D07 /* CreateOrderStatusCell.h in Headers */ = {isa = PBXBuildFile; fileRef = F0580201221D2DDF00682D07 /* CreateOrderStatusCell.h */; };
+		F058020D221D2E3200682D07 /* PolycabSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0580208221D2E3000682D07 /* PolycabSearchViewController.m */; };
+		F058020E221D2E3200682D07 /* PolycabSearchViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = F0580209221D2E3000682D07 /* PolycabSearchViewController.h */; };
+		F058020F221D2E3200682D07 /* SearchProductByCatalogNextViewVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = F058020A221D2E3100682D07 /* SearchProductByCatalogNextViewVC.xib */; };
+		F0580210221D2E3200682D07 /* SearchProductByCatalogNextViewVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F058020B221D2E3100682D07 /* SearchProductByCatalogNextViewVC.m */; };
+		F0580211221D2E3200682D07 /* SearchProductByCatalogNextViewVC.h in Headers */ = {isa = PBXBuildFile; fileRef = F058020C221D2E3100682D07 /* SearchProductByCatalogNextViewVC.h */; };
 		F059CC8E214F70D000E303F6 /* cart.png in Resources */ = {isa = PBXBuildFile; fileRef = F059CC69214F70CF00E303F6 /* cart.png */; };
 		F059CC8F214F70D000E303F6 /* crossicon.png in Resources */ = {isa = PBXBuildFile; fileRef = F059CC6A214F70CF00E303F6 /* crossicon.png */; };
 		F059CC90214F70D000E303F6 /* calendar.png in Resources */ = {isa = PBXBuildFile; fileRef = F059CC6C214F70CF00E303F6 /* calendar.png */; };
@@ -1703,7 +1714,6 @@
 		F03D424220F75EC4008E0B08 /* OTPVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OTPVC.xib; sourceTree = "<group>"; };
 		F03F2F43212BE0AE0023A2D3 /* CreateOrderDisplayCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CreateOrderDisplayCell.h; sourceTree = "<group>"; };
 		F03F2F44212BE0AE0023A2D3 /* CreateOrderDisplayCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CreateOrderDisplayCell.m; sourceTree = "<group>"; };
-		F03F2F47212BE0BC0023A2D3 /* CreateOrderDisplayCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreateOrderDisplayCell.xib; sourceTree = "<group>"; };
 		F04B2F3120FF22CB00E6120A /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
 		F04B2F3220FF22CB00E6120A /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
 		F04B2F3920FF2AAE00E6120A /* SWReavelViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SWReavelViewController.xib; sourceTree = "<group>"; };
@@ -1718,6 +1728,18 @@
 		F04D564E21006F3900FF6CA8 /* RightVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RightVC.xib; sourceTree = "<group>"; };
 		F055728321AE86EF00D1160C /* DependentDropDownClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DependentDropDownClass.h; sourceTree = "<group>"; };
 		F055728421AE86EF00D1160C /* DependentDropDownClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DependentDropDownClass.m; sourceTree = "<group>"; };
+		F05801FA221D2DB500682D07 /* CreateOrderDisplayCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateOrderDisplayCell.xib; sourceTree = "<group>"; };
+		F05801FC221D2DDE00682D07 /* CreateOrderStatusVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateOrderStatusVC.h; sourceTree = "<group>"; };
+		F05801FD221D2DDF00682D07 /* CreateOrderStatusVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateOrderStatusVC.m; sourceTree = "<group>"; };
+		F05801FE221D2DDF00682D07 /* CreateOrderStatusCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateOrderStatusCell.xib; sourceTree = "<group>"; };
+		F05801FF221D2DDF00682D07 /* CreateOrderStatusCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateOrderStatusCell.m; sourceTree = "<group>"; };
+		F0580200221D2DDF00682D07 /* CreateOrderStatusVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateOrderStatusVC.xib; sourceTree = "<group>"; };
+		F0580201221D2DDF00682D07 /* CreateOrderStatusCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateOrderStatusCell.h; sourceTree = "<group>"; };
+		F0580208221D2E3000682D07 /* PolycabSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PolycabSearchViewController.m; sourceTree = "<group>"; };
+		F0580209221D2E3000682D07 /* PolycabSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PolycabSearchViewController.h; sourceTree = "<group>"; };
+		F058020A221D2E3100682D07 /* SearchProductByCatalogNextViewVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchProductByCatalogNextViewVC.xib; sourceTree = "<group>"; };
+		F058020B221D2E3100682D07 /* SearchProductByCatalogNextViewVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchProductByCatalogNextViewVC.m; sourceTree = "<group>"; };
+		F058020C221D2E3100682D07 /* SearchProductByCatalogNextViewVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchProductByCatalogNextViewVC.h; sourceTree = "<group>"; };
 		F059CC69214F70CF00E303F6 /* cart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cart.png; sourceTree = "<group>"; };
 		F059CC6A214F70CF00E303F6 /* crossicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = crossicon.png; sourceTree = "<group>"; };
 		F059CC6C214F70CF00E303F6 /* calendar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = calendar.png; sourceTree = "<group>"; };
@@ -3502,6 +3524,11 @@
 				F031563221269F92005DE7F2 /* SearchProductByCatalogVC.h */,
 				F031563321269F92005DE7F2 /* SearchProductByCatalogVC.m */,
 				F031563421269F92005DE7F2 /* SearchProductByCatalogVC.xib */,
+				F0580209221D2E3000682D07 /* PolycabSearchViewController.h */,
+				F0580208221D2E3000682D07 /* PolycabSearchViewController.m */,
+				F058020C221D2E3100682D07 /* SearchProductByCatalogNextViewVC.h */,
+				F058020B221D2E3100682D07 /* SearchProductByCatalogNextViewVC.m */,
+				F058020A221D2E3100682D07 /* SearchProductByCatalogNextViewVC.xib */,
 			);
 			name = "Search By Catalog";
 			sourceTree = "<group>";
@@ -3984,7 +4011,13 @@
 				F0A8EA7F211D6C8F001C4FAD /* CreateOrderVC2.xib */,
 				F03F2F43212BE0AE0023A2D3 /* CreateOrderDisplayCell.h */,
 				F03F2F44212BE0AE0023A2D3 /* CreateOrderDisplayCell.m */,
-				F03F2F47212BE0BC0023A2D3 /* CreateOrderDisplayCell.xib */,
+				F05801FA221D2DB500682D07 /* CreateOrderDisplayCell.xib */,
+				F0580201221D2DDF00682D07 /* CreateOrderStatusCell.h */,
+				F05801FF221D2DDF00682D07 /* CreateOrderStatusCell.m */,
+				F05801FE221D2DDF00682D07 /* CreateOrderStatusCell.xib */,
+				F05801FC221D2DDE00682D07 /* CreateOrderStatusVC.h */,
+				F05801FD221D2DDF00682D07 /* CreateOrderStatusVC.m */,
+				F0580200221D2DDF00682D07 /* CreateOrderStatusVC.xib */,
 			);
 			name = "Create Order";
 			sourceTree = "<group>";
@@ -4095,6 +4128,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				850FCE161D12E0A200896090 /* OrderListVC.h in Headers */,
+				F058020E221D2E3200682D07 /* PolycabSearchViewController.h in Headers */,
 				859EED9B1E9CE330006D3D9C /* MTBBarcodeScanner.h in Headers */,
 				38A6BFEB1EFD1D3F00537D62 /* ImageUploadFormViewController.h in Headers */,
 				85CA0B6A1E8012C900B8ED30 /* FormBaseSection.h in Headers */,
@@ -4191,6 +4225,7 @@
 				F0A358F020FC9ECF00CE34AC /* LogInVC.h in Headers */,
 				F0A3590020FCC6FD00CE34AC /* TermsVC.h in Headers */,
 				90EF3CA117AF7F9400F2663E /* DotReportListCellRenderer.h in Headers */,
+				F0580207221D2DE000682D07 /* CreateOrderStatusCell.h in Headers */,
 				F01D9C0B21A3F7C200D41B2A /* PaymentOutstandingReportView.h in Headers */,
 				F0B2FB41218850F5006A7C6B /* CustomeReportVC.h in Headers */,
 				F0B2FB3B218850F5006A7C6B /* RMACardCell.h in Headers */,
@@ -4281,6 +4316,7 @@
 				F05D9A4720F33283007BB9A8 /* MyClaimResponse.h in Headers */,
 				F0B2FB43218850F5006A7C6B /* CustomeReportHeader.h in Headers */,
 				854DC1AD1E6D9FEC002225EC /* ExpandableRowTabularDataSection.h in Headers */,
+				F0580202221D2DE000682D07 /* CreateOrderStatusVC.h in Headers */,
 				85AC9663198FFDDF00AC0338 /* ReportSectionsController.h in Headers */,
 				F0B2FB29218850F5006A7C6B /* BusinessVerticalVC.h in Headers */,
 				F0C76ED820DD0BF700390528 /* CustomerClaimInvoiceFetchDetailsVC.h in Headers */,
@@ -4307,6 +4343,7 @@
 				858082A31A5D88EB00207EAB /* DotHBarChart.h in Headers */,
 				F0B2FB46218850F5006A7C6B /* DispatchDetailsVC.h in Headers */,
 				F0B2FB1E218850F5006A7C6B /* SearchProductListVC.h in Headers */,
+				F0580211221D2E3200682D07 /* SearchProductByCatalogNextViewVC.h in Headers */,
 				85DB6AC21E634CB90018710B /* WideReportVC.h in Headers */,
 				8502702019064625003A7E01 /* CommonRequestStruct.h in Headers */,
 				85CC35051DFA67900016F65C /* MultiSelectSearchViewCell.h in Headers */,
@@ -4517,6 +4554,7 @@
 				90E810B6174F451D003BDF77 /* HorizontalSeparator.png in Resources */,
 				857F8C771A828D210018A54C /* forgot_password@2x.png in Resources */,
 				F059CCDF214F70F600E303F6 /* downarrow@2x.png in Resources */,
+				F05801FB221D2DB600682D07 /* CreateOrderDisplayCell.xib in Resources */,
 				F0B2FB2E218850F5006A7C6B /* RMAVC.xib in Resources */,
 				F059CD37214F710600E303F6 /* polycab_logo2@3x.png in Resources */,
 				F059CD35214F710600E303F6 /* carticon@3x.png in Resources */,
@@ -4593,6 +4631,7 @@
 				857A3EE51A6CFC3500279931 /* FirstDashView.xib in Resources */,
 				F059CD22214F710600E303F6 /* 03-order@3x.png in Resources */,
 				F059CC94214F70D000E303F6 /* polycab_notification.png in Resources */,
+				F0580206221D2DE000682D07 /* CreateOrderStatusVC.xib in Resources */,
 				857A3EF61A6CFC3500279931 /* SecondDashView.xib in Resources */,
 				85453900190F2B0F0023D0FC /* FormVC4.xib in Resources */,
 				9051C51F1804226A002B6BBB /* DocumentScreenController.xib in Resources */,
@@ -4625,7 +4664,6 @@
 				F059CCA6214F70D000E303F6 /* blackeyeicon.png in Resources */,
 				F022CA2C211AFCEC0048DEAD /* SalesAggregateCollectionView.xib in Resources */,
 				F08F14D521C2592C00B48A04 /* OverDueCollectionView.xib in Resources */,
-				F03F2F48212BE0BC0023A2D3 /* CreateOrderDisplayCell.xib in Resources */,
 				F059CCE5214F70F600E303F6 /* polycab_image@2x.png in Resources */,
 				857F8C791A828D210018A54C /* my_details@2x.png in Resources */,
 				904053FD1754C61400203856 /* FormVC.xib in Resources */,
@@ -4674,6 +4712,7 @@
 				F059CCE2214F70F600E303F6 /* reporticon@2x.png in Resources */,
 				F02E355C22157E550007573D /* NationalSalesAggregatePieCellView.xib in Resources */,
 				F059CD24214F710600E303F6 /* 05-requestforetain@3x.png in Resources */,
+				F058020F221D2E3200682D07 /* SearchProductByCatalogNextViewVC.xib in Resources */,
 				F0B2FB18218850F5006A7C6B /* ReportQuantityValueTableHeader.xib in Resources */,
 				F059CCF0214F70F600E303F6 /* 11-policies@2x.png in Resources */,
 				857F8C761A828D210018A54C /* file_explorer@2x.png in Resources */,
@@ -4696,6 +4735,7 @@
 				F059CCA7214F70D000E303F6 /* businessveritical.png in Resources */,
 				90001757180D45600002F464 /* TimePickerViewController.xib in Resources */,
 				F059CD1B214F710600E303F6 /* calendar@3x.png in Resources */,
+				F0580204221D2DE000682D07 /* CreateOrderStatusCell.xib in Resources */,
 				85C4AD941D0FB30100D69383 /* undo_normal@2x.png in Resources */,
 				856DC9D91D06613700B7F48E /* EditOrderSubFormVC.xib in Resources */,
 				85E19B601962E933000FD291 /* havells_57x57.png in Resources */,
@@ -4920,11 +4960,13 @@
 				8530E06D1AC11CA3001E5E79 /* CategoryResponse.m in Sources */,
 				F088F6172105FBB7000E26F4 /* Data.m in Sources */,
 				8579E75F174CDC3600D7945F /* NetworkConstant.m in Sources */,
+				F0580203221D2DE000682D07 /* CreateOrderStatusVC.m in Sources */,
 				858F05011DEEC27A00398D46 /* EditSearchField.m in Sources */,
 				F04B2F4520FF2B3D00E6120A /* LeftViewVC.m in Sources */,
 				858082B41A5D8A8A00207EAB /* DotLIneChart.m in Sources */,
 				855342371D04482300741B18 /* XMWTableFormDelegate.m in Sources */,
 				85E245FC19D98CB90052A4D5 /* NotificationRequestItem.m in Sources */,
+				F058020D221D2E3200682D07 /* PolycabSearchViewController.m in Sources */,
 				F04D564A2100622000FF6CA8 /* MyDetailsVC.m in Sources */,
 				8530E0681AC05965001E5E79 /* ProductSearchVC.m in Sources */,
 				8579E761174CDC3600D7945F /* XmwcsConstant.m in Sources */,
@@ -4944,6 +4986,7 @@
 				F02903EC21491F36007D2B2D /* ProgressBarView.m in Sources */,
 				8579E77A174CDC9100D7945F /* DotFormElement.m in Sources */,
 				8579E78E174CDCC000D7945F /* ClientLoginResponse.m in Sources */,
+				F0580210221D2E3200682D07 /* SearchProductByCatalogNextViewVC.m in Sources */,
 				8500DCEC1A78FE10002B534F /* ChartSlider.m in Sources */,
 				8579E790174CDCC000D7945F /* ClientMasterDetail.m in Sources */,
 				85AC9660198FFDDF00AC0338 /* ReportHeaderSection.m in Sources */,
@@ -5036,6 +5079,7 @@
 				85900FBA18E008580052067B /* TagKeyConstant.m in Sources */,
 				F023B78D211C1B9500D54B38 /* CreditDetailsCollectionView.m in Sources */,
 				F088F5F72105E587000E26F4 /* SalesComparisonLegend.m in Sources */,
+				F0580205221D2DE000682D07 /* CreateOrderStatusCell.m in Sources */,
 				F0E1A0D6213E4E5D005F4435 /* HamperSchemeCell.m in Sources */,
 				857A3EE11A6CFC3500279931 /* FirstDashMTDView.m in Sources */,
 				F02E355A22157E3A0007573D /* NationalSalesAggregatePieCellView.m in Sources */,

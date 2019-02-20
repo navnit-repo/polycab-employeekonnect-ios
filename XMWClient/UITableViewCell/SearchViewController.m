@@ -15,7 +15,7 @@
 
 @interface SearchViewController ()
 {
-    NSMutableDictionary* selectedRows;
+    // NSMutableDictionary* selectedRows;
     CGFloat columnOffsets[10];
     
 }
@@ -27,8 +27,9 @@
     BOOL isFilterd;
     NSMutableArray * filteredArray;
     NSString *seachBarText;
+    
 }
-
+@synthesize selectedRows;
 @synthesize searchList;
 @synthesize screenId;
 @synthesize searchResponse;
@@ -40,7 +41,6 @@
 @synthesize multiSelect;
 @synthesize multiSelectDelegate;
 @synthesize headerTitle;
-
 @synthesize primaryCat,subCat;
 
 
@@ -74,7 +74,17 @@ int CHECKBOX_TAG_OFFSET = 9000;
     
     
     
-    if(isiPhone10) {
+    if (isiPhoneXSMAX) {
+        self.view.frame = CGRectMake(0, 64, 414, 832);
+    }
+    else if(isiPhoneXR) {
+        self.view.frame = CGRectMake(0, 64, 414, 832);
+    }
+    
+    else if(isiPhoneXS) {
+        self.view.frame = CGRectMake(0, 64, 375, 748);
+    }
+    else if(isiPhone10) {
         self.view.frame = CGRectMake(0, 64, 375, 748);
     }
     
@@ -89,7 +99,6 @@ int CHECKBOX_TAG_OFFSET = 9000;
         // 0, 64, 320, 416
         self.view.frame = CGRectMake(0, 64, 320, 416);
     }
-    
     
     [self drawHeaderItem];
     [self showSearchData];
@@ -147,8 +156,8 @@ int CHECKBOX_TAG_OFFSET = 9000;
     else{
         isFilterd = true;
         filteredArray  = [[NSMutableArray alloc]init];
-
-
+        
+        
         for (int i=0; i<searchData.count; i++) {
             NSArray *obj = [[NSArray alloc]initWithArray:[searchData objectAtIndex:i]];
             NSString *str;
@@ -161,15 +170,15 @@ int CHECKBOX_TAG_OFFSET = 9000;
                 if (nameRange.location != NSNotFound) {
                     [filteredArray addObject:obj];
                     break;
-
+                    
                 }
-
+                
             }
-
+            
         }
     }
     [self.searchList reloadData];
-
+    
 }
 
 
@@ -213,15 +222,15 @@ int CHECKBOX_TAG_OFFSET = 9000;
     // self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.translucent = NO;
     
-//    UILabel*  titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 160, 40)];
-//    titleLabel.text = headerTitle;
-//    titleLabel.textColor = [UIColor blackColor];
-//    titleLabel.textAlignment = NSTextAlignmentCenter;
-//    titleLabel.backgroundColor = [UIColor clearColor];
-//    [self.navigationItem setTitleView: titleLabel];
-//    
-//    self.navigationItem.backBarButtonItem.tintColor = [UIColor blackColor];
-
+    //    UILabel*  titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 160, 40)];
+    //    titleLabel.text = headerTitle;
+    //    titleLabel.textColor = [UIColor blackColor];
+    //    titleLabel.textAlignment = NSTextAlignmentCenter;
+    //    titleLabel.backgroundColor = [UIColor clearColor];
+    //    [self.navigationItem setTitleView: titleLabel];
+    //
+    //    self.navigationItem.backBarButtonItem.tintColor = [UIColor blackColor];
+    
 }
 
 
@@ -235,39 +244,38 @@ int CHECKBOX_TAG_OFFSET = 9000;
 
 - (void) doneHandler : (id) sender {
     
-  
+    
     if(multiSelectDelegate !=nil&& [multiSelectDelegate respondsToSelector:@selector(multipleItemsSelected::)]
        )
-    {        
-       [multiSelectDelegate multipleItemsSelected:self.searchResponse.searchHeaderDetail   :selectedRows.allValues];
+    {
+        [multiSelectDelegate multipleItemsSelected:self.searchResponse.searchHeaderDetail   :selectedRows.allValues];
         
     }
     [ [self navigationController]  popViewControllerAnimated:YES];
-   
+    
 }
 
 
 -(void)showSearchData
-     {
-         NSMutableArray *data = searchResponse.searchRecord;
-         [self drawSearchTable : data ];
-     }
-     
+{
+    NSMutableArray *data = searchResponse.searchRecord;
+    [self drawSearchTable : data ];
+}
+
 -(void)drawSearchTable :(NSMutableArray *)data
 {
-     NSMutableArray *records = searchResponse.searchRecord;
+    NSMutableArray *records = searchResponse.searchRecord;
     CGRect screenRect = self.view.bounds;
     CGFloat screenWidth = screenRect.size.width;
     
     self.searchData = records;
     
     if([records count]>0) {
-        CGFloat screenHeight = [records count]*50;
-    
-        if(screenHeight > self.view.bounds.size.height) {
-            screenHeight = self.view.bounds.size.height;
-        }
-
+        CGFloat screenHeight = self.view.bounds.size.height;
+        //        if(screenHeight > self.view.bounds.size.height) {
+        //            screenHeight = self.view.bounds.size.height;
+        //        }
+        
         if (primaryCat || subCat !=nil) {
             UILabel* browserSectionLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width , 22)];
             browserSectionLabel.text = primaryCat;
@@ -275,7 +283,7 @@ int CHECKBOX_TAG_OFFSET = 9000;
             browserSectionLabel.textAlignment = UITextAlignmentCenter;
             browserSectionLabel.backgroundColor = [UIColor whiteColor];
             browserSectionLabel.tag = 50;
-        
+            
             UILabel* itemValue = [[UILabel alloc] initWithFrame:CGRectMake(0, 23, self.view.frame.size.width , 21)];
             itemValue.text = subCat;
             [itemValue setFont:[UIFont fontWithName:@"Helvetica-Light" size:16]];
@@ -296,8 +304,8 @@ int CHECKBOX_TAG_OFFSET = 9000;
             [[self.view viewWithTag:50]removeFromSuperview];
             [[self.view viewWithTag:51]removeFromSuperview];
             
-        searchList = [[UITableView alloc]initWithFrame:CGRectMake(0, 60, screenWidth, screenHeight-60) style:UITableViewStylePlain];
-        
+            searchList = [[UITableView alloc]initWithFrame:CGRectMake(0, 60, screenWidth, screenHeight-60) style:UITableViewStylePlain];
+            
         }
         [self.searchList setDelegate:self];
         [self.searchList setDataSource:self];
@@ -315,7 +323,7 @@ int CHECKBOX_TAG_OFFSET = 9000;
 
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
 {
-	return 1;
+    return 1;
 }
 
 
@@ -337,10 +345,10 @@ int CHECKBOX_TAG_OFFSET = 9000;
     CGFloat screenWidth = self.view.bounds.size.width;
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:simpleTableIdentifier];
-         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//    if (cell == nil) {
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:simpleTableIdentifier];
-          cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         NSMutableArray* row;
         if (isFilterd) {
@@ -352,45 +360,47 @@ int CHECKBOX_TAG_OFFSET = 9000;
         NSInteger width = 0;
         
         if(multiSelect==YES) {
-            DVCheckbox* checkBox = [[DVCheckbox alloc] initWithFrame:CGRectMake(5, 5, 40, 40) check:NO enable:YES];
+            DVCheckbox* checkBox = [[DVCheckbox alloc] initWithFrame:CGRectMake(5, 20, 40, 40) check:NO enable:YES];
             checkBox.checkboxDelegate = self;
             [cell addSubview:checkBox];
             width = (screenWidth-50)/[row count];
             
             checkBox.tag = CHECKBOX_TAG_OFFSET + indexPath.row;
+            
+            
         } else {
             width = screenWidth/[row count];
             
         }
         
-//        for(int cntComponent = 0; cntComponent <[row count]; cntComponent++)
-//        {
-//            NSString *componentType = (NSString *)[row objectAtIndex:cntComponent];
-//
-//            CGFloat lowerOffset = columnOffsets[cntComponent];
-//            CGFloat upperOffset = columnOffsets[cntComponent+1];
-//            UIView* firstCol = [[UIView alloc] initWithFrame:CGRectMake(lowerOffset, 0, upperOffset - lowerOffset, 50)];
-//            UILabel *label1   = [[UILabel alloc] initWithFrame:CGRectMake(2, 0, upperOffset - lowerOffset - 4, 50)];
-//
-//            label1.text                              = [row objectAtIndex:cntComponent];
-//            label1.textColor                         = [UIColor blackColor];
-//            label1.numberOfLines = 0;
-//            label1.font = [UIFont systemFontOfSize:12];
-//
-//            [firstCol addSubview:label1];
-//            [cell  addSubview: firstCol];
-//        }
+        //        for(int cntComponent = 0; cntComponent <[row count]; cntComponent++)
+        //        {
+        //            NSString *componentType = (NSString *)[row objectAtIndex:cntComponent];
+        //
+        //            CGFloat lowerOffset = columnOffsets[cntComponent];
+        //            CGFloat upperOffset = columnOffsets[cntComponent+1];
+        //            UIView* firstCol = [[UIView alloc] initWithFrame:CGRectMake(lowerOffset, 0, upperOffset - lowerOffset, 50)];
+        //            UILabel *label1   = [[UILabel alloc] initWithFrame:CGRectMake(2, 0, upperOffset - lowerOffset - 4, 50)];
+        //
+        //            label1.text                              = [row objectAtIndex:cntComponent];
+        //            label1.textColor                         = [UIColor blackColor];
+        //            label1.numberOfLines = 0;
+        //            label1.font = [UIFont systemFontOfSize:12];
+        //
+        //            [firstCol addSubview:label1];
+        //            [cell  addSubview: firstCol];
+        //        }
         
-//        LVBS09CXSWY2004C2.5SA001S,
-//        FG-CoCSN-InX02-RdYwBeBk-BdY03-ArG02-OsY03-4C2.5,
-//        1001,
-//        MTR,
-//        BLACK,
-//        4C,
-//        2.5 SQ MM,
-//        1100V,
-//        METER,
-//        101
+        //        LVBS09CXSWY2004C2.5SA001S,
+        //        FG-CoCSN-InX02-RdYwBeBk-BdY03-ArG02-OsY03-4C2.5,
+        //        1001,
+        //        MTR,
+        //        BLACK,
+        //        4C,
+        //        2.5 SQ MM,
+        //        1100V,
+        //        METER,
+        //        101
         
         
         //change for polycab seearch list view comment previous code
@@ -402,37 +412,37 @@ int CHECKBOX_TAG_OFFSET = 9000;
                 componentType = @"";
             }
             else{
-            componentType = (NSString *)[row objectAtIndex:cntComponent];
+                componentType = (NSString *)[row objectAtIndex:cntComponent];
             }
             appendString = [appendString stringByAppendingString: componentType];;
             appendString= [appendString stringByAppendingString:@" "];
-        
+            
         }
         NSLog(@"%@",appendString);
-       
+        NSUInteger length = [appendString length];
         
-                    UIView* firstCol = [[UIView alloc] initWithFrame:CGRectMake(50, 0, 250, 60)];
-                    UILabel *label1   = [[UILabel alloc] initWithFrame:CGRectMake(2, 0, 250, 60)];
-        
-        
+        UIView* firstCol = [[UIView alloc] initWithFrame:CGRectMake(50, 0, 250, 200)];
+        UILabel *label1   = [[UILabel alloc] initWithFrame:CGRectMake(2, 0, 250, 200)];
         
         
-                    label1.text                              = appendString;
-                    label1.textColor                         = [UIColor blackColor];
-                    label1.numberOfLines = 0;
-                    label1.font = [UIFont systemFontOfSize:12];
+        
+        
+        label1.text                              = appendString;
+        label1.textColor                         = [UIColor blackColor];
+        label1.numberOfLines = 0;
+        label1.font = [UIFont systemFontOfSize:12];
         label1.backgroundColor = [UIColor clearColor];
         label1.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         label1.lineBreakMode = NSLineBreakByWordWrapping;
         label1.adjustsFontSizeToFitWidth = YES;
         label1.textAlignment = UITextAlignmentLeft;
         label1.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
-                    [firstCol addSubview:label1];                
-                    [cell  addSubview: firstCol];
+        [firstCol addSubview:label1];
+        [cell  addSubview: firstCol];
         
         
         
- //   }
+    }
     
     tableView.separatorColor =  [UIColor colorWithRed:0.41 green:0.41 blue:0.59 alpha:1.0];
     return cell;
@@ -450,13 +460,13 @@ int CHECKBOX_TAG_OFFSET = 9000;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 65;
+    return 210;
     
 }
 
 -(void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath*)indexPath
 {
-        
+    
     [self handleDrillDown: indexPath.row];
     
 }
@@ -479,14 +489,14 @@ int CHECKBOX_TAG_OFFSET = 9000;
         selectedRowElement= (NSMutableArray *)[filteredArray objectAtIndex:position];
     }
     else{
-      selectedRowElement = (NSMutableArray *)[searchResponse.searchRecord objectAtIndex:position];
+        selectedRowElement = (NSMutableArray *)[searchResponse.searchRecord objectAtIndex:position];
     }
     
     
     //selectedRowElement = (NSMutableArray *)[searchResponse.searchRecord objectAtIndex:position];
     
-    NSString *key; 
-	NSString *name; 
+    NSString *key;
+    NSString *name;
     key = [selectedRowElement objectAtIndex:0];
     name =[selectedRowElement objectAtIndex:1];
     
@@ -509,6 +519,7 @@ int CHECKBOX_TAG_OFFSET = 9000;
     
     int rowIdx = sender.tag - CHECKBOX_TAG_OFFSET;
     
+    
     if(rowIdx>=0) {
         @try {
             if (isFilterd) {
@@ -519,7 +530,7 @@ int CHECKBOX_TAG_OFFSET = 9000;
             }
             
             
-           // [selectedRows setObject:[searchData objectAtIndex:rowIdx] forKey:[NSString stringWithFormat:@"%d", rowIdx]];
+            // [selectedRows setObject:[searchData objectAtIndex:rowIdx] forKey:[NSString stringWithFormat:@"%d", rowIdx]];
         }
         @catch (NSException *exception) {
             NSLog(@"Exception in hasChecked: %@", exception.description);
@@ -527,7 +538,7 @@ int CHECKBOX_TAG_OFFSET = 9000;
         @finally {
             // not do anything here
         }
-
+        
     }
     
 }
@@ -539,14 +550,17 @@ int CHECKBOX_TAG_OFFSET = 9000;
     if(rowIdx>=0 && selectedRows!=nil) {
         @try {
             
-            if (isFilterd) {
-                [selectedRows setObject:[filteredArray objectAtIndex:rowIdx] forKey:[NSString stringWithFormat:@"%d", rowIdx]];
-            }
-            else{
-                [selectedRows setObject:[searchData objectAtIndex:rowIdx] forKey:[NSString stringWithFormat:@"%d", rowIdx]];
-            }
+            //            if (isFilterd) {
+            //
+            //               [selectedRows setObject:[filteredArray objectAtIndex:rowIdx] forKey:[NSString stringWithFormat:@"%d", rowIdx]];
+            //            }
+            //            else{
+            //
+            //                [selectedRows setObject:[searchData objectAtIndex:rowIdx] forKey:[NSString stringWithFormat:@"%d", rowIdx]];
+            //            }
             
-          //  [selectedRows removeObjectForKey:[NSString stringWithFormat:@"%d", rowIdx]];
+            [selectedRows removeObjectForKey:[NSString stringWithFormat:@"%d", rowIdx]];
+            
         }
         @catch (NSException *exception) {
             NSLog(@"Exception in hasUnchecked: %@", exception.description);

@@ -18,7 +18,7 @@
 #import "CategoryResponse.h"
 #import "ProductResponse.h"
 #import "PolycabProductCatObject.h"
-#import "CreateOrderVC2.h"
+#import "SearchProductByCatalogNextViewVC.h"
 
 #define DotSearchConst_SEARCH_TEXT @"SEARCH_TEXT"
 #define DotSearchConst_SEARCH_BY @"SEARCH_BY"
@@ -31,8 +31,8 @@
 
 @optional
 - (void)didSelectProductCategory:(ProductCatObject *)category
-       withCategoryPathString:(NSString *)categoryPathString
-                       sender:(id)sender;
+          withCategoryPathString:(NSString *)categoryPathString
+                          sender:(id)sender;
 - (void)didExpandProductCategory:(ProductCatObject *)category sender:(id)sender;
 - (void)didCollapseProductCategory:(ProductCatObject *)category sender:(id)sender;
 
@@ -47,9 +47,9 @@
     UITextField*  searchInputField;
     RadioGroup *radioGroup;
     NSArray* radioGroupData;
-   
+    
 }
- 
+
 @property (nonatomic, weak) id<ProductCatTreeTblViewDelegate> myDelegate;
 @property (nonatomic, strong) NSArray *myCatInputData;
 @property (nonatomic, strong) NSMutableArray *categoryPathStringArr;
@@ -63,8 +63,8 @@
 @implementation ProductSearchVC
 {
     NSString *searchButtonClickTag;
-    NSString *primarayCat;
-    NSString *subCat;
+    //    NSString *primarayCat;
+    //    NSString *subCat;
 }
 @synthesize parentController;
 @synthesize elementId;
@@ -74,7 +74,8 @@
 @synthesize multiSelectDelegate;
 @synthesize dependentValueMap;
 @synthesize defaultSelectionRadio;
-
+@synthesize primarayCat;
+@synthesize subCat;
 
 
 
@@ -104,7 +105,7 @@
     [self fetchProductCatalogTree];
     
     
-   // [self fetchProductsForCatalog:@"49B8A6B0F561005EE1008000C009017B" ofCategory:@"4AB4D8F2821D008CE1008000C009017B"];
+    // [self fetchProductsForCatalog:@"49B8A6B0F561005EE1008000C009017B" ofCategory:@"4AB4D8F2821D008CE1008000C009017B"];
     
 }
 - (void)didReceiveMemoryWarning {
@@ -113,14 +114,14 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 -(void) fetchProductCatalogTree
 {
@@ -133,9 +134,8 @@
         
         [catalogQuery setObject:self.productDivision forKey:@"BUSINESS_VERTICAL"];
         [catalogQuery setObject:self.productDivision forKey:@"CUSTOMER_NUMBER"];
-        [catalogQuery setObject:[[NSUserDefaults standardUserDefaults] valueForKey:@"REGISTRY_ID"]  forKey:@"USERNAME"]; //for employee changes
-
-    //    [catalogQuery setObject:[ClientVariable getInstance].CLIENT_USER_LOGIN.userName forKey:@"USERNAME"];
+        [catalogQuery setObject:[ClientVariable getInstance].CLIENT_USER_LOGIN.userName forKey:@"USERNAME"];
+        // [catalogQuery setObject:@"" forKey:@"BILL_TO"];
         
         // sample division fan, 45
     } else {
@@ -156,20 +156,17 @@
     
     
     NSMutableDictionary* catalogQuery = [[NSMutableDictionary alloc] init];
-   // [catalogQuery setObject:[ClientVariable getInstance].CLIENT_USER_LOGIN.userName forKey:@"USERNAME"];
-    [catalogQuery setObject:[[NSUserDefaults standardUserDefaults] valueForKey:@"REGISTRY_ID"]  forKey:@"USERNAME"]; //for employee changes
+    [catalogQuery setObject:[ClientVariable getInstance].CLIENT_USER_LOGIN.userName forKey:@"USERNAME"];
     [catalogQuery setObject:category.lobCode  forKey:@"BUSINESS_VERTICAL"];
     [catalogQuery setObject:self.productDivision forKey:@"CUSTOMER_NUMBER"];
     [catalogQuery setObject:category.primaryCategory forKey:@"PRIMARY_CATEGORY"];
-     [catalogQuery setObject:category.primarySubCategory forKey:@"PRIMARY_SUBCATEGORY"];
-     [catalogQuery setObject:category.secondaryItemCategory forKey:@"secondaryItemCategory"];
-     [catalogQuery setObject:category.secondaryItemSubCategory forKey:@"secondaryItemSubCategory"];
-    
-    
+    [catalogQuery setObject:category.primarySubCategory forKey:@"PRIMARY_SUBCATEGORY"];
+    [catalogQuery setObject:category.secondaryItemCategory forKey:@"secondaryItemCategory"];
+    [catalogQuery setObject:category.secondaryItemSubCategory forKey:@"secondaryItemSubCategory"];
     networkHelper = [[NetworkHelper alloc] init];
     networkHelper.serviceURLString = XmwcsConst_PRODUCT_TREE_SERVICE_URL;
     [networkHelper makeXmwNetworkCall:catalogQuery :self :nil :@"GET_PRODUCTS"];
-
+    
 }
 
 #pragma mark - NetworkHelper delegate
@@ -183,7 +180,7 @@
         
     }
     else if([callName isEqualToString:@"GET_PRODUCTS"]) {
-    
+        
         
         [self handleCategoryProducts:respondedObject];
         
@@ -230,8 +227,8 @@
 
 -(SearchResponse*) adaptorProductToSearch:(ProductResponse*) categoryProducts
 {
- 
-
+    
+    
     
     SearchResponse* searchResult = [[SearchResponse alloc] init];
     searchResult.searchMessage = nil;
@@ -245,7 +242,7 @@
     for(id prodObj in categoryProducts.productList) {
         
         NSMutableArray* searchRec = [[NSMutableArray alloc] initWithObjects:[prodObj objectForKey:@"itemNo"],
-        [prodObj objectForKey:@"shortDesc"], [prodObj objectForKey:@"inventoryItemId"],[prodObj objectForKey:@"uom"],[prodObj objectForKey:@"color"],[prodObj objectForKey:@"core"],[prodObj objectForKey:@"squaremm"],[prodObj objectForKey:@"voltage"], [prodObj objectForKey:@"price"],nil];
+                                     [prodObj objectForKey:@"shortDesc"], [prodObj objectForKey:@"inventoryItemId"],[prodObj objectForKey:@"uom"],[prodObj objectForKey:@"color"],[prodObj objectForKey:@"core"],[prodObj objectForKey:@"squaremm"],[prodObj objectForKey:@"voltage"],[prodObj objectForKey:@"uomdesc"],[prodObj objectForKey:@"price"],nil];
         
         
         
@@ -316,7 +313,7 @@
         [holderView addSubview:searchSectionLabel];
         
         
-       // return holderView;
+        // return holderView;
         return nil;
     } else if(section==1) {
         UIView* holderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
@@ -325,17 +322,17 @@
         browserSectionLabel.text = @"Browser Catalog";
         browserSectionLabel.backgroundColor = [UIColor whiteColor];
         [holderView addSubview:browserSectionLabel];
-    
+        
         return holderView;
     }
     return nil;
 }
 
-     
+
 -(UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = nil;
-  
+    
     if(indexPath.section==0) {
         
         // this section is for search control
@@ -436,7 +433,7 @@
     [searchButton setTitle:@"Search" forState:UIControlStateNormal];
     
     [searchButton addTarget:self action:@selector(buttonEvent:) forControlEvents:UIControlEventTouchUpInside];
-
+    
     return searchButton;
 }
 
@@ -455,8 +452,8 @@
         }
     }
     
- 
-   [formPost.postData setObject:[ClientVariable getInstance].CLIENT_USER_LOGIN.userName forKey:@"USERNAME"];
+    
+    [formPost.postData setObject:[ClientVariable getInstance].CLIENT_USER_LOGIN.userName forKey:@"USERNAME"];
     
     [formPost setModuleId: [DVAppDelegate currentModuleContext]];
     [formPost setDocId: inMasterValueMapping];
@@ -494,8 +491,8 @@
     
     UITableViewCell *cell ;
     if(cell==nil) {
-         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"CategoryCell"];
-         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"CategoryCell"];
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         [cell setBackgroundColor:[UIColor clearColor]];
     }
@@ -521,11 +518,11 @@
     
     /*
      PRADEEP changing the code here
-    if([currObject.ACCESORY_IMAGE isEqualToString:@"Yes"]) {
-        [cell setAccesoryTypeAsImageName:DotMenuCellAccesoryDefaultImage : currObject.MENU_NAME];
-    } else {
-        [cell setAccesoryType:DotMenuCellAccesoryStatusNone];
-    }*/
+     if([currObject.ACCESORY_IMAGE isEqualToString:@"Yes"]) {
+     [cell setAccesoryTypeAsImageName:DotMenuCellAccesoryDefaultImage : currObject.MENU_NAME];
+     } else {
+     [cell setAccesoryType:DotMenuCellAccesoryStatusNone];
+     }*/
     
     UIColor *level0 = [UIColor colorWithRed:(0xdb/255.0) green:(0x31/255.0) blue:(0x31/255.0) alpha:1];
     UIColor *level1 = [UIColor colorWithRed:(0xdb/255.0) green:(0x31/255.0) blue:(0x31/255.0) alpha:1];
@@ -533,63 +530,63 @@
     UIColor *level3 = [UIColor colorWithRed:(150.0/255.0) green:(150.0/255.0) blue:(150.0/255.0) alpha:1];
     
     
-//    switch (currObject.levelDepth) {
-//        case 0: {
-//            [cell.textLabel setTextColor:level0];
-//            NSMutableAttributedString *titltTxt = [[NSMutableAttributedString alloc] initWithString:currObject.CATAGORY_ID];
-//            [titltTxt addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:14.0] range:NSMakeRange(0, currObject.CATAGORY_ID.length)];
-//            [titltTxt addAttribute:NSForegroundColorAttributeName value:level0 range:NSMakeRange(0, currObject.CATAGORY_ID.length)];
-//            //[titltTxt appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@" (%i)",[currObject.numberOfProducts intValue]]]];
-//            cell.textLabel.attributedText = titltTxt;
-//            cell.textLabel.numberOfLines = 0;
-//            break;
-//        }
-//        case 1:
-//            [cell.textLabel setTextColor:level1];
-//            cell.textLabel.font = [UIFont systemFontOfSize:13.0];
-//            cell.textLabel.numberOfLines = 0;
-//            break;
-//        case 2:
-//            [cell.textLabel setTextColor:level2];
-//            cell.textLabel.font = [UIFont systemFontOfSize:12.0];
-//            cell.textLabel.numberOfLines = 0;
-//            break;
-//        default:
-//            [cell.textLabel setTextColor:level3];
-//            cell.textLabel.font = [UIFont systemFontOfSize:11.0];
-//            cell.textLabel.numberOfLines = 0;
-//            break;
-//    }
-//    tableView.separatorColor = [UIColor lightGrayColor];
+    //    switch (currObject.levelDepth) {
+    //        case 0: {
+    //            [cell.textLabel setTextColor:level0];
+    //            NSMutableAttributedString *titltTxt = [[NSMutableAttributedString alloc] initWithString:currObject.CATAGORY_ID];
+    //            [titltTxt addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:14.0] range:NSMakeRange(0, currObject.CATAGORY_ID.length)];
+    //            [titltTxt addAttribute:NSForegroundColorAttributeName value:level0 range:NSMakeRange(0, currObject.CATAGORY_ID.length)];
+    //            //[titltTxt appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@" (%i)",[currObject.numberOfProducts intValue]]]];
+    //            cell.textLabel.attributedText = titltTxt;
+    //            cell.textLabel.numberOfLines = 0;
+    //            break;
+    //        }
+    //        case 1:
+    //            [cell.textLabel setTextColor:level1];
+    //            cell.textLabel.font = [UIFont systemFontOfSize:13.0];
+    //            cell.textLabel.numberOfLines = 0;
+    //            break;
+    //        case 2:
+    //            [cell.textLabel setTextColor:level2];
+    //            cell.textLabel.font = [UIFont systemFontOfSize:12.0];
+    //            cell.textLabel.numberOfLines = 0;
+    //            break;
+    //        default:
+    //            [cell.textLabel setTextColor:level3];
+    //            cell.textLabel.font = [UIFont systemFontOfSize:11.0];
+    //            cell.textLabel.numberOfLines = 0;
+    //            break;
+    //    }
+    //    tableView.separatorColor = [UIColor lightGrayColor];
     return cell;
 }
 
 -(NSString *)getDisplayName:(PolycabProductCatObject*) catObject {
-        NSString *displayName;
+    NSString *displayName;
     
-        NSString *level = [catObject.level description];
+    NSString *level = [catObject.level description];
+    
+    if ([level isEqualToString:@"1"]) {
+        displayName = [catObject.primaryCategory copy];
         
-        if ([level isEqualToString:@"1"]) {
-            displayName = [catObject.primaryCategory copy];
-    
-        }
-        else if ([level isEqualToString:@"2"])
-        {
-            displayName = [catObject.primarySubCategory copy];
-         
-        }
-        else if ([level isEqualToString:@"3"])
-        {
-            displayName = [catObject.secondaryItemCategory copy];
+    }
+    else if ([level isEqualToString:@"2"])
+    {
+        displayName = [catObject.primarySubCategory copy];
         
-        }
-        else if ([level isEqualToString:@"4"])
-        {
-            displayName = [catObject.secondaryItemSubCategory copy];
-           
-        }
+    }
+    else if ([level isEqualToString:@"3"])
+    {
+        displayName = [catObject.secondaryItemCategory copy];
+        
+    }
+    else if ([level isEqualToString:@"4"])
+    {
+        displayName = [catObject.secondaryItemSubCategory copy];
+        
+    }
     
-
+    
     return displayName;
 }
 
@@ -606,14 +603,14 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-   if(indexPath.section==1) {
-    
+    if(indexPath.section==1) {
+        
         PolycabProductCatObject *currObject = self.myCatTableDataArray[indexPath.row];
         [self updateCategoryPathWithCategory:currObject];
-       
-       primarayCat = currObject.primaryCategory;
-       subCat = currObject.primarySubCategory;
-       
+        
+        primarayCat = currObject.primaryCategory;
+        subCat = currObject.primarySubCategory;
+        
         if([currObject.childList count] > 0) {
             BOOL isAlreadyInserted=[self checkIfChildrenInserted:currObject];
             
@@ -647,7 +644,7 @@
             
             self.lastSelectedObject = currObject;
         }
-
+        
     }
 }
 
@@ -691,9 +688,9 @@
         if([self.myCatTableDataArray indexOfObject:dInner]!=NSNotFound) {
             [self.myCatTableDataArray removeObject:dInner];
             [self.mainTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:
-                                          [NSIndexPath indexPathForRow:indexToRemove inSection:1]
-                                          ]
-                        withRowAnimation:UITableViewRowAnimationRight];
+                                                        [NSIndexPath indexPathForRow:indexToRemove inSection:1]
+                                                        ]
+                                      withRowAnimation:UITableViewRowAnimationRight];
         }
     }
 }
@@ -747,8 +744,8 @@
 
 
 - (void)didSelectProductCategory:(PolycabProductCatObject *)category
-       withCategoryPathString:(NSString *)categoryPathString
-                       sender:(id)sender
+          withCategoryPathString:(NSString *)categoryPathString
+                          sender:(id)sender
 {
     NSLog(@"SDCategory Data = %@",category);
     

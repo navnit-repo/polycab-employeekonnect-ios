@@ -10,7 +10,8 @@
 @protocol DisplayCellButtonDelegate;
 @interface CreateOrderDisplayCell : UIView<UITextFieldDelegate>
 +(CreateOrderDisplayCell *) CreateInstance;
--(void)configure:(NSArray *)array :(long int)buttonTag;
+-(void)configure:(NSArray *)array :(long int)buttonTag :(NSString*)verticalName;
+-(void)configure:(NSArray *)array :(long int)buttonTag :(NSString*)verticalName :(NSString *)quntyValue;
 @property (weak, nonatomic) IBOutlet UILabel *titleLbl;
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLbl;
 @property (weak, nonatomic) IBOutlet UITextField *valueTxtFld;
@@ -19,6 +20,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *priceLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *measurementLbl;
+@property (weak, nonatomic) IBOutlet UILabel *mainDescLbl;
 
 
 @property(weak,nonatomic) id<DisplayCellButtonDelegate>delegate;
@@ -26,4 +28,6 @@
 
 @protocol DisplayCellButtonDelegate <NSObject>
 -(void)buttonDelegate:(long int)tag;
+-(void)textFieldDelegate:(UITextField *)textfield;
+-(void)textFieldValue:(UITextField *)textfield :(long int)cellIndex;
 @end

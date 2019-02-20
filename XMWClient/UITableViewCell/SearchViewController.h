@@ -38,8 +38,10 @@
     id<SearchViewMultiSelectDelegate> multiSelectDelegate;
     NSString *primaryCat;
     NSString *subCat;
+    NSMutableDictionary* selectedRows;
     
 }
+@property NSMutableDictionary* selectedRows;
 @property NSString *primaryCat;
 @property NSString *subCat;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;

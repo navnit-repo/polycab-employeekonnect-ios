@@ -12,7 +12,7 @@
 
 @protocol PolyCabCreateOrderMultiSelectDelegate;
 
-@interface CreateOrderVC2 : FormVC<UITableViewDelegate,UITableViewDataSource,DisplayCellButtonDelegate,UIAlertViewDelegate>
+@interface CreateOrderVC2 : FormVC<UITableViewDelegate,UITableViewDataSource,DisplayCellButtonDelegate,UIAlertViewDelegate,UITextFieldDelegate>
 {
     id<PolyCabCreateOrderMultiSelectDelegate> PolyCabCreateOrderMultiSelectDelegate;
 }

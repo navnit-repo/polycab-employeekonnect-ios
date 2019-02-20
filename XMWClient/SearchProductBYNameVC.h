@@ -23,8 +23,9 @@
     MXButton *squareButton;
     MXButton *uomDescriptionButton;
     MXButton *mxButton;
-    
+    NSString *itemNameString;
 }
+@property NSString *itemNameString;
 @property MXTextField *coreTextField;
 @property MXTextField *colorTextField;
 @property MXTextField *squareTextField;
@@ -37,5 +38,5 @@
 
 @property  MXButton *mxButton;
 @property (weak, nonatomic) IBOutlet UITableView *mainTableView;
--(id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil parentForm:(FormVC*) parent formElement:(NSString *) formElementId elementData:(NSString *)masterValueMapping radioGroupData:(NSMutableArray *) keyValueDoubleArray :(NSString*)buttonSender :(NSString*)itemName;
+-(id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil parentForm:(FormVC*) parent formElement:(NSString *) formElementId elementData:(NSString *)masterValueMapping radioGroupData:(NSMutableArray *) keyValueDoubleArray :(NSString*)buttonSender :(NSString*)itemName :(NSString*)bill_To;
 @end

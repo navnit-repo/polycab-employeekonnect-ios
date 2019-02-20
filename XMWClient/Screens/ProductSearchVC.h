@@ -18,6 +18,7 @@
 #import "FormVC.h"
 #import "LoadingView.h"
 #import "NetworkHelper.h"
+#import "PolycabProductCatObject.h"
 
 @protocol SearchViewMultiSelectDelegate;
 
@@ -34,9 +35,12 @@
     NSMutableDictionary* dependentValueMap;
     NSInteger defaultSelectionRadio;
     NSMutableArray *myCatTableDataArray;
+    NSString *primarayCat;
+    NSString *subCat;
 }
 
-
+@property NSString *primarayCat;
+@property NSString *subCat;
 @property FormVC* parentController;
 @property NSString *elementId;
 @property NSString *inMasterValueMapping;
@@ -59,6 +63,10 @@
 -(RadioGroup*) addRadioGroup;
 -(UIButton*) addSearchButton;
 - (UITableViewCell *)catTreeTableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath;
+-(void) handleCatalogResults:(id) xmwResponse;
+-(void) handleCategoryProducts:(id) xmwResponse;
+-(void) handleSearchResult:(id) xmwResponse;
+-(void) fetchProductsForCatalog:(PolycabProductCatObject *)category;
 @property (nonatomic, strong) NSMutableArray *myCatTableDataArray;
 
 @end
