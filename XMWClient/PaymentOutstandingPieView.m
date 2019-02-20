@@ -49,7 +49,7 @@
 - (void)networkCAll
 {
     chartPostRqst = [[DotFormPost alloc]init];
-    [chartPostRqst setAdapterId:@"DR_NATIONAL_PAYMENT_OUTSTANDING_BU_WISE"];
+    [chartPostRqst setAdapterId:AppConst_EMPLOYEE_PAYMENT_OUTSTANDING_PIE_CARD_DOC_ID];
     [chartPostRqst setAdapterType:@"CLASSLOADER"];
     [chartPostRqst setReportCacheRefresh:@"true"];
     [chartPostRqst setModuleId:AppConst_MOBILET_ID_DEFAULT];

@@ -167,11 +167,41 @@ NSMutableDictionary *masterDataForEmployee;
     UIViewController *frontViewController;
     NSString *roleName =[NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] valueForKey:@"ROLE_NAME"]];
     
-    if ([roleName isEqualToString:@"NATIONAL_ALL"]) {
+    
+    
+   
+    
+    if ([roleName isEqualToString:@"NATIONAL_ALL"] ) {
         NSLog(@"role name -: NATIONAL_ALL");
+        
+        AppConst_EMPLOYEE_SALES_AGGREGATE_CARD_DOC_ID = @"DR_NATIONAL_SALES_BU" ;
+        AppConst_EMPLOYEE_SALES_AGGREGATE_PIE_CARD_DOC_ID = @"DR_NATIONAL_SALES_BU";
+        AppConst_EMPLOYEE_PAYMENT_OUTSTANDING_PIE_CARD_DOC_ID = @"DR_NATIONAL_PAYMENT_OUTSTANDING_BU_WISE" ;
+        AppConst_EMPLOYEE_OVERDUE_PIE_CARD_DOC_ID = @"DR_NATIONAL_OVERDUE_BU_WISE";
         
       frontViewController = [[NationalDashboardVC alloc] initWithNibName:@"DashBoardVC" bundle:nil];
     }
+    
+ 
+    
+    
+   else if ([roleName isEqualToString:@"BU_HEAD"]) {
+        AppConst_EMPLOYEE_SALES_AGGREGATE_CARD_DOC_ID = @"DR_BU_SALES_REGION_WISE" ;
+        AppConst_EMPLOYEE_SALES_AGGREGATE_PIE_CARD_DOC_ID = @"DR_BU_SALES_REGION_WISE";
+        AppConst_EMPLOYEE_PAYMENT_OUTSTANDING_PIE_CARD_DOC_ID = @"DR_BU_PAYMENT_OUTSTANDING_REGION_WISE" ;
+        AppConst_EMPLOYEE_OVERDUE_PIE_CARD_DOC_ID = @"DR_BU_OVERDUE_REGION_WISE";
+        
+        frontViewController = [[NationalDashboardVC alloc] initWithNibName:@"DashBoardVC" bundle:nil];
+    }
+    
+   else if ([roleName isEqualToString:@"REGIONAL_HEAD"]) {
+       AppConst_EMPLOYEE_SALES_AGGREGATE_CARD_DOC_ID = @"DR_BU_SALES_STATE_WISE" ;
+       AppConst_EMPLOYEE_SALES_AGGREGATE_PIE_CARD_DOC_ID = @"DR_BU_SALES_STATE_WISE";
+       AppConst_EMPLOYEE_PAYMENT_OUTSTANDING_PIE_CARD_DOC_ID = @"DR_BU_REGION_PAYMENT_OUTSTANDING_STATE_WISE" ;
+       AppConst_EMPLOYEE_OVERDUE_PIE_CARD_DOC_ID = @"DR_BU_REGION_OVERDUE_STATE_WISE";
+       
+       frontViewController = [[NationalDashboardVC alloc] initWithNibName:@"DashBoardVC" bundle:nil];
+   }
     
     else{
        frontViewController = [[DashBoardVC alloc] init];
@@ -316,38 +346,23 @@ NSMutableDictionary *masterDataForEmployee;
 //                        else if([clientLoginResponse.userLoginStatus isEqualToString:@"1"]) //successfully login
                     else
                     {
-                       
-                            [masterDataForEmployee setDictionary:clientLoginResponse.clientMasterDetail.masterDataRefresh];
-                           NSString *tncStatus = [[clientLoginResponse.clientMasterDetail.masterDataRefresh valueForKey:@"ACCEPT_TERMS_CONDITION"]valueForKey:@"Terms_Condition"]; // check term and condition value  true or false
-                            
-                            if (tncStatus!= NULL && [tncStatus isEqualToString:@"false"]) {
-                                
-                               // go to term and condition page
-                                TermsVC *vc = [[TermsVC alloc]init];
-                                vc.regID = m_username;
-                                vc.password =self.password.text;
-                                [self.navigationController pushViewController:vc animated:YES];
-                                
-                            }
-                            else{
-                            //save user Detalis is sucessfully login
-                                
-                                
-                            [[NSUserDefaults standardUserDefaults] setObject:[[clientLoginResponse.clientMasterDetail.masterDataRefresh valueForKey:@"USER_PROFILE"]valueForKey:@"customer_name"]  forKey:@"customer_name"];
-                            [[NSUserDefaults standardUserDefaults] setObject:m_username forKey:@"USERNAME"];
-                            [[NSUserDefaults standardUserDefaults] setObject:self.password.text forKey:@"PASSWORD"];
-                             [[NSUserDefaults standardUserDefaults] setObject:@"YES" forKey:@"ISCHECKED"];
-                            [[NSUserDefaults standardUserDefaults] synchronize];
-                            // default context (MAIN)
-                            ClientLoginResponse* clientLoginResponse =  (ClientLoginResponse*) respondedObject;
-                            [LoginUtils setClientVariables :  clientLoginResponse : m_username];
-                            
-                            [self registerCustomReportVC];
-                            [self registerCustomFormVC];
-                            menuDetailsDict =clientLoginResponse.menuDetail;
-                            [self revealViewControllConfig];
-                            }
-                        }
+                         [masterDataForEmployee setDictionary:clientLoginResponse.clientMasterDetail.masterDataRefresh];
+                        
+                        [[NSUserDefaults standardUserDefaults] setObject:[[clientLoginResponse.clientMasterDetail.masterDataRefresh valueForKey:@"USER_PROFILE"]valueForKey:@"customer_name"]  forKey:@"customer_name"];
+                        [[NSUserDefaults standardUserDefaults] setObject:m_username forKey:@"USERNAME"];
+                        [[NSUserDefaults standardUserDefaults] setObject:self.password.text forKey:@"PASSWORD"];
+                        [[NSUserDefaults standardUserDefaults] setObject:@"YES" forKey:@"ISCHECKED"];
+                        [[NSUserDefaults standardUserDefaults] synchronize];
+                        // default context (MAIN)
+                        ClientLoginResponse* clientLoginResponse =  (ClientLoginResponse*) respondedObject;
+                        [LoginUtils setClientVariables :  clientLoginResponse : m_username];
+                        
+                        [self registerCustomReportVC];
+                        [self registerCustomFormVC];
+                        menuDetailsDict =clientLoginResponse.menuDetail;
+                        
+                        [self revealViewControllConfig];
+                    }
                     }
                 }
     }
@@ -403,7 +418,7 @@ NSMutableDictionary *masterDataForEmployee;
     [clientVariables registerReportVCClass:@"DispatchDetailsVC" forId:@"DOT_REPORT_DISPATCH_DETAILS_DW"];
     
     // for Payment Outstanding
-    //[clientVariables registerReportVCClass:@"PaymentOutstandingReportView" forId:@"DOT_REPORT_PAYMENT_OUTSTANDING"];
+    [clientVariables registerReportVCClass:@"PaymentOutstandingReportView" forId:@"DOT_REPORT_PAYMENT_OUTSTANDING"];
   
     
     

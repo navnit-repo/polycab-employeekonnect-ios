@@ -48,5 +48,13 @@ NSString *const AppConst_MOBILET_ID_DEFAULT = @"xmwpolycab";
  NSString *const AppConst_MAIN_MENU_SCREEN_TITLE = @"Main Menu";
  NSString *const AppConst_SIMPLESCREEN_TITLE = @"SimpleScreenTitle";
 
+ NSString *AppConst_EMPLOYEE_SALES_AGGREGATE_CARD_DOC_ID =@"";
+ NSString *AppConst_EMPLOYEE_SALES_AGGREGATE_PIE_CARD_DOC_ID =@"";
+ NSString *AppConst_EMPLOYEE_PAYMENT_OUTSTANDING_PIE_CARD_DOC_ID =@"";
+ NSString *AppConst_EMPLOYEE_OVERDUE_PIE_CARD_DOC_ID=@"" ;
+
+
+
+
 
 @end

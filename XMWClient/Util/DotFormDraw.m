@@ -1040,10 +1040,16 @@ int uiViewStartIdx = 1001;
 
    // }
 
+    if ([[formController.dotForm formId] isEqualToString:@"DOT_FORM_1"] ) {
+         formCell.valueLabel.text = valueSetToLabel;//dotFormElement.defaultVal;
+    }
     
    // formCell.valueLabel.text = valueSetToLabel;//dotFormElement.defaultVal;
+    else
+    {
+        formCell.valueLabel.text = [[NSUserDefaults standardUserDefaults] valueForKey:@"customer_name"];
+    }
     
-    formCell.valueLabel.text = [[NSUserDefaults standardUserDefaults] valueForKey:@"customer_name"];
     formCell.valueLabel.elementId = currentCompName;
     formCell.valueLabel.attachedData = attachedData;//newly added
     formCell.frame = CGRectMake(0, 0, screenWidth, formLineHeight);

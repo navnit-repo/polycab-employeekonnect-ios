@@ -32,7 +32,7 @@
     blankView.backgroundColor = [UIColor clearColor];
     
     UILabel *lbl = [[UILabel alloc]initWithFrame:CGRectMake(10, 8, 150*deviceWidthRation, 15*deviceHeightRation)];
-    lbl.text = @"Sales Aggregate BU Wise";
+    lbl.text = @"Sales Aggregate";
     lbl.font = [UIFont fontWithName:@"Helvetica-Bold" size:12];
     [blankView addSubview:lbl];
     
@@ -120,7 +120,7 @@
     
     
     chartPostRqst = [[DotFormPost alloc]init];
-    [chartPostRqst setAdapterId:@"DR_NATIONAL_SALES_BU"];
+    [chartPostRqst setAdapterId:AppConst_EMPLOYEE_SALES_AGGREGATE_PIE_CARD_DOC_ID];
     [chartPostRqst setAdapterType:@"CLASSLOADER"];
     [chartPostRqst setReportCacheRefresh:@"false"];
     [chartPostRqst setModuleId:AppConst_MOBILET_ID_DEFAULT];

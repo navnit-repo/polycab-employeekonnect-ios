@@ -90,10 +90,8 @@
 }
 -(void)headerView{
     
-//    UINavigationBar *bar = [self.navigationController navigationBar];
-//    [bar setTintColor:[UIColor whiteColor]];
-    
-    
+//self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:204.0/255 green:41.0/255 blue:43.0/255 alpha:1.0];
+    self.navigationController.navigationBar.barTintColor = [UIColor redColor];
     SWRevealViewController *revealController = [self revealViewController];
     revealController.panGestureRecognizer.enabled = NO;
     [revealController panGestureRecognizer];
@@ -105,16 +103,16 @@
     
     
     
-    menuButton.tintColor = [UIColor colorWithRed:119.0/255 green:119.0/255 blue:119.0/255 alpha:1.0];
-    
+    //menuButton.tintColor = [UIColor colorWithRed:119.0/255 green:119.0/255 blue:119.0/255 alpha:1.0];
+      menuButton.tintColor = [UIColor whiteColor];
     
     
     UIBarButtonItem* notificationButton = [[UIBarButtonItem alloc] initWithImage:[UIImage
                                                                           imageNamed:@"polycab_notification"] style:UIBarButtonItemStylePlain target:self
                                                                   action:@selector(notificationHandler:)];
     
-    notificationButton.tintColor =  [UIColor colorWithRed:119.0/255 green:119.0/255 blue:119.0/255 alpha:1.0];
-    
+   // notificationButton.tintColor =  [UIColor colorWithRed:119.0/255 green:119.0/255 blue:119.0/255 alpha:1.0];
+     notificationButton.tintColor = [UIColor whiteColor];
     
     UIImageView *polycabLogo = [[UIImageView alloc] initWithImage:[UIImage  imageNamed:@"polycab_logo"]];
     self.navigationItem.titleView.contentMode = UIViewContentModeCenter;
@@ -311,7 +309,7 @@
         
         cell.backgroundColor = [UIColor clearColor];
         
-        NSString *text1 = @"Dear M/s.";
+        NSString *text1 = @"Dear";
         NSString *text2;
         text2= [[NSUserDefaults standardUserDefaults] valueForKey:@"customer_name"];
         
@@ -595,6 +593,27 @@
 - (void) httpResponseObjectHandler : (NSString*) callName : (id) respondedObject : (id) requestedObject
 {
     [loadingView removeView];
+    
+    if ([callName isEqualToString : @"FOR_LOGOUT"])
+    {
+        DocPostResponse *reportPostResponse = (DocPostResponse*) respondedObject;
+        if ([[reportPostResponse submitStatus] isEqualToString:@"S"]) {
+            LogInVC *loginVC = [[LogInVC alloc] initWithNibName:@"LogInVC" bundle:nil];
+            UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:loginVC];
+            DVAppDelegate* appDelegate =(DVAppDelegate*)[UIApplication sharedApplication].delegate;
+            appDelegate.navController = nc;
+            
+            
+            [[UIApplication sharedApplication] keyWindow].rootViewController = nc;//added by ashish tiwari on aug 2014
+        }
+        else
+        {
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Logout" message:[reportPostResponse submittedMessage] delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+            [alert show];
+        }
+        
+    }
+    
     if ([callName isEqualToString : XmwcsConst_CALL_NAME_FOR_REPORT])
     {
         DotFormPost* dotFormPost = (DotFormPost*) requestedObject;
@@ -647,24 +666,74 @@
     //    [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"PASSWORD"];
     //    [[NSUserDefaults standardUserDefaults] setObject:@"NO" forKey:@"ISCHECKED"];
     //    [[NSUserDefaults standardUserDefaults] synchronize];
+    loadingView = [LoadingView loadingViewInView:self.view];
+    
+    DotFormPost *logOutPost = [[DotFormPost alloc]init];
+    [logOutPost setAdapterType:@"JDBC"];
+    [logOutPost setAdapterId:@"ADT_JDBC_LOGOUT"];
+    [logOutPost setModuleId:AppConst_MOBILET_ID_DEFAULT];
+    [logOutPost setDocId:@"DOT_FORM_LOGOUT"];
+    [logOutPost setDocDesc:@"Logout"];
+    [logOutPost setReportCacheRefresh:@"false"];
+    
+    networkHelper = [[NetworkHelper alloc] init];
+    [networkHelper makeXmwNetworkCall:logOutPost :self :self  :@"FOR_LOGOUT"];
     
     
-    dispatch_async(dispatch_get_main_queue(), ^{
-        
-        // [self.navigationController popViewControllerAnimated:YES];
-        //code to be executed in the background
-        LogInVC *loginVC = [[LogInVC alloc] initWithNibName:@"LogInVC" bundle:nil];//added by ashish tiwari on aug 2014
-        UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:loginVC];//addded by ashish tiwari on aug 2014
-        
-        DVAppDelegate* appDelegate =(DVAppDelegate*)[UIApplication sharedApplication].delegate;
-        appDelegate.navController = nc;
-        
-        
-        [[UIApplication sharedApplication] keyWindow].rootViewController = nc;//added by ashish tiwari on aug 2014
-        
-    });
+    
+    
+    
+    
+    //    dispatch_async(dispatch_get_main_queue(), ^{
+    //
+    //        // [self.navigationController popViewControllerAnimated:YES];
+    //        //code to be executed in the background
+    //        LogInVC *loginVC = [[LogInVC alloc] initWithNibName:@"LogInVC" bundle:nil];//added by ashish tiwari on aug 2014
+    //        UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:loginVC];//addded by ashish tiwari on aug 2014
+    //
+    //        DVAppDelegate* appDelegate =(DVAppDelegate*)[UIApplication sharedApplication].delegate;
+    //        appDelegate.navController = nc;
+    //
+    //
+    //        [[UIApplication sharedApplication] keyWindow].rootViewController = nc;//added by ashish tiwari on aug 2014
+    //
+    //    });
     
 }
+
+//-(void) userLogout
+//{
+//    // [ThirdDashView removeObsr];
+//
+//    //for clear all default save data
+//    NSUserDefaults * defs = [NSUserDefaults standardUserDefaults];
+//    NSDictionary * dict = [defs dictionaryRepresentation];
+//    for (id key in dict) {
+//        [defs removeObjectForKey:key];
+//    }
+//    [defs synchronize];
+//
+//    //    [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"PASSWORD"];
+//    //    [[NSUserDefaults standardUserDefaults] setObject:@"NO" forKey:@"ISCHECKED"];
+//    //    [[NSUserDefaults standardUserDefaults] synchronize];
+//
+//
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//
+//        // [self.navigationController popViewControllerAnimated:YES];
+//        //code to be executed in the background
+//        LogInVC *loginVC = [[LogInVC alloc] initWithNibName:@"LogInVC" bundle:nil];//added by ashish tiwari on aug 2014
+//        UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:loginVC];//addded by ashish tiwari on aug 2014
+//
+//        DVAppDelegate* appDelegate =(DVAppDelegate*)[UIApplication sharedApplication].delegate;
+//        appDelegate.navController = nc;
+//
+//
+//        [[UIApplication sharedApplication] keyWindow].rootViewController = nc;//added by ashish tiwari on aug 2014
+//
+//    });
+//
+//}
 - (void)alertViewCancel:(UIAlertView *)alertView
 {
     //    if(alertView.tag == TAG_LOGOUT_DIALOG) {

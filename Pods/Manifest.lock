@@ -1,14 +1,27 @@
 PODS:
+  - Crashlytics (3.12.0):
+    - Fabric (~> 1.9.0)
+  - Fabric (1.9.0)
   - ZXingObjC (3.2.2):
     - ZXingObjC/All (= 3.2.2)
   - ZXingObjC/All (3.2.2)
 
 DEPENDENCIES:
+  - Crashlytics
+  - Fabric
   - ZXingObjC (~> 3.2.1)
 
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Crashlytics
+    - Fabric
+    - ZXingObjC
+
 SPEC CHECKSUMS:
+  Crashlytics: 07fb167b1694128c1c9a5a5cc319b0e9c3ca0933
+  Fabric: f988e33c97f08930a413e08123064d2e5f68d655
   ZXingObjC: 2c95a0dc52daac69b23ec78fad8fa2fec05f8981
 
-PODFILE CHECKSUM: da06a41f5bcfd7efb77dad98841070c173f484e7
+PODFILE CHECKSUM: ed6c8a36122b1324fcdd87d68f4cd4ee0ecfaa95
 
-COCOAPODS: 1.2.1
+COCOAPODS: 1.5.3

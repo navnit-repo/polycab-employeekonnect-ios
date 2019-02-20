@@ -128,7 +128,7 @@
         
         cell.backgroundColor = [UIColor clearColor];
         
-        NSString *text1 = @"Dear M/s.";
+        NSString *text1 = @"Dear";
         NSString *text2;
         text2= [[NSUserDefaults standardUserDefaults] valueForKey:@"customer_name"];
         

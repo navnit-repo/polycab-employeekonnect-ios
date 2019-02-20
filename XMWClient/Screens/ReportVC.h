@@ -23,12 +23,12 @@
 
 @interface ReportVC : UIViewController <HttpEventListener>
 {
-    @protected
+@protected
     NSMutableDictionary *reportCompMap;
     NSMutableArray *sectionArray;
     ReportSectionsController* sectionController;
     NSMutableArray *docIdData;
-
+    
     NSUInteger trackerIndex;
     int selectionDiff;
     
@@ -46,7 +46,7 @@
     
     BOOL needRefresh;
     UITableView *reportTableView;
- 
+    
 }
 
 @property (strong, nonatomic) UITableView *reportTableView;
@@ -91,8 +91,6 @@
 
 -(void) makeReportScreenV2;
 -(ReportTabularDataSection*) addTabularDataSection;
-
-
 - (void) httpResponseObjectHandler : (NSString*) callName : (id) respondedObject : (id) requestedObject;
 - (void) httpFailureHandler : (NSString*) callName : (NSString*) message;
 

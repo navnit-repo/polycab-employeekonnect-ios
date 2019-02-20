@@ -8,6 +8,7 @@
 
 #import "OverduePieView.h"
 #import "OverduePieCellView.h"
+#import "AppConstants.h"
 @implementation OverduePieView
 {
     OverduePieCellView *overduePieCellView;
@@ -22,7 +23,7 @@
 - (void)networkCAll
 {
     chartPostRqst = [[DotFormPost alloc]init];
-    [chartPostRqst setAdapterId:@"DR_NATIONAL_OVERDUE_BU_WISE"];
+    [chartPostRqst setAdapterId:AppConst_EMPLOYEE_OVERDUE_PIE_CARD_DOC_ID];
     [chartPostRqst setAdapterType:@"CLASSLOADER"];
     [chartPostRqst setReportCacheRefresh:@"true"];
     [chartPostRqst setModuleId:AppConst_MOBILET_ID_DEFAULT];

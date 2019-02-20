@@ -209,14 +209,35 @@
             [keys addObject: key];
             [values addObject: value];
         }
+        
+        NSMutableArray *key_value_Array = [[NSMutableArray alloc]init];
+        for (int i=0; i<keys.count; i++) {
+            NSString *key;
+            NSString *value;
+            key = [keys objectAtIndex:i];
+            value = [values objectAtIndex:i];
+            if ([key isEqualToString:@""] || [key isKindOfClass:[NSNull class]] || key == nil || key.length <=0) {
+                key = @"";
+            }
+            if ([value isEqualToString:@""] || [value isKindOfClass:[NSNull class]] || value == nil || value.length <=0) {
+                value = @"";
+            }
+            
+            NSString *finalValue = [[key stringByAppendingString:@"-"]stringByAppendingString:value];
+            [key_value_Array addObject:finalValue];
+        }
+        
         [dropDownData addObject:keys];
-        [dropDownData addObject:values];
+        [dropDownData addObject:key_value_Array];
+        
+        
         
         MXButton *mxbutton = (MXButton*)[self getDataFromId:@"SHIP_TO_button"];
         mxbutton.attachedData = dropDownData;
         
         MXTextField *SHIP_TO = (MXTextField *) [self getDataFromId:@"SHIP_TO"];
-        SHIP_TO.text = [values objectAtIndex:0];
+        SHIP_TO.text = [key_value_Array objectAtIndex:0];
+        SHIP_TO.keyvalue =[[dropDownData objectAtIndex:0]objectAtIndex:0]; ///value check
   
     }
     
@@ -245,15 +266,32 @@
             [keys addObject: key];
             [values addObject: value];
         }
+        NSMutableArray *key_value_Array = [[NSMutableArray alloc]init];
+        for (int i=0; i<keys.count; i++) {
+            NSString *key;
+            NSString *value;
+            key = [keys objectAtIndex:i];
+            value = [values objectAtIndex:i];
+            if ([key isEqualToString:@""] || [key isKindOfClass:[NSNull class]] || key == nil || key.length <=0) {
+                key = @"";
+            }
+            if ([value isEqualToString:@""] || [value isKindOfClass:[NSNull class]] || value == nil || value.length <=0) {
+                value = @"";
+            }
+            
+            NSString *finalValue = [[key stringByAppendingString:@"-"]stringByAppendingString:value];
+            [key_value_Array addObject:finalValue];
+        }
+        
         [dropDownData addObject:keys];
-        [dropDownData addObject:values];
+        [dropDownData addObject:key_value_Array];
         
         MXButton *mxbutton = (MXButton*)[self getDataFromId:@"BILL_TO_button"];
         mxbutton.attachedData = dropDownData;
 
         MXTextField *BILL_TO = (MXTextField *) [self getDataFromId:@"BILL_TO"];
-        BILL_TO.text = [values objectAtIndex:0];
-        
+        BILL_TO.text = [key_value_Array objectAtIndex:0];
+        BILL_TO.keyvalue =[[dropDownData objectAtIndex:0]objectAtIndex:0]; ///value check 
         [loadingView removeView];
     }
     

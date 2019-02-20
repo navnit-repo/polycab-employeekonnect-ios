@@ -49,5 +49,6 @@
 -(void) configureDataRowCell:(UIView*) dataCell :(NSIndexPath *)indexPath;
 
 -(void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath;
-
+-(bool) clickableAndExpandable : (int) rowIdx : (NSString**) expandProperty;
+-(void) handleDrillDown : (NSInteger) position :(NSMutableDictionary *) in_forwardedDataDisplay :(NSMutableDictionary *) in_forwardedDataPost;
 @end

@@ -215,7 +215,7 @@
 //
 //    SWRevealViewController *reveal = (SWRevealViewController*)root;
 //    [(UINavigationController*)reveal.frontViewController pushViewController:vc animated:YES];
-    
+     DotFormPost *reqFormPost = (DotFormPost*)chartPostRqst;
     ReportPostResponse *reportPostResponse = (ReportPostResponse*) chartResponseData;
     ClientVariable* clientVariable = [ClientVariable getInstance];
     UIViewController* objVC = [clientVariable reportVCForId:reqFormPost.adapterId];

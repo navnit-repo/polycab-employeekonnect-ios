@@ -32,6 +32,8 @@
 #import "SWRevealViewController.h"
 #import "DashBoardVC.h"
 #import "LeftViewVC.h"
+#import <Fabric/Fabric.h>
+
 
 CGFloat deviceWidthRation;
 CGFloat deviceHeightRation;

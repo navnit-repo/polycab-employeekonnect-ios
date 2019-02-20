@@ -72,7 +72,7 @@ static DownloadHistoryMenuView* rightSlideMenu = nil;
     return self;
 }
 
-#pragma mark - Initialize View 
+#pragma mark - Initialize View
 
 - (void)viewDidLoad
 {
@@ -130,8 +130,8 @@ static DownloadHistoryMenuView* rightSlideMenu = nil;
                                                                           imageNamed:@"back-button"] style:UIBarButtonItemStylePlain target:self
                                                                   action:@selector(backHandler:)];
     
-    backButton.tintColor = [UIColor colorWithRed:119.0/255 green:119.0/255 blue:119.0/255 alpha:1.0];
-    
+    //backButton.tintColor = [UIColor colorWithRed:119.0/255 green:119.0/255 blue:119.0/255 alpha:1.0];
+    backButton.tintColor = [UIColor whiteColor];
     
     [self.navigationItem setLeftBarButtonItem:backButton];
     
@@ -325,16 +325,16 @@ static DownloadHistoryMenuView* rightSlideMenu = nil;
 }
 
 
-- (UITableViewCellEditingStyle)tableView:(UITableView *)aTableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath 
+- (UITableViewCellEditingStyle)tableView:(UITableView *)aTableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([[menuDetailMap objectForKey:@"FOR_OPERATION"]  isEqualToString:@"DELETE"]) 
+    if ([[menuDetailMap objectForKey:@"FOR_OPERATION"]  isEqualToString:@"DELETE"])
         return UITableViewCellEditingStyleDelete;
 
     return UITableViewCellEditingStyleNone;
 }
 
 
-- (void)tableView:(UITableView *)aTableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath 
+- (void)tableView:(UITableView *)aTableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
 
 }
@@ -351,7 +351,7 @@ static DownloadHistoryMenuView* rightSlideMenu = nil;
 -(id) getGradientColor:(UIView *)myView
 {
     static NSMutableArray *colors           = nil;
-    if (colors == nil) 
+    if (colors == nil)
     {
         colors                              = [[NSMutableArray alloc] initWithCapacity:3];
         UIColor *color                      = nil;
@@ -411,7 +411,7 @@ static DownloadHistoryMenuView* rightSlideMenu = nil;
 	[dotFormPost setAdapterType:dotReport.ddAdapterType];
 	[dotFormPost setModuleId:[DVAppDelegate currentModuleContext]];
 	dotFormPost.maxDocId  = [NSNumber numberWithInt:clientVariables.MAX_DOC_ID_CREATED];
-   	
+    
     NSInteger remarksFieldId = TAG_KEY_REMARK_TEXTFIELD;
     MXTextField* textField = (MXTextField*)[[self view] viewWithTag:TAG_KEY_REMARK_TEXTFIELD];
     if(textField!=nil) {
@@ -425,7 +425,7 @@ static DownloadHistoryMenuView* rightSlideMenu = nil;
     
     [dotFormPost.postData setObject:buttonClicked.elementId forKey:attachedData];
     [dotFormPost.displayData setObject:buttonClicked.elementId forKey:attachedData ];
-    	
+    
     NSArray* keys = [forwardedDataPost allKeys];
     
 	for(int i=0; i<[keys count]; i++)
@@ -452,7 +452,7 @@ static DownloadHistoryMenuView* rightSlideMenu = nil;
      if([callName isEqualToString:XmwcsConst_CALL_NAME_FOR_SUBMIT]) {
             DocPostResponse *docPostResponse = (DocPostResponse *)respondedObject;
             NSString *message = docPostResponse.submittedMessage;
-            
+         
             UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Info!" message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil , nil];
             [myAlertView show];
      } else if([callName isEqualToString:XmwcsConst_CALL_NAME_FOR_REPORT]) {
@@ -485,13 +485,13 @@ static DownloadHistoryMenuView* rightSlideMenu = nil;
 {
     
     [ [self navigationController]  popViewControllerAnimated:YES];
-        
+    
     
 }
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
 	[textField resignFirstResponder];
-    	
+    
 	return TRUE;
 }
 

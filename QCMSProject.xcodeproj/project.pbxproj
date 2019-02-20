@@ -4331,7 +4331,6 @@
 				90F47D661796A1BB00C6B76C /* Headers */,
 				85D831681A9F94EB00C9ACBB /* ShellScript */,
 				D26F507405F90DB31C36D692 /* [CP] Embed Pods Frameworks */,
-				7672F02895376DE66FD9143B /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -4352,8 +4351,8 @@
 				ORGANIZATIONNAME = dotvik;
 				TargetAttributes = {
 					8579E707174CD04600D7945F = {
-						DevelopmentTeam = 83647ZT3U2;
-						ProvisioningStyle = Automatic;
+						DevelopmentTeam = XP362JQVP7;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.Push = {
 								enabled = 1;
@@ -4816,21 +4815,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		7672F02895376DE66FD9143B /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-XMWClient/Pods-XMWClient-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		85D831681A9F94EB00C9ACBB /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -4842,7 +4826,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "./Crashlytics.framework/run ba515076b4ea66dcf76ab3ffb7c31aa6fabf9258 47f4597abcbdde998736bf1f0a1ab5511c77f221fc3138b1772b294a563bc01c\n";
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" cc9f075af7ebdd5493d67c5fc8b720e55f346463 98517ace9775b4439aaeaa5a456544d1178a09c4b0ceeea6499db4f1aa90edfc\n";
 		};
 		D26F507405F90DB31C36D692 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -4850,9 +4834,12 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-XMWClient/Pods-XMWClient-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/ZXingObjC/ZXingObjC.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ZXingObjC.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -4865,13 +4852,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-XMWClient-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -5214,10 +5204,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = XMWClient/XMWClient.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 83647ZT3U2;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = XP362JQVP7;
 				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = YES;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -5237,10 +5227,10 @@
 					"$(PROJECT_DIR)/RLMFramework/Alamofire.framework",
 					"$(PROJECT_DIR)/RLMFramework/SwiftyJSON.framework",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.dotvik.dealer;
+				PRODUCT_BUNDLE_IDENTIFIER = com.polycab.xmw.employee;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = Polycab_Employee_Development;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
@@ -5254,10 +5244,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = XMWClient/XMWClient.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 83647ZT3U2;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = XP362JQVP7;
 				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = YES;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -5278,10 +5268,10 @@
 					"$(PROJECT_DIR)/RLMFramework/Alamofire.framework",
 				);
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PRODUCT_BUNDLE_IDENTIFIER = com.dotvik.dealer;
+				PRODUCT_BUNDLE_IDENTIFIER = com.polycab.xmw.employee;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = Polycab_Employee_Development;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = YES;

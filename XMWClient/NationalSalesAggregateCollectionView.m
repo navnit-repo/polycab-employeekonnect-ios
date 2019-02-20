@@ -28,7 +28,7 @@
     blankView.backgroundColor = [UIColor clearColor];
     
     UILabel *lbl = [[UILabel alloc]initWithFrame:CGRectMake(10, 8, 150*deviceWidthRation, 15*deviceHeightRation)];
-    lbl.text = @"Sales Aggregate BU Wise";
+    lbl.text = @"Sales Aggregate";
     lbl.font = [UIFont fontWithName:@"Helvetica-Bold" size:12];
     [blankView addSubview:lbl];
     
@@ -68,7 +68,7 @@
     
     
     ftdPost = [[DotFormPost alloc]init];
-    [ftdPost setAdapterId:@"DR_NATIONAL_SALES_BU_DASHBOARD"];
+    [ftdPost setAdapterId:AppConst_EMPLOYEE_SALES_AGGREGATE_CARD_DOC_ID];
     [ftdPost setAdapterType:@"CLASSLOADER"];
     [ftdPost setModuleId:AppConst_MOBILET_ID_DEFAULT];
     
@@ -128,7 +128,7 @@
     
     // sesond request mtd
     mtdPost = [[DotFormPost alloc]init];
-    [mtdPost setAdapterId:@"DR_NATIONAL_SALES_BU_DASHBOARD"];
+    [mtdPost setAdapterId:AppConst_EMPLOYEE_SALES_AGGREGATE_CARD_DOC_ID];
     [mtdPost setAdapterType:@"CLASSLOADER"];
     [mtdPost setModuleId:AppConst_MOBILET_ID_DEFAULT];
     
@@ -225,7 +225,7 @@
     
     // third request mtd
     ytdPost = [[DotFormPost alloc]init];
-    [ytdPost setAdapterId:@"DR_NATIONAL_SALES_BU_DASHBOARD"];
+    [ytdPost setAdapterId:AppConst_EMPLOYEE_SALES_AGGREGATE_CARD_DOC_ID];
     [ytdPost setAdapterType:@"CLASSLOADER"];
     [ytdPost setModuleId:AppConst_MOBILET_ID_DEFAULT];
     

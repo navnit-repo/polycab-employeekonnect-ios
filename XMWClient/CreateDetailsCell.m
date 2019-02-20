@@ -268,34 +268,70 @@
     if(index%5 == 0)
     {
         //color = [UIColor colorWithRed:(49.0/255) green:(221.0/255) blue:(179.0/255) alpha:(1)];
-        color = [UIColor redColor];
+        color  = [self colorWithHexString:@"c7f6ed"];
         
     }
     if(index%5 == 1)
     {
-      //  color =[UIColor colorWithRed:(79.0/255) green:(121.0/255) blue:(219.0/255) alpha:(1)];
-        color = [UIColor yellowColor];
+        //  color =[UIColor colorWithRed:(79.0/255) green:(121.0/255) blue:(219.0/255) alpha:(1)];
+        color  = [self colorWithHexString:@"d6dff5"];
     }
     
     if(index%5 == 2)
     {
-     //   color = [UIColor colorWithRed:(90.0/255) green:(221.0/255) blue:(179.0/255) alpha:(1)];
-        color = [UIColor blueColor];
+        //   color = [UIColor colorWithRed:(90.0/255) green:(221.0/255) blue:(179.0/255) alpha:(1)];
+        color  = [self colorWithHexString:@"f6f4c7"];
     }
     if(index%5 == 3)
     {
-       // color = [UIColor colorWithRed:(160.0/255) green:(221.0/255) blue:(179.0/255) alpha:(1)];
-        color = [UIColor darkGrayColor];
+        // color = [UIColor colorWithRed:(160.0/255) green:(221.0/255) blue:(179.0/255) alpha:(1)];
+        color  = [self colorWithHexString:@"B89AFE"];
     }
     if(index%5 == 4)
     {
-       // color = [UIColor colorWithRed:(106.0/255) green:(221.0/255) blue:(179.0/255) alpha:(1)];
-        color = [UIColor brownColor];
+        // color = [UIColor colorWithRed:(106.0/255) green:(221.0/255) blue:(179.0/255) alpha:(1)];
+        color  = [self colorWithHexString:@"BBEBFF"];
     }
     
     
     return color;
 }
+-(UIColor*)colorWithHexString:(NSString*)hex
+{
+    NSString *cString = [[hex stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] uppercaseString];
+    
+    // String should be 6 or 8 characters
+    if ([cString length] < 6) return [UIColor grayColor];
+    
+    // strip 0X if it appears
+    if ([cString hasPrefix:@"0X"]) cString = [cString substringFromIndex:2];
+    
+    if ([cString length] != 6) return  [UIColor grayColor];
+    
+    // Separate into r, g, b substrings
+    NSRange range;
+    range.location = 0;
+    range.length = 2;
+    NSString *rString = [cString substringWithRange:range];
+    
+    range.location = 2;
+    NSString *gString = [cString substringWithRange:range];
+    
+    range.location = 4;
+    NSString *bString = [cString substringWithRange:range];
+    
+    // Scan values
+    unsigned int r, g, b;
+    [[NSScanner scannerWithString:rString] scanHexInt:&r];
+    [[NSScanner scannerWithString:gString] scanHexInt:&g];
+    [[NSScanner scannerWithString:bString] scanHexInt:&b];
+    
+    return [UIColor colorWithRed:((float) r / 255.0f)
+                           green:((float) g / 255.0f)
+                            blue:((float) b / 255.0f)
+                           alpha:1.0f];
+}
+
 
 
 @end

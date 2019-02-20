@@ -7,13 +7,13 @@
 //
 
 #import "NationalWisePolycabSalesComparisonChat.h"
-
+#import "AppConstants.h"
 @implementation NationalWisePolycabSalesComparisonChat
 
 - (DotFormPost *)salesReportFormPost:(NSString *)fromDate toDate:(NSString *)toDate{
     DotFormPost *dotFormPost = [[DotFormPost alloc]init];
     
-    [dotFormPost setAdapterId:@"DR_NATIONAL_SALES_BU_DASHBOARD"];
+    [dotFormPost setAdapterId:AppConst_EMPLOYEE_SALES_AGGREGATE_CARD_DOC_ID];
     [dotFormPost setAdapterType:@"CLASSLOADER"];
     [dotFormPost setModuleId:AppConst_MOBILET_ID_DEFAULT];
     
@@ -24,6 +24,32 @@
     [dotFormPost setPostData:sendData];
     
     return dotFormPost;
+}
+
+-(NSString*)formateCurrency:(NSString *)actualAmount{
+    
+    float shortenedAmount = [actualAmount floatValue];
+    NSString *suffix = @"";
+    float currency = [actualAmount floatValue];
+    if(currency >= 100.0f) {
+        suffix = @"Cr";
+        shortenedAmount /= 100.0f;
+    }
+    //    if (currency <=0.0) {
+    //        suffix=@"";
+    //    }
+    else {
+        suffix = @"L";
+        
+    }
+    //    else if(currency >= 1000.0f) {
+    //        suffix = @"K";
+    //        shortenedAmount /= 1000.0f;
+    //    }
+    
+    NSString *requiredString = [NSString stringWithFormat:@"%0.1f%@", shortenedAmount, suffix];
+    return requiredString;
+    
 }
 
 @end
