@@ -204,39 +204,33 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     
-
+    if (dataArray.count>1) {
+        DotFormPost *reqFormPost = (DotFormPost*)chartPostRqst;
+        ReportPostResponse *reportPostResponse = (ReportPostResponse*) chartResponseData;
+        ClientVariable* clientVariable = [ClientVariable getInstance];
+        UIViewController* objVC = [clientVariable reportVCForId:reqFormPost.adapterId];
+        
+        NSMutableDictionary* forwardedDataDisplay;
+        NSMutableDictionary* forwardedDataPost;
+        forwardedDataPost = [[NSMutableDictionary alloc]init];
+        forwardedDataDisplay = [[NSMutableDictionary alloc]init];
+        ReportVC *reportVC = (ReportVC*) objVC;
+        
+        reportVC.requestFormPost = reqFormPost;
+        reportVC.screenId = AppConst_SCREEN_ID_REPORT;
+        reportVC.reportPostResponse = reportPostResponse;
+        reportVC.forwardedDataDisplay = forwardedDataDisplay;
+        reportVC.forwardedDataPost = forwardedDataPost;
+        
+        UIViewController *root;
+        root = [[[[UIApplication sharedApplication]windows]objectAtIndex:0]rootViewController];
+        
+        SWRevealViewController *reveal = (SWRevealViewController*)root;
+        [(UINavigationController*)reveal.frontViewController pushViewController:objVC animated:YES];
+    }
     
     
-//    detailsTableView *vc = [[detailsTableView alloc]init];
-//    vc.dataArray = dataArray;
-//    vc.headerName = @"Overdue";
-//    UIViewController *root;
-//    root = [[[[UIApplication sharedApplication]windows]objectAtIndex:0]rootViewController];
-//
-//    SWRevealViewController *reveal = (SWRevealViewController*)root;
-//    [(UINavigationController*)reveal.frontViewController pushViewController:vc animated:YES];
-     DotFormPost *reqFormPost = (DotFormPost*)chartPostRqst;
-    ReportPostResponse *reportPostResponse = (ReportPostResponse*) chartResponseData;
-    ClientVariable* clientVariable = [ClientVariable getInstance];
-    UIViewController* objVC = [clientVariable reportVCForId:reqFormPost.adapterId];
-    
-    NSMutableDictionary* forwardedDataDisplay;
-    NSMutableDictionary* forwardedDataPost;
-    forwardedDataPost = [[NSMutableDictionary alloc]init];
-    forwardedDataDisplay = [[NSMutableDictionary alloc]init];
-    ReportVC *reportVC = (ReportVC*) objVC;
-    
-    reportVC.requestFormPost = reqFormPost;
-    reportVC.screenId = AppConst_SCREEN_ID_REPORT;
-    reportVC.reportPostResponse = reportPostResponse;
-    reportVC.forwardedDataDisplay = forwardedDataDisplay;
-    reportVC.forwardedDataPost = forwardedDataPost;
-    
-    UIViewController *root;
-    root = [[[[UIApplication sharedApplication]windows]objectAtIndex:0]rootViewController];
-    
-    SWRevealViewController *reveal = (SWRevealViewController*)root;
-    [(UINavigationController*)reveal.frontViewController pushViewController:objVC animated:YES];
+   
     
 }
 

@@ -10,9 +10,24 @@
 #import "DotForm.h"
 #import "DotFormPost.h"
 #import "DotFormElement.h"
+#import "ReportPostResponse.h"
+@interface XmwCompareTuple : NSObject
+@property NSString* fieldName;
+@property NSString* firstValue;
+@property NSString* secondValue;
+@property NSString* thirdValue;
+@property NSString* uomValue;
+@property NSArray* firstRawData;
+@property NSArray* secondRawData;
+@property NSArray* thirdRawData;
+@end
 
 
 @interface CustomCompareReportVC : UIViewController
+{
+     NSArray* sortedDataSetKeys;
+    NSMutableDictionary* dataSet;
+}
 
 @property (weak, nonatomic) DotForm* dotForm;
 
@@ -25,6 +40,12 @@
 
 
 @property (weak, nonatomic) IBOutlet UITableView* mainTable;
-
-
+@property  NSArray* sortedDataSetKeys;
+@property NSMutableDictionary* dataSet;
+-(void) handleDrilldown:(NSInteger) rowIndex;
+-(NSArray*) pickGoodRawData:(NSArray*) best option:(NSArray*)other1 option:(NSArray*) other2;
+-(DotFormPost*)ddColumnDotFormPost:(DotFormPost*) dotFormPost rowIndex:(NSInteger) rowIndex columnRowData:(NSArray*) colRowData;
+-(void) addFirstSetData:(ReportPostResponse*) reportData into:(NSMutableDictionary*) inDataSet;
+-(void) addSecondSetData:(ReportPostResponse*) reportData into:(NSMutableDictionary*) inDataSet;
+-(void) addThirdSetData:(ReportPostResponse*) reportData into:(NSMutableDictionary*) inDataSet;
 @end

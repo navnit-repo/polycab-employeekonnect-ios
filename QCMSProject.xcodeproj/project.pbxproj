@@ -637,6 +637,12 @@
 		F033A0C220E637A000366E3B /* showInfoClaimVC.h in Headers */ = {isa = PBXBuildFile; fileRef = F033A0BF20E637A000366E3B /* showInfoClaimVC.h */; };
 		F033A0C320E637A000366E3B /* showInfoClaimVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F033A0C020E637A000366E3B /* showInfoClaimVC.m */; };
 		F033A0C420E637A000366E3B /* showInfoClaimVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = F033A0C120E637A000366E3B /* showInfoClaimVC.xib */; };
+		F03484E0221E8BE7007E7653 /* EmployeeSalesFormVC.h in Headers */ = {isa = PBXBuildFile; fileRef = F03484DE221E8BE7007E7653 /* EmployeeSalesFormVC.h */; };
+		F03484E1221E8BE7007E7653 /* EmployeeSalesFormVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F03484DF221E8BE7007E7653 /* EmployeeSalesFormVC.m */; };
+		F03484E4221E8C36007E7653 /* EmpolyeeSalesReportVC.h in Headers */ = {isa = PBXBuildFile; fileRef = F03484E2221E8C36007E7653 /* EmpolyeeSalesReportVC.h */; };
+		F03484E5221E8C36007E7653 /* EmpolyeeSalesReportVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F03484E3221E8C36007E7653 /* EmpolyeeSalesReportVC.m */; };
+		F03484E7221E8DB8007E7653 /* EmployeeSalesFormVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = F03484E6221E8DB7007E7653 /* EmployeeSalesFormVC.xib */; };
+		F03484E9221E9352007E7653 /* EmpolyeeSalesReportHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F03484E8221E9352007E7653 /* EmpolyeeSalesReportHeaderView.xib */; };
 		F038EF3E2150C1C400AFB080 /* polycab_arrow_closed.png in Resources */ = {isa = PBXBuildFile; fileRef = F038EF3C2150C1C300AFB080 /* polycab_arrow_closed.png */; };
 		F038EF3F2150C1C400AFB080 /* polycab_arrow_open.png in Resources */ = {isa = PBXBuildFile; fileRef = F038EF3D2150C1C300AFB080 /* polycab_arrow_open.png */; };
 		F038EF422150C2B200AFB080 /* polycab_arrow_closed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F038EF402150C2B200AFB080 /* polycab_arrow_closed@2x.png */; };
@@ -684,6 +690,9 @@
 		F058020F221D2E3200682D07 /* SearchProductByCatalogNextViewVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = F058020A221D2E3100682D07 /* SearchProductByCatalogNextViewVC.xib */; };
 		F0580210221D2E3200682D07 /* SearchProductByCatalogNextViewVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F058020B221D2E3100682D07 /* SearchProductByCatalogNextViewVC.m */; };
 		F0580211221D2E3200682D07 /* SearchProductByCatalogNextViewVC.h in Headers */ = {isa = PBXBuildFile; fileRef = F058020C221D2E3100682D07 /* SearchProductByCatalogNextViewVC.h */; };
+		F0580217221D7D8500682D07 /* polycab_loading_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = F0580216221D7D8500682D07 /* polycab_loading_logo.png */; };
+		F058021B221D7DC500682D07 /* polycab_loading_logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F058021A221D7DC400682D07 /* polycab_loading_logo@2x.png */; };
+		F058021D221D7DE100682D07 /* polycab_loading_logo@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F058021C221D7DE100682D07 /* polycab_loading_logo@3x.png */; };
 		F059CC8E214F70D000E303F6 /* cart.png in Resources */ = {isa = PBXBuildFile; fileRef = F059CC69214F70CF00E303F6 /* cart.png */; };
 		F059CC8F214F70D000E303F6 /* crossicon.png in Resources */ = {isa = PBXBuildFile; fileRef = F059CC6A214F70CF00E303F6 /* crossicon.png */; };
 		F059CC90214F70D000E303F6 /* calendar.png in Resources */ = {isa = PBXBuildFile; fileRef = F059CC6C214F70CF00E303F6 /* calendar.png */; };
@@ -1693,6 +1702,12 @@
 		F033A0BF20E637A000366E3B /* showInfoClaimVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = showInfoClaimVC.h; sourceTree = "<group>"; };
 		F033A0C020E637A000366E3B /* showInfoClaimVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = showInfoClaimVC.m; sourceTree = "<group>"; };
 		F033A0C120E637A000366E3B /* showInfoClaimVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = showInfoClaimVC.xib; sourceTree = "<group>"; };
+		F03484DE221E8BE7007E7653 /* EmployeeSalesFormVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EmployeeSalesFormVC.h; sourceTree = "<group>"; };
+		F03484DF221E8BE7007E7653 /* EmployeeSalesFormVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EmployeeSalesFormVC.m; sourceTree = "<group>"; };
+		F03484E2221E8C36007E7653 /* EmpolyeeSalesReportVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EmpolyeeSalesReportVC.h; sourceTree = "<group>"; };
+		F03484E3221E8C36007E7653 /* EmpolyeeSalesReportVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EmpolyeeSalesReportVC.m; sourceTree = "<group>"; };
+		F03484E6221E8DB7007E7653 /* EmployeeSalesFormVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmployeeSalesFormVC.xib; sourceTree = "<group>"; };
+		F03484E8221E9352007E7653 /* EmpolyeeSalesReportHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmpolyeeSalesReportHeaderView.xib; sourceTree = "<group>"; };
 		F038EF3C2150C1C300AFB080 /* polycab_arrow_closed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = polycab_arrow_closed.png; sourceTree = "<group>"; };
 		F038EF3D2150C1C300AFB080 /* polycab_arrow_open.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = polycab_arrow_open.png; sourceTree = "<group>"; };
 		F038EF402150C2B200AFB080 /* polycab_arrow_closed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "polycab_arrow_closed@2x.png"; sourceTree = "<group>"; };
@@ -1740,6 +1755,9 @@
 		F058020A221D2E3100682D07 /* SearchProductByCatalogNextViewVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchProductByCatalogNextViewVC.xib; sourceTree = "<group>"; };
 		F058020B221D2E3100682D07 /* SearchProductByCatalogNextViewVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchProductByCatalogNextViewVC.m; sourceTree = "<group>"; };
 		F058020C221D2E3100682D07 /* SearchProductByCatalogNextViewVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchProductByCatalogNextViewVC.h; sourceTree = "<group>"; };
+		F0580216221D7D8500682D07 /* polycab_loading_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = polycab_loading_logo.png; sourceTree = "<group>"; };
+		F058021A221D7DC400682D07 /* polycab_loading_logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "polycab_loading_logo@2x.png"; sourceTree = "<group>"; };
+		F058021C221D7DE100682D07 /* polycab_loading_logo@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "polycab_loading_logo@3x.png"; sourceTree = "<group>"; };
 		F059CC69214F70CF00E303F6 /* cart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cart.png; sourceTree = "<group>"; };
 		F059CC6A214F70CF00E303F6 /* crossicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = crossicon.png; sourceTree = "<group>"; };
 		F059CC6C214F70CF00E303F6 /* calendar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = calendar.png; sourceTree = "<group>"; };
@@ -3533,6 +3551,19 @@
 			name = "Search By Catalog";
 			sourceTree = "<group>";
 		};
+		F03484D9221E8B53007E7653 /* Employee Sales Class */ = {
+			isa = PBXGroup;
+			children = (
+				F03484DE221E8BE7007E7653 /* EmployeeSalesFormVC.h */,
+				F03484DF221E8BE7007E7653 /* EmployeeSalesFormVC.m */,
+				F03484E6221E8DB7007E7653 /* EmployeeSalesFormVC.xib */,
+				F03484E2221E8C36007E7653 /* EmpolyeeSalesReportVC.h */,
+				F03484E3221E8C36007E7653 /* EmpolyeeSalesReportVC.m */,
+				F03484E8221E9352007E7653 /* EmpolyeeSalesReportHeaderView.xib */,
+			);
+			name = "Employee Sales Class";
+			sourceTree = "<group>";
+		};
 		F04B2F3020FF223A00E6120A /* Reveal VIew Controller Class */ = {
 			isa = PBXGroup;
 			children = (
@@ -3609,6 +3640,7 @@
 		F059CC6B214F70CF00E303F6 /* 04_dashboard */ = {
 			isa = PBXGroup;
 			children = (
+				F0580216221D7D8500682D07 /* polycab_loading_logo.png */,
 				F038EF3C2150C1C300AFB080 /* polycab_arrow_closed.png */,
 				F038EF3D2150C1C300AFB080 /* polycab_arrow_open.png */,
 				F059CC6C214F70CF00E303F6 /* calendar.png */,
@@ -3691,6 +3723,7 @@
 				F059CCB1214F70F500E303F6 /* polycab_logo@2x.png */,
 				F059CCB2214F70F500E303F6 /* polycab_menu@2x.png */,
 				F059CCB3214F70F500E303F6 /* polycab_notification@2x.png */,
+				F058021A221D7DC400682D07 /* polycab_loading_logo@2x.png */,
 			);
 			name = 04_dashboard;
 			path = "Polycab Assests/assests/2x/04_dashboard";
@@ -3784,6 +3817,7 @@
 				F059CCF9214F710400E303F6 /* polycab_logo@3x.png */,
 				F059CCFA214F710400E303F6 /* polycab_menu@3x.png */,
 				F059CCFB214F710400E303F6 /* polycab_notification@3x.png */,
+				F058021C221D7DE100682D07 /* polycab_loading_logo@3x.png */,
 			);
 			name = 04_dashboard;
 			path = "Polycab Assests/assests/3x/04_dashboard";
@@ -3920,6 +3954,7 @@
 		F088F5E42105DB3A000E26F4 /* SideBar Menus */ = {
 			isa = PBXGroup;
 			children = (
+				F03484D9221E8B53007E7653 /* Employee Sales Class */,
 				F0C4A0FD21B4F8BE00D7DF53 /* Employee Create Order */,
 				F01D9C0421A3F65800D41B2A /* Payment Outstanding report */,
 				F0A8EA76211D69BE001C4FAD /* Create Order */,
@@ -4270,8 +4305,10 @@
 				9022FC2217F960D0004373A4 /* SearchRequestStorage.h in Headers */,
 				F0B2FB23218850F5006A7C6B /* CustomCompareReportVC.h in Headers */,
 				8502702819064666003A7E01 /* UpdateAppVersion.h in Headers */,
+				F03484E0221E8BE7007E7653 /* EmployeeSalesFormVC.h in Headers */,
 				8530E0671AC05965001E5E79 /* ProductSearchVC.h in Headers */,
 				F0A8EA7A211D6A2C001C4FAD /* CreateOrderVC1.h in Headers */,
+				F03484E4221E8C36007E7653 /* EmpolyeeSalesReportVC.h in Headers */,
 				F0E1A0DB213E4E90005F4435 /* OrderPendencyCell.h in Headers */,
 				F0B2FB2A218850F5006A7C6B /* TravellerController.h in Headers */,
 				F02E3526221542A70007573D /* NationalDashboardVC.h in Headers */,
@@ -4502,6 +4539,7 @@
 				85B6A6D41E0E0DF500E0183E /* goods_return.png in Resources */,
 				F081178B21916CCE00149035 /* 16-balanceconfirmation.png in Resources */,
 				F01FCC1420F5F952001B0C4E /* ShowInvoice.xib in Resources */,
+				F03484E9221E9352007E7653 /* EmpolyeeSalesReportHeaderView.xib in Resources */,
 				857F8C7B1A828D210018A54C /* popular_scheme@2x.png in Resources */,
 				F031563721269F92005DE7F2 /* SearchProductByCatalogVC.xib in Resources */,
 				857F8C781A828D210018A54C /* logout@2x.png in Resources */,
@@ -4602,6 +4640,7 @@
 				852A941918F997D700F5DB5F /* checkbox@2x.png in Resources */,
 				857F8C721A828D210018A54C /* contact_us@2x.png in Resources */,
 				F059CC9D214F70D000E303F6 /* 08-stockmovement.png in Resources */,
+				F058021B221D7DC500682D07 /* polycab_loading_logo@2x.png in Resources */,
 				F059CD32214F710600E303F6 /* black-showpasswordicon@3x.png in Resources */,
 				85D7DA9F18F749CB00CF7D94 /* minus_normal.png in Resources */,
 				857A3ED91A6CFC3500279931 /* category-menu@2x.png in Resources */,
@@ -4718,6 +4757,7 @@
 				857F8C761A828D210018A54C /* file_explorer@2x.png in Resources */,
 				F02E35622215837E0007573D /* PaymentOutstandingPieViewCellView.xib in Resources */,
 				85D9926C1D2B9894003AEBBE /* edit_order_L.png in Resources */,
+				F058021D221D7DE100682D07 /* polycab_loading_logo@3x.png in Resources */,
 				F0B2FB2B218850F5006A7C6B /* CustomCompareReportVC.xib in Resources */,
 				852A941818F997D700F5DB5F /* checkbox.png in Resources */,
 				F088F5FB2105E587000E26F4 /* SalesIncentiveLegend.xib in Resources */,
@@ -4783,12 +4823,14 @@
 				F04B2F4620FF2B3D00E6120A /* LeftViewVC.xib in Resources */,
 				85D5DA6D18E6F60700BE344F /* havells_120x120.png in Resources */,
 				857F8C5A1A828CBD0018A54C /* my_details_L.png in Resources */,
+				F0580217221D7D8500682D07 /* polycab_loading_logo.png in Resources */,
 				F02E354C221576040007573D /* OverduePieView.xib in Resources */,
 				90F5F4E4179D55E7003BCA61 /* WorkFlowLoginScreen.xib in Resources */,
 				F0B2FB58218851E1006A7C6B /* user_icon.png in Resources */,
 				85CC35011DFA67900016F65C /* DVCheckBoxCell.xib in Resources */,
 				854DC1A31E6D6D16002225EC /* ProofOfDeliveryVC.xib in Resources */,
 				F059CCA4214F70D000E303F6 /* back-button.png in Resources */,
+				F03484E7221E8DB8007E7653 /* EmployeeSalesFormVC.xib in Resources */,
 				85D992671D2B9884003AEBBE /* gold_card@2x.png in Resources */,
 				90FA56DC17D727B3002B7601 /* SearchViewController.xib in Resources */,
 				85BBB00F1E710CD500169952 /* arrow_left@3x.png in Resources */,
@@ -4960,6 +5002,7 @@
 				8530E06D1AC11CA3001E5E79 /* CategoryResponse.m in Sources */,
 				F088F6172105FBB7000E26F4 /* Data.m in Sources */,
 				8579E75F174CDC3600D7945F /* NetworkConstant.m in Sources */,
+				F03484E1221E8BE7007E7653 /* EmployeeSalesFormVC.m in Sources */,
 				F0580203221D2DE000682D07 /* CreateOrderStatusVC.m in Sources */,
 				858F05011DEEC27A00398D46 /* EditSearchField.m in Sources */,
 				F04B2F4520FF2B3D00E6120A /* LeftViewVC.m in Sources */,
@@ -5022,6 +5065,7 @@
 				F0B2FB1D218850F5006A7C6B /* SalesComparisonVC.m in Sources */,
 				90272F2D174DD14100115D7B /* MXLabel.m in Sources */,
 				85AC9662198FFDDF00AC0338 /* ReportLegendSection.m in Sources */,
+				F03484E5221E8C36007E7653 /* EmpolyeeSalesReportVC.m in Sources */,
 				90272F32174DD16400115D7B /* HeaderView.m in Sources */,
 				90E81078174F390B003BDF77 /* MenuTVCell.m in Sources */,
 				F0B2FB3F218850F5006A7C6B /* CustomCompareReportVC.m in Sources */,

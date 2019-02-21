@@ -195,7 +195,8 @@ int CHECKBOX_TAG_OFFSET = 9000;
                                                                           imageNamed:@"back-button.png"] style:UIBarButtonItemStylePlain target:self
                                                                   action:@selector(backHandler:)];
     
-    backButton.tintColor =[UIColor colorWithRed:119.0/255 green:119.0/255 blue:119.0/255 alpha:1.0];
+   // backButton.tintColor =[UIColor colorWithRed:119.0/255 green:119.0/255 blue:119.0/255 alpha:1.0];
+     backButton.tintColor =[UIColor whiteColor];
     
     UIImageView *polycabLogo = [[UIImageView alloc] initWithImage:[UIImage  imageNamed:@"polycab_logo"]];
     self.navigationItem.titleView.contentMode = UIViewContentModeCenter;
@@ -208,7 +209,7 @@ int CHECKBOX_TAG_OFFSET = 9000;
                                                                        style:UIBarButtonItemStyleBordered
                                                                       target:self
                                                                       action:@selector(doneHandler:)];
-        backButton.tintColor = [UIColor blackColor];
+        backButton.tintColor = [UIColor whiteColor];
         [self.navigationItem setRightBarButtonItem:backButton];
     }
     

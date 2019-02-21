@@ -66,7 +66,7 @@
         [leftBackButton setFrame:CGRectMake( 0.0f, 0.0f, 60.0f, 30.0f)];
       [leftBackButton setTitle:@"Cancel" forState:UIControlStateNormal];
     leftBackButton.backgroundColor = [UIColor clearColor];
-    [leftBackButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal ];
+    [leftBackButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal ];
 
     [leftBackButton addTarget:self action:@selector(backButtonAction:) forControlEvents:UIControlEventTouchUpInside];
 
@@ -87,7 +87,7 @@
     [rightBackButton setFrame:CGRectMake( 0.0f, 0.0f, 60.0f, 30.0f)];
       [rightBackButton setTitle:@"Done" forState:UIControlStateNormal];
     rightBackButton.backgroundColor = [UIColor clearColor];
-    [rightBackButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal ];
+    [rightBackButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal ];
     
 
 

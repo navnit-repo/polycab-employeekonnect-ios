@@ -75,7 +75,7 @@
                                                                    style:UIBarButtonItemStyleBordered
                                                                   target:self
                                                                   action:@selector(backHandler:)];
-    cancelButton.tintColor = [Styles barButtonTextColor];
+    cancelButton.tintColor = [UIColor whiteColor];
     [self.navigationItem setLeftBarButtonItem:cancelButton];
     
     
@@ -85,7 +85,7 @@
                                                                      style:UIBarButtonItemStyleBordered
                                                                     target:self
                                                                     action:@selector(doneHandler:)];
-    doneButton.tintColor = [Styles barButtonTextColor];
+    doneButton.tintColor = [UIColor whiteColor];
     [self.navigationItem setRightBarButtonItem:doneButton];
 
     

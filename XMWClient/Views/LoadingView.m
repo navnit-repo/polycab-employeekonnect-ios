@@ -147,7 +147,7 @@ static NSMutableDictionary* g_QuotesMap = nil;
     
     UIImageView *image = [[UIImageView alloc]init];
     image.frame = CGRectMake(30, 30, 80*deviceWidthRation, 20);
-    [image setImage:[UIImage imageNamed:@"polycab_logo.png"]];
+    [image setImage:[UIImage imageNamed:@"polycab_loading_logo.png"]];
     
     [backGroundView addSubview:image];
     

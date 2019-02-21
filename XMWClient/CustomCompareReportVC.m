@@ -21,16 +21,16 @@
 #import "LayoutClass.h"
 
 
-@interface XmwCompareTuple : NSObject
-@property NSString* fieldName;
-@property NSString* firstValue;
-@property NSString* secondValue;
-@property NSString* thirdValue;
-@property NSString* uomValue;
-@property NSArray* firstRawData;
-@property NSArray* secondRawData;
-@property NSArray* thirdRawData;
-@end
+//@interface XmwCompareTuple : NSObject
+//@property NSString* fieldName;
+//@property NSString* firstValue;
+//@property NSString* secondValue;
+//@property NSString* thirdValue;
+//@property NSString* uomValue;
+//@property NSArray* firstRawData;
+//@property NSArray* secondRawData;
+//@property NSArray* thirdRawData;
+//@end
 
 
 @implementation XmwCompareTuple
@@ -51,9 +51,9 @@
     ReportPostResponse* secondResponse;
     ReportPostResponse* thirdResponse;
     
-    NSMutableDictionary* dataSet;
+   // NSMutableDictionary* dataSet;
     
-    NSArray* sortedDataSetKeys;
+//    NSArray* sortedDataSetKeys;
     
     LoadingView* loadingView;
     int loaderCount;

@@ -230,7 +230,7 @@ static NSString *const kCellsuperSubCatIdentifier = @"kCellCatIdentifier";
    
     
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 110*deviceHeightRation)];
-    view.backgroundColor = [UIColor whiteColor];
+    view.backgroundColor = [UIColor redColor];
     
     profileImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 35, 30*deviceWidthRation, 30*deviceHeightRation)];
 
@@ -254,7 +254,7 @@ static NSString *const kCellsuperSubCatIdentifier = @"kCellCatIdentifier";
     
     UILabel *customerName = [[UILabel alloc]initWithFrame:CGRectMake(profileImageView.frame.origin.x+profileImageView.frame.size.width+5, 30, 220*deviceWidthRation, 25*deviceHeightRation)];
     customerName.text =[[NSUserDefaults standardUserDefaults] valueForKey:@"customer_name"];
-    customerName.textColor = [UIColor blackColor];
+    customerName.textColor = [UIColor whiteColor];
     customerName.font = [UIFont fontWithName:@"Helvetica-Bold" size:14];
     
     customerName.autoresizingMask = UIViewAutoresizingFlexibleWidth;
@@ -267,13 +267,14 @@ static NSString *const kCellsuperSubCatIdentifier = @"kCellCatIdentifier";
     
     
     UILabel *regID = [[UILabel alloc]initWithFrame:CGRectMake(profileImageView.frame.origin.x+profileImageView.frame.size.width+5, 55, 80*deviceWidthRation, 20*deviceHeightRation)];
-    regID.textColor =  [UIColor colorWithRed:119.0/255 green:119.0/255 blue:119.0/255 alpha:1.0];
-    regID.font = [UIFont fontWithName:@"Helvetica-Light" size:12];
+ //   regID.textColor =  [UIColor colorWithRed:119.0/255 green:119.0/255 blue:119.0/255 alpha:1.0];
+     regID.textColor =  [UIColor whiteColor];
+    regID.font = [UIFont fontWithName:@"Helvetica-Bold" size:12];
     regID.text = [[NSUserDefaults standardUserDefaults] valueForKey:@"USERNAME"];
  
     UIView*underLine = [[UIView alloc]initWithFrame:CGRectMake(10, regID.frame.origin.y+regID.frame.size.height+5, tableView.frame.size.width, 0.5)];
-    underLine.backgroundColor = [UIColor colorWithRed:119.0/255 green:119.0/255 blue:119.0/255 alpha:1.0];
-    
+    //underLine.backgroundColor = [UIColor colorWithRed:119.0/255 green:119.0/255 blue:119.0/255 alpha:1.0];
+     underLine.backgroundColor = [UIColor whiteColor];
     
     [view addSubview:profileImageView];
     [view addSubview:customerName];

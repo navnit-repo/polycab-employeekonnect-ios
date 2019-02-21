@@ -36,13 +36,13 @@
     
     
     
-    cancelButton.tintColor = [UIColor blackColor];
+    cancelButton.tintColor = [UIColor whiteColor];
     
     UIBarButtonItem* DoneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:@selector(DoneHandler:)];
     
     
     
-    DoneButton.tintColor = [UIColor blackColor];
+    DoneButton.tintColor = [UIColor whiteColor];
     
     [self.navigationItem setRightBarButtonItem:DoneButton];
     

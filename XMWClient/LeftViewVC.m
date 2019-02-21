@@ -1,4 +1,4 @@
- //
+//
 //  LeftViewVC.m
 //  XMWClient
 //
@@ -27,10 +27,20 @@ static HamBurgerMenuView* rightSlideMenu = nil;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    if(isiPhone10) {
+    if (isiPhoneXSMAX) {
+        self.view.frame = CGRectMake(0, 64, 414, 832);
+    }
+    else if(isiPhoneXR) {
+        self.view.frame = CGRectMake(0, 64, 414, 832);
+    }
+    
+    else if(isiPhoneXS) {
         self.view.frame = CGRectMake(0, 64, 375, 748);
     }
-
+    else if(isiPhone10) {
+        self.view.frame = CGRectMake(0, 64, 375, 748);
+    }
+    
     else if(isiPhone6Plus) {
         self.view.frame = CGRectMake(0, 64, 414, 672);
     }
@@ -46,8 +56,8 @@ static HamBurgerMenuView* rightSlideMenu = nil;
     NSLog(@"%@",menuDetailsDict);
     [self getMenuItems];
     [self configureSideBar];
-   
-
+    
+    
 }
 -(void) getMenuItems
 {
@@ -64,14 +74,41 @@ static HamBurgerMenuView* rightSlideMenu = nil;
     [menuDetailsDict setObject:logOutEmptyData forKey:@"1000"];
     
     
+    NSMutableDictionary *dashboardEmptyData = [[NSMutableDictionary alloc]init];
+    [dashboardEmptyData setValue:CHILD_MENU_DETAIL forKey:@"CHILD_MENU_DETAIL"];
+    [dashboardEmptyData setValue:@"DOT_FORM_DASHBOARD" forKey:@"FORM_ID"];
+    [dashboardEmptyData setValue:@"DASHBOARD" forKey:@"FORM_TYPE"];
+    [dashboardEmptyData setValue:@"Dashboard" forKey:@"MENU_NAME"];
+    [dashboardEmptyData setValue:@"xmwpcdealer" forKey:@"MODULE"];
+    [menuDetailsDict setObject:dashboardEmptyData forKey:@"10"];
+    
+    [keyIdName addObject:@"10"];
     [keyIdName addObject:@"1000"];
+    
+    NSMutableArray *keys= [[NSMutableArray alloc]init];
+    for (int i=0; i<keyIdName.count; i++) {
+        NSInteger b = [[keyIdName objectAtIndex:i]integerValue];
+        NSNumber *number = [NSNumber numberWithInt:b];
+        [keys addObject:number];
+    }
+    
+    keys = [NSMutableArray arrayWithArray:[keys sortedArrayUsingSelector: @selector(compare:)]];
+    [keys sortedArrayUsingSelector: @selector(compare:)];
+    keyIdName = [[NSMutableArray alloc]init];
+    for(int i=0; i<keys.count;i++)
+    {
+        [keyIdName addObject: [NSString stringWithFormat:@"%@",[keys objectAtIndex:i]]];
+    }
+    
+    
+    
     NSLog(@"menuDetail = %@",menuDetailsDict);
     long int sizeOfKeyVec    = [keyIdName count];
     NSString *menuTitle;
-   
+    
     for (int idx = 0; idx < sizeOfKeyVec; idx++)
     {
-        NSMutableDictionary* menuItemDetail = [menuDetailsDict objectForKey: [keyIdName objectAtIndex:idx]];
+        NSMutableDictionary* menuItemDetail = [menuDetailsDict objectForKey:[keyIdName objectAtIndex:idx]];
         menuTitle = [menuItemDetail objectForKey: XmwcsConst_MENU_CONSTANT_MENU_NAME ];
         [menuItems addObject:menuTitle];
     }
@@ -79,20 +116,20 @@ static HamBurgerMenuView* rightSlideMenu = nil;
 }
 -(void)configureSideBar{
     
-            rightSlideMenu = [[HamBurgerMenuView alloc] initWithFrame:CGRectMake(0,0, 300, self.view.bounds.size.height+64) withMenu:menuItems handler:self :menuDetailsDict : keyIdName];
-            [self.view addSubview : rightSlideMenu];
-            [UIView beginAnimations:@"TableAnimation" context:NULL];
-            [UIView setAnimationCurve:self];
-            [UIView setAnimationDuration:0.2];
-            [UIView commitAnimations];
- 
+    rightSlideMenu = [[HamBurgerMenuView alloc] initWithFrame:CGRectMake(0,0, 300, self.view.bounds.size.height+64) withMenu:menuItems handler:self :menuDetailsDict : keyIdName];
+    [self.view addSubview : rightSlideMenu];
+    [UIView beginAnimations:@"TableAnimation" context:NULL];
+    [UIView setAnimationCurve:self];
+    [UIView setAnimationDuration:0.2];
+    [UIView commitAnimations];
+    
 }
 -(void) humbergerMenuClicked : (int) idx : (DotMenuObject *)selectedMenuData
 {
     
     [self.revealViewController setFrontViewPosition:FrontViewPositionLeft animated:YES];
     [self.delegate clickedDashBoardDelegate:idx :selectedMenuData :auth_Token];
-     NSLog(@"Hamburger menu clicked with idx %d", idx);
+    NSLog(@"Hamburger menu clicked with idx %d", idx);
     
 }
 

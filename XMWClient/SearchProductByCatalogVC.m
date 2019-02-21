@@ -90,6 +90,8 @@
         [catalogQuery setObject:self.productDivision forKey:@"CUSTOMER_NUMBER"];
         [catalogQuery setObject:[ClientVariable getInstance].CLIENT_USER_LOGIN.userName forKey:@"USERNAME"];
         
+        
+        
         [catalogQuery setObject:billTO forKey:@"SHIP_TO"];
         
         // sample division fan, 45

@@ -288,8 +288,8 @@
     if ([array count] != 0) {
         
         NSMutableDictionary *header = [[NSMutableDictionary alloc]init];
-        [header setObject:[[NSUserDefaults standardUserDefaults] valueForKey:@"USERNAME"] forKey:@"USERNAME"];
-        [header setObject:[[NSUserDefaults standardUserDefaults] valueForKey:@"CUSTOMER_NAME"] forKey:@"CUSTOMER_NAME"];
+        [header setObject:[[NSUserDefaults standardUserDefaults] valueForKey:@"selectedRegisterIDCode"] forKey:@"USERNAME"];
+        [header setObject:[[NSUserDefaults standardUserDefaults] valueForKey:@"selectedRegisterIDCustomerName"] forKey:@"CUSTOMER_NAME"];
         [header setObject:[NSString stringWithFormat:@"%@", [forwardedDataPost valueForKey:@"BUSINESS_VERTICAL"]] forKey:@"ACCOUNT_NUMBER"];
         [header setObject:[NSString stringWithFormat:@"%@", [forwardedDataPost valueForKey:@"BILL_TO"]] forKey:@"BILL_TO"];
         [header setObject:[NSString stringWithFormat:@"%@", [forwardedDataPost valueForKey:@"SHIP_TO"]] forKey:@"SHIP_TO"];

@@ -24,6 +24,8 @@
     
     float totalAmmount;
     
+    int numberOfTotal;
+    
     
 }
 +(OverDueCell*) createInstance;
@@ -35,11 +37,11 @@
 -(void)autoLayout;
 -(NSString*)formateCurrency:(NSString *)actualAmount;
 
-@property (weak, nonatomic) IBOutlet UIView *constantView1;
-@property (weak, nonatomic) IBOutlet UIView *constantView2;
-@property (weak, nonatomic) IBOutlet UIView *constantView3;
-@property (weak, nonatomic) IBOutlet UIView *constantView4;
-@property (weak, nonatomic) IBOutlet UIView *constantView5;
+@property (strong, nonatomic) IBOutlet UIView *constantView1;
+@property (strong, nonatomic) IBOutlet UIView *constantView2;
+@property (strong, nonatomic) IBOutlet UIView *constantView3;
+@property (strong, nonatomic) IBOutlet UIView *constantView4;
+@property (strong, nonatomic) IBOutlet UIView *constantView5;
 
 @property (weak, nonatomic) IBOutlet UILabel *user1;
 
@@ -55,5 +57,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *value3;
 @property (weak, nonatomic) IBOutlet UILabel *value4;
 @property (weak, nonatomic) IBOutlet UILabel *value5;
-
+@property int numberOfTotal;
+-(void)configurePieView;
 @end

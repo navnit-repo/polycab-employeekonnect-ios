@@ -165,7 +165,15 @@
     //    pageIndicator.numberOfPages = [dataArray count];
     
     if (dataArray.count !=0) {
-        
+        //for testing
+//        NSMutableArray *testArray = [[NSMutableArray alloc]init];
+//        [testArray addObject:[dataArray objectAtIndex:0]];
+//        [testArray addObject:[dataArray objectAtIndex:1]];
+//        [testArray addObject:[dataArray objectAtIndex:2]];
+//        [testArray addObject:[dataArray objectAtIndex:3]];
+//        [testArray addObject:[dataArray objectAtIndex:4]];
+//        dataArray = [[NSMutableArray alloc]init];
+//        [dataArray addObjectsFromArray:testArray];
         if (indexPath.row==0) {
             
             nationalSalesAggregatePieCellView = [NationalSalesAggregatePieCellView createInstance];
@@ -188,33 +196,38 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
    
-    DotFormPost *reqFormPost = (DotFormPost*)chartPostRqst;
-    ReportPostResponse *reportPostResponse = (ReportPostResponse*) chartResponseData;
-      ClientVariable* clientVariable = [ClientVariable getInstance];
-     UIViewController* objVC = [clientVariable reportVCForId:reqFormPost.adapterId];
     
-    NSMutableDictionary* forwardedDataDisplay;
-    NSMutableDictionary* forwardedDataPost;
-    forwardedDataPost = [[NSMutableDictionary alloc]init];
-    forwardedDataDisplay = [[NSMutableDictionary alloc]init];
-    [forwardedDataDisplay setObject:[reqFormPost.postData valueForKey:@"TO_DATE"]  forKey:@"TO_DATE"];
-    [forwardedDataDisplay setObject:[reqFormPost.postData valueForKey:@"FROM_DATE"] forKey:@"FROM_DATE"];
-    [forwardedDataPost setObject:[reqFormPost.postData valueForKey:@"TO_DATE"] forKey:@"TO_DATE"];
-    [forwardedDataPost setObject:[reqFormPost.postData valueForKey:@"FROM_DATE"] forKey:@"FROM_DATE"];
-    
-    ReportVC *reportVC = (ReportVC*) objVC;
-    
-    reportVC.requestFormPost = reqFormPost;
-    reportVC.screenId = AppConst_SCREEN_ID_REPORT;
-    reportVC.reportPostResponse = reportPostResponse;
-    reportVC.forwardedDataDisplay = forwardedDataDisplay;
-    reportVC.forwardedDataPost = forwardedDataPost;
-    
+    if (dataArray.count>1) {
+        DotFormPost *reqFormPost = (DotFormPost*)chartPostRqst;
+        ReportPostResponse *reportPostResponse = (ReportPostResponse*) chartResponseData;
+        ClientVariable* clientVariable = [ClientVariable getInstance];
+        UIViewController* objVC = [clientVariable reportVCForId:reqFormPost.adapterId];
+        
+        NSMutableDictionary* forwardedDataDisplay;
+        NSMutableDictionary* forwardedDataPost;
+        forwardedDataPost = [[NSMutableDictionary alloc]init];
+        forwardedDataDisplay = [[NSMutableDictionary alloc]init];
+        [forwardedDataDisplay setObject:[reqFormPost.postData valueForKey:@"TO_DATE"]  forKey:@"TO_DATE"];
+        [forwardedDataDisplay setObject:[reqFormPost.postData valueForKey:@"FROM_DATE"] forKey:@"FROM_DATE"];
+        [forwardedDataPost setObject:[reqFormPost.postData valueForKey:@"TO_DATE"] forKey:@"TO_DATE"];
+        [forwardedDataPost setObject:[reqFormPost.postData valueForKey:@"FROM_DATE"] forKey:@"FROM_DATE"];
+        
+        ReportVC *reportVC = (ReportVC*) objVC;
+        
+        reportVC.requestFormPost = reqFormPost;
+        reportVC.screenId = AppConst_SCREEN_ID_REPORT;
+        reportVC.reportPostResponse = reportPostResponse;
+        reportVC.forwardedDataDisplay = forwardedDataDisplay;
+        reportVC.forwardedDataPost = forwardedDataPost;
+        
         UIViewController *root;
         root = [[[[UIApplication sharedApplication]windows]objectAtIndex:0]rootViewController];
-    
+        
         SWRevealViewController *reveal = (SWRevealViewController*)root;
         [(UINavigationController*)reveal.frontViewController pushViewController:objVC animated:YES];
+    }
+    
+   
   
 }
 

@@ -236,8 +236,17 @@ UITextField* activeTextField = nil;
     [super viewDidLoad];
     
 
+    if (isiPhoneXSMAX) {
+        self.view.frame = CGRectMake(0, 64, 414, 832);
+    }
+    else if(isiPhoneXR) {
+        self.view.frame = CGRectMake(0, 64, 414, 832);
+    }
     
-    if(isiPhone10) {
+    else if(isiPhoneXS) {
+        self.view.frame = CGRectMake(0, 64, 375, 748);
+    }
+    else if(isiPhone10) {
         self.view.frame = CGRectMake(0, 64, 375, 748);
     }
     
@@ -998,8 +1007,17 @@ UITextField* activeTextField = nil;
     // this code for set selected reg id
     if ([dropDownField.elementId isEqualToString:@"REGISTRY_ID"]) {
         regIDCheck = YES;
+         NSArray *myArray = [display componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"-"]];
+        [[NSUserDefaults standardUserDefaults ] setObject:[myArray objectAtIndex:1] forKey:@"selectedRegisterIDCustomerName"];
         [[NSUserDefaults standardUserDefaults ] setObject:display forKey:@"selectedRegisterID"];
         [[NSUserDefaults standardUserDefaults ] setObject:code forKey:@"selectedRegisterIDCode"];
+        
+        //////////////
+    
+        [ClientVariable getInstance].CLIENT_USER_LOGIN.userName = code; // set userName accoring to userID
+        
+        /////////////////
+        
     }
 
     

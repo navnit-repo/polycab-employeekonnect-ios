@@ -15,6 +15,7 @@
 #import "DotFormPost.h"
 #import "SearchResponse.h"
 #import "DVAppDelegate.h"
+#import "ClientVariable.h"
 
 @interface EmployeeCreateOrderVC ()
 
@@ -42,9 +43,17 @@
     
     if ([dropDownField.elementId isEqualToString:@"REGISTRY_ID"]) {
         regIDCheck = YES;
-        
+        NSArray *myArray = [display componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"-"]];
          [[NSUserDefaults standardUserDefaults ] setObject:display forKey:@"selectedRegisterID"];
          [[NSUserDefaults standardUserDefaults ] setObject:code forKey:@"selectedRegisterIDCode"];
+         [[NSUserDefaults standardUserDefaults ] setObject:[myArray objectAtIndex:1] forKey:@"selectedRegisterIDCustomerName"];
+        //////////////
+       
+        
+        [ClientVariable getInstance].CLIENT_USER_LOGIN.userName = code; // set userName accoring to userID
+      
+        /////////////////
+        
         //blank field code
         MXTextField *BUSINESS_VERTICAL = (MXTextField *) [self getDataFromId:@"BUSINESS_VERTICAL"];
         BUSINESS_VERTICAL.text = @"";

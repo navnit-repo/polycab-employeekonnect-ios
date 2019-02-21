@@ -203,6 +203,15 @@ NSMutableDictionary *masterDataForEmployee;
        frontViewController = [[NationalDashboardVC alloc] initWithNibName:@"DashBoardVC" bundle:nil];
    }
     
+   else if ([roleName isEqualToString:@"STATE_HEAD"]) {
+       AppConst_EMPLOYEE_SALES_AGGREGATE_CARD_DOC_ID = @"DR_BU_SALES_CUSTOMER_WISE" ;
+       AppConst_EMPLOYEE_SALES_AGGREGATE_PIE_CARD_DOC_ID = @"DR_BU_SALES_CUSTOMER_WISE";
+       AppConst_EMPLOYEE_PAYMENT_OUTSTANDING_PIE_CARD_DOC_ID = @"DR_BU_PAYMENT_OUTSTANDING_CUSTOMER_WISE" ;
+       AppConst_EMPLOYEE_OVERDUE_PIE_CARD_DOC_ID = @"DR_BU_OVERDUE_CUSTOMER_WISE";
+       
+       frontViewController = [[NationalDashboardVC alloc] initWithNibName:@"DashBoardVC" bundle:nil];
+   }
+    
     else{
        frontViewController = [[DashBoardVC alloc] init];
     }
@@ -449,6 +458,17 @@ NSMutableDictionary *masterDataForEmployee;
     
     // for RMAVC
      [clientVariables registerFormVCClass:@"RMAVC" forId:@"DOT_FORM_REQUEST_FOR_RETURN_MATERIAL"];
+    
+ ////for employee////////////////////////
+    // for SalesComparisonVC
+    [clientVariables registerFormVCClass:@"EmployeeSalesFormVC" forId:@"DOT_FORM_LEVEL_SALES_NATIONAL_WISE"];
+    // for SalesComparisonVC
+    [clientVariables registerFormVCClass:@"EmployeeSalesFormVC" forId:@"DOT_FORM_LEVEL_BU_NATIONAL_WISE"];
+    // for SalesComparisonVC
+    [clientVariables registerFormVCClass:@"EmployeeSalesFormVC" forId:@"DOT_FORM_BU_SALES_REGION_WISE"];
+    // for SalesComparisonVC
+    [clientVariables registerFormVCClass:@"EmployeeSalesFormVC" forId:@"DOT_FORM_BU_REGION_SALES_STATE_WISE"];
+/////////////////////////////
     
 }
 

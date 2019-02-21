@@ -89,7 +89,17 @@
     ytdMaxBarValue = nil;
     
     
-    if(isiPhone10) {
+    if (isiPhoneXSMAX) {
+        self.view.frame = CGRectMake(0, 64, 414, 832);
+    }
+    else if(isiPhoneXR) {
+        self.view.frame = CGRectMake(0, 64, 414, 832);
+    }
+    
+    else if(isiPhoneXS) {
+        self.view.frame = CGRectMake(0, 64, 375, 748);
+    }
+    else if(isiPhone10) {
         self.view.frame = CGRectMake(0, 64, 375, 748);
     }
     
@@ -104,7 +114,6 @@
         // 0, 64, 320, 416
         self.view.frame = CGRectMake(0, 64, 320, 416);
     }
-    
     
     // Do any additional setup after loading the view.
     self.navigationController.navigationBar.translucent = NO;
