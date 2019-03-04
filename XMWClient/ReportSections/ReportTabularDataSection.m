@@ -571,6 +571,13 @@
     BOOL isDrillDown = [self clickableAndExpandable :indexPath.row :&expandProperty];
     NSLog(@"expandProperty");
     
+    NSMutableArray *records = recordTableData;
+    NSArray* rowData = [records objectAtIndex:indexPath.row];
+    
+    if([[rowData objectAtIndex:0]isEqualToString:@"All"])//for polycab RECPT check
+    {
+        isDrillDown = NO;
+    }
     if([expandProperty isEqualToString:@""]!=0)
     {
         // handle expandable

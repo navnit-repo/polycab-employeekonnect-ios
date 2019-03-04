@@ -20,6 +20,34 @@
     
     return view;
 }
+
+-(void)addLoadingView
+{
+    // add blank view
+    blankView = [[UIView alloc]initWithFrame:CGRectMake(self.bounds.origin.x, self.bounds.origin.y, self.bounds.size.width-20, self.bounds.size.height)];
+    blankView.backgroundColor = [UIColor clearColor];
+    
+    UILabel *lbl = [[UILabel alloc]initWithFrame:CGRectMake(10, 8, 150*deviceWidthRation, 15*deviceHeightRation)];
+    lbl.text = @"Overdue";
+    lbl.font = [UIFont fontWithName:@"Helvetica-Bold" size:12];
+    [blankView addSubview:lbl];
+    
+    
+    UIActivityIndicatorView *  activityIndicatorView = [[UIActivityIndicatorView alloc]
+                                                        initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    activityIndicatorView.tag = 50003;
+    activityIndicatorView.center=blankView.center;
+    [activityIndicatorView startAnimating];
+    activityIndicatorView.color = [UIColor redColor];
+    activityIndicatorView.hidesWhenStopped = NO;
+    activityIndicatorView.hidden = NO;
+    [blankView addSubview:activityIndicatorView];
+    
+    [self.mainView addSubview:blankView];
+    
+    
+}
+
 - (void)networkCAll
 {
     chartPostRqst = [[DotFormPost alloc]init];

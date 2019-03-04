@@ -80,7 +80,7 @@
     
     
     
-    backButton.tintColor = [UIColor colorWithRed:119.0/255 green:119.0/255 blue:119.0/255 alpha:1.0];
+    backButton.tintColor = [UIColor whiteColor];
     
     
     UIImageView *polycabLogo = [[UIImageView alloc] initWithImage:[UIImage  imageNamed:@"polycab_logo"]];

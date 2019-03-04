@@ -36,18 +36,17 @@
 @implementation XmwCompareTuple
 
 
-
 @end
 
 @interface CustomCompareReportVC () <UITableViewDataSource, UITableViewDelegate, DVPeriodCalendarDelegate>
 {
-    NSString* firstColumnText;
+//    NSString* firstColumnText;
     NSString* secondColumnText;
     NSString* thirdColumnText;
     NSDateFormatter* dateFormatter;
     
     
-    ReportPostResponse* firstResponse;
+//    ReportPostResponse* firstResponse;
     ReportPostResponse* secondResponse;
     ReportPostResponse* thirdResponse;
     
@@ -55,8 +54,9 @@
     
 //    NSArray* sortedDataSetKeys;
     
-    LoadingView* loadingView;
-    int loaderCount;
+//    LoadingView* loadingView;
+//    int loaderCount;
+    
     
 }
 
@@ -68,6 +68,9 @@
     [LayoutClass setLayoutForIPhone6:self.mainTable];
     
     [super viewDidLoad];
+    
+   
+    
     loaderCount = 0;
     
     dateFormatter = [[NSDateFormatter alloc] init];
@@ -106,7 +109,7 @@
                                                                           imageNamed:@"back-button.png"] style:UIBarButtonItemStylePlain target:self
                                                                   action:@selector(backHandler:)];
     
-    backButton.tintColor = [UIColor colorWithRed:119.0/255 green:119.0/255 blue:119.0/255 alpha:1.0];
+    backButton.tintColor = [UIColor whiteColor];
     [self.navigationItem setLeftBarButtonItem:backButton];
     
     [self drawTitle: self.dotForm.screenHeader];
@@ -115,6 +118,7 @@
 
 -(void) drawTitle:(NSString *)headerStr
 {
+    
     NSDictionary *textAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
                                     [UIColor whiteColor],NSForegroundColorAttributeName,
                                     [UIColor whiteColor],NSBackgroundColorAttributeName,nil];

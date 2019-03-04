@@ -8,11 +8,17 @@
 
 #import "EmpolyeeSalesReportVC.h"
 #import "DVAppDelegate.h"
-
+#import "ClientVariable.h"
+#import "XmwReportService.h"
 @implementation EmpolyeeSalesReportVC
+{
+    
+    UILabel *label;
+    NSMutableArray *sortDataArrayAddName;
+}
 
 - (void)viewDidLoad {
-    
+    sortDataArrayAddName = [[NSMutableArray alloc]init];
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 }
@@ -92,14 +98,16 @@
 -(void)headerView:(NSString*)headername{
     NSLog(@"Header Name : %@",headername);
     
-    UILabel *label = [[UILabel alloc] initWithFrame: CGRectMake(0, 10, self.view.bounds.size.width, 40)];
+    label = [[UILabel alloc] initWithFrame: CGRectMake(0, 10, self.view.bounds.size.width, 40)];
     [label setBackgroundColor:[UIColor clearColor]];
     [label setTextColor: [UIColor blackColor]];
     [label setFont:[UIFont fontWithName:@"Helvetica-Bold" size:18]];
-    [label setText: headername];
-    
-    [label setNumberOfLines: 0];
+    [label setText: [headername uppercaseString]];
+    //[label setText: headername];
+    label.lineBreakMode = UILineBreakModeWordWrap;
+    label.textAlignment = NSTextAlignmentCenter;
     [label sizeToFit];
+    [label setNumberOfLines: 0];
     [label setCenter: CGPointMake(self.view.center.x, label.center.y)];
     [self.view addSubview:label];
 }
@@ -153,7 +161,7 @@
     }
     
     NSArray* rowWiseTableData = reportData.tableData;
-    
+   
     for(NSArray* rowData in rowWiseTableData) {
         NSString* fieldName = [rowData objectAtIndex:0];
         XmwCompareTuple* tupleObject = (XmwCompareTuple*)[inDataSet objectForKey:fieldName];
@@ -166,6 +174,7 @@
             tupleObject.secondRawData = nil;
             tupleObject.thirdRawData = nil;
             [dataSet setObject:tupleObject forKey:fieldName];
+    
         }
         tupleObject.firstValue = [rowData objectAtIndex:2];
         if([rowData count]>2) {
@@ -176,6 +185,16 @@
         tupleObject.fieldName = fieldName;
         tupleObject.firstRawData = rowData;
     }
+    
+    for (int i=0; i<rowWiseTableData.count; i++) {
+        NSString *object =[[rowWiseTableData objectAtIndex:i] objectAtIndex:0];
+        
+        if (![sortDataArrayAddName containsObject:object]){
+            [sortDataArrayAddName addObject:object];
+        }
+       
+    }
+    
 }
 
 -(void) addSecondSetData:(ReportPostResponse*) reportData into:(NSMutableDictionary*) inDataSet
@@ -191,7 +210,7 @@
     }
     
     NSArray* rowWiseTableData = reportData.tableData;
-    
+  
     for(NSArray* rowData in rowWiseTableData) {
         NSString* fieldName = [rowData objectAtIndex:0];
         XmwCompareTuple* tupleObject = (XmwCompareTuple*)[inDataSet objectForKey:fieldName];
@@ -205,7 +224,7 @@
             tupleObject.thirdRawData = nil;
             [dataSet setObject:tupleObject forKey:fieldName];
         }
-        tupleObject.secondValue = [rowData objectAtIndex:3];
+        tupleObject.secondValue = [rowData objectAtIndex:2];
         if([rowData count]>2) {
             tupleObject.uomValue = [rowData objectAtIndex:2];
         } else {
@@ -214,6 +233,16 @@
         tupleObject.fieldName = fieldName;
         tupleObject.secondRawData = rowData;
     }
+    
+    for (int i=0; i<rowWiseTableData.count; i++) {
+        NSString *object =[[rowWiseTableData objectAtIndex:i] objectAtIndex:0];
+        
+        if (![sortDataArrayAddName containsObject:object]){
+            [sortDataArrayAddName addObject:object];
+        }
+        
+    }
+    
 }
 
 -(void) addThirdSetData:(ReportPostResponse*) reportData into:(NSMutableDictionary*) inDataSet
@@ -242,7 +271,7 @@
             tupleObject.thirdRawData = nil;
             [dataSet setObject:tupleObject forKey:fieldName];
         }
-        tupleObject.thirdValue = [rowData objectAtIndex:4];
+        tupleObject.thirdValue = [rowData objectAtIndex:2];
         if([rowData count]>2) {
             tupleObject.uomValue = [rowData objectAtIndex:2];
         } else {
@@ -251,6 +280,157 @@
         tupleObject.fieldName = fieldName;
         tupleObject.thirdRawData = rowData;
     }
+    
+    for (int i=0; i<rowWiseTableData.count; i++) {
+        NSString *object =[[rowWiseTableData objectAtIndex:i] objectAtIndex:0];
+        
+        if (![sortDataArrayAddName containsObject:object]){
+            [sortDataArrayAddName addObject:object];
+        }
+        
+    }
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    NSString* dataSetKey = [sortedDataSetKeys objectAtIndex:indexPath.row];
+    XmwCompareTuple* dataTuple = [dataSet objectForKey:dataSetKey];
+    
+
+    
+    NSArray* rawData = [self pickGoodRawData:dataTuple.firstRawData option:dataTuple.secondRawData option:dataTuple.thirdRawData];
+    
+    
+    if([[rawData objectAtIndex:0]isEqualToString:@"All"])//for polycab All check
+    {
+        //isDrillDown = NO;
+    }
+    else
+    {
+            if(indexPath.section==1 && [self clickable:indexPath.row]==YES) {
+                [self handleDrilldown:indexPath.row];
+            }
+    }
+
+    
+}
+-(void) fetchFirstColumnData:(DotFormPost*) formPost
+{
+    
+    if(loadingView==nil) {
+        loadingView = [LoadingView loadingViewInView:self.view];
+    }
+    loaderCount++;
+    
+    
+    firstColumnText = [NSString stringWithFormat:@"%@\r\n%@",
+                       [self.firstFormPost.postData objectForKey:@"FROM_DATE"],
+                       [self.firstFormPost.postData objectForKey:@"TO_DATE"]];
+    
+    
+    XmwReportService* reportService = [[XmwReportService alloc] initWithPostData:formPost withContext:@"fetchFirstColumnData"];
+    
+    [reportService fetchReportUsingSuccess:^(DotFormPost* formPosted, ReportPostResponse* reportResponse) {
+        
+        if(loaderCount>0) {
+            loaderCount--;
+            if(loaderCount==0) {
+                [loadingView removeView];
+                loadingView = nil;
+            }
+        }
+        // we should receive report response data here
+        
+        
+        firstResponse = reportResponse;
+        
+        ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
+        DotReport* dotReport;
+        if(firstResponse!=nil) {
+            dotReport = [clientVariables.DOT_REPORT_MAP objectForKey:firstResponse.viewReportId];
+            
+        } else {
+            dotReport = [clientVariables.DOT_REPORT_MAP objectForKey:self.dotForm.submitAdapterId];
+            
+        }
+        [label setText: [dotReport.screenHeader uppercaseString]];
+        label.lineBreakMode = UILineBreakModeWordWrap;
+        label.textAlignment = NSTextAlignmentCenter;
+        [label sizeToFit];
+        [label setNumberOfLines: 0];
+        [label setCenter: CGPointMake(self.view.center.x, label.center.y)];
+      //  label.text = dotReport.screenHeader;
+        
+        [self addFirstSetData:firstResponse into:dataSet];
+        
+        
+        sortedDataSetKeys = [self sortKeys];
+        [self.mainTable reloadData];
+        
+    }   fail:^(DotFormPost* formPosted, NSString* message) {
+        if(loaderCount>0) {
+            loaderCount--;
+            if(loaderCount==0) {
+                [loadingView removeView];
+                loadingView = nil;
+            }
+        }
+        
+        
+    }];
+    
+}
+
+
+-(NSArray*) sortKeys
+{
+    NSString* sortOnFieldData = [self dotReport].sortedOnField;
+    
+    NSMutableArray *sortedElementIds = [DotReportDraw sortRptComponents:self.dotReport.reportElements :XmwcsConst_REPORT_PLACE_TABLE];
+    
+    if(sortOnFieldData !=nil && [sortOnFieldData length]>0) {
+        NSDictionary* sortFieldMap = [XmwUtils getExtendedPropertyMap:sortOnFieldData];
+        
+        // FIRST_FIELD_NAME:[VKBUR]$FIRST_FIELD_TYPE:[CHAR]$FIRST_FIELD_ORDER:[DESC]
+        NSString* sortingField = [sortFieldMap objectForKey:@"FIRST_FIELD_NAME"];
+        NSString* sortingFieldType = [sortFieldMap objectForKey:@"FIRST_FIELD_TYPE"];
+        NSString* sortingOrder = [sortFieldMap objectForKey:@"FIRST_FIELD_ORDER"];
+        
+        int sortFieldIndex = -1;
+        for(int i=0; i<[sortedElementIds count]; i++) {
+            if([[sortedElementIds objectAtIndex:i] isEqualToString:sortingField]) {
+                sortFieldIndex = i;
+            }
+        }
+        
+        if(sortFieldIndex>-1) {
+            NSArray* allKeys = [dataSet allKeys];
+            NSArray* sortedList = [allKeys sortedArrayUsingComparator:^NSComparisonResult(NSString* item1, NSString* item2) {
+                
+                XmwCompareTuple* objectA = [dataSet objectForKey:item1];
+                XmwCompareTuple* objectB = [dataSet objectForKey:item2];
+                
+                NSArray* rowDataA = [self pickGoodRawData:objectA.firstRawData option:objectA.secondRawData option:objectA.thirdRawData];
+                
+                NSArray* rowDataB = [self pickGoodRawData:objectB.firstRawData option:objectB.secondRawData option:objectB.thirdRawData];
+                
+                NSString* keyA = [rowDataA objectAtIndex:sortFieldIndex];
+                NSString* keyB = [rowDataB objectAtIndex:sortFieldIndex];
+                
+                if([sortingOrder isEqualToString:@"DESC"]) {
+                    return [keyA compare:keyB options:NSNumericSearch];
+                } else {
+                    return [keyB compare:keyA options:NSNumericSearch];
+                }
+            }];
+            
+            return sortedList;
+        }
+        
+    }
+    
+    return sortDataArrayAddName;
 }
 
 @end

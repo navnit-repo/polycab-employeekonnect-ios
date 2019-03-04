@@ -759,7 +759,12 @@ int uiViewStartIdx = 1001;
         NSMutableArray *value = [[NSMutableArray alloc]init];
         NSMutableArray *customerAccountButtonDropDownArray = [[NSMutableArray alloc]init];
         
-        NSString *selectKey = [@"BUSINESS_VERTICAL_" stringByAppendingString:[[NSUserDefaults standardUserDefaults] valueForKey:@"selectedRegisterIDCode"]];
+        NSString* selectedRegIDCode = [[NSUserDefaults standardUserDefaults] valueForKey:@"selectedRegisterIDCode"];
+        if ([selectedRegIDCode isEqualToString:@""] || selectedRegIDCode == nil || selectedRegIDCode.length ==0 || [selectedRegIDCode isKindOfClass:[NSNull class]]) {
+            selectedRegIDCode = @"";
+        }
+        
+        NSString *selectKey = [@"BUSINESS_VERTICAL_" stringByAppendingString:selectedRegIDCode];
         NSMutableArray *getDataArray = [[NSMutableArray alloc]init];
         [getDataArray addObjectsFromArray:[masterDataForEmployee  valueForKey:selectKey]];
         NSLog(@"%@",getDataArray);
@@ -785,7 +790,14 @@ int uiViewStartIdx = 1001;
         NSMutableArray *value = [[NSMutableArray alloc]init];
         NSMutableArray *customerAccountButtonDropDownArray = [[NSMutableArray alloc]init];
         
-        NSString *selectKey = [@"BUSINESS_VERTICAL_" stringByAppendingString:[[NSUserDefaults standardUserDefaults] valueForKey:@"selectedRegisterIDCode"]];
+        
+        NSString* selectedRegIDCode = [[NSUserDefaults standardUserDefaults] valueForKey:@"selectedRegisterIDCode"];
+        if ([selectedRegIDCode isEqualToString:@""] || selectedRegIDCode == nil || selectedRegIDCode.length ==0 || [selectedRegIDCode isKindOfClass:[NSNull class]]) {
+            selectedRegIDCode = @"";
+        }
+        
+        
+        NSString *selectKey = [@"BUSINESS_VERTICAL_" stringByAppendingString:selectedRegIDCode];
         NSMutableArray *getDataArray = [[NSMutableArray alloc]init];
         [getDataArray addObjectsFromArray:[masterDataForEmployee  valueForKey:selectKey]];
         NSLog(@"%@",getDataArray);

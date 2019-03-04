@@ -230,7 +230,7 @@ static NSString *const kCellsuperSubCatIdentifier = @"kCellCatIdentifier";
    
     
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 110*deviceHeightRation)];
-    view.backgroundColor = [UIColor redColor];
+    view.backgroundColor = [UIColor colorWithRed:204.0/255 green:41.0/255 blue:43.0/255 alpha:1.0];
     
     profileImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 35, 30*deviceWidthRation, 30*deviceHeightRation)];
 

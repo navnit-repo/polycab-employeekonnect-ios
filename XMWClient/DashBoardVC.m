@@ -100,7 +100,8 @@
 -(void)headerView{
     
 //self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:204.0/255 green:41.0/255 blue:43.0/255 alpha:1.0];
-    self.navigationController.navigationBar.barTintColor = [UIColor redColor];
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:204.0/255 green:41.0/255 blue:43.0/255 alpha:1.0];
+    
     SWRevealViewController *revealController = [self revealViewController];
     revealController.panGestureRecognizer.enabled = NO;
     [revealController panGestureRecognizer];
@@ -310,7 +311,7 @@
     {
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    }
+    
     
   
 
@@ -381,6 +382,8 @@
         cell.clipsToBounds = YES;
         
     }
+    
+}
 
     return cell;
 }
@@ -389,6 +392,21 @@
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
 
+    if (indexPath.section ==1) {
+        
+        UIActivityIndicatorView *act = [(UIActivityIndicatorView*)self.view viewWithTag:50000];
+        [act startAnimating];
+        
+    }
+    if (indexPath.section ==2) {
+        UIActivityIndicatorView *act = [(UIActivityIndicatorView*)self.view viewWithTag:50001];
+        [act startAnimating];
+    }
+    if (indexPath.section ==3) {
+        UIActivityIndicatorView *act = [(UIActivityIndicatorView*)self.view viewWithTag:50002];
+        [act startAnimating];
+    }
+    
 }
 
 
@@ -607,6 +625,14 @@
     {
         DocPostResponse *reportPostResponse = (DocPostResponse*) respondedObject;
         if ([[reportPostResponse submitStatus] isEqualToString:@"S"]) {
+            //for clear all default save data
+            NSUserDefaults * defs = [NSUserDefaults standardUserDefaults];
+            NSDictionary * dict = [defs dictionaryRepresentation];
+            for (id key in dict) {
+                [defs removeObjectForKey:key];
+            }
+            [defs synchronize];
+            
             LogInVC *loginVC = [[LogInVC alloc] initWithNibName:@"LogInVC" bundle:nil];
             UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:loginVC];
             DVAppDelegate* appDelegate =(DVAppDelegate*)[UIApplication sharedApplication].delegate;
@@ -662,20 +688,25 @@
 }
 -(void) userLogout
 {
-    // [ThirdDashView removeObsr];
+   //  [ThirdDashView removeObsr];
     
     //for clear all default save data
-    NSUserDefaults * defs = [NSUserDefaults standardUserDefaults];
-    NSDictionary * dict = [defs dictionaryRepresentation];
-    for (id key in dict) {
-        [defs removeObjectForKey:key];
-    }
-    [defs synchronize];
+//    NSUserDefaults * defs = [NSUserDefaults standardUserDefaults];
+//    NSDictionary * dict = [defs dictionaryRepresentation];
+//    for (id key in dict) {
+//        [defs removeObjectForKey:key];
+//    }
+//    [defs synchronize];
     
     //    [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"PASSWORD"];
     //    [[NSUserDefaults standardUserDefaults] setObject:@"NO" forKey:@"ISCHECKED"];
     //    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    
+    
     loadingView = [LoadingView loadingViewInView:self.view];
+    
+  
     
     DotFormPost *logOutPost = [[DotFormPost alloc]init];
     [logOutPost setAdapterType:@"JDBC"];
@@ -688,25 +719,6 @@
     networkHelper = [[NetworkHelper alloc] init];
     [networkHelper makeXmwNetworkCall:logOutPost :self :self  :@"FOR_LOGOUT"];
     
-    
-    
-    
-    
-    
-    //    dispatch_async(dispatch_get_main_queue(), ^{
-    //
-    //        // [self.navigationController popViewControllerAnimated:YES];
-    //        //code to be executed in the background
-    //        LogInVC *loginVC = [[LogInVC alloc] initWithNibName:@"LogInVC" bundle:nil];//added by ashish tiwari on aug 2014
-    //        UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:loginVC];//addded by ashish tiwari on aug 2014
-    //
-    //        DVAppDelegate* appDelegate =(DVAppDelegate*)[UIApplication sharedApplication].delegate;
-    //        appDelegate.navController = nc;
-    //
-    //
-    //        [[UIApplication sharedApplication] keyWindow].rootViewController = nc;//added by ashish tiwari on aug 2014
-    //
-    //    });
     
 }
 

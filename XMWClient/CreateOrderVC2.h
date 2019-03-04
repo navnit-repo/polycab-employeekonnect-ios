@@ -15,7 +15,10 @@
 @interface CreateOrderVC2 : FormVC<UITableViewDelegate,UITableViewDataSource,DisplayCellButtonDelegate,UIAlertViewDelegate,UITextFieldDelegate>
 {
     id<PolyCabCreateOrderMultiSelectDelegate> PolyCabCreateOrderMultiSelectDelegate;
+    float createOrderDynamicCellHeight;
+    
 }
+@property float createOrderDynamicCellHeight;
 @property (weak, nonatomic) IBOutlet UILabel *constant5;
 @property (weak, nonatomic) IBOutlet UIButton *constant4;
 @property (weak, nonatomic) IBOutlet UIButton *constant3;

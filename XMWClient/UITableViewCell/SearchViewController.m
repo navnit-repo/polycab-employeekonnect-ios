@@ -347,7 +347,7 @@ int CHECKBOX_TAG_OFFSET = 9000;
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:simpleTableIdentifier];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    if (cell == nil) {
+    //if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:simpleTableIdentifier];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
@@ -360,19 +360,7 @@ int CHECKBOX_TAG_OFFSET = 9000;
         }
         NSInteger width = 0;
         
-        if(multiSelect==YES) {
-            DVCheckbox* checkBox = [[DVCheckbox alloc] initWithFrame:CGRectMake(5, 20, 40, 40) check:NO enable:YES];
-            checkBox.checkboxDelegate = self;
-            [cell addSubview:checkBox];
-            width = (screenWidth-50)/[row count];
-            
-            checkBox.tag = CHECKBOX_TAG_OFFSET + indexPath.row;
-            
-            
-        } else {
-            width = screenWidth/[row count];
-            
-        }
+    
         
         //        for(int cntComponent = 0; cntComponent <[row count]; cntComponent++)
         //        {
@@ -422,8 +410,8 @@ int CHECKBOX_TAG_OFFSET = 9000;
         NSLog(@"%@",appendString);
         NSUInteger length = [appendString length];
         
-        UIView* firstCol = [[UIView alloc] initWithFrame:CGRectMake(50, 0, 250, 200)];
-        UILabel *label1   = [[UILabel alloc] initWithFrame:CGRectMake(2, 0, 250, 200)];
+        UIView* firstCol = [[UIView alloc] initWithFrame:CGRectMake(50, 0, self.view.frame.size.width-100, 200)];
+        UILabel *label1   = [[UILabel alloc] initWithFrame:CGRectMake(2, 0, self.view.frame.size.width-100, 200)];
         
         
         
@@ -441,9 +429,33 @@ int CHECKBOX_TAG_OFFSET = 9000;
         [firstCol addSubview:label1];
         [cell  addSubview: firstCol];
         
+    CGSize maximumLabelSize = CGSizeMake(label1.frame.size.width, FLT_MAX);
+    
+    CGSize expectedLabelSize = [appendString sizeWithFont:label1.font constrainedToSize:maximumLabelSize lineBreakMode:label1.lineBreakMode];
+    
+    //adjust the label the the new height.
+    CGRect newFrame = label1.frame;
+    newFrame.size.height = expectedLabelSize.height;
+    label1.frame = newFrame;
         
+  //  }
+    
+    if(multiSelect==YES) {
+        DVCheckbox* checkBox = [[DVCheckbox alloc] initWithFrame:CGRectMake(5, label1.frame.size.height/5, 40, 40) check:NO enable:YES];
+        checkBox.checkboxDelegate = self;
+        [cell addSubview:checkBox];
+        width = (screenWidth-50)/[row count];
+        
+        checkBox.tag = CHECKBOX_TAG_OFFSET + indexPath.row;
+        
+        
+    } else {
+        width = screenWidth/[row count];
         
     }
+    
+    cellHeight = label1.frame.size.height+10;
+    
     
     tableView.separatorColor =  [UIColor colorWithRed:0.41 green:0.41 blue:0.59 alpha:1.0];
     return cell;
@@ -461,7 +473,7 @@ int CHECKBOX_TAG_OFFSET = 9000;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 210;
+    return cellHeight;
     
 }
 

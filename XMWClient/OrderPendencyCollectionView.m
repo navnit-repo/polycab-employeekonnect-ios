@@ -88,7 +88,7 @@
 
 
     UIActivityIndicatorView *activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-
+     activityIndicatorView.tag = 50002;
     activityIndicatorView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin |    UIViewAutoresizingFlexibleRightMargin |
     UIViewAutoresizingFlexibleTopMargin |    UIViewAutoresizingFlexibleBottomMargin;
     [activityIndicatorView startAnimating];

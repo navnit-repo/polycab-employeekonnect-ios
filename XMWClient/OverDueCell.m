@@ -254,24 +254,32 @@
     float shortenedAmount = [actualAmount floatValue];
     NSString *suffix = @"";
     float currency = [actualAmount floatValue];
-    if(currency >= 10000000.0f) {
-        suffix = @"Cr";
-        shortenedAmount /= 10000000.0f;
-    }
-    else if(currency >= 100000.0f) {
-        suffix = @"L";
-        shortenedAmount /= 100000.0f;
-    }
+    suffix = @"Cr";
+    shortenedAmount /=100.0f;
+    
+    //    if(currency >= 10000000.0f) {
+    //        suffix = @"Cr";
+    //        shortenedAmount /= 10000000.0f;
+    //    }
+    //    else if(currency >= 100000.0f) {
+    //        suffix = @"Cr";
+    //        shortenedAmount /= 100000.0f;
+    //    }
     //    else if(currency >= 1000.0f) {
     //        suffix = @"K";
     //        shortenedAmount /= 1000.0f;
     //    }
     
-    NSString *requiredString = [NSString stringWithFormat:@"%0.2f%@", shortenedAmount, suffix];
+    
+    NSNumberFormatter *formatter = [NSNumberFormatter new];
+    [formatter setPositiveFormat:@"##,##,###.#"];
+    NSString *formatted = [formatter stringFromNumber:[NSNumber numberWithFloat:shortenedAmount]];
+    NSString *requiredString = [formatted stringByAppendingString:suffix];
+    
+    //  NSString *requiredString = [NSString stringWithFormat:@"%0.1f%@", shortenedAmount, suffix];
     return requiredString;
     
 }
-
 //Specify the number of Sectors in the chart
 - (NSUInteger)numberOfSlicesInPieChart:(XYPieChart *)pieChart
 {

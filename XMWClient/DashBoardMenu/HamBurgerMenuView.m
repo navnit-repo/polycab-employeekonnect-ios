@@ -62,7 +62,7 @@ static NSMutableDictionary* g_MenuImageMap = nil;
     if(imageArray!=nil && [imageArray count]>0) {
         return [imageArray objectAtIndex:0];
     } else {
-        return @"01-dashboard.png";
+        return @"sales.png";
     }
     return @"";
 }
@@ -74,7 +74,7 @@ static NSMutableDictionary* g_MenuImageMap = nil;
     if(imageArray!=nil && [imageArray count]>0) {
         return [imageArray objectAtIndex:1];
     } else {
-      return @"01-dashboard.png";
+      return @"sales.png";
 
     }
     return @"";

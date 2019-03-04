@@ -47,7 +47,7 @@
                                                                           imageNamed:@"back-button.png"] style:UIBarButtonItemStylePlain target:self
                                                                   action:@selector(backHandler:)];
     
-    backButton.tintColor = [UIColor colorWithRed:119.0/255 green:119.0/255 blue:119.0/255 alpha:1.0];
+    backButton.tintColor = [UIColor whiteColor];
     
     UIImageView *polycabLogo = [[UIImageView alloc] initWithImage:[UIImage  imageNamed:@"polycab_logo"]];
     self.navigationItem.titleView.contentMode = UIViewContentModeCenter;
@@ -142,10 +142,10 @@
         [formPost.postData setObject:billTo forKey:@"SHIP_TO"];
         [formPost.postData setObject:[ClientVariable getInstance].CLIENT_USER_LOGIN.userName forKey:@"USERNAME"];
         [formPost.postData setObject:[catalogReqstData valueForKey:@"CUSTOMER_NUMBER"] forKey:@"BUSINESS_VERTICAL"];
-        [formPost.postData setObject:[catalogReqstData valueForKey:@"PRIMARY_CATEGORY"] forKey:@"PRY_ITEMCATEGORY"];
-        [formPost.postData setObject:[catalogReqstData valueForKey:@"PRIMARY_SUBCATEGORY"] forKey:@"PRY_SUBITEMCATEGORY"];
-        [formPost.postData setObject:[catalogReqstData valueForKey:@"secondaryItemCategory"] forKey:@"SECOND_ITEMCATEGORY"];
-        [formPost.postData setObject:[catalogReqstData valueForKey:@"secondaryItemSubCategory"] forKey:@"SECOND_SUBITEMCATEGORY"];
+        [formPost.postData setObject:[catalogReqstData valueForKey:@"PRY_ITEMCATEGORY"] forKey:@"PRY_ITEMCATEGORY"];
+        [formPost.postData setObject:[catalogReqstData valueForKey:@"PRY_SUBITEMCATEGORY"] forKey:@"PRY_SUBITEMCATEGORY"];
+        [formPost.postData setObject:[catalogReqstData valueForKey:@"SECOND_ITEMCATEGORY"] forKey:@"SECOND_ITEMCATEGORY"];
+        [formPost.postData setObject:[catalogReqstData valueForKey:@"SECOND_SUBITEMCATEGORY"] forKey:@"SECOND_SUBITEMCATEGORY"];
         [formPost.postData setObject:self.coreTextField.text forKey:@"CORE"];
         [formPost setModuleId: [DVAppDelegate currentModuleContext]];
         [formPost setDocId: @"SQAUREMM_BY_WNC_CORE"];
@@ -180,10 +180,11 @@
         [formPost.postData setObject:billTo forKey:@"SHIP_TO"];
         [formPost.postData setObject:[ClientVariable getInstance].CLIENT_USER_LOGIN.userName forKey:@"USERNAME"];
         [formPost.postData setObject:[catalogReqstData valueForKey:@"CUSTOMER_NUMBER"] forKey:@"BUSINESS_VERTICAL"];
-        [formPost.postData setObject:[catalogReqstData valueForKey:@"PRIMARY_CATEGORY"] forKey:@"PRY_ITEMCATEGORY"];
-        [formPost.postData setObject:[catalogReqstData valueForKey:@"PRIMARY_SUBCATEGORY"] forKey:@"PRY_SUBITEMCATEGORY"];
-        [formPost.postData setObject:[catalogReqstData valueForKey:@"secondaryItemCategory"] forKey:@"SECOND_ITEMCATEGORY"];
-        [formPost.postData setObject:[catalogReqstData valueForKey:@"secondaryItemSubCategory"] forKey:@"SECOND_SUBITEMCATEGORY"];
+        [formPost.postData setObject:[catalogReqstData valueForKey:@"CUSTOMER_NUMBER"] forKey:@"BUSINESS_VERTICAL"];
+        [formPost.postData setObject:[catalogReqstData valueForKey:@"PRY_ITEMCATEGORY"] forKey:@"PRY_ITEMCATEGORY"];
+        [formPost.postData setObject:[catalogReqstData valueForKey:@"PRY_SUBITEMCATEGORY"] forKey:@"PRY_SUBITEMCATEGORY"];
+        [formPost.postData setObject:[catalogReqstData valueForKey:@"SECOND_ITEMCATEGORY"] forKey:@"SECOND_ITEMCATEGORY"];
+        [formPost.postData setObject:[catalogReqstData valueForKey:@"SECOND_SUBITEMCATEGORY"] forKey:@"SECOND_SUBITEMCATEGORY"];
         [formPost.postData setObject:self.coreTextField.text forKey:@"CORE"];
         //        [formPost.postData setObject:self.colorTextField.text forKey:@"COLOR"];
         [formPost.postData setObject:self.squareTextField.text forKey:@"SQAUREMM"];
@@ -217,10 +218,11 @@
         [formPost.postData setObject:billTo forKey:@"SHIP_TO"];
         [formPost.postData setObject:[ClientVariable getInstance].CLIENT_USER_LOGIN.userName forKey:@"USERNAME"];
         [formPost.postData setObject:[catalogReqstData valueForKey:@"CUSTOMER_NUMBER"] forKey:@"BUSINESS_VERTICAL"];
-        [formPost.postData setObject:[catalogReqstData valueForKey:@"PRIMARY_CATEGORY"] forKey:@"PRY_ITEMCATEGORY"];
-        [formPost.postData setObject:[catalogReqstData valueForKey:@"PRIMARY_SUBCATEGORY"] forKey:@"PRY_SUBITEMCATEGORY"];
-        [formPost.postData setObject:[catalogReqstData valueForKey:@"secondaryItemCategory"] forKey:@"SECOND_ITEMCATEGORY"];
-        [formPost.postData setObject:[catalogReqstData valueForKey:@"secondaryItemSubCategory"] forKey:@"SECOND_SUBITEMCATEGORY"];     
+        [formPost.postData setObject:[catalogReqstData valueForKey:@"CUSTOMER_NUMBER"] forKey:@"BUSINESS_VERTICAL"];
+        [formPost.postData setObject:[catalogReqstData valueForKey:@"PRY_ITEMCATEGORY"] forKey:@"PRY_ITEMCATEGORY"];
+        [formPost.postData setObject:[catalogReqstData valueForKey:@"PRY_SUBITEMCATEGORY"] forKey:@"PRY_SUBITEMCATEGORY"];
+        [formPost.postData setObject:[catalogReqstData valueForKey:@"SECOND_ITEMCATEGORY"] forKey:@"SECOND_ITEMCATEGORY"];
+        [formPost.postData setObject:[catalogReqstData valueForKey:@"SECOND_SUBITEMCATEGORY"] forKey:@"SECOND_SUBITEMCATEGORY"];
         [formPost.postData setObject:self.coreTextField.text forKey:@"CORE"];
         [formPost.postData setObject:self.squareTextField.text forKey:@"SQAUREMM"];
         [formPost.postData setObject:self.colorTextField.text forKey:@"COLOR"];
@@ -307,10 +309,10 @@
     [formPost.postData setObject:billTo forKey:@"SHIP_TO"];
     [formPost.postData setObject:[ClientVariable getInstance].CLIENT_USER_LOGIN.userName forKey:@"USERNAME"];
     [formPost.postData setObject:[catalogReqstData valueForKey:@"CUSTOMER_NUMBER"] forKey:@"BUSINESS_VERTICAL"];
-    [formPost.postData setObject:[catalogReqstData valueForKey:@"PRIMARY_CATEGORY"] forKey:@"PRY_ITEMCATEGORY"];
-      [formPost.postData setObject:[catalogReqstData valueForKey:@"PRIMARY_SUBCATEGORY"] forKey:@"PRY_SUBITEMCATEGORY"];
-      [formPost.postData setObject:[catalogReqstData valueForKey:@"secondaryItemCategory"] forKey:@"SECOND_ITEMCATEGORY"];
-      [formPost.postData setObject:[catalogReqstData valueForKey:@"secondaryItemSubCategory"] forKey:@"SECOND_SUBITEMCATEGORY"];
+    [formPost.postData setObject:[catalogReqstData valueForKey:@"PRY_ITEMCATEGORY"] forKey:@"PRY_ITEMCATEGORY"];
+    [formPost.postData setObject:[catalogReqstData valueForKey:@"PRY_SUBITEMCATEGORY"] forKey:@"PRY_SUBITEMCATEGORY"];
+    [formPost.postData setObject:[catalogReqstData valueForKey:@"SECOND_ITEMCATEGORY"] forKey:@"SECOND_ITEMCATEGORY"];
+    [formPost.postData setObject:[catalogReqstData valueForKey:@"SECOND_SUBITEMCATEGORY"] forKey:@"SECOND_SUBITEMCATEGORY"];
     [formPost setModuleId: [DVAppDelegate currentModuleContext]];
     [formPost setDocId: @"CORES_BY_CAT_TREE"];
     [formPost setReportCacheRefresh:@"false"];
@@ -860,10 +862,10 @@
     [formPost setDocId: @"MATERIAL_LOB_TREE_JDBC"];
      [formPost.postData setObject:[catalogReqstData valueForKey:@"CUSTOMER_NUMBER"] forKey:@"BUSINESS_VERTICAL"];
      [formPost.postData setObject:billTo forKey:@"SHIP_TO"];
-    [formPost.postData setObject:[catalogReqstData valueForKey:@"PRIMARY_CATEGORY"] forKey:@"PRY_ITEMCATEGORY"];
-    [formPost.postData setObject:[catalogReqstData valueForKey:@"PRIMARY_SUBCATEGORY"] forKey:@"PRY_SUBITEMCATEGORY"];
-    [formPost.postData setObject:[catalogReqstData valueForKey:@"secondaryItemCategory"] forKey:@"SECOND_ITEMCATEGORY"];
-    [formPost.postData setObject:[catalogReqstData valueForKey:@"secondaryItemSubCategory"] forKey:@"SECOND_SUBITEMCATEGORY"];
+    [formPost.postData setObject:[catalogReqstData valueForKey:@"PRIMARY_CATEGORY"] forKey:@"PRIMARY_CATEGORY"];
+    [formPost.postData setObject:[catalogReqstData valueForKey:@"PRIMARY_SUBCATEGORY"] forKey:@"PRIMARY_SUBCATEGORY"];
+    [formPost.postData setObject:[catalogReqstData valueForKey:@"SECONDARY_CATEGORY"] forKey:@"SECONDARY_CATEGORY"];
+    [formPost.postData setObject:[catalogReqstData valueForKey:@"SECONDARY_SUBCATEGORY"] forKey:@"SECONDARY_SUBCATEGORY"];
     
  
     loadingView = [LoadingView loadingViewInView:self.view];

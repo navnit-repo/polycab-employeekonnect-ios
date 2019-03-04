@@ -38,6 +38,7 @@
                              initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
     
     activityIndicatorView.center=blankView.center;
+    activityIndicatorView.tag = 50000;
     [activityIndicatorView startAnimating];
     activityIndicatorView.color = [UIColor redColor];
     activityIndicatorView.hidesWhenStopped = NO;

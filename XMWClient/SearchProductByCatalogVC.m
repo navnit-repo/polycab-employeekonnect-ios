@@ -11,6 +11,9 @@
 #import "ClientVariable.h"
 #import "LoadingView.h"
 #import "NetworkHelper.h"
+#import "DVAppDelegate.h"
+#define DotSearchConst_SEARCH_TEXT @"SEARCH_TEXT"
+#define DotSearchConst_SEARCH_BY @"SEARCH_BY"
 @interface SearchProductByCatalogVC ()
 
 @end
@@ -62,7 +65,7 @@
                                                                           imageNamed:@"back-button.png"] style:UIBarButtonItemStylePlain target:self
                                                                   action:@selector(backHandler:)];
     
-    backButton.tintColor = [UIColor colorWithRed:119.0/255 green:119.0/255 blue:119.0/255 alpha:1.0];
+    backButton.tintColor = [UIColor whiteColor];
     
     UIImageView *polycabLogo = [[UIImageView alloc] initWithImage:[UIImage  imageNamed:@"polycab_logo"]];
     self.navigationItem.titleView.contentMode = UIViewContentModeCenter;
@@ -201,15 +204,15 @@
 
 -(void) fetchProductsForCatalog:(PolycabProductCatObject *)category
 {
-    
+
     NSMutableDictionary* catalogQuery = [[NSMutableDictionary alloc] init];
     [catalogQuery setObject:[ClientVariable getInstance].CLIENT_USER_LOGIN.userName forKey:@"USERNAME"];
     [catalogQuery setObject:category.lobCode  forKey:@"BUSINESS_VERTICAL"];
     [catalogQuery setObject:self.productDivision forKey:@"CUSTOMER_NUMBER"];
-    [catalogQuery setObject:category.primaryCategory forKey:@"PRIMARY_CATEGORY"];
-    [catalogQuery setObject:category.primarySubCategory forKey:@"PRIMARY_SUBCATEGORY"];
-    [catalogQuery setObject:category.secondaryItemCategory forKey:@"secondaryItemCategory"];
-    [catalogQuery setObject:category.secondaryItemSubCategory forKey:@"secondaryItemSubCategory"];
+    [catalogQuery setObject:category.primaryCategory forKey:@"PRY_ITEMCATEGORY"];
+    [catalogQuery setObject:category.primarySubCategory forKey:@"PRY_SUBITEMCATEGORY"];
+    [catalogQuery setObject:category.secondaryItemCategory forKey:@"SECOND_ITEMCATEGORY"];
+    [catalogQuery setObject:category.secondaryItemSubCategory forKey:@"SECOND_SUBITEMCATEGORY"];
     
     if ([itemNameString isEqualToString:@"Cables"] || [itemNameString isEqualToString:@"Wires"] ||[itemNameString isEqualToString:@"PP & Flexibles"] )
     {
@@ -221,11 +224,38 @@
         [self.navigationController pushViewController:vc animated:YES];
     }
     else{
+        
+        
+        DotFormPost *formPost = [[DotFormPost alloc]init];
+        [formPost.postData setObject:@"" forKey:DotSearchConst_SEARCH_TEXT];
+        [formPost.postData setObject:@"SBN" forKey:DotSearchConst_SEARCH_BY];
+        [formPost.postData setObject:billTO forKey:@"SHIP_TO"];
+        [formPost.postData setObject:[ClientVariable getInstance].CLIENT_USER_LOGIN.userName forKey:@"USERNAME"];
+        //[formPost.postData setObject:category.lobCode  forKey:@"CUSTOMER_NUMBER"];
+        [formPost.postData setObject:self.productDivision forKey:@"BUSINESS_VERTICAL"];
+        [formPost.postData setObject:category.primaryCategory forKey:@"PRY_ITEMCATEGORY"];
+        [formPost.postData setObject:category.primarySubCategory forKey:@"PRY_SUBITEMCATEGORY"];
+        [formPost.postData setObject:category.secondaryItemCategory forKey:@"SECOND_ITEMCATEGORY"];
+        [formPost.postData setObject:category.secondaryItemSubCategory forKey:@"SECOND_SUBITEMCATEGORY"];
+        
+        
+        
+        [formPost setModuleId: [DVAppDelegate currentModuleContext]];
+        [formPost setDocId: @"MATERIAL_LOB_TREE_JDBC"];
+        [formPost setReportCacheRefresh:@"true"];
+        
+        
         loadingView = [LoadingView loadingViewInView:self.view];
+        
         networkHelper = [[NetworkHelper alloc] init];
-        networkHelper.serviceURLString = XmwcsConst_PRODUCT_TREE_SERVICE_URL;
-        [catalogQuery setObject:billTO forKey:@"SHIP_TO"];
-        [networkHelper makeXmwNetworkCall:catalogQuery :self :nil :@"GET_PRODUCTS"];
+        [networkHelper makeXmwNetworkCall:formPost :self : nil :  @"FOR_SEARCH_IGNORE_SESSION"];
+        
+        
+//        loadingView = [LoadingView loadingViewInView:self.view];
+//        networkHelper = [[NetworkHelper alloc] init];
+//        networkHelper.serviceURLString = XmwcsConst_PRODUCT_TREE_SERVICE_URL;
+//        [catalogQuery setObject:billTO forKey:@"SHIP_TO"];
+//        [networkHelper makeXmwNetworkCall:catalogQuery :self :nil :@"FOR_SEARCH_IGNORE_SESSION"];
     }
     
 }
@@ -242,7 +272,12 @@
         
         [self handleCategoryProducts:respondedObject];
         
-    } else if([callName isEqualToString:XmwcsConst_CALL_NAME_FOR_SEARCH]) {
+    }
+    else if ([callName isEqualToString:@"FOR_SEARCH_IGNORE_SESSION"])
+    {
+        [self handleSearchResult:respondedObject];
+    }
+    else if([callName isEqualToString:XmwcsConst_CALL_NAME_FOR_SEARCH]) {
         
         [self handleSearchResult:respondedObject];
     }

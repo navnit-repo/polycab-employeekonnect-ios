@@ -468,6 +468,8 @@ NSMutableDictionary *masterDataForEmployee;
     [clientVariables registerFormVCClass:@"EmployeeSalesFormVC" forId:@"DOT_FORM_BU_SALES_REGION_WISE"];
     // for SalesComparisonVC
     [clientVariables registerFormVCClass:@"EmployeeSalesFormVC" forId:@"DOT_FORM_BU_REGION_SALES_STATE_WISE"];
+     [clientVariables registerFormVCClass:@"EmployeeSalesFormVC" forId:@"DOT_FORM_BU_SALES_CUSTOMER_WISE"];
+    
 /////////////////////////////
     
 }

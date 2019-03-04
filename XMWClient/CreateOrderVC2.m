@@ -44,6 +44,7 @@
 }
 @synthesize itemName,orderRefNo,dateofDelivery;
 @synthesize mainView;
+@synthesize createOrderDynamicCellHeight;
 -(void)autoLayout{
     [LayoutClass labelLayout:self.itemName forFontWeight:UIFontWeightBold];
     [LayoutClass labelLayout:self.constant1 forFontWeight:UIFontWeightThin];
@@ -182,7 +183,7 @@
     }
     
     else if(indexPath.section==1) {
-        return 200.0f*deviceHeightRation;
+        return createOrderDynamicCellHeight*deviceHeightRation;
     }
     else if (indexPath.section==2)
     {
@@ -546,8 +547,11 @@
     //[displayCell configure:[alreadyAddDisplayCellData objectAtIndex:arrayObjectTag] :cancelButtonTag];
     long int cellTag = indexPath.row +2000;
     displayCell.tag = cellTag;
+    
     [cell addSubview:displayCell];
     displayCell.clipsToBounds = YES;
+    
+    createOrderDynamicCellHeight =displayCell.titleLbl.frame.size.height+displayCell.descriptionLbl.frame.size.height+displayCell.mainDescLbl.frame.size.height+displayCell.priceLabel.frame.size.height;
     
     return cell;
 }
@@ -562,24 +566,27 @@
 
 
 - (NSArray *)dictionaryByReplacingNullsWithStrings :(NSMutableArray *)array {
+    NSMutableArray *replaceArry = [[NSMutableArray alloc]init];
     
     for (int i=0; i<array.count; i++) {
         NSLog(@"%@",[array objectAtIndex:i]);
         
         NSString *value =( NSString*)[array objectAtIndex:i];
         if ([value isKindOfClass:[NSNull class]]) {
-            
-            [array replaceObjectAtIndex:i withObject:@""];
+            [replaceArry addObject:@""];
+          //  [array replaceObjectAtIndex:i withObject:[NSString stringWithFormat:@""]];
             
         }
         else{
-            // not change data
+            [replaceArry addObject:[array objectAtIndex:i]];
+            // no need to change data
         }
         
     }
     
     NSLog(@"After Remove Null :%@",array);
-    return array;
+    NSLog(@"replace array  :%@",replaceArry);
+    return replaceArry;
     
 }
 

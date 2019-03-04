@@ -207,7 +207,13 @@
     //        shortenedAmount /= 1000.0f;
     //    }
     
-    NSString *requiredString = [NSString stringWithFormat:@"%0.1f%@", shortenedAmount, suffix];
+    
+    NSNumberFormatter *formatter = [NSNumberFormatter new];
+    [formatter setPositiveFormat:@"##,##,###.#"];
+    NSString *formatted = [formatter stringFromNumber:[NSNumber numberWithFloat:shortenedAmount]];
+    NSString *requiredString = [formatted stringByAppendingString:suffix];
+    
+  //  NSString *requiredString = [NSString stringWithFormat:@"%0.1f%@", shortenedAmount, suffix];
     return requiredString;
     
 }

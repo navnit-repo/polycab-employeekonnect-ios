@@ -250,7 +250,8 @@ static DownloadHistoryMenuView* rightSlideMenu = nil;
     [label setTextColor: [UIColor blackColor]];
     [label setFont:[UIFont fontWithName:@"Helvetica-Bold" size:18]];
     [label setText: [headername uppercaseString]];
-    
+    label.lineBreakMode = UILineBreakModeWordWrap;
+    label.textAlignment = NSTextAlignmentCenter;
     [label setNumberOfLines: 0];
     [label sizeToFit];
     [label setCenter: CGPointMake(self.view.center.x, label.center.y)];

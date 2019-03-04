@@ -39,13 +39,14 @@
     NSString *primaryCat;
     NSString *subCat;
     NSMutableDictionary* selectedRows;
+    float cellHeight;
     
 }
 @property NSMutableDictionary* selectedRows;
 @property NSString *primaryCat;
 @property NSString *subCat;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
-
+@property float cellHeight;
 
 @property  FormVC *parentController;
 @property NSMutableArray *selectedRowElement;

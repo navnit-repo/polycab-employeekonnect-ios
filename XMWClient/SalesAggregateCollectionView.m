@@ -113,7 +113,7 @@
 
     activityIndicatorView = [[UIActivityIndicatorView alloc]
                              initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-    
+    activityIndicatorView.tag = 50000;
     activityIndicatorView.center=blankView.center;
     [activityIndicatorView startAnimating];
     activityIndicatorView.color = [UIColor redColor];
@@ -533,7 +533,10 @@
 //    [ytdDataArray addObjectsFromArray:sortedArray3];
     
     sortDone = true;
-    
+    if (numberOfCell >10) {
+        numberOfCell = 10;
+   
+    }
     
    [self.collectionView reloadData];//reload cell data
 }

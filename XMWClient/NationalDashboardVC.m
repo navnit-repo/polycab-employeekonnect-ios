@@ -120,7 +120,7 @@
     {
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    }
+    
     
     
     
@@ -205,9 +205,31 @@
         
     }
     
-    
+    }
     return cell;
 }
 
-
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    if (indexPath.section ==1) {
+        
+        UIActivityIndicatorView *act = [(UIActivityIndicatorView*)self.view viewWithTag:50000];
+        [act startAnimating];
+        
+    }
+    if (indexPath.section ==2) {
+        UIActivityIndicatorView *act = [(UIActivityIndicatorView*)self.view viewWithTag:50001];
+        [act startAnimating];
+    }
+    if (indexPath.section ==3) {
+        UIActivityIndicatorView *act = [(UIActivityIndicatorView*)self.view viewWithTag:50002];
+        [act startAnimating];
+    }
+    if (indexPath.section ==4) {
+        UIActivityIndicatorView *act = [(UIActivityIndicatorView*)self.view viewWithTag:50003];
+        [act startAnimating];
+    }
+    
+}
 @end

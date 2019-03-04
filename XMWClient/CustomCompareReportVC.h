@@ -11,6 +11,8 @@
 #import "DotFormPost.h"
 #import "DotFormElement.h"
 #import "ReportPostResponse.h"
+#import "LoadingView.h"
+#import "DotReport.h"
 @interface XmwCompareTuple : NSObject
 @property NSString* fieldName;
 @property NSString* firstValue;
@@ -27,8 +29,13 @@
 {
      NSArray* sortedDataSetKeys;
     NSMutableDictionary* dataSet;
+    LoadingView* loadingView;
+    int loaderCount;
+    NSString* firstColumnText;
+    ReportPostResponse* firstResponse;
 }
-
+@property ReportPostResponse* firstResponse;
+@property NSString* firstColumnText;
 @property (weak, nonatomic) DotForm* dotForm;
 
 @property (strong, nonatomic) DotFormPost* firstFormPost;
@@ -48,4 +55,8 @@
 -(void) addFirstSetData:(ReportPostResponse*) reportData into:(NSMutableDictionary*) inDataSet;
 -(void) addSecondSetData:(ReportPostResponse*) reportData into:(NSMutableDictionary*) inDataSet;
 -(void) addThirdSetData:(ReportPostResponse*) reportData into:(NSMutableDictionary*) inDataSet;
+-(bool) clickable:(NSInteger) rowIdx;
+-(void) fetchFirstColumnData:(DotFormPost*) formPost;
+-(NSArray*) sortKeys;
+-(DotReport*) dotReport;
 @end

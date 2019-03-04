@@ -619,6 +619,12 @@
 		F03029642101B0280089A4E4 /* 01_splash.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F03029632101B0280089A4E4 /* 01_splash.jpg */; };
 		F030296F2101F4010089A4E4 /* hide.png in Resources */ = {isa = PBXBuildFile; fileRef = F030296D2101F4000089A4E4 /* hide.png */; };
 		F03029702101F4010089A4E4 /* show.png in Resources */ = {isa = PBXBuildFile; fileRef = F030296E2101F4000089A4E4 /* show.png */; };
+		F0302BB72229268500F73808 /* password.png in Resources */ = {isa = PBXBuildFile; fileRef = F0302BB52229268400F73808 /* password.png */; };
+		F0302BB82229268500F73808 /* sales.png in Resources */ = {isa = PBXBuildFile; fileRef = F0302BB62229268500F73808 /* sales.png */; };
+		F0302BBB2229269000F73808 /* sales@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F0302BB92229268F00F73808 /* sales@2x.png */; };
+		F0302BBC2229269000F73808 /* password@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F0302BBA2229268F00F73808 /* password@2x.png */; };
+		F0302BBF2229269800F73808 /* password@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F0302BBD2229269700F73808 /* password@3x.png */; };
+		F0302BC02229269800F73808 /* sales@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F0302BBE2229269800F73808 /* sales@3x.png */; };
 		F031562C2126931C005DE7F2 /* SearchProductBYNameVC.h in Headers */ = {isa = PBXBuildFile; fileRef = F03156292126931C005DE7F2 /* SearchProductBYNameVC.h */; };
 		F031562D2126931C005DE7F2 /* SearchProductBYNameVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F031562A2126931C005DE7F2 /* SearchProductBYNameVC.m */; };
 		F031562E2126931C005DE7F2 /* SearchProductBYNameVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = F031562B2126931C005DE7F2 /* SearchProductBYNameVC.xib */; };
@@ -1684,6 +1690,12 @@
 		F03029632101B0280089A4E4 /* 01_splash.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 01_splash.jpg; sourceTree = "<group>"; };
 		F030296D2101F4000089A4E4 /* hide.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hide.png; sourceTree = "<group>"; };
 		F030296E2101F4000089A4E4 /* show.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = show.png; sourceTree = "<group>"; };
+		F0302BB52229268400F73808 /* password.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = password.png; sourceTree = "<group>"; };
+		F0302BB62229268500F73808 /* sales.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sales.png; sourceTree = "<group>"; };
+		F0302BB92229268F00F73808 /* sales@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sales@2x.png"; sourceTree = "<group>"; };
+		F0302BBA2229268F00F73808 /* password@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "password@2x.png"; sourceTree = "<group>"; };
+		F0302BBD2229269700F73808 /* password@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "password@3x.png"; sourceTree = "<group>"; };
+		F0302BBE2229269800F73808 /* sales@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sales@3x.png"; sourceTree = "<group>"; };
 		F03156292126931C005DE7F2 /* SearchProductBYNameVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchProductBYNameVC.h; sourceTree = "<group>"; };
 		F031562A2126931C005DE7F2 /* SearchProductBYNameVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchProductBYNameVC.m; sourceTree = "<group>"; };
 		F031562B2126931C005DE7F2 /* SearchProductBYNameVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchProductBYNameVC.xib; sourceTree = "<group>"; };
@@ -3665,6 +3677,8 @@
 		F059CC73214F70CF00E303F6 /* 05_leftnavigation */ = {
 			isa = PBXGroup;
 			children = (
+				F0302BB52229268400F73808 /* password.png */,
+				F0302BB62229268500F73808 /* sales.png */,
 				F081178821916CCD00149035 /* 15-feedbackfromcustomer.png */,
 				F081178921916CCE00149035 /* 16-balanceconfirmation.png */,
 				F059CC74214F70CF00E303F6 /* 01-dashboard.png */,
@@ -3777,6 +3791,8 @@
 		F059CCC5214F70F600E303F6 /* 05_leftnavigation */ = {
 			isa = PBXGroup;
 			children = (
+				F0302BBA2229268F00F73808 /* password@2x.png */,
+				F0302BB92229268F00F73808 /* sales@2x.png */,
 				F081178C21916CFE00149035 /* 15-feedbackfromcustomer@2x.png */,
 				F081178D21916CFE00149035 /* 16-balanceconfirmation@2x.png */,
 				F059CCC6214F70F600E303F6 /* 01-dashboard@2x.png */,
@@ -3826,6 +3842,8 @@
 		F059CCFC214F710500E303F6 /* 05_leftnavigation */ = {
 			isa = PBXGroup;
 			children = (
+				F0302BBD2229269700F73808 /* password@3x.png */,
+				F0302BBE2229269800F73808 /* sales@3x.png */,
 				F081179121916D0E00149035 /* 15-feedbackfromcustomer@3x.png */,
 				F081179021916D0E00149035 /* 16-balanceconfirmation@3x.png */,
 				F059CCFD214F710500E303F6 /* 01-dashboard@3x.png */,
@@ -4589,6 +4607,7 @@
 				F059CCD8214F70F600E303F6 /* polycab_notification@2x.png in Resources */,
 				85CC35041DFA67900016F65C /* MultiSelectPopup.xib in Resources */,
 				F07B39E520CE519600740DF4 /* CustomerClaimVC.xib in Resources */,
+				F0302BBC2229269000F73808 /* password@2x.png in Resources */,
 				90E810B6174F451D003BDF77 /* HorizontalSeparator.png in Resources */,
 				857F8C771A828D210018A54C /* forgot_password@2x.png in Resources */,
 				F059CCDF214F70F600E303F6 /* downarrow@2x.png in Resources */,
@@ -4692,6 +4711,7 @@
 				F059CC9F214F70D000E303F6 /* 10-testreports.png in Resources */,
 				857F8C511A828CBD0018A54C /* create_order_L.png in Resources */,
 				F059CCD7214F70F600E303F6 /* polycab_menu@2x.png in Resources */,
+				F0302BC02229269800F73808 /* sales@3x.png in Resources */,
 				F059CD1C214F710600E303F6 /* downarrow_right_arrow@3x.png in Resources */,
 				8569B91F18E3C1DB008D65F5 /* XmwFileExplorer.xib in Resources */,
 				85DB6AC51E634CB90018710B /* WideReportVC4.xib in Resources */,
@@ -4707,6 +4727,7 @@
 				857F8C791A828D210018A54C /* my_details@2x.png in Resources */,
 				904053FD1754C61400203856 /* FormVC.xib in Resources */,
 				85D5DA6818E6F5EF00BE344F /* menu@2x.png in Resources */,
+				F0302BBB2229269000F73808 /* sales@2x.png in Resources */,
 				F059CCE1214F70F600E303F6 /* proofofdelivery@2x.png in Resources */,
 				855A8E471B495022001152F2 /* CreateOrderVC.xib in Resources */,
 				857A3EF91A6CFC3500279931 /* SixDashView.xib in Resources */,
@@ -4766,6 +4787,7 @@
 				85F9D7DF19E8AEF7000413B0 /* minus_normal@2x.png in Resources */,
 				F0B2FB40218850F5006A7C6B /* SalesComparisonVC.xib in Resources */,
 				85D9926F1D2B9894003AEBBE /* gold_card_L@2x.png in Resources */,
+				F0302BB72229268500F73808 /* password.png in Resources */,
 				F039CADC20F475D9005CEC02 /* TrackClaimVC.xib in Resources */,
 				85453901190F2B0F0023D0FC /* MenuVC4.xib in Resources */,
 				F059CCEE214F70F600E303F6 /* 09-statutoryrequirement@2x.png in Resources */,
@@ -4801,6 +4823,7 @@
 				F088F5FD2105E587000E26F4 /* SalesIncentiveItemPopup.xib in Resources */,
 				F0A8EA7C211D6A2C001C4FAD /* CreateOrderVC1.xib in Resources */,
 				F0B2FB4B218850F5006A7C6B /* ReportQuantityValue.xib in Resources */,
+				F0302BB82229268500F73808 /* sales.png in Resources */,
 				F0B2FB2C218850F5006A7C6B /* BusinessVerticalVC.xib in Resources */,
 				F059CD2C214F710600E303F6 /* 13-feedback@3x.png in Resources */,
 				857A3ED51A6CFC3500279931 /* arrow_open@2x.png in Resources */,
@@ -4872,6 +4895,7 @@
 				F059CD26214F710600E303F6 /* 07-proofofdelivery@3x.png in Resources */,
 				F059CD20214F710600E303F6 /* 01-dashboard@3x.png in Resources */,
 				857F8C7D1A828D210018A54C /* special_offer@2x.png in Resources */,
+				F0302BBF2229269800F73808 /* password@3x.png in Resources */,
 				F059CC8F214F70D000E303F6 /* crossicon.png in Resources */,
 				85C93EBB1ABC191F00B8EE17 /* refresh.png in Resources */,
 				F059CC98214F70D000E303F6 /* 03-order.png in Resources */,

@@ -57,7 +57,15 @@
     "Balance Confirmation": [
                          "16-balanceconfirmation.png",
                          "16-balanceconfirmation.png"
-                         ]
+                         ],
     
-   
+    "Dashboard": [
+        "01-dashboard.png",
+        "01-dashboard.png"
+    ],
+    
+    "Change Password": [
+        "password.png",
+        "password.png"
+    ]
 }
