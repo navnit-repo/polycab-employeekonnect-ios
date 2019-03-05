@@ -7,7 +7,7 @@
 //
 
 #import "NationalSalesAggregateCellView.h"
-
+#import "CurrencyConversationClass.h"
 @implementation NationalSalesAggregateCellView
 
 +(NationalSalesAggregateCellView*) createInstance
@@ -23,11 +23,12 @@
 
 - (void)configure:(NSArray *)ftdData :(NSArray *)mtdData :(NSArray *)ytdData{
     [self autoLayout];
+    CurrencyConversationClass *currencyFormate = [[CurrencyConversationClass alloc]init];
     NSString *rupee=@"\u20B9";
     
-    NSString *ftd = [self formateCurrency:[ftdData objectAtIndex:2]];
-    NSString *mtd = [self formateCurrency:[mtdData objectAtIndex:2]];
-    NSString *ytd = [self formateCurrency:[ytdData objectAtIndex:2]];
+    NSString *ftd = [currencyFormate formateCurrency:[ftdData objectAtIndex:2]];
+    NSString *mtd = [currencyFormate formateCurrency:[mtdData objectAtIndex:2]];
+    NSString *ytd = [currencyFormate formateCurrency:[ytdData objectAtIndex:2]];
     
     
     self.displayName.text   = [ytdData objectAtIndex:0];

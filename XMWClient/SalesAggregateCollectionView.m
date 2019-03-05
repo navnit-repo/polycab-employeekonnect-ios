@@ -434,8 +434,8 @@
             for (int i=0; i<addEmptyArray.count; i++) {
                 NSMutableArray *emptyArray = [[NSMutableArray alloc]init];
                 [emptyArray addObject:[addEmptyArray objectAtIndex:i]];
-                [emptyArray addObject:@"0"];
-                [emptyArray addObject:@"0"];
+                [emptyArray addObject:@"0.0"];
+                [emptyArray addObject:@"0.0"];
                 [ftdDataArray insertObject:emptyArray atIndex:ftdCount];
             }
         
@@ -447,8 +447,8 @@
         for (int i=0; i<addEmptyArray.count; i++) {
                         NSMutableArray *emptyArray = [[NSMutableArray alloc]init];
                         [emptyArray addObject:[addEmptyArray objectAtIndex:i]];
-                        [emptyArray addObject:@"0"];
-                        [emptyArray addObject:@"0"];
+                        [emptyArray addObject:@"0.0"];
+                        [emptyArray addObject:@"0.0"];
                         [mtdDataArray insertObject:emptyArray atIndex:mtdCount];
                     }
     }
@@ -460,8 +460,8 @@
         for (int i=0; i<addEmptyArray.count; i++) {
             NSMutableArray *emptyArray = [[NSMutableArray alloc]init];
             [emptyArray addObject:[addEmptyArray objectAtIndex:i]];
-            [emptyArray addObject:@"0"];
-            [emptyArray addObject:@"0"];
+            [emptyArray addObject:@"0.0"];
+            [emptyArray addObject:@"0.0"];
             [ytdDataArray insertObject:emptyArray atIndex:ytdCount];
         }
     

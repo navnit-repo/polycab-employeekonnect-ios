@@ -7,7 +7,7 @@
 //
 
 #import "NationalSalesAggregatePieCellView.h"
-
+#import "CurrencyConversationClass.h"
 @implementation NationalSalesAggregatePieCellView
 
 +(OverDueCell*) createInstance
@@ -20,11 +20,12 @@
 - (void)configure:(NSArray *)dataArray{
     
     [self autoLayout];
+    CurrencyConversationClass *currencyFormate  = [[CurrencyConversationClass alloc]init];
     
     NSLog(@"Data : %@",dataArray);
     NSLog(@"Data count : %lu",(unsigned long)dataArray.count);
     NSString *rupee=@"\u20B9";
-    NSString *allData = [self formateCurrency:[[dataArray objectAtIndex:0]objectAtIndex:2]];
+    NSString *allData = [currencyFormate formateCurrency:[[dataArray objectAtIndex:0]objectAtIndex:2]];
     creditDetailsDisplayNameLbl.text = [[NSString stringWithFormat:@"%@",rupee]stringByAppendingString:allData];
     if (dataArray.count >=6) {
         numberOfTotal =5;
@@ -45,12 +46,12 @@
         self.user5.text = [[dataArray objectAtIndex:5]objectAtIndex:0];
         
         
-        self.value1.text = [[NSString stringWithFormat:@"%@",rupee]stringByAppendingString:[self formateCurrency:[NSString stringWithFormat:@"%f", user1]]];
+        self.value1.text = [[NSString stringWithFormat:@"%@",rupee]stringByAppendingString:[currencyFormate formateCurrency:[NSString stringWithFormat:@"%f", user1]]];
         
-        self.value2.text = [[NSString stringWithFormat:@"%@",rupee]stringByAppendingString:[self formateCurrency:[NSString stringWithFormat:@"%f", user2]]];
-        self.value3.text = [[NSString stringWithFormat:@"%@",rupee]stringByAppendingString:[self formateCurrency:[NSString stringWithFormat:@"%f", user3]]];
-        self.value4.text = [[NSString stringWithFormat:@"%@",rupee]stringByAppendingString:[self formateCurrency:[NSString stringWithFormat:@"%f", user4]]];
-        self.value5.text = [[NSString stringWithFormat:@"%@",rupee]stringByAppendingString:[self formateCurrency:[NSString stringWithFormat:@"%f", user5]]];
+        self.value2.text = [[NSString stringWithFormat:@"%@",rupee]stringByAppendingString:[currencyFormate formateCurrency:[NSString stringWithFormat:@"%f", user2]]];
+        self.value3.text = [[NSString stringWithFormat:@"%@",rupee]stringByAppendingString:[currencyFormate formateCurrency:[NSString stringWithFormat:@"%f", user3]]];
+        self.value4.text = [[NSString stringWithFormat:@"%@",rupee]stringByAppendingString:[currencyFormate formateCurrency:[NSString stringWithFormat:@"%f", user4]]];
+        self.value5.text = [[NSString stringWithFormat:@"%@",rupee]stringByAppendingString:[currencyFormate formateCurrency:[NSString stringWithFormat:@"%f", user5]]];
     }
     
     
@@ -99,11 +100,11 @@
             
             
             
-            self.value1.text = [[NSString stringWithFormat:@"%@",rupee]stringByAppendingString:[self formateCurrency:[NSString stringWithFormat:@"%f", user1]]];
+            self.value1.text = [[NSString stringWithFormat:@"%@",rupee]stringByAppendingString:[currencyFormate formateCurrency:[NSString stringWithFormat:@"%f", user1]]];
             
-            self.value2.text = [[NSString stringWithFormat:@"%@",rupee]stringByAppendingString:[self formateCurrency:[NSString stringWithFormat:@"%f", user2]]];
-            self.value3.text = [[NSString stringWithFormat:@"%@",rupee]stringByAppendingString:[self formateCurrency:[NSString stringWithFormat:@"%f", user3]]];
-            self.value4.text = [[NSString stringWithFormat:@"%@",rupee]stringByAppendingString:[self formateCurrency:[NSString stringWithFormat:@"%f", user4]]];
+            self.value2.text = [[NSString stringWithFormat:@"%@",rupee]stringByAppendingString:[currencyFormate formateCurrency:[NSString stringWithFormat:@"%f", user2]]];
+            self.value3.text = [[NSString stringWithFormat:@"%@",rupee]stringByAppendingString:[currencyFormate formateCurrency:[NSString stringWithFormat:@"%f", user3]]];
+            self.value4.text = [[NSString stringWithFormat:@"%@",rupee]stringByAppendingString:[currencyFormate formateCurrency:[NSString stringWithFormat:@"%f", user4]]];
             
             
             [self.constantView5 removeFromSuperview];
@@ -125,10 +126,10 @@
             self.user2.text = [[dataArray objectAtIndex:2]objectAtIndex:0];
             self.user3.text = [[dataArray objectAtIndex:3]objectAtIndex:0];
             
-            self.value1.text = [[NSString stringWithFormat:@"%@",rupee]stringByAppendingString:[self formateCurrency:[NSString stringWithFormat:@"%f", user1]]];
+            self.value1.text = [[NSString stringWithFormat:@"%@",rupee]stringByAppendingString:[currencyFormate formateCurrency:[NSString stringWithFormat:@"%f", user1]]];
             
-            self.value2.text = [[NSString stringWithFormat:@"%@",rupee]stringByAppendingString:[self formateCurrency:[NSString stringWithFormat:@"%f", user2]]];
-            self.value3.text = [[NSString stringWithFormat:@"%@",rupee]stringByAppendingString:[self formateCurrency:[NSString stringWithFormat:@"%f", user3]]];
+            self.value2.text = [[NSString stringWithFormat:@"%@",rupee]stringByAppendingString:[currencyFormate formateCurrency:[NSString stringWithFormat:@"%f", user2]]];
+            self.value3.text = [[NSString stringWithFormat:@"%@",rupee]stringByAppendingString:[currencyFormate formateCurrency:[NSString stringWithFormat:@"%f", user3]]];
             
             
             
@@ -148,9 +149,9 @@
             self.user1.text = [[dataArray objectAtIndex:1]objectAtIndex:0];
             self.user2.text = [[dataArray objectAtIndex:2]objectAtIndex:0];
             
-            self.value1.text = [[NSString stringWithFormat:@"%@",rupee]stringByAppendingString:[self formateCurrency:[NSString stringWithFormat:@"%f", user1]]];
+            self.value1.text = [[NSString stringWithFormat:@"%@",rupee]stringByAppendingString:[currencyFormate formateCurrency:[NSString stringWithFormat:@"%f", user1]]];
             
-            self.value2.text = [[NSString stringWithFormat:@"%@",rupee]stringByAppendingString:[self formateCurrency:[NSString stringWithFormat:@"%f", user2]]];
+            self.value2.text = [[NSString stringWithFormat:@"%@",rupee]stringByAppendingString:[currencyFormate formateCurrency:[NSString stringWithFormat:@"%f", user2]]];
             
             
             [self.constantView3 removeFromSuperview];
@@ -167,7 +168,7 @@
             
             
             self.user1.text = [[dataArray objectAtIndex:1]objectAtIndex:0];
-            self.value1.text = [[NSString stringWithFormat:@"%@",rupee]stringByAppendingString:[self formateCurrency:[NSString stringWithFormat:@"%f", user1]]];
+            self.value1.text = [[NSString stringWithFormat:@"%@",rupee]stringByAppendingString:[currencyFormate formateCurrency:[NSString stringWithFormat:@"%f", user1]]];
             
             
             

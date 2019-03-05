@@ -12,6 +12,7 @@
 #import "XmwReportService.h"
 #import "NationalSalesAggregatePieCellView.h"
 #import "SimpleEditForm.h"
+#import "DashBoardVC.h"
 @implementation NationalSalesAggregatePieView
 {
     NationalSalesAggregatePieCellView *nationalSalesAggregatePieCellView;
@@ -220,9 +221,11 @@
         reportVC.forwardedDataDisplay = forwardedDataDisplay;
         reportVC.forwardedDataPost = forwardedDataPost;
         
+        
         UIViewController *root;
         root = [[[[UIApplication sharedApplication]windows]objectAtIndex:0]rootViewController];
-        
+      
+
         SWRevealViewController *reveal = (SWRevealViewController*)root;
         [(UINavigationController*)reveal.frontViewController pushViewController:objVC animated:YES];
     }

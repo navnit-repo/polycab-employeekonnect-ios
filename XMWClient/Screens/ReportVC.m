@@ -37,7 +37,7 @@
     
     
     UIBarButtonItem*  downloadButton;
-    
+    float titleLblHeight;
   
 }
 @end
@@ -255,6 +255,18 @@ static DownloadHistoryMenuView* rightSlideMenu = nil;
     [label setNumberOfLines: 0];
     [label sizeToFit];
     [label setCenter: CGPointMake(self.view.center.x, label.center.y)];
+    
+    CGSize maximumLabelSize = CGSizeMake(label.frame.size.width, FLT_MAX);
+    
+    CGSize expectedLabelSize = [headername sizeWithFont:label.font constrainedToSize:maximumLabelSize lineBreakMode:label.lineBreakMode];
+    
+    //adjust the label the the new height.
+    CGRect newFrame = label.frame;
+    newFrame.size.height = expectedLabelSize.height;
+    label.frame = newFrame;
+    
+    titleLblHeight = label.frame.size.height+10;
+    
     [self.view addSubview:label];
 }
 -(void) makeReportScreenV2
@@ -262,7 +274,7 @@ static DownloadHistoryMenuView* rightSlideMenu = nil;
     
     
     
-    self.reportTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 35, self.view.frame.size.width, self.view.frame.size.height-35)];
+    self.reportTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, titleLblHeight, self.view.frame.size.width, self.view.frame.size.height-35)];
     self.reportTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 
     sectionArray = [[NSMutableArray alloc] init];

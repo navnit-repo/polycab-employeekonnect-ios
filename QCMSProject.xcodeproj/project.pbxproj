@@ -984,6 +984,8 @@
 		F0EAC5BA2142641D007D694C /* SelectedListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F0EAC5B72142641C007D694C /* SelectedListVC.m */; };
 		F0EAC5BB2142641D007D694C /* SelectedListVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = F0EAC5B82142641C007D694C /* SelectedListVC.xib */; };
 		F0EAC5BC2142641D007D694C /* SelectedListVC.h in Headers */ = {isa = PBXBuildFile; fileRef = F0EAC5B92142641D007D694C /* SelectedListVC.h */; };
+		F0F5B8C0222E4EB900EBAF39 /* CurrencyConversationClass.h in Headers */ = {isa = PBXBuildFile; fileRef = F0F5B8BE222E4EB900EBAF39 /* CurrencyConversationClass.h */; };
+		F0F5B8C1222E4EB900EBAF39 /* CurrencyConversationClass.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F5B8BF222E4EB900EBAF39 /* CurrencyConversationClass.m */; };
 		F0FE2BA11F71406E00D8FCEF /* WebViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = F0FE2B9E1F71406D00D8FCEF /* WebViewController.h */; };
 		F0FE2BA21F71406E00D8FCEF /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0FE2B9F1F71406D00D8FCEF /* WebViewController.m */; };
 		F0FE2BA31F71406E00D8FCEF /* WebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F0FE2BA01F71406D00D8FCEF /* WebViewController.xib */; };
@@ -2055,6 +2057,8 @@
 		F0EAC5B72142641C007D694C /* SelectedListVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectedListVC.m; sourceTree = "<group>"; };
 		F0EAC5B82142641C007D694C /* SelectedListVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectedListVC.xib; sourceTree = "<group>"; };
 		F0EAC5B92142641D007D694C /* SelectedListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectedListVC.h; sourceTree = "<group>"; };
+		F0F5B8BE222E4EB900EBAF39 /* CurrencyConversationClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CurrencyConversationClass.h; sourceTree = "<group>"; };
+		F0F5B8BF222E4EB900EBAF39 /* CurrencyConversationClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CurrencyConversationClass.m; sourceTree = "<group>"; };
 		F0FE2B9E1F71406D00D8FCEF /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
 		F0FE2B9F1F71406D00D8FCEF /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
 		F0FE2BA01F71406D00D8FCEF /* WebViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WebViewController.xib; sourceTree = "<group>"; };
@@ -3450,6 +3454,8 @@
 				F08F14DD21C25FAD00B48A04 /* detailsTableView.m */,
 				F08F14DE21C25FAD00B48A04 /* detailsTableView.xib */,
 				F08F14E421C2618400B48A04 /* dataTableViewHeader.xib */,
+				F0F5B8BE222E4EB900EBAF39 /* CurrencyConversationClass.h */,
+				F0F5B8BF222E4EB900EBAF39 /* CurrencyConversationClass.m */,
 				F02CA95C21C244FB005168C8 /* Overdue cell */,
 				F023B790211C1BC100D54B38 /* Order Pendency Cell */,
 				F023B783211C1B3C00D54B38 /* Payment Outstanding Cell */,
@@ -4399,6 +4405,7 @@
 				F0B2FB46218850F5006A7C6B /* DispatchDetailsVC.h in Headers */,
 				F0B2FB1E218850F5006A7C6B /* SearchProductListVC.h in Headers */,
 				F0580211221D2E3200682D07 /* SearchProductByCatalogNextViewVC.h in Headers */,
+				F0F5B8C0222E4EB900EBAF39 /* CurrencyConversationClass.h in Headers */,
 				85DB6AC21E634CB90018710B /* WideReportVC.h in Headers */,
 				8502702019064625003A7E01 /* CommonRequestStruct.h in Headers */,
 				85CC35051DFA67900016F65C /* MultiSelectSearchViewCell.h in Headers */,
@@ -4995,6 +5002,7 @@
 				F02E356C22159E7D0007573D /* NationalWisePolycabSalesComparisonChat.m in Sources */,
 				F01FCBFA20F5F941001B0C4E /* ShowInvoice.m in Sources */,
 				F031562D2126931C005DE7F2 /* SearchProductBYNameVC.m in Sources */,
+				F0F5B8C1222E4EB900EBAF39 /* CurrencyConversationClass.m in Sources */,
 				F0EAC5BA2142641D007D694C /* SelectedListVC.m in Sources */,
 				855A2A841A851C68003888ED /* SecondDashDataView.m in Sources */,
 				8579E741174CDBDC00D7945F /* SBJsonStreamParser.m in Sources */,

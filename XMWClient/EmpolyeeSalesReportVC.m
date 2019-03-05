@@ -176,9 +176,9 @@
             [dataSet setObject:tupleObject forKey:fieldName];
     
         }
-        tupleObject.firstValue = [rowData objectAtIndex:2];
+        tupleObject.firstValue = [rowData objectAtIndex:3];
         if([rowData count]>2) {
-            tupleObject.uomValue = [rowData objectAtIndex:2];
+            tupleObject.uomValue = [rowData objectAtIndex:3];
         } else {
             tupleObject.uomValue = @"";
         }
@@ -224,9 +224,9 @@
             tupleObject.thirdRawData = nil;
             [dataSet setObject:tupleObject forKey:fieldName];
         }
-        tupleObject.secondValue = [rowData objectAtIndex:2];
+        tupleObject.secondValue = [rowData objectAtIndex:3];
         if([rowData count]>2) {
-            tupleObject.uomValue = [rowData objectAtIndex:2];
+            tupleObject.uomValue = [rowData objectAtIndex:3];
         } else {
             tupleObject.uomValue = @"";
         }
@@ -271,9 +271,9 @@
             tupleObject.thirdRawData = nil;
             [dataSet setObject:tupleObject forKey:fieldName];
         }
-        tupleObject.thirdValue = [rowData objectAtIndex:2];
+        tupleObject.thirdValue = [rowData objectAtIndex:3];
         if([rowData count]>2) {
-            tupleObject.uomValue = [rowData objectAtIndex:2];
+            tupleObject.uomValue = [rowData objectAtIndex:3];
         } else {
             tupleObject.uomValue = @"";
         }

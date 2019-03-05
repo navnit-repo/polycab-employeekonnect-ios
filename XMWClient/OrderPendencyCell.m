@@ -8,6 +8,7 @@
 
 #import "OrderPendencyCell.h"
 #import "LayoutClass.h"
+#import "CurrencyConversationClass.h"
 @implementation OrderPendencyCell
 {
     double totalAmount;
@@ -61,10 +62,15 @@
     blockedAmount = [[array objectAtIndex:4] doubleValue];
     activeAmount = [[array objectAtIndex:3] doubleValue];
     
+    CurrencyConversationClass *currencyFormate  = [[CurrencyConversationClass alloc]init];
+    
      NSString *rupee=@"\u20B9";
-     NSString *totalLbl = [self formateCurrency:[array objectAtIndex:2]];
-     NSString *blockedLbl = [self formateCurrency:[array objectAtIndex:4]];
-     NSString *activeLbl = [self formateCurrency:[array objectAtIndex:3]];
+     NSString *totalLbl = [currencyFormate formateCurrency:[array objectAtIndex:2]];
+     NSString *blockedLbl = [currencyFormate formateCurrency:[array objectAtIndex:4]];
+     NSString *activeLbl = [currencyFormate formateCurrency:[array objectAtIndex:3]];
+    
+    
+    
     
     self.totalLblDisplayTop.text =[[NSString stringWithFormat:@"%@",rupee]stringByAppendingString:totalLbl];
     self.activeLblDisplayTop.text =[[NSString stringWithFormat:@"%@",rupee]stringByAppendingString:activeLbl];
@@ -124,9 +130,9 @@
        
        NSString *rupee=@"\u20B9";
        
-       NSString *totalLbl = [self formateCurrency:[array objectAtIndex:2]];
-       NSString *blockedLbl = [self formateCurrency:[array objectAtIndex:4]];
-       NSString *activeLbl = [self formateCurrency:[array objectAtIndex:3]];
+       NSString *totalLbl = [currencyFormate formateCurrency:[array objectAtIndex:2]];
+       NSString *blockedLbl = [currencyFormate formateCurrency:[array objectAtIndex:4]];
+       NSString *activeLbl = [currencyFormate formateCurrency:[array objectAtIndex:3]];
        
        self.totalPriceLbl.text = [[NSString stringWithFormat:@"%@",rupee]stringByAppendingString:totalLbl];
        self.activePriceLbl.text = [[NSString stringWithFormat:@"%@",rupee]stringByAppendingString:activeLbl];

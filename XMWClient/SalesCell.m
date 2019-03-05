@@ -8,7 +8,7 @@
 
 #import "SalesCell.h"
 #import "LayoutClass.h"
-
+#import "CurrencyConversationClass.h"
 @implementation SalesCell
 @synthesize ftdDataSetLbl,ytdDataSetLbl,mtdDataSetLbl;
 @synthesize displayName;
@@ -41,10 +41,15 @@
     [self autoLayout];
     NSString *rupee=@"\u20B9";
     
-    NSString *ftd = [self formateCurrency:[ftdData objectAtIndex:2]];
-    NSString *mtd = [self formateCurrency:[mtdData objectAtIndex:2]];
-    NSString *ytd = [self formateCurrency:[ytdData objectAtIndex:2]];
+//    NSString *ftd = [self formateCurrency:[ftdData objectAtIndex:2]];
+//    NSString *mtd = [self formateCurrency:[mtdData objectAtIndex:2]];
+//    NSString *ytd = [self formateCurrency:[ytdData objectAtIndex:2]];
+//
+    CurrencyConversationClass *currencyFormate = [[CurrencyConversationClass alloc]init];
     
+  NSString *ftd=  [currencyFormate formateCurrency:[ftdData objectAtIndex:2]];
+  NSString *mtd = [currencyFormate formateCurrency:[mtdData objectAtIndex:2]];
+  NSString *ytd = [currencyFormate formateCurrency:[ytdData objectAtIndex:2]];
     
     self.displayName.text   = [[[ytdData objectAtIndex:0]stringByAppendingString:@"-"]stringByAppendingString:[ytdData objectAtIndex:1]];
     self.ftdDataSetLbl.text = [[NSString stringWithFormat:@"%@",rupee]stringByAppendingString:ftd];
