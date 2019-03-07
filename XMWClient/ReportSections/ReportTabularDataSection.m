@@ -367,7 +367,9 @@
                [dotReportElement.dataType isEqualToString:XmwcsConst_DE_TEXTFIELD_DATA_TYPE_AMOUNT] ||
                [dotReportElement.dataType isEqualToString:XmwcsConst_DE_TEXTFIELD_DATA_TYPE_FLOAT])
             {
-                mItemLabel.textAlignment = NSTextAlignmentRight;
+                //   mItemLabel.textAlignment = NSTextAlignmentRight;
+                
+                mItemLabel.textAlignment = NSTextAlignmentCenter;///for polycab
             }
             
             [firstCol addSubview:mItemLabel];

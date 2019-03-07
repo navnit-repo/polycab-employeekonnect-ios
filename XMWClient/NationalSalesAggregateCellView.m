@@ -30,8 +30,16 @@
     NSString *mtd = [currencyFormate formateCurrency:[mtdData objectAtIndex:2]];
     NSString *ytd = [currencyFormate formateCurrency:[ytdData objectAtIndex:2]];
     
+    if ([[ytdData objectAtIndex:1] isEqualToString:@""] || [[ytdData objectAtIndex:1] length] ==0 || [ytdData objectAtIndex:1] == nil || [[ytdData objectAtIndex:1] isKindOfClass:[NSNull class]] ) {
+      self.displayName.text   = [ytdData objectAtIndex:0];
+    }
+    else
+    {
+          self.displayName.text   =  [[[ytdData objectAtIndex:0]stringByAppendingString:@"-"]stringByAppendingString:[ytdData objectAtIndex:1]];
+    }
     
-    self.displayName.text   = [ytdData objectAtIndex:0];
+
+  
     self.ftdDataSetLbl.text = [[NSString stringWithFormat:@"%@",rupee]stringByAppendingString:ftd];
     self.mtdDataSetLbl.text = [[NSString stringWithFormat:@"%@",rupee]stringByAppendingString:mtd];
     self.ytdDataSetLbl.text = [[NSString stringWithFormat:@"%@",rupee]stringByAppendingString:ytd];

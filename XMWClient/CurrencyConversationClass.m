@@ -25,6 +25,9 @@
     
     float shortenedAmount = [actualAmount floatValue];
     NSString *suffix = @"";
+    NSNumberFormatter *formatter = [NSNumberFormatter new];
+    [formatter setPositiveFormat:@"##,##,###.#"];
+    [formatter setRoundingMode: NSNumberFormatterRoundDown];
     float currency = [actualAmount floatValue];
     
      if (currency ==0)
@@ -44,14 +47,16 @@
     {
         suffix = @"L";
         shortenedAmount = currency;
+        [formatter setRoundingMode: NSNumberFormatterRoundHalfDown];
     }
         
         
-        NSNumberFormatter *formatter = [NSNumberFormatter new];
-        [formatter setPositiveFormat:@"##,##,###.#"];
-        [formatter setRoundingMode: NSNumberFormatterRoundDown];
+       
+        
+        
         NSString *formatted = [formatter stringFromNumber:[NSNumber numberWithFloat:shortenedAmount]];
         NSString *requiredString = [formatted stringByAppendingString:suffix];
+        NSLog(@"return : %@",requiredString);
         return requiredString;
 }
     
