@@ -32,16 +32,6 @@
 @end
 
 @implementation ReportTabularDataSection
-    {
-        bool sortFlag;
-        NSMutableArray *finalFilterData;
-        NSMutableDictionary *columnSortFlagDict;
-        NSMutableArray *objectArray;
-        NSMutableDictionary *objectDict;
-    }
-    
-   
-
 
 +(NSInteger) tableRowHeight
 {
@@ -78,52 +68,6 @@
     sortedElementIds =[DotReportDraw sortRptComponents : reportElements : self.componentPlace];
     cellComponent = [self createCellComponent];
     recordTableData = self.reportPostResponse.tableData;
-    columnSortFlagDict = [[NSMutableDictionary alloc]init];
-   
-   
-    
-    
-    
-    
-    NSMutableArray *elementId = [cellComponent objectAtIndex:2];
-    NSMutableArray *headerElementId = [cellComponent objectAtIndex:3];
-    NSMutableArray *elementDisplay = [cellComponent objectAtIndex:4];
-    for (int i=0;i<elementDisplay.count; i++) {
-        
-        
-        [columnSortFlagDict setValue:@"false" forKey:[NSString stringWithFormat:@"%ld",[elementId  indexOfObjectIdenticalTo:[headerElementId objectAtIndex:i]]]];
-        
-      
-    }
-    
-    NSMutableArray *arrayTest = [[NSMutableArray alloc]init];
-   
-        for (int i=0; i<elementDisplay.count; i++) {
-             objectArray = [[NSMutableArray alloc]init];
-             objectDict = [[NSMutableDictionary alloc]init];
-            long int index =[elementId  indexOfObjectIdenticalTo:[headerElementId objectAtIndex:i]];
-            for (int k=0;k<recordTableData.count ; k++) {
-                
-                NSString *getData = [[recordTableData objectAtIndex:k]objectAtIndex:index];
-                [objectArray addObject:getData];
-                
-            }
-            [objectDict setObject:objectArray forKey:[headerElementId objectAtIndex:i]];
-            [arrayTest addObject:objectDict];
-        }
-        
-
-    
-    NSLog(@"dict Array %@",arrayTest);
-    
-    
-    NSSortDescriptor *ageDescriptor = [[NSSortDescriptor alloc] initWithKey:@"ORDER_NUMBER" ascending:YES];
-    NSSortDescriptor *hireDateDescriptor = [[NSSortDescriptor alloc] initWithKey:@"PENDING_AMOUNT" ascending:YES];
-    NSArray *sortDescriptors = @[ageDescriptor, hireDateDescriptor];
-    NSArray *sortedArray = [arrayTest sortedArrayUsingDescriptors:sortDescriptors];
-    
-    ///////finally work correctly;
-   
     
 }
 
@@ -139,11 +83,7 @@
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    
-  
        return [self drawTableHeader];
-    
- 
 }
 
 
@@ -189,15 +129,12 @@
 {
     int screenWidth = self.tableView.frame.size.width;
     UIView *tableHeaderContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, [ReportTabularDataSection tableHeaderHeight]) ];
-
     NSMutableArray *elementType = [cellComponent objectAtIndex:0];
     NSMutableDictionary *columnLengthMap = [cellComponent objectAtIndex:1];
     NSMutableArray *elementId = [cellComponent objectAtIndex:2];
     NSMutableArray *headerElementId = [cellComponent objectAtIndex:3];
     NSMutableArray *elementDisplay = [cellComponent objectAtIndex:4];
-    NSMutableArray *dataType = [cellComponent objectAtIndex:6];
-    
-    
+  
     //start calculate tableheader column width
     // need to calculate column width normalization when total percentage is not 100% then we need to extrapolate to 100%
     // 76  ---- 18
@@ -245,17 +182,6 @@
         
         UIView *header = [[UIView alloc]initWithFrame:CGRectMake(xCord+1, 0, columnWidth , hight)];
         header.backgroundColor = [UIColor whiteColor];
-        
-        MXButton *sortButton = [[MXButton alloc]initWithFrame:CGRectMake(xCord+1, 0, columnWidth , hight)]; ////my sorting code
-         sortButton.backgroundColor = [UIColor clearColor];
-         sortButton.sortButtonDataType =[dataType objectAtIndex:cntTableColumn];
-        sortButton.elementId = [headerElementId objectAtIndex:cntTableColumn];
-        sortButton.tag = [elementId  indexOfObjectIdenticalTo:[headerElementId objectAtIndex:cntTableColumn]];
-        sortButton.buttonClickFlag = false;
-        [sortButton addTarget:self
-                   action:@selector(sortButtonHandler:)
-         forControlEvents:UIControlEventTouchUpInside];
-        
         UILabel *labelHeader = [[UILabel alloc]initWithFrame:CGRectMake(1, 0, header.frame.size.width-1, hight)];
         labelHeader.backgroundColor = [UIColor darkGrayColor];
         labelHeader.text = [elementDisplay objectAtIndex:cntTableColumn];
@@ -264,31 +190,8 @@
         labelHeader.textAlignment = NSTextAlignmentCenter;
         [header addSubview:labelHeader];
         [labelHeader setFont:[UIFont systemFontOfSize:FONT_SIZE_HEADER weight:UIFontWeightMedium]];
-
-
-        
         [tableHeaderContainer addSubview:header];
-        [tableHeaderContainer addSubview:sortButton];
-        
-//
-//        UIView *checkBoxHeader = [[UIView alloc]initWithFrame:CGRectMake(xCord+1,hight , columnWidth , hight)];
-//        header.backgroundColor = [UIColor whiteColor];
-//
-//        UIButton *checkBoxButton = [[UIButton alloc]initWithFrame:CGRectMake(1, hight,20, 20)];
-//        [checkBoxButton setImage:[UIImage imageNamed: @"checkedbox"] forState:UIControlStateNormal];
-//
-//        [checkBoxHeader addSubview:checkBoxButton];
-//
-//        [tableHeaderContainer addSubview:checkBoxHeader];
-        
-        
         xCord = xCord + columnWidth;
-        
-      
-        
-        
-        
-        
     }
     
     return tableHeaderContainer;
@@ -340,16 +243,6 @@
                 [columnLengthMap setObject:dotReportElement.length forKey:dotReportElement.elementId];
             }
             [headerElementId addObject:dotReportElement.elementId];
-            ////my sorting code
-            if (dotReportElement.dataType !=nil) {
-                [dataType addObject:dotReportElement.dataType];
-            }
-            else
-            {
-                 [dataType addObject:@""];
-            }
-            
-            
         } else if([dotReportElement.componentType isEqualToString:XmwcsConst_DRE_COLUMN_TYPE_HIDDEN]) {
             [hiddenElementIds addObject:dotReportElement.elementId];
         }
@@ -474,9 +367,7 @@
                [dotReportElement.dataType isEqualToString:XmwcsConst_DE_TEXTFIELD_DATA_TYPE_AMOUNT] ||
                [dotReportElement.dataType isEqualToString:XmwcsConst_DE_TEXTFIELD_DATA_TYPE_FLOAT])
             {
-             //   mItemLabel.textAlignment = NSTextAlignmentRight;
-                
-                 mItemLabel.textAlignment = NSTextAlignmentCenter;///for polycab
+                mItemLabel.textAlignment = NSTextAlignmentRight;
             }
             
             [firstCol addSubview:mItemLabel];
@@ -562,18 +453,8 @@
     // newly added close
     
     
- //   NSMutableArray* row = [recordTableData objectAtIndex:indexPath.row];
-    
-   ///my sorting code
-    NSMutableArray* row = [[NSMutableArray alloc]init];
-    if (sortFlag == true) {
-        [row addObjectsFromArray: [finalFilterData objectAtIndex:indexPath.row]];
-    }
-    else
-    {
-        [row addObjectsFromArray: [recordTableData objectAtIndex:indexPath.row]];
-    }
-    
+    NSMutableArray* row = [recordTableData objectAtIndex:indexPath.row];
+ 
     // NSInteger width = screenWidth/[cellComponent count];
     
     int x =0;
@@ -942,152 +823,6 @@
 {
      [loadingView removeView];
 }
-
-    
-#pragma mark - Sort Button Handler
--(IBAction)sortButtonHandler:(id)sender
-    {
-        sortFlag = true;
-
-        
-        MXButton *button = (MXButton*)sender;
-        NSLog(@"Column no : %ld",button.tag);
-        
-        NSMutableArray *tempAllData = [[NSMutableArray alloc]init];
-        finalFilterData = [[NSMutableArray alloc]init];
-        [tempAllData addObjectsFromArray:self.reportPostResponse.tableData];
-        
-
-        if ([[columnSortFlagDict valueForKey:[NSString stringWithFormat:@"%ld",button.tag]] isEqualToString:@"false" ]) {
-             [columnSortFlagDict setValue:@"true" forKey:[NSString stringWithFormat:@"%ld",button.tag]];
-
-            
-            if ([button.sortButtonDataType isEqualToString:@"CHAR"]) {
-               
-                NSArray *   sortedArray = [tempAllData sortedArrayUsingComparator:^(id a, id b) {
-                    return [[a objectAtIndex:button.tag] compare:[b objectAtIndex:button.tag]];
-                }];
-                NSLog( @"%@",sortedArray);
-       
-                [finalFilterData addObjectsFromArray:sortedArray];
-                
-                NSLog(@"Final FilterDataArray : %@",finalFilterData);
-                
-                
-                
-                [self.tableView reloadSections:[[NSIndexSet alloc] initWithIndex:reportSection] withRowAnimation:UITableViewRowAnimationFade];
-             
-
-            }
-           else if ([button.sortButtonDataType isEqualToString:@"NUMERIC"]) {
-          
-            NSArray *   sortedArray = [tempAllData sortedArrayUsingComparator:^(id a, id b) {
-                   return [[a objectAtIndex:button.tag] compare:[b objectAtIndex:button.tag] options:(NSNumericSearch)];
-               }];
-               NSLog( @"%@",sortedArray);
-               
-                [finalFilterData addObjectsFromArray:sortedArray];
-               
-               NSLog(@"Final FilterDataArray : %@",finalFilterData);
-               
-               
-               
-               [self.tableView reloadSections:[[NSIndexSet alloc] initWithIndex:reportSection] withRowAnimation:UITableViewRowAnimationFade];
-            }
-           else if ([button.sortButtonDataType isEqualToString:@"DATE"]) {
-            
-
-               NSDateFormatter *df = [[NSDateFormatter alloc] init];
-                              [df setDateFormat:@"dd-MM-yyyy"];
-               NSArray *    sortedArray = [tempAllData sortedArrayUsingComparator:^(id a, id b) {
-                   
-                   NSDate *d1 = [df dateFromString: [a objectAtIndex:button.tag]];
-                   NSDate *d2 = [df dateFromString: [b objectAtIndex:button.tag]];
-                  return [d1 compare: d2];
-                
-               }];
-               NSLog( @"%@",sortedArray);
-                [finalFilterData addObjectsFromArray:sortedArray];
-               
-               NSLog(@"Final FilterDataArray : %@",finalFilterData);
-               
-               
-               
-               [self.tableView reloadSections:[[NSIndexSet alloc] initWithIndex:reportSection] withRowAnimation:UITableViewRowAnimationFade];
-            }
-            
- 
-           
-
-     
-        }
-
-      else  if ([[columnSortFlagDict valueForKey:[NSString stringWithFormat:@"%ld",button.tag]] isEqualToString:@"true" ]) {
-             [columnSortFlagDict setValue:@"false" forKey:[NSString stringWithFormat:@"%ld",button.tag]];
-          
-          //   button.buttonClickFlag = false;
-          
-          
-          if ([button.sortButtonDataType isEqualToString:@"CHAR"]) {
-              NSArray *   sortedArray = [tempAllData sortedArrayUsingComparator:^(id a, id b) {
-                  return [[b objectAtIndex:button.tag] compare:[a objectAtIndex:button.tag]];
-              }];
-              NSLog( @"%@",sortedArray);
-              
-              [finalFilterData addObjectsFromArray:sortedArray];
-              
-              NSLog(@"Final FilterDataArray : %@",finalFilterData);
-              
-              
-              
-              [self.tableView reloadSections:[[NSIndexSet alloc] initWithIndex:reportSection] withRowAnimation:UITableViewRowAnimationFade];
-              
-          }
-          else if ([button.sortButtonDataType isEqualToString:@"NUMERIC"]) {
-              
-              NSArray *   sortedArray = [tempAllData sortedArrayUsingComparator:^(id a, id b) {
-                  return [[b objectAtIndex:button.tag] compare:[a objectAtIndex:button.tag] options:(NSNumericSearch)];
-              }];
-              NSLog( @"%@",sortedArray);
-              
-              [finalFilterData addObjectsFromArray:sortedArray];
-              
-              NSLog(@"Final FilterDataArray : %@",finalFilterData);
-              
-              
-              
-              [self.tableView reloadSections:[[NSIndexSet alloc] initWithIndex:reportSection] withRowAnimation:UITableViewRowAnimationFade];
-              
-          }
-          else if ([button.sortButtonDataType isEqualToString:@"DATE"]) {
-              NSDateFormatter *df = [[NSDateFormatter alloc] init];
-              [df setDateFormat:@"dd-MM-yyyy"];
-              NSArray *    sortedArray = [tempAllData sortedArrayUsingComparator:^(id a, id b) {
-                  
-                  NSDate *d1 = [df dateFromString: [a objectAtIndex:button.tag]];
-                  NSDate *d2 = [df dateFromString: [b objectAtIndex:button.tag]];
-                  return [d2 compare: d1];
-                  
-              }];
-              NSLog( @"%@",sortedArray);
-              [finalFilterData addObjectsFromArray:sortedArray];
-              
-              NSLog(@"Final FilterDataArray : %@",finalFilterData);
-              
-              
-              
-              [self.tableView reloadSections:[[NSIndexSet alloc] initWithIndex:reportSection] withRowAnimation:UITableViewRowAnimationFade];
-          }
-          
-          
-       
-//          NSLog(@"Final FilterDataArray : %@",finalFilterData);
-//          
-//        
-//        [self.tableView reloadSections:[[NSIndexSet alloc] initWithIndex:reportSection] withRowAnimation:UITableViewRowAnimationFade];
-          
-        }
-    }
 
 
 @end
