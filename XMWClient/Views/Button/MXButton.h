@@ -12,8 +12,9 @@
 
 @property id parent;
 @property (strong, nonatomic) NSString *elementId;
-
+@property (strong, nonatomic) NSString *sortButtonDataType;
 @property (strong, nonatomic) id attachedData;
+@property BOOL buttonClickFlag;
 
 -(MXButton *) init;
 

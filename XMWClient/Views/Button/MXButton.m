@@ -12,9 +12,9 @@
 
 @synthesize parent;
 @synthesize elementId;
-
+@synthesize sortButtonDataType;
 @synthesize attachedData;
-
+@synthesize buttonClickFlag;
 
 -(MXButton *) init
 {
@@ -23,6 +23,7 @@
 	if ( self ) 
 	{
 		elementId    = [[NSString alloc] init];
+        sortButtonDataType = [[NSString alloc] init];
 	}	
 	return self;
 }
