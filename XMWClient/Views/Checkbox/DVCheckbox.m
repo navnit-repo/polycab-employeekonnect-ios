@@ -12,7 +12,7 @@
 {
     UIImage* checkedImage;
     UIImage* uncheckedImage;
-    UIImageView* imageHolder;
+//    UIImageView* imageHolder;
 }
 @end
 
@@ -21,7 +21,7 @@
 
 @synthesize context;
 @synthesize checkboxDelegate;
-
+@synthesize imageHolder;
 - (id)initWithFrame:(CGRect)frame check:(BOOL) checkFlag enable:(BOOL) enableFlag
 {
     self = [super initWithFrame:frame];

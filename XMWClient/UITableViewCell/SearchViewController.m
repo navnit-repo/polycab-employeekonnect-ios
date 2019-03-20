@@ -27,7 +27,7 @@
     BOOL isFilterd;
     NSMutableArray * filteredArray;
     NSString *seachBarText;
-    
+    NSMutableDictionary *checkBoxState;
 }
 @synthesize selectedRows;
 @synthesize searchList;
@@ -105,47 +105,11 @@ int CHECKBOX_TAG_OFFSET = 9000;
     
     
     self.searchBar.delegate  = self;
-    
+    checkBoxState = [[NSMutableDictionary alloc]init];
     
     // Do any additional setup after loading the view from its nib.
 }
 
-
-
-//-(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
-//    [searchBar resignFirstResponder];
-//
-//    if (searchBar.text.length ==0) {
-//        isFilterd = false;
-//    }
-//    else{
-//        isFilterd = true;
-//        filteredArray  = [[NSMutableArray alloc]init];
-//        seachBarText = searchBar.text;
-//
-//        for (int i=0; i<searchData.count; i++) {
-//            NSArray *obj = [[NSArray alloc]initWithArray:[searchData objectAtIndex:i]];
-//
-//            if ([obj containsObject: seachBarText]) {
-//                [filteredArray addObject:obj];
-//            }
-//
-////            for (NSString *str in obj) {
-////
-////                NSRange nameRange = [str rangeOfString:searchBar.text options:NSCaseInsensitiveSearch];
-////                if (nameRange.location != NSNotFound) {
-////                    [filteredArray addObject:obj];
-////                    break;
-////
-////                }
-////
-////            }
-//
-//        }
-//    }
-//    [self.searchList reloadData];
-//
-//}
 -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
     [searchBar resignFirstResponder];
 }
@@ -448,6 +412,9 @@ int CHECKBOX_TAG_OFFSET = 9000;
         
         checkBox.tag = CHECKBOX_TAG_OFFSET + indexPath.row;
         
+        if ([[checkBoxState valueForKey:[row objectAtIndex:2]] isEqualToString:@"true"]) {
+            [checkBox.imageHolder setImage:[UIImage imageNamed:@"checkedbox"]];
+        }
         
     } else {
         width = screenWidth/[row count];
@@ -536,9 +503,12 @@ int CHECKBOX_TAG_OFFSET = 9000;
     if(rowIdx>=0) {
         @try {
             if (isFilterd) {
+                
+                [checkBoxState setValue:@"true" forKey:[[filteredArray objectAtIndex:rowIdx] objectAtIndex:2]];
                 [selectedRows setObject:[filteredArray objectAtIndex:rowIdx] forKey:[NSString stringWithFormat:@"%d", rowIdx]];
             }
             else{
+                [checkBoxState setValue:@"true" forKey:[[searchData objectAtIndex:rowIdx] objectAtIndex:2]];
                 [selectedRows setObject:[searchData objectAtIndex:rowIdx] forKey:[NSString stringWithFormat:@"%d", rowIdx]];
             }
             
@@ -571,7 +541,7 @@ int CHECKBOX_TAG_OFFSET = 9000;
             //
             //                [selectedRows setObject:[searchData objectAtIndex:rowIdx] forKey:[NSString stringWithFormat:@"%d", rowIdx]];
             //            }
-            
+            [checkBoxState setValue:@"false" forKey:[[selectedRows valueForKey:[NSString stringWithFormat:@"%d", rowIdx]] objectAtIndex:2]];
             [selectedRows removeObjectForKey:[NSString stringWithFormat:@"%d", rowIdx]];
             
         }

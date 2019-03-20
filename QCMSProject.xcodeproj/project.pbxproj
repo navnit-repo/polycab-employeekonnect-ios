@@ -670,6 +670,9 @@
 		F03D424520F75EC4008E0B08 /* OTPVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = F03D424220F75EC4008E0B08 /* OTPVC.xib */; };
 		F03F2F45212BE0AE0023A2D3 /* CreateOrderDisplayCell.h in Headers */ = {isa = PBXBuildFile; fileRef = F03F2F43212BE0AE0023A2D3 /* CreateOrderDisplayCell.h */; };
 		F03F2F46212BE0AE0023A2D3 /* CreateOrderDisplayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F03F2F44212BE0AE0023A2D3 /* CreateOrderDisplayCell.m */; };
+		F0483D2E2242133000D1DFF8 /* ForgotPasswordVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = F0483D2B2242132F00D1DFF8 /* ForgotPasswordVC.xib */; };
+		F0483D2F2242133000D1DFF8 /* ForgotPasswordVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F0483D2C2242132F00D1DFF8 /* ForgotPasswordVC.m */; };
+		F0483D302242133000D1DFF8 /* ForgotPasswordVC.h in Headers */ = {isa = PBXBuildFile; fileRef = F0483D2D2242132F00D1DFF8 /* ForgotPasswordVC.h */; };
 		F04B2F3320FF22CB00E6120A /* SWRevealViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = F04B2F3120FF22CB00E6120A /* SWRevealViewController.h */; };
 		F04B2F3420FF22CB00E6120A /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F04B2F3220FF22CB00E6120A /* SWRevealViewController.m */; };
 		F04B2F3A20FF2AAE00E6120A /* SWReavelViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F04B2F3920FF2AAE00E6120A /* SWReavelViewController.xib */; };
@@ -1743,6 +1746,9 @@
 		F03D424220F75EC4008E0B08 /* OTPVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OTPVC.xib; sourceTree = "<group>"; };
 		F03F2F43212BE0AE0023A2D3 /* CreateOrderDisplayCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CreateOrderDisplayCell.h; sourceTree = "<group>"; };
 		F03F2F44212BE0AE0023A2D3 /* CreateOrderDisplayCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CreateOrderDisplayCell.m; sourceTree = "<group>"; };
+		F0483D2B2242132F00D1DFF8 /* ForgotPasswordVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ForgotPasswordVC.xib; sourceTree = "<group>"; };
+		F0483D2C2242132F00D1DFF8 /* ForgotPasswordVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForgotPasswordVC.m; sourceTree = "<group>"; };
+		F0483D2D2242132F00D1DFF8 /* ForgotPasswordVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForgotPasswordVC.h; sourceTree = "<group>"; };
 		F04B2F3120FF22CB00E6120A /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
 		F04B2F3220FF22CB00E6120A /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
 		F04B2F3920FF2AAE00E6120A /* SWReavelViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SWReavelViewController.xib; sourceTree = "<group>"; };
@@ -3958,6 +3964,9 @@
 				F0A358FD20FCC6FD00CE34AC /* TermsVC.h */,
 				F0A358FE20FCC6FD00CE34AC /* TermsVC.m */,
 				F0A358FF20FCC6FD00CE34AC /* TermsVC.xib */,
+				F0483D2D2242132F00D1DFF8 /* ForgotPasswordVC.h */,
+				F0483D2C2242132F00D1DFF8 /* ForgotPasswordVC.m */,
+				F0483D2B2242132F00D1DFF8 /* ForgotPasswordVC.xib */,
 			);
 			name = "LogIn & SignUp Flow";
 			sourceTree = "<group>";
@@ -4255,6 +4264,7 @@
 				852A941218F9974100F5DB5F /* DVCheckbox.h in Headers */,
 				8500DCF11A794D45002B534F /* XYPieChart.h in Headers */,
 				858082B31A5D8A8A00207EAB /* DotLIneChart.h in Headers */,
+				F0483D302242133000D1DFF8 /* ForgotPasswordVC.h in Headers */,
 				F02E35492215757D0007573D /* OverduePieView.h in Headers */,
 				8502702419064648003A7E01 /* DotNotificationSend.h in Headers */,
 				F02C1EE520EE25D3002ABF27 /* DVPeriodCalendar.h in Headers */,
@@ -4759,6 +4769,7 @@
 				85C4FA281BA832DC002198B1 /* plus_normal@3x.png in Resources */,
 				857A3ED11A6CFC3500279931 /* arrow_closed@2x.png in Resources */,
 				F038EF472150C32200AFB080 /* polycab_arrow_open@3x.png in Resources */,
+				F0483D2E2242133000D1DFF8 /* ForgotPasswordVC.xib in Resources */,
 				85D7DAA118F749CB00CF7D94 /* plus_normal.png in Resources */,
 				90E519E817687FC0006406CB /* right-arrow.png in Resources */,
 				F059CD25214F710600E303F6 /* 06-reports@3x.png in Resources */,
@@ -5127,6 +5138,7 @@
 				858082A41A5D88EB00207EAB /* DotHBarChart.m in Sources */,
 				8516FEDB1B60697500E605A6 /* SelectServerVC.m in Sources */,
 				F0644113211020F4005C5540 /* FeedbackFormCustomerVC.m in Sources */,
+				F0483D2F2242133000D1DFF8 /* ForgotPasswordVC.m in Sources */,
 				8555ED2219E75FCD00EB9507 /* MCSwipeTableViewCell.m in Sources */,
 				F0C76ED920DD0BF700390528 /* CustomerClaimInvoiceFetchDetailsVC.m in Sources */,
 				F05E97E81FEA47FA00E06ADE /* CreateOrderDashView.m in Sources */,

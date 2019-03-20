@@ -19,6 +19,7 @@
                 <outlet property="constant7" destination="vvK-kK-Ndw" id="sBq-of-FHl"/>
                 <outlet property="constant9" destination="epe-5J-mE7" id="kH2-WS-C9T"/>
                 <outlet property="costant8" destination="l0g-2g-owZ" id="apb-Tt-Jsk"/>
+                <outlet property="forgotPasswordButton" destination="mWC-ET-kMP" id="ly8-pX-FN8"/>
                 <outlet property="password" destination="p7y-Td-ZDt" id="iKy-sC-87a"/>
                 <outlet property="userName" destination="C4Y-Tt-RrO" id="UEU-WU-76F"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -109,6 +110,24 @@
                     </state>
                     <connections>
                         <action selector="signInButton:" destination="-1" eventType="touchUpInside" id="azp-k7-Hvr"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mWC-ET-kMP">
+                    <rect key="frame" x="170" y="541" width="105" height="15"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal">
+                        <attributedString key="attributedTitle">
+                            <fragment content="Forgot Password?">
+                                <attributes>
+                                    <color key="NSColor" red="0.80000000000000004" green="0.16078431372549018" blue="0.16862745098039217" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <font key="NSFont" size="12" name="Helvetica-Light"/>
+                                    <integer key="NSUnderline" value="1"/>
+                                </attributes>
+                            </fragment>
+                        </attributedString>
+                    </state>
+                    <connections>
+                        <action selector="forgotPasswordHandler:" destination="-1" eventType="touchUpInside" id="50j-AM-Dcf"/>
                     </connections>
                 </button>
             </subviews>

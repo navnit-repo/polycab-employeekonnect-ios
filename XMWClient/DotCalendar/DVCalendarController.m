@@ -107,7 +107,8 @@
     
     UILabel*  titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 160, 40)];
     titleLabel.text = headerStr;
-    titleLabel.textColor = [Styles headerTextColor];
+//    titleLabel.textColor = [Styles headerTextColor];
+    titleLabel.textColor = [UIColor whiteColor];
     titleLabel.textAlignment = NSTextAlignmentCenter;
     titleLabel.backgroundColor = [UIColor clearColor];
     [self.navigationItem setTitleView: titleLabel];

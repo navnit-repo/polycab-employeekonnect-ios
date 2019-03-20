@@ -47,6 +47,7 @@
 #import "PaymentOutstandingReportView.h"
 #import "EmployeeCreateOrderVC.h"
 #import "NationalDashboardVC.h"
+#import "ForgotPasswordVC.h"
 @interface LogInVC ()
 
 @end
@@ -81,6 +82,7 @@ NSMutableDictionary *masterDataForEmployee;
     [LayoutClass labelLayout:self.costant8 forFontWeight:UIFontWeightLight];
     [LayoutClass labelLayout:self.constant9 forFontWeight:UIFontWeightLight];
     [LayoutClass buttonLayout:self.constant6 forFontWeight:UIFontWeightBold];
+    [LayoutClass buttonLayout:self.forgotPasswordButton forFontWeight:UIFontWeightLight];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -233,6 +235,13 @@ NSMutableDictionary *masterDataForEmployee;
     [UIApplication sharedApplication].keyWindow.rootViewController = self.viewController;
 }
 
+- (IBAction)forgotPasswordHandler:(id)sender {
+    ForgotPasswordVC *fpvc = [[ForgotPasswordVC alloc]init];
+    [self.navigationController pushViewController:fpvc animated:YES];
+}
+
+
+
 - (IBAction)signInButton:(id)sender {
     
     
@@ -297,10 +306,40 @@ NSMutableDictionary *masterDataForEmployee;
                     ClientLoginResponse* clientLoginResponse = (ClientLoginResponse*)respondedObject;
                 [LoginUtils setClientVariables :  clientLoginResponse : m_username];
         customer_name = [[clientLoginResponse.clientMasterDetail.masterDataRefresh valueForKey:@"USER_PROFILE"] valueForKey:@"customer_name"];
-        NSString *userRole = [[[clientLoginResponse.clientMasterDetail.masterDataRefresh valueForKey:@"LEVEL_WISE_ROLES"]objectAtIndex:0] valueForKey:@"rolename"];
+        NSMutableArray *roleList = [[NSMutableArray alloc]init];
+        [roleList addObjectsFromArray:[clientLoginResponse.clientMasterDetail.masterDataRefresh valueForKey:@"LEVEL_WISE_ROLES"]];
+        NSString *userRole= @"";
+        for (int i=0; i<roleList.count; i++) {
+            
+            NSString *checkRole = [[roleList objectAtIndex:i] valueForKey:@"rolename"];
+            if ([checkRole isEqualToString:@"NATIONAL_ALL"]) {
+                userRole= @"NATIONAL_ALL";
+                [[NSUserDefaults standardUserDefaults ]setObject:userRole forKey:@"ROLE_NAME"];
+                break;
+            }
+           else if ([checkRole isEqualToString:@"BU_HEAD"]) {
+               userRole= @"BU_HEAD";
+               [[NSUserDefaults standardUserDefaults ]setObject:userRole forKey:@"ROLE_NAME"];
+                break;
+            }
+           else if ([checkRole isEqualToString:@"REGIONAL_HEAD"]) {
+               userRole= @"REGIONAL_HEAD";
+               [[NSUserDefaults standardUserDefaults ]setObject:userRole forKey:@"ROLE_NAME"];
+                break;
+            }
+           else if ([checkRole isEqualToString:@"STATE_HEAD"]) {
+               userRole= @"STATE_HEAD";
+               [[NSUserDefaults standardUserDefaults ]setObject:userRole forKey:@"ROLE_NAME"];
+                break;
+            }
+        }
+       
+        
+//        NSString *userRole = [[[clientLoginResponse.clientMasterDetail.masterDataRefresh valueForKey:@"LEVEL_WISE_ROLES"]objectAtIndex:0] valueForKey:@"rolename"];
         
         
-        [[NSUserDefaults standardUserDefaults ]setObject:userRole forKey:@"ROLE_NAME"];
+     //   [[NSUserDefaults standardUserDefaults ]setObject:userRole forKey:@"ROLE_NAME"];
+        
          [[NSUserDefaults standardUserDefaults ]setObject:customer_name forKey:@"CUSTOMER_NAME"];
         
         

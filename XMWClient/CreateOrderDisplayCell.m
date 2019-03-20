@@ -84,8 +84,7 @@
         [self setHeightAllField:titleLbl :titleLbl.text];
         [self setHeightAllField:descriptionLbl :descriptionLbl.text];
         [self setHeightAllField:mainDescLbl :mainDescLbl.text];
-//        [self setHeightAllField:priceLabel :priceLabel.text];
-//        [self setHeightAllField:measurementLbl :measurementLbl.text];
+
         
         [self setAllfieldYAxis];
         
@@ -126,6 +125,10 @@
     measurementLbl.frame = CGRectMake(measurementLbl.frame.origin.x, valueTxtFld.frame.origin.y+3, measurementLbl.frame.size.width, measurementLbl.frame.size.height);
     
     cancelButton.frame = CGRectMake(cancelButton.frame.origin.x, descriptionLbl.frame.origin.y, cancelButton.frame.size.width, cancelButton.frame.size.width);
+    
+    
+    float createOrderDynamicCellHeight =titleLbl.frame.size.height+descriptionLbl.frame.size.height+mainDescLbl.frame.size.height+priceLabel.frame.size.height+20;
+    self.mainView.frame =CGRectMake(self.mainView.frame.origin.x, self.mainView.frame.origin.y, self.mainView.frame.size.width, createOrderDynamicCellHeight);
     
 }
 

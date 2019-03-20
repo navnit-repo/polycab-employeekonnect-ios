@@ -22,10 +22,10 @@
     BOOL checked;
     BOOL enabled;
     NSString* context;
-    
+      UIImageView* imageHolder;
     id<DVCheckboxDelegate> checkboxDelegate;
 }
-
+@property    UIImageView* imageHolder;
 @property NSString* context;
 @property id<DVCheckboxDelegate> checkboxDelegate;
 

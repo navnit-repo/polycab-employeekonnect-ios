@@ -28,6 +28,7 @@ extern NSMutableDictionary *masterDataForEmployee;
 @property (weak, nonatomic) IBOutlet UILabel *constant7;
 @property (weak, nonatomic) IBOutlet UILabel *costant8;
 @property (weak, nonatomic) IBOutlet UILabel *constant9;
+@property (weak, nonatomic) IBOutlet UIButton *forgotPasswordButton;
 
 @property (strong, nonatomic) SWRevealViewController *viewController;
 @end
