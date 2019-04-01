@@ -4438,8 +4438,8 @@
 				8579E705174CD04600D7945F /* Frameworks */,
 				8579E706174CD04600D7945F /* Resources */,
 				90F47D661796A1BB00C6B76C /* Headers */,
-				85D831681A9F94EB00C9ACBB /* ShellScript */,
 				D26F507405F90DB31C36D692 /* [CP] Embed Pods Frameworks */,
+				85D831681A9F94EB00C9ACBB /* Fabric Script */,
 			);
 			buildRules = (
 			);
@@ -4939,13 +4939,15 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		85D831681A9F94EB00C9ACBB /* ShellScript */ = {
+		85D831681A9F94EB00C9ACBB /* Fabric Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
 			);
+			name = "Fabric Script";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;

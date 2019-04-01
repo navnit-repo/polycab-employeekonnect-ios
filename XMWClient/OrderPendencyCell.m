@@ -86,7 +86,7 @@
         UILabel *label = [[UILabel alloc] initWithFrame: CGRectMake(0, self.chartView.frame.size.height/2, self.chartView.frame.size.width, 0)];
         [label setBackgroundColor:[UIColor clearColor]];
         [label setTextColor: [UIColor colorWithRed:(204.0/255) green:(43.0/255) blue:(43.0/255) alpha:(1)]];
-        [label setFont:[UIFont fontWithName:@"Helvetica-Light" size:14.0]];
+        [label setFont:[UIFont fontWithName:@"Helvetica-Light" size:18.0]];
         [label setText: @"No Data Available"];
         
         [label setNumberOfLines: 0];

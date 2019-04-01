@@ -184,7 +184,7 @@
 }
 - (void) httpFailureHandler : (NSString*) callName : (NSString*) message {
     
-    UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"mKonnect Authentication!" message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil , nil];
+    UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Polycab Authentication!" message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil , nil];
     [myAlertView show];
     
 }

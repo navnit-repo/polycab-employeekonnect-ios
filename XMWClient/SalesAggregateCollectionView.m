@@ -256,7 +256,7 @@
     
     // for month condition check
     NSDateFormatter *checkMonth = [[NSDateFormatter alloc] init];
-    [checkMonth setDateFormat:@"02/04/yyyy"];
+    [checkMonth setDateFormat:@"01/04/yyyy"];
     NSLog(@"%@",[checkMonth stringFromDate:[NSDate date]]);
     NSString *date1=[checkMonth stringFromDate:[NSDate date]]; //01-04-current year
     NSString *date2=[dateFormatterToDate stringFromDate:[NSDate date]]; //current to date
@@ -281,6 +281,13 @@
         NSLog(@"%@",[dateFormatterFormDate stringFromDate:[NSDate date]]);
         fromDate =[dateFormatterFormDate stringFromDate:[NSDate date]];
         
+    }
+    else if (result == NSOrderedSame) {
+        NSDateFormatter *dateFormatterToDate=[[NSDateFormatter alloc] init];
+        [dateFormatterToDate setDateFormat:@"dd/MM/yyyy"];
+        // or @"yyyy-MM-dd hh:mm:ss a" if you prefer the time with AM/PM
+        NSLog(@"%@",[dateFormatterToDate stringFromDate:[NSDate date]]);
+        fromDate = [dateFormatterToDate stringFromDate:[NSDate date]];
     }
     else{
         NSDate *date = [NSDate date];
@@ -537,9 +544,43 @@
         numberOfCell = 10;
    
     }
-    
-   [self.collectionView reloadData];//reload cell data
+    if (ytdDataArray.count>0) {
+         [self.collectionView reloadData];//reload cell data
+    }
+  else
+  {
+      [self addNoDataAvailableView];
+  }
 }
+
+-(void)addNoDataAvailableView
+{
+    UIView *  noDataView = [[UIView alloc]initWithFrame:CGRectMake(self.bounds.origin.x, self.bounds.origin.y, self.bounds.size.width-20, self.bounds.size.height)];
+    noDataView.backgroundColor = [UIColor clearColor];
+    
+    UILabel *lbl = [[UILabel alloc]initWithFrame:CGRectMake(16, 12, 150*deviceWidthRation, 20*deviceHeightRation)];
+    lbl.text = @"Sales Aggregate";
+    lbl.font = [UIFont fontWithName:@"Helvetica-Bold" size:14];
+    [noDataView addSubview:lbl];
+    
+    
+    UILabel *label = [[UILabel alloc] initWithFrame: CGRectMake(0, noDataView.frame.size.height/2, noDataView.frame.size.width, 0)];
+    [label setBackgroundColor:[UIColor clearColor]];
+    [label setTextColor: [UIColor colorWithRed:(204.0/255) green:(43.0/255) blue:(43.0/255) alpha:(1)]];
+    [label setFont:[UIFont fontWithName:@"Helvetica-Bold" size:18.0]];
+    [label setText: @"No Data Available"];
+    
+    [label setNumberOfLines: 0];
+    [label sizeToFit];
+    [label setCenter: CGPointMake(noDataView.center.x, label.center.y)];
+    [noDataView addSubview:label];
+    
+    
+    [blankView removeFromSuperview];
+    
+    [self.mainView addSubview:noDataView];
+}
+
 
 
 -(NSArray*)distinct:(NSArray*)arrar1 :(NSArray*)array2{

@@ -53,4 +53,5 @@
 -(void)maintainArrayFTD_MTD_YTD;
 -(void)netwrokCall;
 -(void)loadingView;
+-(void)addNoDataAvailableView;
 @end

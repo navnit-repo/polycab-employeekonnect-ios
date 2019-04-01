@@ -15,7 +15,9 @@
 @interface DashBoardVC : UIViewController <SlideBarDelegate,UITableViewDelegate,UITableViewDataSource,UITabBarDelegate>
 {
     NSString *auth_Token;
+    UIRefreshControl*   refreshControl;
 }
+@property UIRefreshControl*   refreshControl;
 @property (weak, nonatomic) IBOutlet MarqueeLabel* marqueeText;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property NSString *auth_Token;
@@ -24,5 +26,6 @@
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *tabbarBottomConstraint;
 -(void)loadCellView;
+- (void)refreshTable;
 @end
 

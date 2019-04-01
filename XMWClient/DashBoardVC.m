@@ -50,7 +50,8 @@
     ProgressBarView *progressBarView;
     
     MarqueeLabel *lble;
-    
+//    UIRefreshControl*   refreshControl;
+    BOOL refreshFlag;
     
 }
 @synthesize auth_Token;
@@ -160,7 +161,28 @@
     tableView.showsVerticalScrollIndicator = NO;
     tableView.bounces = NO;
     tableView.clipsToBounds = YES;
+    
+    
+    //pending work. this work test in next Version 2.1
+//  refreshControl = [[UIRefreshControl alloc]init];
+//    [refreshControl addTarget:self action:@selector(refreshTable) forControlEvents:UIControlEventValueChanged];
+//
+//    if (@available(iOS 10.0, *)) {
+//        tableView.refreshControl = refreshControl;
+//    } else {
+//        [tableView addSubview:refreshControl];
+//    }
+//
 
+}
+- (void)refreshTable {
+    //TODO: refresh your data
+    [refreshControl endRefreshing];
+    [self loadCellView];
+      [self.tableView reloadSections:[[NSIndexSet alloc] initWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
+      [self.tableView reloadSections:[[NSIndexSet alloc] initWithIndex:2] withRowAnimation:UITableViewRowAnimationFade];
+      [self.tableView reloadSections:[[NSIndexSet alloc] initWithIndex:3] withRowAnimation:UITableViewRowAnimationFade];
+   // [tableView reloadData];
 }
 
 - (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item{
@@ -685,7 +707,7 @@
     } else if([callName isEqualToString: XmwcsConst_CALL_NAME_FOR_FETCH_NOTIFICATION_LIST]) {
         
     } else {
-        UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"mKonnect Error!" message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil , nil];
+        UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Polycab Error!" message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil , nil];
         [myAlertView show];
         
     }

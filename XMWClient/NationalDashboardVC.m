@@ -31,6 +31,16 @@
     NSLog(@"NationalDashboardVC call");
     // Do any additional setup after loading the view from its nib.
 }
+- (void)refreshTable {
+    //TODO: refresh your data
+    [refreshControl endRefreshing];
+    [self loadCellView];
+    [self.tableView reloadSections:[[NSIndexSet alloc] initWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
+    [self.tableView reloadSections:[[NSIndexSet alloc] initWithIndex:2] withRowAnimation:UITableViewRowAnimationFade];
+    [self.tableView reloadSections:[[NSIndexSet alloc] initWithIndex:3] withRowAnimation:UITableViewRowAnimationFade];
+    [self.tableView reloadSections:[[NSIndexSet alloc] initWithIndex:4] withRowAnimation:UITableViewRowAnimationFade];
+    // [tableView reloadData];
+}
 - (void)loadCellView
 {
     nationalSalesAggregateCollectionView = [NationalSalesAggregateCollectionView createInstance];

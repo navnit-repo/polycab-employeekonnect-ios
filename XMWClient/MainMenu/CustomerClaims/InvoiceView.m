@@ -95,7 +95,7 @@
         double ratePerUnitText = [ratePerUnit.text doubleValue];
         if(perUnitText >= ratePerUnitText)
         {
-            UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"mKonnect Authentication!" message:@"Per Unit Customer Value should be lesser than Rate Per Unit" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil , nil];
+            UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Polycab Authentication!" message:@"Per Unit Customer Value should be lesser than Rate Per Unit" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil , nil];
            
             [myAlertView show];
             self.nwNetValue.text = @"0.00";

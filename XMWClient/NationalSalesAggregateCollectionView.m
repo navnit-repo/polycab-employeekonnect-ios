@@ -180,7 +180,7 @@
     
     // for month condition check
     NSDateFormatter *checkMonth = [[NSDateFormatter alloc] init];
-    [checkMonth setDateFormat:@"02/04/yyyy"];
+    [checkMonth setDateFormat:@"01/04/yyyy"];
     NSLog(@"%@",[checkMonth stringFromDate:[NSDate date]]);
     NSString *date1=[checkMonth stringFromDate:[NSDate date]]; //01-04-current year
     NSString *date2=[dateFormatterToDate stringFromDate:[NSDate date]]; //current to date
@@ -205,6 +205,14 @@
         NSLog(@"%@",[dateFormatterFormDate stringFromDate:[NSDate date]]);
         fromDate =[dateFormatterFormDate stringFromDate:[NSDate date]];
         
+    }
+    
+    else if (result == NSOrderedSame) {
+        NSDateFormatter *dateFormatterToDate=[[NSDateFormatter alloc] init];
+        [dateFormatterToDate setDateFormat:@"dd/MM/yyyy"];
+        // or @"yyyy-MM-dd hh:mm:ss a" if you prefer the time with AM/PM
+        NSLog(@"%@",[dateFormatterToDate stringFromDate:[NSDate date]]);
+        fromDate = [dateFormatterToDate stringFromDate:[NSDate date]];
     }
     else{
         NSDate *date = [NSDate date];

@@ -36,11 +36,11 @@
        //network Call
     }
     if (nwPassword.text.length<8||confirmNewPassword.text.length<8) {
-        UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"mKonnect Authentication!" message:@"The Password should be of minimum 8 characters." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil , nil];
+        UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Polycab Authentication!" message:@"The Password should be of minimum 8 characters." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil , nil];
         [myAlertView show];
     }
     else if(nwPassword.text != confirmNewPassword.text){
-        UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"mKonnect Authentication!" message:@"Passowrd does not match." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil , nil];
+        UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Polycab Authentication!" message:@"Passowrd does not match." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil , nil];
         [myAlertView show];
     }
     else if([nwPassword.text isEqualToString:confirmNewPassword.text]){

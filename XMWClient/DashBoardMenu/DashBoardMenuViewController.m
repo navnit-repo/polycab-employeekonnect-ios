@@ -1033,7 +1033,7 @@ static HamBurgerMenuView* rightSlideMenu = nil;
     } else if([callName isEqualToString: XmwcsConst_CALL_NAME_FOR_FETCH_NOTIFICATION_LIST]) {
         
     } else {
-        UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"mKonnect Error!" message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil , nil];
+        UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Polycab Error!" message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil , nil];
         [myAlertView show];
         
     }
@@ -1844,14 +1844,14 @@ static HamBurgerMenuView* rightSlideMenu = nil;
 -(void) handleUpgrade:(NSString*) downloadURL
 {
     versionDownloader = [[NewVersionDownloader alloc] initWithDownloadURL:downloadURL];
-    UIAlertView* downloadUpgradePrompt = [[UIAlertView alloc] initWithTitle:@"mKonnect Version Check" message:@"Update is available. Do you want to download?" delegate:versionDownloader cancelButtonTitle:@"YES" otherButtonTitles:@"No", nil];
+    UIAlertView* downloadUpgradePrompt = [[UIAlertView alloc] initWithTitle:@"Polycab Version Check" message:@"Update is available. Do you want to download?" delegate:versionDownloader cancelButtonTitle:@"YES" otherButtonTitles:@"No", nil];
     [downloadUpgradePrompt show];
 }
 
 -(void) handleForceUpgrade:(NSString*) downloadURL
 {
     versionDownloader = [[NewVersionDownloader alloc] initWithDownloadURL:downloadURL];
-    UIAlertView* downloadUpgradePrompt = [[UIAlertView alloc] initWithTitle:@"mKonnect Version Check" message:@"This version is outdated. Need to update." delegate:versionDownloader cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    UIAlertView* downloadUpgradePrompt = [[UIAlertView alloc] initWithTitle:@"Polycab Version Check" message:@"This version is outdated. Need to update." delegate:versionDownloader cancelButtonTitle:@"OK" otherButtonTitles:nil];
     [downloadUpgradePrompt show];
 }
 

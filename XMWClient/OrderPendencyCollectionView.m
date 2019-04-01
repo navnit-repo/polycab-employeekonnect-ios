@@ -154,6 +154,13 @@
         
         
     }
+    else if (result == NSOrderedSame) {
+        NSDateFormatter *dateFormatterToDate=[[NSDateFormatter alloc] init];
+        [dateFormatterToDate setDateFormat:@"dd/MM/yyyy"];
+        // or @"yyyy-MM-dd hh:mm:ss a" if you prefer the time with AM/PM
+        NSLog(@"%@",[dateFormatterToDate stringFromDate:[NSDate date]]);
+        fromDate = [dateFormatterToDate stringFromDate:[NSDate date]];
+    }
     else{
         NSDate *date = [NSDate date];
         NSDateComponents *setPreviousYear = [[NSDateComponents alloc] init];
@@ -197,7 +204,14 @@
         [dataArray addObjectsFromArray:barChartResponseData.tableData];
         NSLog(@"Bar Chart Data: %@",dataArray);
         
+        if (dataArray.count>0) {
             [self.collectionView reloadData];
+        }
+        else
+        {
+            [self addNoDataAvailableView];
+        }
+        
         
         
     }   fail:^(DotFormPost* formPosted, NSString* message) {
@@ -208,6 +222,35 @@
     
     
 }
+
+-(void)addNoDataAvailableView
+{
+    UIView *  noDataView = [[UIView alloc]initWithFrame:CGRectMake(self.bounds.origin.x, self.bounds.origin.y, self.bounds.size.width-20, self.bounds.size.height)];
+    noDataView.backgroundColor = [UIColor clearColor];
+    
+    UILabel *lbl = [[UILabel alloc]initWithFrame:CGRectMake(16, 12, 150*deviceWidthRation, 20*deviceHeightRation)];
+    lbl.text = @"Order Pendency";
+    lbl.font = [UIFont fontWithName:@"Helvetica-Bold" size:14];
+    [noDataView addSubview:lbl];
+    
+    
+    UILabel *label = [[UILabel alloc] initWithFrame: CGRectMake(0, noDataView.frame.size.height/2, noDataView.frame.size.width, 0)];
+    [label setBackgroundColor:[UIColor clearColor]];
+    [label setTextColor: [UIColor colorWithRed:(204.0/255) green:(43.0/255) blue:(43.0/255) alpha:(1)]];
+    [label setFont:[UIFont fontWithName:@"Helvetica-Bold" size:18.0]];
+    [label setText: @"No Data Available"];
+    
+    [label setNumberOfLines: 0];
+    [label sizeToFit];
+    [label setCenter: CGPointMake(noDataView.center.x, label.center.y)];
+    [noDataView addSubview:label];
+    
+    
+    [blankView removeFromSuperview];
+    
+    [self.mainView addSubview:noDataView];
+}
+
 #pragma mark : Collection View Datasource
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     return [dataArray count];

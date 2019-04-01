@@ -584,7 +584,7 @@
     if(![callName isEqualToString: XmwcsConst_CALL_NAME_FOR_FETCH_NOTIFICATION_LIST]) {
         [loadingView removeView];
         
-        UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"mKonnect Error!" message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil , nil];
+        UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Polycab Error!" message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil , nil];
         [myAlertView show];
 
     }

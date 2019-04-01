@@ -1126,7 +1126,7 @@ UITextField* activeTextField = nil;
         
         if ([result isEqualToString : XmwcsConst_BOOLEAN_VALUE_FALSE] ) {
             NSString* message = [XmwUtils getPropertyValue : eventDetail :XmwcsConst_DE_EVENT_EVENT_ALERT_WINODW];
-            UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"mKonnect Alert" message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil , nil];
+            UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Polycab Alert" message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil , nil];
             myAlertView.tag = 3;
             [myAlertView show];
             
@@ -1743,7 +1743,7 @@ UITextField* activeTextField = nil;
                    pos.location = pos.location + 13;
                    pos.length = eventSet.length - pos.location;
                    NSString* message = [eventSet substringWithRange:pos];
-                   UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"mKonnect Alert" message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil , nil];
+                   UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Polycab Alert" message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil , nil];
                    myAlertView.tag = 3;
                    [myAlertView show];
                    if(mxTextField.text.length > 0) {
@@ -2089,7 +2089,7 @@ UITextField* activeTextField = nil;
 - (void) httpFailureHandler : (NSString*) callName : (NSString*) message {
     [loadingView removeView];
     
-    UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"mKonnect Response!" message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil , nil];
+    UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Polycab Response!" message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil , nil];
     [myAlertView show];
     
 }

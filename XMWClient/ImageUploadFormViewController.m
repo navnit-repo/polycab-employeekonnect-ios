@@ -173,7 +173,7 @@
 - (void) httpFailureHandler : (NSString*) callName : (NSString*) message {
     
     [loadingView removeView];
-    UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"mKonnect Error!" message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil , nil];
+    UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Polycab Error!" message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil , nil];
     [myAlertView show];
         
     

@@ -51,8 +51,10 @@ NSString *g_DeviceSessionId = nil;
     
     // NSLog (@"Not implemented : - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error %@", [error description]);
     
-    
-    [responseHandler httpFailureHandler:xmwRequestCallname :[error description]];
+    NSMutableDictionary *dict = [[NSMutableDictionary alloc]init];
+    [dict setDictionary:error.userInfo];
+    [responseHandler httpFailureHandler:xmwRequestCallname :[dict valueForKey:@"NSLocalizedDescription"]];
+   // [responseHandler httpFailureHandler:xmwRequestCallname :[error description]];
     
 }
 
