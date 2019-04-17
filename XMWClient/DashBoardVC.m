@@ -34,6 +34,7 @@
 #import "MarqueeLabel.h"
 #import "OverDueCollectionView.h"
 #import "NationalDashboardVC.h"
+#import "ChatBoxVC.h"
 #define TAG_LOGOUT_DIALOG 1000
 @interface DashBoardVC ()
 @end
@@ -641,6 +642,19 @@
         
     }
     
+    else if ([formId isEqualToString:@"DOT_FORM_CHAIRMAN_CHAT"])
+    {
+        ChatBoxVC *chatVC = [[ChatBoxVC alloc]init];
+        
+        UIViewController *root;
+        root = [[[[UIApplication sharedApplication]windows]objectAtIndex:0]rootViewController];
+        
+        SWRevealViewController *reveal = (SWRevealViewController*)root;
+        [(UINavigationController*)reveal.frontViewController pushViewController:chatVC animated:YES];
+        
+      //  [[self navigationController ] pushViewController:chatVC animated:YES];
+    }
+    
     
 }
 - (void) httpResponseObjectHandler : (NSString*) callName : (id) respondedObject : (id) requestedObject
@@ -666,6 +680,13 @@
             
             
             [[UIApplication sharedApplication] keyWindow].rootViewController = nc;//added by ashish tiwari on aug 2014
+            
+            
+            [[NSFileManager defaultManager] removeItemAtPath:[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"ContactList_DB.sqlite.db"]] error:NULL];
+            
+              [[NSFileManager defaultManager] removeItemAtPath:[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"ChatHistory_DB.sqlite.db"]] error:NULL];
+            
+              [[NSFileManager defaultManager] removeItemAtPath:[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"ChatThreadList_DB.sqlite.db"]] error:NULL];
         }
         else
         {

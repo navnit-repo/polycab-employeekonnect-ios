@@ -965,6 +965,53 @@
 		F0B2FB5521885145006A7C6B /* LayoutClass.h in Headers */ = {isa = PBXBuildFile; fileRef = F0B2FB5321885144006A7C6B /* LayoutClass.h */; };
 		F0B2FB5621885145006A7C6B /* LayoutClass.m in Sources */ = {isa = PBXBuildFile; fileRef = F0B2FB5421885145006A7C6B /* LayoutClass.m */; };
 		F0B2FB58218851E1006A7C6B /* user_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = F0B2FB57218851E1006A7C6B /* user_icon.png */; };
+		F0B4259522671C240011D3E4 /* MessageSubjectVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = F0B4256A22671C220011D3E4 /* MessageSubjectVC.xib */; };
+		F0B4259622671C240011D3E4 /* ChatThreadCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F0B4256B22671C220011D3E4 /* ChatThreadCell.xib */; };
+		F0B4259722671C240011D3E4 /* ChatBoxVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F0B4256C22671C220011D3E4 /* ChatBoxVC.m */; };
+		F0B4259822671C240011D3E4 /* ChatThreadCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F0B4256D22671C220011D3E4 /* ChatThreadCell.m */; };
+		F0B4259922671C240011D3E4 /* MessageSubjectVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F0B4256E22671C220011D3E4 /* MessageSubjectVC.m */; };
+		F0B4259A22671C240011D3E4 /* MessageSubjectVC.h in Headers */ = {isa = PBXBuildFile; fileRef = F0B4256F22671C220011D3E4 /* MessageSubjectVC.h */; };
+		F0B4259B22671C240011D3E4 /* ChatBoxUserListVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = F0B4257022671C230011D3E4 /* ChatBoxUserListVC.xib */; };
+		F0B4259C22671C240011D3E4 /* ChatHistory_DB.h in Headers */ = {isa = PBXBuildFile; fileRef = F0B4257222671C230011D3E4 /* ChatHistory_DB.h */; };
+		F0B4259D22671C240011D3E4 /* ChatThreadList_DB.h in Headers */ = {isa = PBXBuildFile; fileRef = F0B4257322671C230011D3E4 /* ChatThreadList_DB.h */; };
+		F0B4259E22671C240011D3E4 /* ContactList_Object.h in Headers */ = {isa = PBXBuildFile; fileRef = F0B4257422671C230011D3E4 /* ContactList_Object.h */; };
+		F0B4259F22671C240011D3E4 /* ChatThreadList_Object.h in Headers */ = {isa = PBXBuildFile; fileRef = F0B4257522671C230011D3E4 /* ChatThreadList_Object.h */; };
+		F0B425A022671C240011D3E4 /* ChatHistory_Object.h in Headers */ = {isa = PBXBuildFile; fileRef = F0B4257622671C230011D3E4 /* ChatHistory_Object.h */; };
+		F0B425A122671C240011D3E4 /* ContactList_DB.m in Sources */ = {isa = PBXBuildFile; fileRef = F0B4257722671C230011D3E4 /* ContactList_DB.m */; };
+		F0B425A222671C240011D3E4 /* ChatThreadList_DB.m in Sources */ = {isa = PBXBuildFile; fileRef = F0B4257822671C230011D3E4 /* ChatThreadList_DB.m */; };
+		F0B425A322671C240011D3E4 /* ChatHistory_DB.m in Sources */ = {isa = PBXBuildFile; fileRef = F0B4257922671C230011D3E4 /* ChatHistory_DB.m */; };
+		F0B425A422671C240011D3E4 /* ContactList_Object.m in Sources */ = {isa = PBXBuildFile; fileRef = F0B4257A22671C230011D3E4 /* ContactList_Object.m */; };
+		F0B425A522671C240011D3E4 /* ContactList_DB.h in Headers */ = {isa = PBXBuildFile; fileRef = F0B4257B22671C230011D3E4 /* ContactList_DB.h */; };
+		F0B425A622671C240011D3E4 /* ChatHistory_Object.m in Sources */ = {isa = PBXBuildFile; fileRef = F0B4257C22671C230011D3E4 /* ChatHistory_Object.m */; };
+		F0B425A722671C240011D3E4 /* ChatThreadList_Object.m in Sources */ = {isa = PBXBuildFile; fileRef = F0B4257D22671C230011D3E4 /* ChatThreadList_Object.m */; };
+		F0B425A822671C240011D3E4 /* ChatRoomsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = F0B4257E22671C230011D3E4 /* ChatRoomsVC.xib */; };
+		F0B425A922671C240011D3E4 /* ChatBoxVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = F0B4257F22671C230011D3E4 /* ChatBoxVC.xib */; };
+		F0B425AA22671C240011D3E4 /* ChatThreadCell.h in Headers */ = {isa = PBXBuildFile; fileRef = F0B4258022671C230011D3E4 /* ChatThreadCell.h */; };
+		F0B425AB22671C240011D3E4 /* ChatBoxUserListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F0B4258122671C230011D3E4 /* ChatBoxUserListVC.m */; };
+		F0B425AC22671C240011D3E4 /* avatar_unfilled.png in Resources */ = {isa = PBXBuildFile; fileRef = F0B4258422671C240011D3E4 /* avatar_unfilled.png */; };
+		F0B425AD22671C240011D3E4 /* avatar_filled.png in Resources */ = {isa = PBXBuildFile; fileRef = F0B4258522671C240011D3E4 /* avatar_filled.png */; };
+		F0B425AE22671C240011D3E4 /* chat_add.png in Resources */ = {isa = PBXBuildFile; fileRef = F0B4258622671C240011D3E4 /* chat_add.png */; };
+		F0B425AF22671C240011D3E4 /* send.png in Resources */ = {isa = PBXBuildFile; fileRef = F0B4258722671C240011D3E4 /* send.png */; };
+		F0B425B022671C240011D3E4 /* chat_add@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F0B4258922671C240011D3E4 /* chat_add@2x.png */; };
+		F0B425B122671C240011D3E4 /* send@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F0B4258A22671C240011D3E4 /* send@2x.png */; };
+		F0B425B222671C240011D3E4 /* avatar_filled@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F0B4258B22671C240011D3E4 /* avatar_filled@2x.png */; };
+		F0B425B322671C240011D3E4 /* avatar_unfilled@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F0B4258C22671C240011D3E4 /* avatar_unfilled@2x.png */; };
+		F0B425B422671C240011D3E4 /* avatar_unfilled@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F0B4258E22671C240011D3E4 /* avatar_unfilled@3x.png */; };
+		F0B425B522671C240011D3E4 /* avatar_filled@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F0B4258F22671C240011D3E4 /* avatar_filled@3x.png */; };
+		F0B425B622671C240011D3E4 /* send@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F0B4259022671C240011D3E4 /* send@3x.png */; };
+		F0B425B722671C240011D3E4 /* chat_add@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F0B4259122671C240011D3E4 /* chat_add@3x.png */; };
+		F0B425B822671C240011D3E4 /* ChatBoxVC.h in Headers */ = {isa = PBXBuildFile; fileRef = F0B4259222671C240011D3E4 /* ChatBoxVC.h */; };
+		F0B425B922671C240011D3E4 /* ChatBoxUserListVC.h in Headers */ = {isa = PBXBuildFile; fileRef = F0B4259322671C240011D3E4 /* ChatBoxUserListVC.h */; };
+		F0B425BA22671C240011D3E4 /* ChatRoomsVC.h in Headers */ = {isa = PBXBuildFile; fileRef = F0B4259422671C240011D3E4 /* ChatRoomsVC.h */; };
+		F0B425C122671C620011D3E4 /* ChatRoomVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = F0B425BC22671C620011D3E4 /* ChatRoomVC.xib */; };
+		F0B425C222671C620011D3E4 /* ChatRoomVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F0B425BD22671C620011D3E4 /* ChatRoomVC.m */; };
+		F0B425C322671C620011D3E4 /* PTSMessagingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F0B425BE22671C620011D3E4 /* PTSMessagingCell.m */; };
+		F0B425C422671C620011D3E4 /* ChatRoomVC.h in Headers */ = {isa = PBXBuildFile; fileRef = F0B425BF22671C620011D3E4 /* ChatRoomVC.h */; };
+		F0B425C522671C620011D3E4 /* PTSMessagingCell.h in Headers */ = {isa = PBXBuildFile; fileRef = F0B425C022671C620011D3E4 /* PTSMessagingCell.h */; };
+		F0B425C722671D080011D3E4 /* ChatRoomsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F0B425C622671D070011D3E4 /* ChatRoomsVC.m */; };
+		F0B425CF2267343D0011D3E4 /* Artboard.png in Resources */ = {isa = PBXBuildFile; fileRef = F0B425CE2267343D0011D3E4 /* Artboard.png */; };
+		F0B425D12267344A0011D3E4 /* Artboard@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F0B425D02267344A0011D3E4 /* Artboard@2x.png */; };
+		F0B425D3226734550011D3E4 /* Artboard@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F0B425D2226734550011D3E4 /* Artboard@3x.png */; };
 		F0C4A10121B4F8FF00D7DF53 /* EmployeeCreateOrderVC.h in Headers */ = {isa = PBXBuildFile; fileRef = F0C4A0FE21B4F8FF00D7DF53 /* EmployeeCreateOrderVC.h */; };
 		F0C4A10221B4F8FF00D7DF53 /* EmployeeCreateOrderVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C4A0FF21B4F8FF00D7DF53 /* EmployeeCreateOrderVC.m */; };
 		F0C4A10321B4F8FF00D7DF53 /* EmployeeCreateOrderVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = F0C4A10021B4F8FF00D7DF53 /* EmployeeCreateOrderVC.xib */; };
@@ -2041,6 +2088,53 @@
 		F0B2FB5321885144006A7C6B /* LayoutClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LayoutClass.h; path = "autolayout class/LayoutClass.h"; sourceTree = SOURCE_ROOT; };
 		F0B2FB5421885145006A7C6B /* LayoutClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LayoutClass.m; path = "autolayout class/LayoutClass.m"; sourceTree = SOURCE_ROOT; };
 		F0B2FB57218851E1006A7C6B /* user_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = user_icon.png; path = "Polycab Assests/assests/user_icon.png"; sourceTree = SOURCE_ROOT; };
+		F0B4256A22671C220011D3E4 /* MessageSubjectVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessageSubjectVC.xib; sourceTree = "<group>"; };
+		F0B4256B22671C220011D3E4 /* ChatThreadCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatThreadCell.xib; sourceTree = "<group>"; };
+		F0B4256C22671C220011D3E4 /* ChatBoxVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatBoxVC.m; sourceTree = "<group>"; };
+		F0B4256D22671C220011D3E4 /* ChatThreadCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatThreadCell.m; sourceTree = "<group>"; };
+		F0B4256E22671C220011D3E4 /* MessageSubjectVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageSubjectVC.m; sourceTree = "<group>"; };
+		F0B4256F22671C220011D3E4 /* MessageSubjectVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageSubjectVC.h; sourceTree = "<group>"; };
+		F0B4257022671C230011D3E4 /* ChatBoxUserListVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatBoxUserListVC.xib; sourceTree = "<group>"; };
+		F0B4257222671C230011D3E4 /* ChatHistory_DB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatHistory_DB.h; sourceTree = "<group>"; };
+		F0B4257322671C230011D3E4 /* ChatThreadList_DB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatThreadList_DB.h; sourceTree = "<group>"; };
+		F0B4257422671C230011D3E4 /* ContactList_Object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactList_Object.h; sourceTree = "<group>"; };
+		F0B4257522671C230011D3E4 /* ChatThreadList_Object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatThreadList_Object.h; sourceTree = "<group>"; };
+		F0B4257622671C230011D3E4 /* ChatHistory_Object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatHistory_Object.h; sourceTree = "<group>"; };
+		F0B4257722671C230011D3E4 /* ContactList_DB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactList_DB.m; sourceTree = "<group>"; };
+		F0B4257822671C230011D3E4 /* ChatThreadList_DB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatThreadList_DB.m; sourceTree = "<group>"; };
+		F0B4257922671C230011D3E4 /* ChatHistory_DB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatHistory_DB.m; sourceTree = "<group>"; };
+		F0B4257A22671C230011D3E4 /* ContactList_Object.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactList_Object.m; sourceTree = "<group>"; };
+		F0B4257B22671C230011D3E4 /* ContactList_DB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactList_DB.h; sourceTree = "<group>"; };
+		F0B4257C22671C230011D3E4 /* ChatHistory_Object.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatHistory_Object.m; sourceTree = "<group>"; };
+		F0B4257D22671C230011D3E4 /* ChatThreadList_Object.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatThreadList_Object.m; sourceTree = "<group>"; };
+		F0B4257E22671C230011D3E4 /* ChatRoomsVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatRoomsVC.xib; sourceTree = "<group>"; };
+		F0B4257F22671C230011D3E4 /* ChatBoxVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatBoxVC.xib; sourceTree = "<group>"; };
+		F0B4258022671C230011D3E4 /* ChatThreadCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatThreadCell.h; sourceTree = "<group>"; };
+		F0B4258122671C230011D3E4 /* ChatBoxUserListVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatBoxUserListVC.m; sourceTree = "<group>"; };
+		F0B4258422671C240011D3E4 /* avatar_unfilled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = avatar_unfilled.png; sourceTree = "<group>"; };
+		F0B4258522671C240011D3E4 /* avatar_filled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = avatar_filled.png; sourceTree = "<group>"; };
+		F0B4258622671C240011D3E4 /* chat_add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chat_add.png; sourceTree = "<group>"; };
+		F0B4258722671C240011D3E4 /* send.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = send.png; sourceTree = "<group>"; };
+		F0B4258922671C240011D3E4 /* chat_add@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chat_add@2x.png"; sourceTree = "<group>"; };
+		F0B4258A22671C240011D3E4 /* send@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "send@2x.png"; sourceTree = "<group>"; };
+		F0B4258B22671C240011D3E4 /* avatar_filled@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "avatar_filled@2x.png"; sourceTree = "<group>"; };
+		F0B4258C22671C240011D3E4 /* avatar_unfilled@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "avatar_unfilled@2x.png"; sourceTree = "<group>"; };
+		F0B4258E22671C240011D3E4 /* avatar_unfilled@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "avatar_unfilled@3x.png"; sourceTree = "<group>"; };
+		F0B4258F22671C240011D3E4 /* avatar_filled@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "avatar_filled@3x.png"; sourceTree = "<group>"; };
+		F0B4259022671C240011D3E4 /* send@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "send@3x.png"; sourceTree = "<group>"; };
+		F0B4259122671C240011D3E4 /* chat_add@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chat_add@3x.png"; sourceTree = "<group>"; };
+		F0B4259222671C240011D3E4 /* ChatBoxVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatBoxVC.h; sourceTree = "<group>"; };
+		F0B4259322671C240011D3E4 /* ChatBoxUserListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatBoxUserListVC.h; sourceTree = "<group>"; };
+		F0B4259422671C240011D3E4 /* ChatRoomsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatRoomsVC.h; sourceTree = "<group>"; };
+		F0B425BC22671C620011D3E4 /* ChatRoomVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatRoomVC.xib; sourceTree = "<group>"; };
+		F0B425BD22671C620011D3E4 /* ChatRoomVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatRoomVC.m; sourceTree = "<group>"; };
+		F0B425BE22671C620011D3E4 /* PTSMessagingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PTSMessagingCell.m; sourceTree = "<group>"; };
+		F0B425BF22671C620011D3E4 /* ChatRoomVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatRoomVC.h; sourceTree = "<group>"; };
+		F0B425C022671C620011D3E4 /* PTSMessagingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTSMessagingCell.h; sourceTree = "<group>"; };
+		F0B425C622671D070011D3E4 /* ChatRoomsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatRoomsVC.m; sourceTree = "<group>"; };
+		F0B425CE2267343D0011D3E4 /* Artboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Artboard.png; sourceTree = "<group>"; };
+		F0B425D02267344A0011D3E4 /* Artboard@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Artboard@2x.png"; sourceTree = "<group>"; };
+		F0B425D2226734550011D3E4 /* Artboard@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Artboard@3x.png"; sourceTree = "<group>"; };
 		F0C4A0FE21B4F8FF00D7DF53 /* EmployeeCreateOrderVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EmployeeCreateOrderVC.h; sourceTree = "<group>"; };
 		F0C4A0FF21B4F8FF00D7DF53 /* EmployeeCreateOrderVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EmployeeCreateOrderVC.m; sourceTree = "<group>"; };
 		F0C4A10021B4F8FF00D7DF53 /* EmployeeCreateOrderVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmployeeCreateOrderVC.xib; sourceTree = "<group>"; };
@@ -4052,6 +4146,7 @@
 		F0A358E820FC9EC300CE34AC /* Polycab */ = {
 			isa = PBXGroup;
 			children = (
+				F0B4256922671BAE0011D3E4 /* chatBox */,
 				F055728221AE862A00D1160C /* Dependent DropDown Class */,
 				F0B2FADC21885074006A7C6B /* Delete Mapping Files */,
 				F02903E821491F16007D2B2D /* Progress Bar Class */,
@@ -4157,6 +4252,108 @@
 			name = "Delete Mapping Files";
 			sourceTree = "<group>";
 		};
+		F0B4256922671BAE0011D3E4 /* chatBox */ = {
+			isa = PBXGroup;
+			children = (
+				F0B425BB22671C620011D3E4 /* ChatRoom Classes */,
+				F0B4258222671C240011D3E4 /* chat@assets */,
+				F0B4257122671C230011D3E4 /* DB Files */,
+				F0B4259322671C240011D3E4 /* ChatBoxUserListVC.h */,
+				F0B4258122671C230011D3E4 /* ChatBoxUserListVC.m */,
+				F0B4257022671C230011D3E4 /* ChatBoxUserListVC.xib */,
+				F0B4259222671C240011D3E4 /* ChatBoxVC.h */,
+				F0B4256C22671C220011D3E4 /* ChatBoxVC.m */,
+				F0B4257F22671C230011D3E4 /* ChatBoxVC.xib */,
+				F0B4259422671C240011D3E4 /* ChatRoomsVC.h */,
+				F0B425C622671D070011D3E4 /* ChatRoomsVC.m */,
+				F0B4257E22671C230011D3E4 /* ChatRoomsVC.xib */,
+				F0B4258022671C230011D3E4 /* ChatThreadCell.h */,
+				F0B4256D22671C220011D3E4 /* ChatThreadCell.m */,
+				F0B4256B22671C220011D3E4 /* ChatThreadCell.xib */,
+				F0B4256F22671C220011D3E4 /* MessageSubjectVC.h */,
+				F0B4256E22671C220011D3E4 /* MessageSubjectVC.m */,
+				F0B4256A22671C220011D3E4 /* MessageSubjectVC.xib */,
+			);
+			path = chatBox;
+			sourceTree = SOURCE_ROOT;
+		};
+		F0B4257122671C230011D3E4 /* DB Files */ = {
+			isa = PBXGroup;
+			children = (
+				F0B4257B22671C230011D3E4 /* ContactList_DB.h */,
+				F0B4257722671C230011D3E4 /* ContactList_DB.m */,
+				F0B4257422671C230011D3E4 /* ContactList_Object.h */,
+				F0B4257A22671C230011D3E4 /* ContactList_Object.m */,
+				F0B4257322671C230011D3E4 /* ChatThreadList_DB.h */,
+				F0B4257822671C230011D3E4 /* ChatThreadList_DB.m */,
+				F0B4257522671C230011D3E4 /* ChatThreadList_Object.h */,
+				F0B4257D22671C230011D3E4 /* ChatThreadList_Object.m */,
+				F0B4257222671C230011D3E4 /* ChatHistory_DB.h */,
+				F0B4257922671C230011D3E4 /* ChatHistory_DB.m */,
+				F0B4257622671C230011D3E4 /* ChatHistory_Object.h */,
+				F0B4257C22671C230011D3E4 /* ChatHistory_Object.m */,
+			);
+			path = "DB Files";
+			sourceTree = "<group>";
+		};
+		F0B4258222671C240011D3E4 /* chat@assets */ = {
+			isa = PBXGroup;
+			children = (
+				F0B4258322671C240011D3E4 /* @1x */,
+				F0B4258822671C240011D3E4 /* @2x */,
+				F0B4258D22671C240011D3E4 /* @3x */,
+			);
+			path = "chat@assets";
+			sourceTree = "<group>";
+		};
+		F0B4258322671C240011D3E4 /* @1x */ = {
+			isa = PBXGroup;
+			children = (
+				F0B425CE2267343D0011D3E4 /* Artboard.png */,
+				F0B4258422671C240011D3E4 /* avatar_unfilled.png */,
+				F0B4258522671C240011D3E4 /* avatar_filled.png */,
+				F0B4258622671C240011D3E4 /* chat_add.png */,
+				F0B4258722671C240011D3E4 /* send.png */,
+			);
+			path = "@1x";
+			sourceTree = "<group>";
+		};
+		F0B4258822671C240011D3E4 /* @2x */ = {
+			isa = PBXGroup;
+			children = (
+				F0B425D02267344A0011D3E4 /* Artboard@2x.png */,
+				F0B4258922671C240011D3E4 /* chat_add@2x.png */,
+				F0B4258A22671C240011D3E4 /* send@2x.png */,
+				F0B4258B22671C240011D3E4 /* avatar_filled@2x.png */,
+				F0B4258C22671C240011D3E4 /* avatar_unfilled@2x.png */,
+			);
+			path = "@2x";
+			sourceTree = "<group>";
+		};
+		F0B4258D22671C240011D3E4 /* @3x */ = {
+			isa = PBXGroup;
+			children = (
+				F0B425D2226734550011D3E4 /* Artboard@3x.png */,
+				F0B4258E22671C240011D3E4 /* avatar_unfilled@3x.png */,
+				F0B4258F22671C240011D3E4 /* avatar_filled@3x.png */,
+				F0B4259022671C240011D3E4 /* send@3x.png */,
+				F0B4259122671C240011D3E4 /* chat_add@3x.png */,
+			);
+			path = "@3x";
+			sourceTree = "<group>";
+		};
+		F0B425BB22671C620011D3E4 /* ChatRoom Classes */ = {
+			isa = PBXGroup;
+			children = (
+				F0B425BC22671C620011D3E4 /* ChatRoomVC.xib */,
+				F0B425BD22671C620011D3E4 /* ChatRoomVC.m */,
+				F0B425BE22671C620011D3E4 /* PTSMessagingCell.m */,
+				F0B425BF22671C620011D3E4 /* ChatRoomVC.h */,
+				F0B425C022671C620011D3E4 /* PTSMessagingCell.h */,
+			);
+			path = "ChatRoom Classes";
+			sourceTree = "<group>";
+		};
 		F0C4A0FD21B4F8BE00D7DF53 /* Employee Create Order */ = {
 			isa = PBXGroup;
 			children = (
@@ -4212,6 +4409,7 @@
 				90F47D731796A69900C6B76C /* PageViewController.h in Headers */,
 				85284F6F19D5FC600010ED87 /* XmwNotificationWebViewController.h in Headers */,
 				8595B4FF19100D4A0010C685 /* NSDate+Helpers.h in Headers */,
+				F0B4259F22671C240011D3E4 /* ChatThreadList_Object.h in Headers */,
 				855342361D04482300741B18 /* XMWTableFormDelegate.h in Headers */,
 				F088F60D2105F683000E26F4 /* ManageSubUserScrennFlow2nd.h in Headers */,
 				F0B2FB39218850F5006A7C6B /* BusinessVerticalReportVC.h in Headers */,
@@ -4234,9 +4432,12 @@
 				8501CAB219837CF2002E9E1C /* DownloadItem.h in Headers */,
 				85E1D8851B8DC1100034D949 /* OrderFeedbackPopup.h in Headers */,
 				F0B2FB27218850F5006A7C6B /* CustomCompareFormQV.h in Headers */,
+				F0B425C422671C620011D3E4 /* ChatRoomVC.h in Headers */,
 				857A3EF71A6CFC3500279931 /* SixDashView.h in Headers */,
 				F02D142021197235001B1967 /* PolycabHeader.h in Headers */,
+				F0B4259C22671C240011D3E4 /* ChatHistory_DB.h in Headers */,
 				F02903EB21491F36007D2B2D /* ProgressBarView.h in Headers */,
+				F0B425C522671C620011D3E4 /* PTSMessagingCell.h in Headers */,
 				8558B33B1D0730960017FA3A /* GoldCardUpdateVC.h in Headers */,
 				F03D424320F75EC4008E0B08 /* OTPVC.h in Headers */,
 				855A2A831A851C68003888ED /* SecondDashDataView.h in Headers */,
@@ -4254,12 +4455,14 @@
 				85E1D88C1B8DFFAE0034D949 /* BidirectionCollectionLayout.h in Headers */,
 				8558B3361D0730960017FA3A /* GoldCardSubFormVC.h in Headers */,
 				902B4B6218E0352A00797225 /* XmwWebViewController.h in Headers */,
+				F0B425A522671C240011D3E4 /* ContactList_DB.h in Headers */,
 				857A3EE91A6CFC3500279931 /* HamBurgerMenuView.h in Headers */,
 				8595B4EB190FCB790010C685 /* DVDateStruct.h in Headers */,
 				F023B779211C1A3600D54B38 /* HamperSchemeCollectionView.h in Headers */,
 				857A3EDD1A6CFC3500279931 /* FifthDashView.h in Headers */,
 				F088F5FF2105E587000E26F4 /* SalesIncentiveLegend.h in Headers */,
 				856DC9DA1D06613700B7F48E /* EditOrderSubFormVC.h in Headers */,
+				F0B4259D22671C240011D3E4 /* ChatThreadList_DB.h in Headers */,
 				F08F14DF21C25FAD00B48A04 /* detailsTableView.h in Headers */,
 				852A941218F9974100F5DB5F /* DVCheckbox.h in Headers */,
 				8500DCF11A794D45002B534F /* XYPieChart.h in Headers */,
@@ -4272,6 +4475,7 @@
 				F0A358F120FC9ECF00CE34AC /* SignUpVC.h in Headers */,
 				9051C51D1804226A002B6BBB /* DocumentScreenController.h in Headers */,
 				8595B4E7190FCB790010C685 /* DVCalendarConstants.h in Headers */,
+				F0B425A022671C240011D3E4 /* ChatHistory_Object.h in Headers */,
 				8569B91D18E3C1DB008D65F5 /* XmwFileExplorer.h in Headers */,
 				857A3EF41A6CFC3500279931 /* SecondDashView.h in Headers */,
 				90F5F4E2179D55E7003BCA61 /* WorkFlowLoginScreen.h in Headers */,
@@ -4316,6 +4520,7 @@
 				8555ED2119E75FCD00EB9507 /* MCSwipeTableViewCell.h in Headers */,
 				90FA56DA17D727B3002B7601 /* SearchViewController.h in Headers */,
 				8595B4EF190FCB790010C685 /* DVMonthView.h in Headers */,
+				F0B425AA22671C240011D3E4 /* ChatThreadCell.h in Headers */,
 				8595B4F3190FCB790010C685 /* DVTwoWeekView.h in Headers */,
 				F0B2FB1F218850F5006A7C6B /* ReportQuantityValueTableCell.h in Headers */,
 				85AC9665198FFDDF00AC0338 /* ReportSubheaderSection.h in Headers */,
@@ -4324,6 +4529,7 @@
 				F0B2FB44218850F5006A7C6B /* SalesComparisonVC.h in Headers */,
 				F031562C2126931C005DE7F2 /* SearchProductBYNameVC.h in Headers */,
 				F055728521AE86EF00D1160C /* DependentDropDownClass.h in Headers */,
+				F0B4259A22671C240011D3E4 /* MessageSubjectVC.h in Headers */,
 				F07CC79E20E0EB41005917AC /* InvoiceView.h in Headers */,
 				F0224DFC21411CAA00D9A6E2 /* PolycabFooter.h in Headers */,
 				856DC9DC1D06613700B7F48E /* EditOrderTableFormDelegate.h in Headers */,
@@ -4374,6 +4580,7 @@
 				9000175A180D64860002F464 /* TimeTableViewCell.h in Headers */,
 				857A3ECA1A6CFC3500279931 /* DotMenuTreeCell.h in Headers */,
 				F02E3542221573530007573D /* PaymentOutstandingPieView.h in Headers */,
+				F0B425B822671C240011D3E4 /* ChatBoxVC.h in Headers */,
 				F07B39E820CEAE2B00740DF4 /* XmwSearchService.h in Headers */,
 				F088F6162105FBB7000E26F4 /* Data.h in Headers */,
 				F02E355322157A870007573D /* NationalSalesAggregateCellView.h in Headers */,
@@ -4381,6 +4588,7 @@
 				8500DCEB1A78FE10002B534F /* ChartSlider.h in Headers */,
 				85162FDA1E8E435C003B05C8 /* PODFormUpdateSection.h in Headers */,
 				85AC965F198FFDDF00AC0338 /* ReportHeaderSection.h in Headers */,
+				F0B425B922671C240011D3E4 /* ChatBoxUserListVC.h in Headers */,
 				850357B21E8BB582005500B9 /* PODCustomDataSection.h in Headers */,
 				85900FD318E00B280052067B /* UIView+XMW.h in Headers */,
 				857A3EC21A6CFC3500279931 /* DVAsynchImageView.h in Headers */,
@@ -4400,6 +4608,7 @@
 				F0B2FB35218850F5006A7C6B /* RMAVC.h in Headers */,
 				F088F6002105E587000E26F4 /* SalesIncentiveItemPopup.h in Headers */,
 				F0FE2BA61F7141A600D8FCEF /* DivisionVC.h in Headers */,
+				F0B4259E22671C240011D3E4 /* ContactList_Object.h in Headers */,
 				8595B4ED190FCB790010C685 /* DVDayNameCell.h in Headers */,
 				8595B4FA191004120010C685 /* DVCalendarController.h in Headers */,
 				F0B2FB34218850F5006A7C6B /* FeedbackDropDownVC.h in Headers */,
@@ -4423,6 +4632,7 @@
 				F0B2FB5521885145006A7C6B /* LayoutClass.h in Headers */,
 				902416F71802DBC8000BCC7C /* RecentRequestController.h in Headers */,
 				85E245FB19D98CB90052A4D5 /* NotificationRequestItem.h in Headers */,
+				F0B425BA22671C240011D3E4 /* ChatRoomsVC.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4527,6 +4737,7 @@
 				85BBB00D1E710CD500169952 /* arrow_up@2x.png in Resources */,
 				F088F5FC2105E587000E26F4 /* SalesComparisonLegend.xib in Resources */,
 				85B6A6D01E0E0D8900E0183E /* goods_return_L@2x.png in Resources */,
+				F0B425D12267344A0011D3E4 /* Artboard@2x.png in Resources */,
 				F0224E0121411CCF00D9A6E2 /* PolycabFooter.xib in Resources */,
 				F059CCE4214F70F600E303F6 /* crossicon@2x.png in Resources */,
 				F0A8EA82211D6C8F001C4FAD /* CreateOrderVC2.xib in Resources */,
@@ -4535,7 +4746,9 @@
 				8555ED2519E76C1200EB9507 /* icon_delete.png in Resources */,
 				858F05041DEED0F200398D46 /* Icon_search.png in Resources */,
 				F059CD39214F710600E303F6 /* reporticon@3x.png in Resources */,
+				F0B425B222671C240011D3E4 /* avatar_filled@2x.png in Resources */,
 				F059CCEC214F70F600E303F6 /* 07-proofofdelivery@2x.png in Resources */,
+				F0B425B422671C240011D3E4 /* avatar_unfilled@3x.png in Resources */,
 				F023B7A2211C1C5C00D54B38 /* OrderPendencyCollectionView.xib in Resources */,
 				8579E71B174CD04700D7945F /* Default.png in Resources */,
 				857F8C5E1A828CBD0018A54C /* popular_scheme_L.png in Resources */,
@@ -4555,6 +4768,7 @@
 				F03029642101B0280089A4E4 /* 01_splash.jpg in Resources */,
 				85DB6AC41E634CB90018710B /* WideReportVC.xib in Resources */,
 				90E810B0174F451D003BDF77 /* back.png in Resources */,
+				F0B425AE22671C240011D3E4 /* chat_add.png in Resources */,
 				F088F61F21060C6D000E26F4 /* CreateSubUserVC.xib in Resources */,
 				F088F5D92105CCC0000E26F4 /* LaunchScreen.xib in Resources */,
 				90E810B2174F451D003BDF77 /* blueButton.png in Resources */,
@@ -4563,6 +4777,7 @@
 				85B6A6D51E0E0DF500E0183E /* goods_return@2x.png in Resources */,
 				F059CD21214F710600E303F6 /* 02-mydetails@3x.png in Resources */,
 				F02E3528221542A70007573D /* NationalDashboardVC.xib in Resources */,
+				F0B425AF22671C240011D3E4 /* send.png in Resources */,
 				85EC4150191A0D8900B2ACD1 /* PageViewController~ipad.xib in Resources */,
 				F04D564B2100622000FF6CA8 /* MyDetailsVC.xib in Resources */,
 				F088F5F92105E587000E26F4 /* SalesComparisonChart.xib in Resources */,
@@ -4574,6 +4789,7 @@
 				F059CC9B214F70D000E303F6 /* 06-reports.png in Resources */,
 				85B6A6D41E0E0DF500E0183E /* goods_return.png in Resources */,
 				F081178B21916CCE00149035 /* 16-balanceconfirmation.png in Resources */,
+				F0B425CF2267343D0011D3E4 /* Artboard.png in Resources */,
 				F01FCC1420F5F952001B0C4E /* ShowInvoice.xib in Resources */,
 				F03484E9221E9352007E7653 /* EmpolyeeSalesReportHeaderView.xib in Resources */,
 				857F8C7B1A828D210018A54C /* popular_scheme@2x.png in Resources */,
@@ -4587,9 +4803,11 @@
 				859F97201A9BB3160004BBAF /* blankDashIcon@2x.png in Resources */,
 				85284F7119D5FC600010ED87 /* XmwNotificationWebViewController.xib in Resources */,
 				85FBB0671A9EF9B900E962D6 /* pause.png in Resources */,
+				F0B4259622671C240011D3E4 /* ChatThreadCell.xib in Resources */,
 				F059CC95214F70D000E303F6 /* polycab_image.png in Resources */,
 				85AB14691A727DC500045409 /* incentive.png in Resources */,
 				F059CCA8214F70D000E303F6 /* carticon.png in Resources */,
+				F0B425AC22671C240011D3E4 /* avatar_unfilled.png in Resources */,
 				F059CC91214F70D000E303F6 /* downarrow_right_arrow.png in Resources */,
 				85BBB0071E710CD500169952 /* arrow_left@1x.png in Resources */,
 				F023B78F211C1BA500D54B38 /* CreditDetailsCollectionView.xib in Resources */,
@@ -4631,6 +4849,7 @@
 				F059CCDF214F70F600E303F6 /* downarrow@2x.png in Resources */,
 				F05801FB221D2DB600682D07 /* CreateOrderDisplayCell.xib in Resources */,
 				F0B2FB2E218850F5006A7C6B /* RMAVC.xib in Resources */,
+				F0B425C122671C620011D3E4 /* ChatRoomVC.xib in Resources */,
 				F059CD37214F710600E303F6 /* polycab_logo2@3x.png in Resources */,
 				F059CD35214F710600E303F6 /* carticon@3x.png in Resources */,
 				85D9926E1D2B9894003AEBBE /* gold_card_L.png in Resources */,
@@ -4668,6 +4887,7 @@
 				F059CCA3214F70D000E303F6 /* 14-logout.png in Resources */,
 				F059CC96214F70D000E303F6 /* 01-dashboard.png in Resources */,
 				90E810B9174F451D003BDF77 /* login_background.png in Resources */,
+				F0B4259522671C240011D3E4 /* MessageSubjectVC.xib in Resources */,
 				F059CC90214F70D000E303F6 /* calendar.png in Resources */,
 				857A3EF31A6CFC3500279931 /* special_offer.png in Resources */,
 				856D15AC1D322CAA00C62CDF /* save-pdf.png in Resources */,
@@ -4684,6 +4904,7 @@
 				902B4B6418E0352A00797225 /* XmwWebViewController.xib in Resources */,
 				F02E353622155AB10007573D /* NationalSalesAggregateCollectionView.xib in Resources */,
 				F059CD2E214F710600E303F6 /* cart@3x.png in Resources */,
+				F0B425B322671C240011D3E4 /* avatar_unfilled@2x.png in Resources */,
 				857A3ED01A6CFC3500279931 /* arrow_closed2@2x.png in Resources */,
 				F059CCDB214F70F600E303F6 /* black-showpasswordicon@2x.png in Resources */,
 				857A3EFC1A6CFC3500279931 /* ThirdDashView.xib in Resources */,
@@ -4738,6 +4959,7 @@
 				F0A358F220FC9ECF00CE34AC /* SignUpVC.xib in Resources */,
 				851D93B81A81F9B100C61982 /* DualAxisHorizontalBarCell.xib in Resources */,
 				F059CD1E214F710600E303F6 /* polycab_menu@3x.png in Resources */,
+				F0B425A922671C240011D3E4 /* ChatBoxVC.xib in Resources */,
 				F059CCA6214F70D000E303F6 /* blackeyeicon.png in Resources */,
 				F022CA2C211AFCEC0048DEAD /* SalesAggregateCollectionView.xib in Resources */,
 				F08F14D521C2592C00B48A04 /* OverDueCollectionView.xib in Resources */,
@@ -4752,6 +4974,7 @@
 				85F9D7E019E8AEF7000413B0 /* plus_normal@2x.png in Resources */,
 				90E064481758B9DC00C13B78 /* ReportVC.xib in Resources */,
 				F0C4A10321B4F8FF00D7DF53 /* EmployeeCreateOrderVC.xib in Resources */,
+				F0B425D3226734550011D3E4 /* Artboard@3x.png in Resources */,
 				85DB6ABC1E6337C00018710B /* zbar-back.png in Resources */,
 				F059CD1F214F710600E303F6 /* polycab_notification@3x.png in Resources */,
 				857F8C601A828CBD0018A54C /* report_L.png in Resources */,
@@ -4793,6 +5016,7 @@
 				F059CD24214F710600E303F6 /* 05-requestforetain@3x.png in Resources */,
 				F058020F221D2E3200682D07 /* SearchProductByCatalogNextViewVC.xib in Resources */,
 				F0B2FB18218850F5006A7C6B /* ReportQuantityValueTableHeader.xib in Resources */,
+				F0B425B522671C240011D3E4 /* avatar_filled@3x.png in Resources */,
 				F059CCF0214F70F600E303F6 /* 11-policies@2x.png in Resources */,
 				857F8C761A828D210018A54C /* file_explorer@2x.png in Resources */,
 				F02E35622215837E0007573D /* PaymentOutstandingPieViewCellView.xib in Resources */,
@@ -4830,6 +5054,7 @@
 				852BC2E91A89973D00102963 /* default_hum@2x.png in Resources */,
 				F059CCAA214F70D000E303F6 /* polycab_logo2.png in Resources */,
 				85D7DAA018F749CB00CF7D94 /* minus_pressed.png in Resources */,
+				F0B425B022671C240011D3E4 /* chat_add@2x.png in Resources */,
 				902B99A9177455F90022DA82 /* radio-on.png in Resources */,
 				85BBB0061E710CD500169952 /* arrow_down@1x.png in Resources */,
 				F0B2FB37218850F5006A7C6B /* DispatchDetailsVC.xib in Resources */,
@@ -4843,6 +5068,7 @@
 				F0A8EA7C211D6A2C001C4FAD /* CreateOrderVC1.xib in Resources */,
 				F0B2FB4B218850F5006A7C6B /* ReportQuantityValue.xib in Resources */,
 				F0302BB82229268500F73808 /* sales.png in Resources */,
+				F0B425A822671C240011D3E4 /* ChatRoomsVC.xib in Resources */,
 				F0B2FB2C218850F5006A7C6B /* BusinessVerticalVC.xib in Resources */,
 				F059CD2C214F710600E303F6 /* 13-feedback@3x.png in Resources */,
 				857A3ED51A6CFC3500279931 /* arrow_open@2x.png in Resources */,
@@ -4851,6 +5077,7 @@
 				857F8C531A828CBD0018A54C /* default_L.png in Resources */,
 				F0B2FB48218850F5006A7C6B /* DispatchDetailsMapVC.xib in Resources */,
 				F059CD31214F710600E303F6 /* back-button@3x.png in Resources */,
+				F0B425B722671C240011D3E4 /* chat_add@3x.png in Resources */,
 				F0A358F320FC9ECF00CE34AC /* LogInVC.xib in Resources */,
 				F033A0C420E637A000366E3B /* showInfoClaimVC.xib in Resources */,
 				857A3ED61A6CFC3500279931 /* category-menu-selected.png in Resources */,
@@ -4859,6 +5086,7 @@
 				8530E0781AC2AABA001E5E79 /* refresh@2x.png in Resources */,
 				90F47F551796B47500C6B76C /* HavellsMenuScreenVC.xib in Resources */,
 				85BBB0101E710CD500169952 /* arrow_right@3x.png in Resources */,
+				F0B425B622671C240011D3E4 /* send@3x.png in Resources */,
 				85E738A51A8B7C6000FADD4C /* havells@2x.png in Resources */,
 				F059CCA9214F70D000E303F6 /* downarrow.png in Resources */,
 				F059CC97214F70D000E303F6 /* 02-mydetails.png in Resources */,
@@ -4900,6 +5128,7 @@
 				85BBB00B1E710CD500169952 /* arrow_left@2x.png in Resources */,
 				F0B2FB25218850F5006A7C6B /* RMACardCell.xib in Resources */,
 				F0B2FB50218850F5006A7C6B /* TravellerController.xib in Resources */,
+				F0B425B122671C240011D3E4 /* send@2x.png in Resources */,
 				F038EF492150E2F500AFB080 /* Localizable.strings in Resources */,
 				905FFDC6199A081300E95BFB /* downloadImage1.png in Resources */,
 				F059CCD6214F70F600E303F6 /* polycab_logo@2x.png in Resources */,
@@ -4912,8 +5141,10 @@
 				F059CC92214F70D000E303F6 /* polycab_logo.png in Resources */,
 				F03029702101F4010089A4E4 /* show.png in Resources */,
 				F059CD26214F710600E303F6 /* 07-proofofdelivery@3x.png in Resources */,
+				F0B4259B22671C240011D3E4 /* ChatBoxUserListVC.xib in Resources */,
 				F059CD20214F710600E303F6 /* 01-dashboard@3x.png in Resources */,
 				857F8C7D1A828D210018A54C /* special_offer@2x.png in Resources */,
+				F0B425AD22671C240011D3E4 /* avatar_filled.png in Resources */,
 				F0302BBF2229269800F73808 /* password@3x.png in Resources */,
 				F059CC8F214F70D000E303F6 /* crossicon.png in Resources */,
 				85C93EBB1ABC191F00B8EE17 /* refresh.png in Resources */,
@@ -5016,6 +5247,7 @@
 				F02E356C22159E7D0007573D /* NationalWisePolycabSalesComparisonChat.m in Sources */,
 				F01FCBFA20F5F941001B0C4E /* ShowInvoice.m in Sources */,
 				F031562D2126931C005DE7F2 /* SearchProductBYNameVC.m in Sources */,
+				F0B4259722671C240011D3E4 /* ChatBoxVC.m in Sources */,
 				F0F5B8C1222E4EB900EBAF39 /* CurrencyConversationClass.m in Sources */,
 				F0EAC5BA2142641D007D694C /* SelectedListVC.m in Sources */,
 				855A2A841A851C68003888ED /* SecondDashDataView.m in Sources */,
@@ -5025,6 +5257,7 @@
 				856DC9DB1D06613700B7F48E /* EditOrderSubFormVC.m in Sources */,
 				8579E745174CDBDC00D7945F /* SBJsonStreamParserAdapter.m in Sources */,
 				8579E747174CDBDC00D7945F /* SBJsonStreamParserState.m in Sources */,
+				F0B425A322671C240011D3E4 /* ChatHistory_DB.m in Sources */,
 				F0B2FB5621885145006A7C6B /* LayoutClass.m in Sources */,
 				8579E749174CDBDC00D7945F /* SBJsonStreamTokeniser.m in Sources */,
 				F039CAE620F49AF2005CEC02 /* Records.m in Sources */,
@@ -5049,7 +5282,9 @@
 				F088F6172105FBB7000E26F4 /* Data.m in Sources */,
 				8579E75F174CDC3600D7945F /* NetworkConstant.m in Sources */,
 				F03484E1221E8BE7007E7653 /* EmployeeSalesFormVC.m in Sources */,
+				F0B425A422671C240011D3E4 /* ContactList_Object.m in Sources */,
 				F0580203221D2DE000682D07 /* CreateOrderStatusVC.m in Sources */,
+				F0B425C722671D080011D3E4 /* ChatRoomsVC.m in Sources */,
 				858F05011DEEC27A00398D46 /* EditSearchField.m in Sources */,
 				F04B2F4520FF2B3D00E6120A /* LeftViewVC.m in Sources */,
 				858082B41A5D8A8A00207EAB /* DotLIneChart.m in Sources */,
@@ -5104,6 +5339,7 @@
 				857A3EEA1A6CFC3500279931 /* HamBurgerMenuView.m in Sources */,
 				90272F2A174DD13000115D7B /* MXTextField.m in Sources */,
 				F055728621AE86EF00D1160C /* DependentDropDownClass.m in Sources */,
+				F0B4259822671C240011D3E4 /* ChatThreadCell.m in Sources */,
 				850FCE171D12E0A200896090 /* OrderListVC.m in Sources */,
 				F0C4A10221B4F8FF00D7DF53 /* EmployeeCreateOrderVC.m in Sources */,
 				F08F14E021C25FAD00B48A04 /* detailsTableView.m in Sources */,
@@ -5119,6 +5355,7 @@
 				857A3EC31A6CFC3500279931 /* DVAsynchImageView.m in Sources */,
 				F023B77A211C1A3600D54B38 /* HamperSchemeCollectionView.m in Sources */,
 				8595B4EE190FCB790010C685 /* DVDayNameCell.m in Sources */,
+				F0B425C222671C620011D3E4 /* ChatRoomVC.m in Sources */,
 				9000C6A9175340E100A1DAF4 /* XmwUtils.m in Sources */,
 				9000C6AC1753413B00A1DAF4 /* OperationManagerUtil.m in Sources */,
 				905FFDBD1999EEBB00E95BFB /* iToast.m in Sources */,
@@ -5137,6 +5374,7 @@
 				850357AE1E8B77EE005500B9 /* PODTableViewCell.m in Sources */,
 				8502701D19064604003A7E01 /* NotificationDeviceRegister.m in Sources */,
 				857A3EDE1A6CFC3500279931 /* FifthDashView.m in Sources */,
+				F0B425A122671C240011D3E4 /* ContactList_DB.m in Sources */,
 				854304071B0DAD1000328DDD /* MarqueeLabel.m in Sources */,
 				858082A41A5D88EB00207EAB /* DotHBarChart.m in Sources */,
 				8516FEDB1B60697500E605A6 /* SelectServerVC.m in Sources */,
@@ -5151,6 +5389,7 @@
 				902D3F651755E92200E079AB /* ButtonTableViewCell.m in Sources */,
 				F0A358EF20FC9ECF00CE34AC /* SignUpVC.m in Sources */,
 				85DB6AC31E634CB90018710B /* WideReportVC.m in Sources */,
+				F0B4259922671C240011D3E4 /* MessageSubjectVC.m in Sources */,
 				F0E1A0DC213E4E90005F4435 /* OrderPendencyCell.m in Sources */,
 				F0E1A0D0213E48C2005F4435 /* SalesCell.m in Sources */,
 				85804F651A6B63DA0093CDBB /* XmwReportService.m in Sources */,
@@ -5219,6 +5458,7 @@
 				90EC5A6D1779A426004A2E3C /* RadioButton.m in Sources */,
 				8508D96A1E9B716F00C7D67F /* ScanController.m in Sources */,
 				8530E0761AC23D88001E5E79 /* ProductCatObject.m in Sources */,
+				F0B425AB22671C240011D3E4 /* ChatBoxUserListVC.m in Sources */,
 				F088F6012105E587000E26F4 /* SalesIncentiveItemPopup.m in Sources */,
 				F0A3590120FCC6FD00CE34AC /* TermsVC.m in Sources */,
 				F0B2FB4E218850F5006A7C6B /* PolycabSalesComparisonChat.m in Sources */,
@@ -5240,6 +5480,7 @@
 				900573A41787EC7C003288B3 /* DotDropDownPicker.m in Sources */,
 				F02C1EE020EDFEEB002ABF27 /* MyClaimVC.m in Sources */,
 				9036FD98178A8DA2009DB2F2 /* LoginUtils.m in Sources */,
+				F0B425A722671C240011D3E4 /* ChatThreadList_Object.m in Sources */,
 				F02E3534221555440007573D /* NationalSalesAggregateCollectionView.m in Sources */,
 				9036FDA4178A9017009DB2F2 /* BaseDAO.m in Sources */,
 				F0AFB6562126CA12005801B9 /* PolycabProductCatObject.m in Sources */,
@@ -5265,6 +5506,8 @@
 				90082D2B178FC48000C79212 /* MandatoryAlertDelegate.m in Sources */,
 				F0FE2BA71F7141A600D8FCEF /* DivisionVC.m in Sources */,
 				90F47F541796B47500C6B76C /* HavellsMenuScreenVC.m in Sources */,
+				F0B425A622671C240011D3E4 /* ChatHistory_Object.m in Sources */,
+				F0B425C322671C620011D3E4 /* PTSMessagingCell.m in Sources */,
 				F02E3527221542A70007573D /* NationalDashboardVC.m in Sources */,
 				902B4B6318E0352A00797225 /* XmwWebViewController.m in Sources */,
 				90F5F4E3179D55E7003BCA61 /* WorkFlowLoginScreen.m in Sources */,
@@ -5297,6 +5540,7 @@
 				F02E3543221573530007573D /* PaymentOutstandingPieView.m in Sources */,
 				901F6E3C180282E500293AB9 /* XMWFaqWebViewController.m in Sources */,
 				F0B2FB4C218850F5006A7C6B /* BusinessVerticalReportVC.m in Sources */,
+				F0B425A222671C240011D3E4 /* ChatThreadList_DB.m in Sources */,
 				85D5DA6218E6F51200BE344F /* Styles.m in Sources */,
 				902416F81802DBC8000BCC7C /* RecentRequestController.m in Sources */,
 			);

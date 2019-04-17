@@ -333,6 +333,11 @@ NSMutableDictionary *masterDataForEmployee;
                [[NSUserDefaults standardUserDefaults ]setObject:userRole forKey:@"ROLE_NAME"];
                 break;
             }
+            else if([checkRole isEqualToString:@"Accept On Chat"])
+            {
+                [[NSUserDefaults standardUserDefaults ]setObject:userRole forKey:@"Accept_Chat_Button"];
+               // break;
+            }
         }
        
         
@@ -411,6 +416,11 @@ NSMutableDictionary *masterDataForEmployee;
                         menuDetailsDict =clientLoginResponse.menuDetail;
                         
                         [self revealViewControllConfig];
+                        
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            //code to be executed in the background
+                            [self registerDeviceToken];
+                        });
                     }
                     }
                 }
@@ -421,6 +431,28 @@ NSMutableDictionary *masterDataForEmployee;
     UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Polycab Authentication!" message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil , nil];
     [myAlertView show];
     
+}
+-(void)registerDeviceToken
+{
+    NSString *bundleIdentifier =   [[NSBundle mainBundle] bundleIdentifier];
+    NSString* deviceTokenString =[[NSUserDefaults standardUserDefaults] objectForKey:@"PUSH_TOKEN"];
+    ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
+    if(deviceTokenString!=nil) {
+        NotificationDeviceRegister* deviceRegister = [[NotificationDeviceRegister alloc] init];
+        deviceRegister.appId = bundleIdentifier;
+        deviceRegister.devicePort = @"123";
+        deviceRegister.deviceRegisterId = deviceTokenString;
+        deviceRegister.imei = [[clientVariables.CLIENT_USER_LOGIN deviceInfoMap] valueForKey:@"IMEI"] ;
+        deviceRegister.moduleId = @"";
+        deviceRegister.sessionDetail = @"";
+        
+        ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
+        deviceRegister.userId = clientVariables.CLIENT_USER_LOGIN.userName;
+        deviceRegister.os =  XmwcsConst_DEVICE_TYPE_IPHONE;
+        
+        networkHelper = [[NetworkHelper alloc] init];
+        [networkHelper registerDevice:deviceRegister :self :XmwcsConst_CALL_NAME_FOR_NOTIFY_DEVICE_REGISTER];
+    }
 }
 -(void) configureServerUrls
 {
