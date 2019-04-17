@@ -315,7 +315,7 @@
     }
     
     else{
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"PolyCab" message:@"Please enter quantity minimum of one product." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"" message:@"Please fill qnty to place order " delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [loadingView removeView];
         [alert show];
         

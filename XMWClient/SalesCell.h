@@ -22,7 +22,13 @@
 @property (weak, nonatomic) IBOutlet UILabel *constantLbl2;
 @property (weak, nonatomic) IBOutlet UILabel *constantLbl3;
 @property (weak, nonatomic) IBOutlet UILabel *constantLbl4;
--(void)configure:(NSArray*)ftdData :(NSArray*)mtdData :(NSArray*)ytdData;
+-(void)configure:(NSArray*)ftdData :(NSArray*)mtdData :(NSArray*)ytdData :(NSArray*)lftdData;
 -(void)autoLayout;
 -(NSString*)formateCurrency:(NSString *)actualAmount;
+
+@property (weak, nonatomic) IBOutlet UIView *dividerLine;
+@property (weak, nonatomic) IBOutlet UILabel *lftdDisplacyLbl;
+@property (weak, nonatomic) IBOutlet UILabel *lftdConstantLbl;
+
+
 @end

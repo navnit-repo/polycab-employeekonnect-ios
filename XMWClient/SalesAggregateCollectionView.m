@@ -44,6 +44,8 @@
    // UIActivityIndicatorView *activityIndicatorView;
     
 }
+@synthesize LFTD_TO_Date;
+@synthesize LFTD_From_Date;
 @synthesize collectionView;
 @synthesize pageIndicator;
 @synthesize underCellLbl;
@@ -88,6 +90,7 @@
     ftdDataArray = [[NSMutableArray alloc]init];
     mtdDataArray = [[NSMutableArray alloc]init];
     ytdDataArray = [[NSMutableArray alloc]init];
+    lftdDataArray = [[NSMutableArray alloc]init];
     
     self.collectionView.delegate= self;
     self.collectionView.dataSource= self;
@@ -155,7 +158,20 @@
     [sendData setObject:toDate forKey:@"TO_DATE"];
     [ftdPost setPostData:sendData];
     
+  
+    NSDateFormatter *LFTD_dateFormatter = [[NSDateFormatter alloc] init];
+    [LFTD_dateFormatter setDateFormat:@"dd/MM/yyyy"];
+    NSDate *dateFromString = [LFTD_dateFormatter dateFromString:fromDate];
 
+    NSDateComponents *previousDaye = [[NSDateComponents alloc] init];
+    [previousDaye setDay:-1];
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDate *newDate = [calendar dateByAddingComponents:previousDaye toDate:dateFromString options:0];
+    NSLog(@"newDate -> %@",newDate);
+   
+    LFTD_From_Date = [LFTD_dateFormatter stringFromDate:newDate];
+    LFTD_TO_Date = LFTD_From_Date;
+    
     XmwReportService* reportService = [[XmwReportService alloc] initWithPostData:ftdPost withContext:@"ftdCall"];
     
     [reportService fetchReportUsingSuccess:^(DotFormPost* formPosted, ReportPostResponse* reportResponse) {
@@ -333,8 +349,9 @@
         }
         NSLog(@"YTD: %@",ytdDataArray);
         
+        [self LFTD_NetworkCall];
         
-        [self maintainArrayFTD_MTD_YTD];
+//        [self maintainArrayFTD_MTD_YTD];
       
     }   fail:^(DotFormPost* formPosted, NSString* message) {
         // we should receive error response here
@@ -344,6 +361,44 @@
     }];
     
     
+}
+-(void)LFTD_NetworkCall
+{
+    NSLog(@"From date :- %@",LFTD_From_Date);
+    NSLog(@"To date :- %@",LFTD_TO_Date);
+    lftdPost = [[DotFormPost alloc]init];
+    [lftdPost setAdapterId:@"DOT_REPORT_CUSTOMER_WISE_SALE"];
+    [lftdPost setAdapterType:@"CLASSLOADER"];
+    [lftdPost setModuleId:AppConst_MOBILET_ID_DEFAULT];
+    
+    NSMutableDictionary *sendData = [[NSMutableDictionary alloc]init];
+    [sendData setObject:@"" forKey:@"CUSTOMER_ACCOUNT"];
+    [sendData setObject:LFTD_From_Date forKey:@"FROM_DATE"];
+    [sendData setObject:LFTD_TO_Date forKey:@"TO_DATE"];
+    [lftdPost setPostData:sendData];
+    
+    XmwReportService* reportService = [[XmwReportService alloc] initWithPostData:lftdPost withContext:@"lftdCall"];
+    
+    [reportService fetchReportUsingSuccess:^(DotFormPost* formPosted, ReportPostResponse* reportResponse) {
+        
+        
+        // we should receive report response data here
+        
+        lftdResponseData = reportResponse;
+        for (int i=0; i<lftdResponseData.tableData.count; i++) {
+            NSArray *array = [NSArray arrayWithArray:[lftdResponseData.tableData objectAtIndex:i]];
+            [lftdDataArray addObject:array];
+        }
+        
+        NSLog(@"LFTD: %@",lftdDataArray);
+        
+       
+          [self maintainArrayFTD_MTD_YTD];
+        
+    }   fail:^(DotFormPost* formPosted, NSString* message) {
+        // we should receive error response here
+        
+    }];
 }
 -(NSArray*)removeZero:(NSArray*)array{
     NSMutableArray *tempArray = [[NSMutableArray alloc]init];
@@ -372,6 +427,8 @@
     NSMutableArray*temp3 = [[NSMutableArray alloc]init];
     [temp3 addObjectsFromArray:[self removeZero:ytdDataArray]];
     
+    NSMutableArray*temp4 = [[NSMutableArray alloc]init];
+    [temp4 addObjectsFromArray:[self removeZero:lftdDataArray]];
     
     ftdDataArray = [[NSMutableArray alloc]init];
     [ftdDataArray addObjectsFromArray:temp1];
@@ -380,14 +437,19 @@
     ytdDataArray = [[NSMutableArray alloc]init];
     [ytdDataArray addObjectsFromArray:temp3];
     
+    lftdDataArray = [[NSMutableArray alloc]init];
+    [lftdDataArray addObjectsFromArray:temp4];
+    
     NSLog(@"After FTD blank element object removed array: %@",ftdDataArray);
     NSLog(@"After MTD blank element object removed array: %@",mtdDataArray);
     NSLog(@"After YTD blank element object removed array: %@",ytdDataArray);
+    NSLog(@"After LFTD blank element object removed array: %@",lftdDataArray);
     
     
     NSUInteger ftdCount= [ftdDataArray count];
     NSUInteger mtdCount= [mtdDataArray count];
     NSUInteger ytdCount= [ytdDataArray count];
+    NSUInteger lftdCount = [lftdDataArray count];
     
      //count total number of cell draw
     
@@ -473,16 +535,32 @@
         }
     
     }
+    
+    if (lftdCount < numberOfCell) {
+        
+        NSArray *addEmptyArray = [[NSArray alloc]initWithArray:[self distinct:lftdDataArray :maxCellArray]];
+        NSLog(@"%@",addEmptyArray);
+        for (int i=0; i<addEmptyArray.count; i++) {
+            NSMutableArray *emptyArray = [[NSMutableArray alloc]init];
+            [emptyArray addObject:[addEmptyArray objectAtIndex:i]];
+            [emptyArray addObject:@"0.0"];
+            [emptyArray addObject:@"0.0"];
+            [lftdDataArray insertObject:emptyArray atIndex:lftdCount];
+        }
+        
+    }
+    
  
     NSLog(@"FTD final array: %@",ftdDataArray);
     NSLog(@"MTD final array: %@",mtdDataArray);
     NSLog(@"YTD final array: %@",ytdDataArray);
+    NSLog(@"YTD final array: %@",lftdDataArray);
     
     // NSArray *sortedArray, with the unsorted 'array' pulled from some other instance
 //    NSArray *sortedArray1= [[NSArray alloc]init];
     NSMutableArray *tempFtdArray = [[NSMutableArray alloc]init];
      NSMutableArray *tempMtdArray = [[NSMutableArray alloc]init];
- 
+  NSMutableArray *tempLftdArray = [[NSMutableArray alloc]init];
     for (int i=0; i<ytdDataArray.count; i++) {
         NSString *verticalName = [[ytdDataArray objectAtIndex:i]objectAtIndex:0];
         for (int j=0;j<ytdDataArray.count; j++) {
@@ -507,35 +585,30 @@
         }
     }
     
+    
+    for (int i=0; i<ytdDataArray.count; i++) {
+        NSString *verticalName = [[ytdDataArray objectAtIndex:i]objectAtIndex:0];
+        for (int j=0;j<ytdDataArray.count; j++) {
+            NSString *findVerticalInMtdArray = [[lftdDataArray objectAtIndex:j]objectAtIndex:0];
+            if ([verticalName isEqualToString:findVerticalInMtdArray]) {
+                //  [tempFtdArray addObject:[ftdDataArray objectAtIndex:j]];
+                [tempLftdArray insertObject:[lftdDataArray objectAtIndex:j] atIndex:i];
+                break;
+            }
+        }
+    }
 
     
     NSLog(@"Temp ftd Array :%@",tempFtdArray);
     NSLog(@"Temp Mtd Array :%@",tempMtdArray);
-    
-    
-//    sortedArray1 = [ftdDataArray sortedArrayUsingComparator:^(id a, id b) {
-//        return [[a objectAtIndex:0] compare:[b objectAtIndex:0]];
-//    }];
-//
-//    NSArray *sortedArray2= [[NSArray alloc]init];
-//    sortedArray2 = [mtdDataArray sortedArrayUsingComparator:^(id a, id b) {
-//        return [[a objectAtIndex:0] compare:[b objectAtIndex:0]];
-//    }];
-//    NSArray *sortedArray3= [[NSArray alloc]init];
-//    sortedArray3 = [ytdDataArray sortedArrayUsingComparator:^(id a, id b) {
-//        return [[a objectAtIndex:0] compare:[b objectAtIndex:0]];
-//    }];
-//
-//
-//    NSLog(@"%@",sortedArray1);
-//     NSLog(@"%@",sortedArray2);
-//     NSLog(@"%@",sortedArray3);
-    
+    NSLog(@"Temp Mtd Array :%@",tempLftdArray);
     //sorted array
     ftdDataArray = [[NSMutableArray alloc]init];
     [ftdDataArray addObjectsFromArray:tempFtdArray];
     mtdDataArray = [[NSMutableArray alloc]init];
     [mtdDataArray addObjectsFromArray:tempMtdArray];
+    lftdDataArray = [[NSMutableArray alloc]init];
+    [lftdDataArray addObjectsFromArray:tempLftdArray];
 //    ytdDataArray = [[NSMutableArray alloc]init];
 //    [ytdDataArray addObjectsFromArray:sortedArray3];
     
@@ -657,7 +730,7 @@
     NSLog(@"FTD array: %@",ftdDataArray);
     NSLog(@"MTD array: %@",mtdDataArray);
     NSLog(@"YTD array: %@",ytdDataArray);
-    
+    NSLog(@"LFTD array: %@",lftdDataArray);
     if (sortDone== true) {
         [blankView removeFromSuperview];
     }
@@ -667,7 +740,8 @@
             if (indexPath.row ==i) {
 
                 salesCell = [SalesCell createInstance];
-                [salesCell configure:[ftdDataArray objectAtIndex:i]  :[mtdDataArray objectAtIndex:i] :[ytdDataArray objectAtIndex:i]];
+                [salesCell configure:[ftdDataArray objectAtIndex:i] :[mtdDataArray objectAtIndex:i] :[ytdDataArray objectAtIndex:i] :[lftdDataArray objectAtIndex:i]];
+//                [salesCell configure:[ftdDataArray objectAtIndex:i]  :[mtdDataArray objectAtIndex:i] :[ytdDataArray objectAtIndex:i]];
                 [cell addSubview:salesCell];
                 cell.clipsToBounds = YES;
             }

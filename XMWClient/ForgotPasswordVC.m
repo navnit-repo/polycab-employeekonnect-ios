@@ -126,7 +126,7 @@ NSString* regID = [self.enterRegCodeTextField.text  stringByTrimmingCharactersIn
 //            [self.navigationController pushViewController:vc animated:YES];
             
             
-            UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Polycab Connect Authentication!" message:[respondedObject valueForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil , nil];
+            UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Polycab Employee Authentication!" message:[respondedObject valueForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil , nil];
             [myAlertView show];
             LogInVC *vc = [[LogInVC alloc]init];
             [self.navigationController pushViewController:vc animated:YES];
@@ -134,7 +134,7 @@ NSString* regID = [self.enterRegCodeTextField.text  stringByTrimmingCharactersIn
         }
         else
         {
-            UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Polycab Employee Authentication!" message:@"Something went worng. Please try again" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil , nil];
+            UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"" message:[respondedObject valueForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil , nil];
             [myAlertView show];
         }
     }

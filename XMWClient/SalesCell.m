@@ -22,42 +22,68 @@
 }
 -(void)autoLayout{
     [LayoutClass setLayoutForIPhone6:self.mainView];
+    [LayoutClass setLayoutForIPhone6:self.dividerLine];
     [LayoutClass setLayoutForIPhone6:self.ftdView];
     [LayoutClass setLayoutForIPhone6:self.mtdView];
     [LayoutClass setLayoutForIPhone6:self.ytdView];
     [LayoutClass labelLayout:displayName forFontWeight:UIFontWeightBold];
     [LayoutClass labelLayout:self.constantLbl1 forFontWeight:UIFontWeightBold];
     [LayoutClass labelLayout:self.constantLbl2 forFontWeight:UIFontWeightRegular];
+    [LayoutClass labelLayout:self.lftdConstantLbl forFontWeight:UIFontWeightRegular];
     [LayoutClass labelLayout:self.constantLbl3 forFontWeight:UIFontWeightRegular];
     [LayoutClass labelLayout:self.constantLbl4 forFontWeight:UIFontWeightRegular];
     
       [LayoutClass labelLayout:self.ftdDataSetLbl forFontWeight:UIFontWeightBold];
+    
+     [LayoutClass labelLayout:self.lftdDisplacyLbl forFontWeight:UIFontWeightBold];
+    
      [LayoutClass labelLayout:self.mtdDataSetLbl forFontWeight:UIFontWeightBold];
      [LayoutClass labelLayout:self.ytdDataSetLbl forFontWeight:UIFontWeightBold];
     
     
 }
-- (void)configure:(NSArray *)ftdData :(NSArray *)mtdData :(NSArray *)ytdData{
+- (void)configure:(NSArray *)ftdData :(NSArray *)mtdData :(NSArray *)ytdData :(NSArray *)lftdData
+{
     [self autoLayout];
     NSString *rupee=@"\u20B9";
     
-//    NSString *ftd = [self formateCurrency:[ftdData objectAtIndex:2]];
-//    NSString *mtd = [self formateCurrency:[mtdData objectAtIndex:2]];
-//    NSString *ytd = [self formateCurrency:[ytdData objectAtIndex:2]];
-//
+    //    NSString *ftd = [self formateCurrency:[ftdData objectAtIndex:2]];
+    //    NSString *mtd = [self formateCurrency:[mtdData objectAtIndex:2]];
+    //    NSString *ytd = [self formateCurrency:[ytdData objectAtIndex:2]];
+    //
     CurrencyConversationClass *currencyFormate = [[CurrencyConversationClass alloc]init];
     
-  NSString *ftd=  [currencyFormate formateCurrency:[ftdData objectAtIndex:2]];
-  NSString *mtd = [currencyFormate formateCurrency:[mtdData objectAtIndex:2]];
-  NSString *ytd = [currencyFormate formateCurrency:[ytdData objectAtIndex:2]];
-    
+    NSString *ftd=  [currencyFormate formateCurrency:[ftdData objectAtIndex:2]];
+    NSString *mtd = [currencyFormate formateCurrency:[mtdData objectAtIndex:2]];
+    NSString *ytd = [currencyFormate formateCurrency:[ytdData objectAtIndex:2]];
+    NSString *lftd =[currencyFormate formateCurrency:[lftdData objectAtIndex:2]];
     self.displayName.text   = [[[ytdData objectAtIndex:0]stringByAppendingString:@"-"]stringByAppendingString:[ytdData objectAtIndex:1]];
     self.ftdDataSetLbl.text = [[NSString stringWithFormat:@"%@",rupee]stringByAppendingString:ftd];
     self.mtdDataSetLbl.text = [[NSString stringWithFormat:@"%@",rupee]stringByAppendingString:mtd];
     self.ytdDataSetLbl.text = [[NSString stringWithFormat:@"%@",rupee]stringByAppendingString:ytd];
-
-
+    self.lftdDisplacyLbl.text = [[NSString stringWithFormat:@"%@",rupee]stringByAppendingString:lftd];
 }
+//- (void)configure:(NSArray *)ftdData :(NSArray *)mtdData :(NSArray *)ytdData{
+//    [self autoLayout];
+//    NSString *rupee=@"\u20B9";
+//    
+////    NSString *ftd = [self formateCurrency:[ftdData objectAtIndex:2]];
+////    NSString *mtd = [self formateCurrency:[mtdData objectAtIndex:2]];
+////    NSString *ytd = [self formateCurrency:[ytdData objectAtIndex:2]];
+////
+//    CurrencyConversationClass *currencyFormate = [[CurrencyConversationClass alloc]init];
+//    
+//  NSString *ftd=  [currencyFormate formateCurrency:[ftdData objectAtIndex:2]];
+//  NSString *mtd = [currencyFormate formateCurrency:[mtdData objectAtIndex:2]];
+//  NSString *ytd = [currencyFormate formateCurrency:[ytdData objectAtIndex:2]];
+//    
+//    self.displayName.text   = [[[ytdData objectAtIndex:0]stringByAppendingString:@"-"]stringByAppendingString:[ytdData objectAtIndex:1]];
+//    self.ftdDataSetLbl.text = [[NSString stringWithFormat:@"%@",rupee]stringByAppendingString:ftd];
+//    self.mtdDataSetLbl.text = [[NSString stringWithFormat:@"%@",rupee]stringByAppendingString:mtd];
+//    self.ytdDataSetLbl.text = [[NSString stringWithFormat:@"%@",rupee]stringByAppendingString:ytd];
+//
+//
+//}
 
 -(NSString*)formateCurrency:(NSString *)actualAmount{
     

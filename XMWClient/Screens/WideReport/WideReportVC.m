@@ -73,7 +73,7 @@
     return self;
 }
 
-#pragma mark - Initialize View 
+#pragma mark - Initialize View
 
 - (void)viewDidLoad
 {
@@ -82,30 +82,30 @@
     for(int i=0; i<kTotalSections; i++) {
         sectionFlag[i] = 0;
     }
-
+    
     /*
-    if(isiPhone6Plus) {
-        self.view.frame = CGRectMake(0, 64, 414, 672);
-    } else if(isiPhone6) {
-        self.view.frame = CGRectMake(0, 64, 375, 600);
-    } else if(isiPhone5) {
-        self.view.frame = CGRectMake(0, 64, 320, 504);
-    } else {
-        // 0, 64, 320, 416
-        self.view.frame = CGRectMake(0, 64, 320, 416);
-    }
-
-    
-    [self initializeView];
-    
-    [self drawHeaderItem];
-    
-    //
-    // V1 was using DotReportDraw,
-    // V2 was section controller based
-    // This V3 is based on UICollectionView using BiDirectionalFlow layout
-    //
-    [self makeReportScreenV2];
+     if(isiPhone6Plus) {
+     self.view.frame = CGRectMake(0, 64, 414, 672);
+     } else if(isiPhone6) {
+     self.view.frame = CGRectMake(0, 64, 375, 600);
+     } else if(isiPhone5) {
+     self.view.frame = CGRectMake(0, 64, 320, 504);
+     } else {
+     // 0, 64, 320, 416
+     self.view.frame = CGRectMake(0, 64, 320, 416);
+     }
+     
+     
+     [self initializeView];
+     
+     [self drawHeaderItem];
+     
+     //
+     // V1 was using DotReportDraw,
+     // V2 was section controller based
+     // This V3 is based on UICollectionView using BiDirectionalFlow layout
+     //
+     [self makeReportScreenV2];
      */
     
     
@@ -117,7 +117,7 @@
     [ [self navigationController]  popViewControllerAnimated:YES];
     
     // if( self.screenId==XmwcsConst_WorkflowMainScreen) {
-	//	[DVAppDelegate popModuleContext];
+    //    [DVAppDelegate popModuleContext];
     // }
 }
 
@@ -127,7 +127,7 @@
     dotReport = [clientVariables.DOT_REPORT_MAP objectForKey:reportPostResponse.viewReportId];
     
     
-    hScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+    hScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 35, self.view.frame.size.width, self.view.frame.size.height)];
     
     hScrollView.scrollEnabled = YES;
     hScrollView.delegate = self;
@@ -137,13 +137,30 @@
     
     hScrollView.contentSize = CGSizeMake(self.view.frame.size.width, self.view.frame.size.height);
     
-
+    
     [self.view addSubview:hScrollView];
     
 }
 
 -(void) drawTitle:(NSString *)headerStr
 {
+    //    NSDictionary *textAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
+    //                                    [UIColor whiteColor],NSForegroundColorAttributeName,
+    //                                    [UIColor whiteColor],NSBackgroundColorAttributeName,nil];
+    //
+    //    self.navigationController.navigationBar.titleTextAttributes = textAttributes;
+    //    // self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
+    //    self.navigationController.navigationBar.translucent = NO;
+    //
+    //    UILabel*  titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 160, 40)];
+    //    titleLabel.text = dotReport.screenHeader;
+    //    titleLabel.textColor = [Styles headerTextColor];
+    //    titleLabel.textAlignment = NSTextAlignmentCenter;
+    //    titleLabel.backgroundColor = [UIColor clearColor];
+    //    [self.navigationItem setTitleView: titleLabel];
+    
+    
+    
     NSDictionary *textAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
                                     [UIColor whiteColor],NSForegroundColorAttributeName,
                                     [UIColor whiteColor],NSBackgroundColorAttributeName,nil];
@@ -152,23 +169,45 @@
     // self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.translucent = NO;
     
-    UILabel*  titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 160, 40)];
-    titleLabel.text = dotReport.screenHeader;
-    titleLabel.textColor = [Styles headerTextColor];
-    titleLabel.textAlignment = NSTextAlignmentCenter;
-    titleLabel.backgroundColor = [UIColor clearColor];
-    [self.navigationItem setTitleView: titleLabel];
-
+    //    UILabel*  titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 160, 40)];
+    //    titleLabel.text = dotReport.screenHeader;
+    //    titleLabel.textColor = [UIColor blackColor];
+    //    titleLabel.textAlignment = NSTextAlignmentCenter;
+    //    titleLabel.backgroundColor = [UIColor clearColor];
+    
+    
+    UIImageView *polycabLogo = [[UIImageView alloc] initWithImage:[UIImage  imageNamed:@"polycab_logo"]];
+    self.navigationItem.titleView.contentMode = UIViewContentModeCenter;
+    self.navigationItem.titleView = polycabLogo;
+    
+    //  [self.navigationItem setTitleView: titleLabel];
+    
+    
+    [self headerView:dotReport.screenHeader];
+    
 }
 
-
+-(void)headerView:(NSString*)headername{
+    NSLog(@"Header Name : %@",headername);
+    
+    UILabel *label = [[UILabel alloc] initWithFrame: CGRectMake(0, 10, self.view.bounds.size.width, 35)];
+    [label setBackgroundColor:[UIColor clearColor]];
+    [label setTextColor: [UIColor blackColor]];
+    [label setFont:[UIFont fontWithName:@"Helvetica-Bold" size:18]];
+    [label setText: [headername uppercaseString]];
+    
+    [label setNumberOfLines: 0];
+    [label sizeToFit];
+    [label setCenter: CGPointMake(self.view.center.x, label.center.y)];
+    [self.view addSubview:label];
+}
 -(void) makeReportScreenV2
 {
     
     sectionArray = [[NSMutableArray alloc] init];
     sectionController = [[ReportSectionsController alloc] init];
     
-    self.reportTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+    self.reportTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 35, self.view.frame.size.width, self.view.frame.size.height)];
     
     sectionController.tableView = self.reportTableView;
     self.reportTableView.dataSource = sectionController;
@@ -223,14 +262,14 @@
     
     if(sectionFlag[kReportSectionTable] == 1) {
         NSArray* sortedElementIds =[DotReportDraw sortRptComponents : dotReport.reportElements : XmwcsConst_REPORT_PLACE_TABLE];
-
+        
         if([sortedElementIds count]>0) {
             NSInteger defaultColumnWidth = self.view.frame.size.width/[sortedElementIds count];
-        
+            
             for(int i=0; i<[sortedElementIds count]; i++) {
                 DotReportElement* dotReportElement = [dotReport.reportElements  objectForKey:[sortedElementIds objectAtIndex:i]];
                 if(dotReportElement.length!=nil) {
-                   scrollWidth = scrollWidth +  [dotReportElement.length integerValue];
+                    scrollWidth = scrollWidth +  [dotReportElement.length integerValue];
                 }
                 scrollWidth = scrollWidth + defaultColumnWidth;
             }
@@ -252,7 +291,7 @@
 
 -(void) deSelect:(id)sender
 {
-	[(UITableView *)sender deselectRowAtIndexPath:[(UITableView *)sender indexPathForSelectedRow] animated:YES];
+    [(UITableView *)sender deselectRowAtIndexPath:[(UITableView *)sender indexPathForSelectedRow] animated:YES];
 }
 
 #pragma mark - Helper Methods
@@ -282,17 +321,17 @@
     [loadingView removeView];
     
     NSLog(@"ReportScreenController::formResponseHandler");
-   
-     if([callName isEqualToString:XmwcsConst_CALL_NAME_FOR_SUBMIT])
-        {
-            DocPostResponse *docPostResponse = (DocPostResponse *)respondedObject;
-            NSString *message = docPostResponse.submittedMessage;
-            
-            UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Info!" message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil , nil];
-            [myAlertView show];
-
-            
-        }
+    
+    if([callName isEqualToString:XmwcsConst_CALL_NAME_FOR_SUBMIT])
+    {
+        DocPostResponse *docPostResponse = (DocPostResponse *)respondedObject;
+        NSString *message = docPostResponse.submittedMessage;
+        
+        UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Info!" message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil , nil];
+        [myAlertView show];
+        
+        
+    }
 }
 
 -(void) httpFailureHandler:(NSString *)callName :(NSString *)message

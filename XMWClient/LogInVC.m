@@ -48,6 +48,7 @@
 #import "EmployeeCreateOrderVC.h"
 #import "NationalDashboardVC.h"
 #import "ForgotPasswordVC.h"
+#import "WideReportVC.h"
 @interface LogInVC ()
 
 @end
@@ -360,7 +361,7 @@ NSMutableDictionary *masterDataForEmployee;
         
                     if([clientLoginResponse.userLoginStatus isEqualToString:@"0"])
                     {
-                        UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Authentication!" message:@"Incorrect username or password" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil , nil];
+                        UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Authentication!" message:clientLoginResponse.userLoginMessage delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil , nil];
                         [myAlertView show];
         
                     }
@@ -467,8 +468,12 @@ NSMutableDictionary *masterDataForEmployee;
     
     // for Payment Outstanding
     [clientVariables registerReportVCClass:@"PaymentOutstandingReportView" forId:@"DOT_REPORT_PAYMENT_OUTSTANDING"];
-  
     
+  // for WideReportVC
+    [clientVariables registerReportVCClass:@"WideReportVC" forId:@"DOT_REPORT_EMPLOYEE_PORTAL_ORDERS"];
+    
+    // for WideReportVC drilldown
+    [clientVariables registerReportVCClass:@"WideReportVC" forId:@"DOT_REPORT_EMPLOYEE_PORTAL_ORDERS_DD"];
     
 }
 

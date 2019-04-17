@@ -80,6 +80,19 @@
     [ftdPost setPostData:sendData];
     
     
+    NSDateFormatter *LFTD_dateFormatter = [[NSDateFormatter alloc] init];
+    [LFTD_dateFormatter setDateFormat:@"dd/MM/yyyy"];
+    NSDate *dateFromString = [LFTD_dateFormatter dateFromString:fromDate];
+    
+    NSDateComponents *previousDaye = [[NSDateComponents alloc] init];
+    [previousDaye setDay:-1];
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDate *newDate = [calendar dateByAddingComponents:previousDaye toDate:dateFromString options:0];
+    NSLog(@"newDate -> %@",newDate);
+    
+    LFTD_From_Date = [LFTD_dateFormatter stringFromDate:newDate];
+    LFTD_TO_Date = LFTD_From_Date;
+    
     XmwReportService* reportService = [[XmwReportService alloc] initWithPostData:ftdPost withContext:@"ftdCall"];
     
     [reportService fetchReportUsingSuccess:^(DotFormPost* formPosted, ReportPostResponse* reportResponse) {
@@ -258,8 +271,8 @@
         }
         NSLog(@"YTD: %@",ytdDataArray);
         
-        
-        [self maintainArrayFTD_MTD_YTD];
+        [self LFTD_NetworkCall];
+        //[self maintainArrayFTD_MTD_YTD];
         
     }   fail:^(DotFormPost* formPosted, NSString* message) {
         // we should receive error response here
@@ -271,6 +284,44 @@
     
 }
 
+-(void)LFTD_NetworkCall
+{
+    NSLog(@"From date :- %@",LFTD_From_Date);
+    NSLog(@"To date :- %@",LFTD_TO_Date);
+    lftdPost = [[DotFormPost alloc]init];
+    [lftdPost setAdapterId:AppConst_EMPLOYEE_SALES_AGGREGATE_CARD_DOC_ID];
+    [lftdPost setAdapterType:@"CLASSLOADER"];
+    [lftdPost setModuleId:AppConst_MOBILET_ID_DEFAULT];
+    
+    NSMutableDictionary *sendData = [[NSMutableDictionary alloc]init];
+    [sendData setObject:@"" forKey:@"CUSTOMER_ACCOUNT"];
+    [sendData setObject:LFTD_From_Date forKey:@"FROM_DATE"];
+    [sendData setObject:LFTD_TO_Date forKey:@"TO_DATE"];
+    [lftdPost setPostData:sendData];
+    
+    XmwReportService* reportService = [[XmwReportService alloc] initWithPostData:lftdPost withContext:@"lftdCall"];
+    
+    [reportService fetchReportUsingSuccess:^(DotFormPost* formPosted, ReportPostResponse* reportResponse) {
+        
+        
+        // we should receive report response data here
+        
+        lftdResponseData = reportResponse;
+        for (int i=0; i<lftdResponseData.tableData.count; i++) {
+            NSArray *array = [NSArray arrayWithArray:[lftdResponseData.tableData objectAtIndex:i]];
+            [lftdDataArray addObject:array];
+        }
+        
+        NSLog(@"LFTD: %@",lftdDataArray);
+        
+        
+        [self maintainArrayFTD_MTD_YTD];
+        
+    }   fail:^(DotFormPost* formPosted, NSString* message) {
+        // we should receive error response here
+        
+    }];
+}
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     
     UICollectionViewCell *cell=[collectionView dequeueReusableCellWithReuseIdentifier:@"cellIdentifier" forIndexPath:indexPath];
@@ -281,7 +332,7 @@
     NSLog(@"FTD array: %@",ftdDataArray);
     NSLog(@"MTD array: %@",mtdDataArray);
     NSLog(@"YTD array: %@",ytdDataArray);
-    
+    NSLog(@"LFTD array: %@",lftdDataArray);
     if (sortDone== true) {
         [blankView removeFromSuperview];
     }
@@ -291,7 +342,8 @@
         if (indexPath.row ==i) {
             
             salesCell = [NationalSalesAggregateCellView createInstance];
-            [salesCell configure:[ftdDataArray objectAtIndex:i]  :[mtdDataArray objectAtIndex:i] :[ytdDataArray objectAtIndex:i]];
+            [salesCell configure:[ftdDataArray objectAtIndex:i] :[mtdDataArray objectAtIndex:i] :[ytdDataArray objectAtIndex:i] :[lftdDataArray objectAtIndex:i]];
+//            [salesCell configure:[ftdDataArray objectAtIndex:i]  :[mtdDataArray objectAtIndex:i] :[ytdDataArray objectAtIndex:i]];
             [cell addSubview:salesCell];
             cell.clipsToBounds = YES;
         }

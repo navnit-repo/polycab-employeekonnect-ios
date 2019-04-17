@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -36,15 +36,34 @@
                             <rect key="frame" x="0.0" y="40" width="91" height="80"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
+                                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8g5-LX-V3r">
+                                    <rect key="frame" x="46" y="15" width="1" height="50"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </view>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="61l-CJ-ijA">
+                                    <rect key="frame" x="0.0" y="19.5" width="46" height="18"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="12"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="LFTD" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JE0-2X-aPR">
+                                    <rect key="frame" x="0.0" y="43" width="44" height="18"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="13"/>
+                                    <color key="textColor" red="0.46274509800000002" green="0.47058823529999999" blue="0.45882352939999999" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="Zqz-gn-Lvo">
-                                    <rect key="frame" x="0.0" y="19.5" width="91" height="18"/>
+                                    <rect key="frame" x="46.5" y="19.5" width="44" height="18"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="12"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="FTD" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="08H-w9-Y7I">
-                                    <rect key="frame" x="0.0" y="43" width="91" height="18"/>
+                                    <rect key="frame" x="45.5" y="43" width="44" height="18"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="13"/>
                                     <color key="textColor" red="0.46274509803921571" green="0.47058823529411764" blue="0.45882352941176469" alpha="1" colorSpace="calibratedRGB"/>
@@ -106,8 +125,11 @@
                 <outlet property="constantLbl3" destination="K9C-6e-YwE" id="3KX-D5-hGP"/>
                 <outlet property="constantLbl4" destination="YR3-an-0x8" id="hNx-yf-DBU"/>
                 <outlet property="displayName" destination="JG3-jG-khu" id="iqD-gu-pCP"/>
+                <outlet property="dividerLine" destination="8g5-LX-V3r" id="0om-gH-Unh"/>
                 <outlet property="ftdDataSetLbl" destination="Zqz-gn-Lvo" id="UAP-Y2-eJx"/>
                 <outlet property="ftdView" destination="8iJ-7t-chd" id="FDW-F8-Ykj"/>
+                <outlet property="lftdConstantLbl" destination="JE0-2X-aPR" id="NOz-Kv-Shn"/>
+                <outlet property="lftdDisplacyLbl" destination="61l-CJ-ijA" id="fmw-9w-J5t"/>
                 <outlet property="mainView" destination="NwL-4u-CB2" id="zuw-76-7oM"/>
                 <outlet property="mtdDataSetLbl" destination="tka-3y-LJy" id="jk1-Uo-jS2"/>
                 <outlet property="mtdView" destination="WQs-QL-v0Z" id="UaM-bT-g8Y"/>

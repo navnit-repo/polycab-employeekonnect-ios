@@ -10,6 +10,7 @@
 #import "CurrencyConversationClass.h"
 @implementation NationalSalesAggregateCellView
 
+
 +(NationalSalesAggregateCellView*) createInstance
 
 {
@@ -20,8 +21,8 @@
 
 
 
-
-- (void)configure:(NSArray *)ftdData :(NSArray *)mtdData :(NSArray *)ytdData{
+- (void)configure:(NSArray *)ftdData :(NSArray *)mtdData :(NSArray *)ytdData :(NSArray *)lftdData
+{
     [self autoLayout];
     CurrencyConversationClass *currencyFormate = [[CurrencyConversationClass alloc]init];
     NSString *rupee=@"\u20B9";
@@ -29,23 +30,48 @@
     NSString *ftd = [currencyFormate formateCurrency:[ftdData objectAtIndex:2]];
     NSString *mtd = [currencyFormate formateCurrency:[mtdData objectAtIndex:2]];
     NSString *ytd = [currencyFormate formateCurrency:[ytdData objectAtIndex:2]];
+    NSString *lftd =[currencyFormate formateCurrency:[lftdData objectAtIndex:2]];
     
     if ([[ytdData objectAtIndex:1] isEqualToString:@""] || [[ytdData objectAtIndex:1] length] ==0 || [ytdData objectAtIndex:1] == nil || [[ytdData objectAtIndex:1] isKindOfClass:[NSNull class]] ) {
-      self.displayName.text   = [ytdData objectAtIndex:0];
+        self.displayName.text   = [ytdData objectAtIndex:0];
     }
     else
     {
-          self.displayName.text   =  [[[ytdData objectAtIndex:0]stringByAppendingString:@"-"]stringByAppendingString:[ytdData objectAtIndex:1]];
+        self.displayName.text   =  [[[ytdData objectAtIndex:0]stringByAppendingString:@"-"]stringByAppendingString:[ytdData objectAtIndex:1]];
     }
     
-
-  
+    
+    
     self.ftdDataSetLbl.text = [[NSString stringWithFormat:@"%@",rupee]stringByAppendingString:ftd];
     self.mtdDataSetLbl.text = [[NSString stringWithFormat:@"%@",rupee]stringByAppendingString:mtd];
     self.ytdDataSetLbl.text = [[NSString stringWithFormat:@"%@",rupee]stringByAppendingString:ytd];
-    
-    
+    self.lftdDisplacyLbl.text = [[NSString stringWithFormat:@"%@",rupee]stringByAppendingString:lftd];
 }
+//- (void)configure:(NSArray *)ftdData :(NSArray *)mtdData :(NSArray *)ytdData{
+//    [self autoLayout];
+//    CurrencyConversationClass *currencyFormate = [[CurrencyConversationClass alloc]init];
+//    NSString *rupee=@"\u20B9";
+//    
+//    NSString *ftd = [currencyFormate formateCurrency:[ftdData objectAtIndex:2]];
+//    NSString *mtd = [currencyFormate formateCurrency:[mtdData objectAtIndex:2]];
+//    NSString *ytd = [currencyFormate formateCurrency:[ytdData objectAtIndex:2]];
+//    
+//    if ([[ytdData objectAtIndex:1] isEqualToString:@""] || [[ytdData objectAtIndex:1] length] ==0 || [ytdData objectAtIndex:1] == nil || [[ytdData objectAtIndex:1] isKindOfClass:[NSNull class]] ) {
+//      self.displayName.text   = [ytdData objectAtIndex:0];
+//    }
+//    else
+//    {
+//          self.displayName.text   =  [[[ytdData objectAtIndex:0]stringByAppendingString:@"-"]stringByAppendingString:[ytdData objectAtIndex:1]];
+//    }
+//    
+//
+//  
+//    self.ftdDataSetLbl.text = [[NSString stringWithFormat:@"%@",rupee]stringByAppendingString:ftd];
+//    self.mtdDataSetLbl.text = [[NSString stringWithFormat:@"%@",rupee]stringByAppendingString:mtd];
+//    self.ytdDataSetLbl.text = [[NSString stringWithFormat:@"%@",rupee]stringByAppendingString:ytd];
+//    
+//    
+//}
 -(NSString*)formateCurrency:(NSString *)actualAmount{
     
     float shortenedAmount = [actualAmount floatValue];

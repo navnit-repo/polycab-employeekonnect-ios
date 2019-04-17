@@ -14,14 +14,16 @@
 #import "DVAppDelegate.h"
 
 @interface SalesAggregateCollectionView : UIView<UICollectionViewDelegate,UICollectionViewDataSource>
-{
+{   DotFormPost *lftdPost;
     DotFormPost *ftdPost;
     DotFormPost *mtdPost;
     DotFormPost *ytdPost;
     ReportPostResponse* ftdResponseData;
+    ReportPostResponse* lftdResponseData;
     ReportPostResponse* mtdResponseData;
     ReportPostResponse* ytdResponseData;
     NSMutableArray *ftdDataArray;
+    NSMutableArray *lftdDataArray;
     NSMutableArray *mtdDataArray;
     NSMutableArray *ytdDataArray;
     BOOL sortDone;
@@ -30,16 +32,23 @@
     UIPageControl *pageIndicator;
      UIView *blankView;
     UIActivityIndicatorView *activityIndicatorView;
+    NSString *LFTD_From_Date;
+    NSString *LFTD_TO_Date;
 }
+@property NSString *LFTD_From_Date;
+@property NSString *LFTD_TO_Date;
 @property DotFormPost *ftdPost;
 @property DotFormPost *mtdPost;
 @property DotFormPost *ytdPost;
+@property DotFormPost *lftdPost;
 @property ReportPostResponse* ftdResponseData;
 @property ReportPostResponse* mtdResponseData;
 @property ReportPostResponse* ytdResponseData;
+@property ReportPostResponse* lftdResponseData;
 @property NSMutableArray *ftdDataArray;
 @property NSMutableArray *mtdDataArray;
 @property NSMutableArray *ytdDataArray;
+@property NSMutableArray *lftdDataArray;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (strong, nonatomic) IBOutlet UIPageControl *pageIndicator;
 @property (strong, nonatomic) IBOutlet UILabel *underCellLbl;
