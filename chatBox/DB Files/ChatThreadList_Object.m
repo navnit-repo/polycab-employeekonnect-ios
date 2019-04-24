@@ -16,4 +16,5 @@
 @synthesize KEY_ID;
 @synthesize subject;
 @synthesize lastMessageOn;
+@synthesize displayName;
 @end

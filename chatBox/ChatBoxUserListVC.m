@@ -17,6 +17,8 @@
 #import "MessageSubjectVC.h"
 #import "ContactList_DB.h"
 #import "ContactList_Object.h"
+#import "LayoutClass.h"
+#import "DVAppDelegate.h"
 @interface ChatBoxUserListVC ()
 
 @end
@@ -30,6 +32,33 @@
 @synthesize contactsList;
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    if (isiPhoneXSMAX) {
+        self.view.frame = CGRectMake(0, 64, 414, 832);
+    }
+    else if(isiPhoneXR) {
+        self.view.frame = CGRectMake(0, 64, 414, 832);
+    }
+    
+    else if(isiPhoneXS) {
+        self.view.frame = CGRectMake(0, 64, 375, 748);
+    }
+    else if(isiPhone10) {
+        self.view.frame = CGRectMake(0, 64, 375, 748);
+    }
+    
+    else if(isiPhone6Plus) {
+        self.view.frame = CGRectMake(0, 64, 414, 672);
+    }
+    else if(isiPhone6) {
+        self.view.frame = CGRectMake(0, 64, 375, 603);
+    } else if(isiPhone5) {
+        self.view.frame = CGRectMake(0, 64, 320, 504);
+    } else {
+        // 0, 64, 320, 416
+        self.view.frame = CGRectMake(0, 64, 320, 416);
+    }
+    
     contactsList = [[NSMutableArray alloc]init];
     [self drawHeaderItem];
     [self configureTableView];
@@ -64,7 +93,7 @@
 }
 -(void)configureTableView
 {
-    mainTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height) style:UITableViewStylePlain];
+    mainTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, self.view.bounds.size.width, self.view.bounds.size.height) style:UITableViewStylePlain];
     mainTableView.bounces = NO;
     mainTableView.delegate = self;
     mainTableView.dataSource = self;
@@ -115,14 +144,29 @@
             ContactList_DB *contactListStorage = [ContactList_DB getInstance];
             [contactListStorage dropTable:@"ContactList_DB_STORAGE"];
             
-            for(int i =0; i<[contactsList count];i++)
+            for(int i =0; i<[contactsList count];i++) //for unhidden contact  insert into db
             {
                 ContactList_Object* contactList_Object = [[ContactList_Object alloc] init];
                 contactList_Object.emailId = [[contactsList objectAtIndex:i] valueForKey:@"emailId"];
                 contactList_Object.name =    [[contactsList objectAtIndex:i] valueForKey:@"name"];
                 contactList_Object.userId =  [[contactsList objectAtIndex:i] valueForKey:@"userId"];
+                contactList_Object.isHidden = 0;
                 [contactListStorage insertDoc:contactList_Object];
             }
+            
+            contactsList = [[NSMutableArray alloc]init];
+            [contactsList addObjectsFromArray:[[respondedObject valueForKey:@"responseData"] valueForKey:@"hiddenContacts"]];
+            
+            for(int i =0; i<[contactsList count];i++) //for hidden contact  insert into db
+            {
+                ContactList_Object* contactList_Object = [[ContactList_Object alloc] init];
+                contactList_Object.emailId = [[contactsList objectAtIndex:i] valueForKey:@"emailId"];
+                contactList_Object.name =    [[contactsList objectAtIndex:i] valueForKey:@"name"];
+                contactList_Object.userId =  [[contactsList objectAtIndex:i] valueForKey:@"userId"];
+                contactList_Object.isHidden = 1;
+                [contactListStorage insertDoc:contactList_Object];
+            }
+            
             NSMutableArray *contactListStorageData = [contactListStorage getRecentDocumentsData : @"False"];
             contactsList = [[NSMutableArray alloc]init];
             [contactsList addObjectsFromArray:contactListStorageData];
@@ -160,15 +204,18 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifire];
         
        //  UIView *cellView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
-         UILabel *name= [[UILabel alloc]initWithFrame:CGRectMake(20, 0, self.view.frame.size.width, 20)];
+         UILabel *name= [[UILabel alloc]initWithFrame:CGRectMake(20, 10, self.view.frame.size.width, 20)];
          [name setFont:[UIFont fontWithName:@"Helvetica-Bold" size:14.0f]];
          [name setTextColor:[UIColor blackColor]];
          name.text =[[contactsList objectAtIndex:indexPath.row] valueForKey:@"name"];
         
-         UILabel *email= [[UILabel alloc]initWithFrame:CGRectMake(20, 22, self.view.frame.size.width, 20)];
+         UILabel *email= [[UILabel alloc]initWithFrame:CGRectMake(20, 32, self.view.frame.size.width, 20)];
         [email setFont:[UIFont fontWithName:@"Helvetica-light" size:12.0f]];
         [email setTextColor:[UIColor lightGrayColor]];
         email.text =[[contactsList objectAtIndex:indexPath.row] valueForKey:@"emailId"];
+        
+        [LayoutClass labelLayout:name forFontWeight:UIFontWeightBold];
+        [LayoutClass labelLayout:email forFontWeight:UIFontWeightRegular];
         
         [cell.contentView addSubview:name];
         [cell.contentView addSubview:email];
@@ -186,6 +233,27 @@
     NSLog(@"UserID unique : %@",[[contactsList objectAtIndex:indexPath.row] valueForKey:@"userId"]);
     MessageSubjectVC *vc = [[MessageSubjectVC alloc]init];
    vc.userIDUnique = [[contactsList objectAtIndex:indexPath.row] valueForKey:@"userId"];
+    vc.nameLblText = [[contactsList objectAtIndex:indexPath.row] valueForKey:@"name"];
     [self.navigationController pushViewController:vc animated:YES];
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 80;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 10; // you can have your own choice, of course
+}
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    UIView *headerView = [[UIView alloc] init];
+    headerView.backgroundColor = [UIColor clearColor];
+    return headerView;
+}
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+{
+    return [UIView new];
+    
 }
 @end

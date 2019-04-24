@@ -335,7 +335,7 @@ NSMutableDictionary *masterDataForEmployee;
             }
             else if([checkRole isEqualToString:@"Accept On Chat"])
             {
-                [[NSUserDefaults standardUserDefaults ]setObject:userRole forKey:@"Accept_Chat_Button"];
+                [[NSUserDefaults standardUserDefaults ]setObject:@"YES" forKey:@"Accept_Chat_Button"];
                // break;
             }
         }

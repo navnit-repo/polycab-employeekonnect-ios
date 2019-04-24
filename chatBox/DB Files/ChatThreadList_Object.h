@@ -20,7 +20,9 @@ NS_ASSUME_NONNULL_BEGIN
     NSString *subject;
     NSString *lastMessageOn;
     int KEY_ID;
+    NSString *displayName;
 }
+@property NSString *displayName;
 @property int chatThreadId;
 @property NSString *from;
 @property NSString *to;

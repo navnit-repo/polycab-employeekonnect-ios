@@ -12,4 +12,6 @@
 @synthesize name;
 @synthesize userId;
 @synthesize emailId;
+@synthesize isHidden;
+@synthesize userName;
 @end

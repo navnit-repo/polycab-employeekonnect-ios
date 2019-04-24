@@ -101,8 +101,33 @@
     [self loadCellView];
 
     
-    
+    [self fetchPendingNotifications];
 }
+
+-(void) fetchPendingNotifications
+{
+    NSString *bundleIdentifier =   [[NSBundle mainBundle] bundleIdentifier];
+    NSString* deviceTokenString =[[NSUserDefaults standardUserDefaults] objectForKey:@"PUSH_TOKEN"];
+    
+    if(deviceTokenString!=nil && (deviceTokenString.length > 0)) {
+        NSMutableDictionary* requestData = [[NSMutableDictionary alloc] init];
+        [requestData setObject:bundleIdentifier forKey:@"APP_ID"];
+        [requestData setObject:deviceTokenString forKey:@"DEVICE_TOKEN"];
+        
+        ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
+        
+        if(clientVariables.CLIENT_USER_LOGIN != nil)
+        {
+            
+            [requestData setObject:clientVariables.CLIENT_USER_LOGIN.userName forKey:@"USER_ID"];
+            [requestData setObject:XmwcsConst_DEVICE_TYPE_IPHONE forKey:@"OS"];
+            
+            networkHelper = [[NetworkHelper alloc] init];
+            [networkHelper genericRequestWith:requestData :self :XmwcsConst_CALL_NAME_FOR_FETCH_NOTIFICATION_LIST];
+        }
+    }
+}
+
 -(void)headerView{
     
 //self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:204.0/255 green:41.0/255 blue:43.0/255 alpha:1.0];
@@ -660,6 +685,10 @@
 - (void) httpResponseObjectHandler : (NSString*) callName : (id) respondedObject : (id) requestedObject
 {
     [loadingView removeView];
+    
+    if ([callName isEqualToString : @"FOR_FETCH_NOTIFICATION_LIST"]) {
+        NSLog(@"FOR_FETCH_NOTIFICATION_LIST response");
+    }
     
     if ([callName isEqualToString : @"FOR_LOGOUT"])
     {

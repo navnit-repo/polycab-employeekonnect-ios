@@ -33,6 +33,7 @@ static ChatThreadList_DB* DEFAULT_INSTANCE = 0;
     query = [query stringByAppendingString : @"status TEXT, "];
     query = [query stringByAppendingString : @"subject TEXT, "];
     query = [query stringByAppendingString : @"lastMessageOn TEXT, "];
+    query = [query stringByAppendingString : @"displayName TEXT, "];
     query =  [query stringByAppendingString : @"REC_TS DATETIME DEFAULT CURRENT_TIMESTAMP); "];     // adding Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
     
     char *errMsg;
@@ -118,8 +119,8 @@ static ChatThreadList_DB* DEFAULT_INSTANCE = 0;
     
     NSString* query = @"INSERT INTO ";
     query =  [query stringByAppendingString : [self getTableName]];
-    query = [query stringByAppendingString : @"(chatThreadId, fromId, toId, status, subject, lastMessageOn) "];
-    query = [query stringByAppendingString : @"VALUES(:chatThreadId, :fromId, :toId, :status, :subject, :lastMessageOn);"];
+    query = [query stringByAppendingString : @"(chatThreadId, fromId, toId, status, subject, lastMessageOn, displayName) "];
+    query = [query stringByAppendingString : @"VALUES(:chatThreadId, :fromId, :toId, :status, :subject, :lastMessageOn, :displayName);"];
     
     sqlite3_stmt *statement = nil;
     if (sqlite3_prepare_v2([self sqlConnection], [query UTF8String], -1, &statement, nil) == SQLITE_OK)
@@ -135,6 +136,7 @@ static ChatThreadList_DB* DEFAULT_INSTANCE = 0;
          sqlite3_bind_text(statement, sqlite3_bind_parameter_index(statement, ":subject"), [chatThreadList_Object.subject UTF8String], chatThreadList_Object.subject.length, nil);
          sqlite3_bind_text(statement, sqlite3_bind_parameter_index(statement, ":lastMessageOn"), [chatThreadList_Object.lastMessageOn UTF8String], chatThreadList_Object.lastMessageOn.length, nil);
         
+         sqlite3_bind_text(statement, sqlite3_bind_parameter_index(statement, ":displayName"), [chatThreadList_Object.displayName UTF8String], chatThreadList_Object.displayName.length, nil);
         
         
         if (sqlite3_step(statement) == SQLITE_DONE)
@@ -153,7 +155,7 @@ static ChatThreadList_DB* DEFAULT_INSTANCE = 0;
 -(NSMutableArray*)  getRecentDocumentsData : (NSString *)delete_stringFlag
 {
     NSMutableArray* list = [[NSMutableArray alloc] init];
-    NSString* query = @"SELECT chatThreadId,  fromId, toId, status, subject, lastMessageOn from ";
+    NSString* query = @"SELECT chatThreadId,  fromId, toId, status, subject, lastMessageOn, displayName from ";
     query = [[query stringByAppendingString : [self getTableName]]stringByAppendingString:@" ORDER BY chatThreadId DESC;"];
    // NSString* query = [@"SELECT * from " stringByAppendingString:[self getTableName]];
     
@@ -194,7 +196,12 @@ static ChatThreadList_DB* DEFAULT_INSTANCE = 0;
     chatThreadList_Object.subject  = [[NSString alloc] initWithUTF8String:(const char *)sqlite3_column_text(statement, 4)];
 
     chatThreadList_Object.lastMessageOn  = [[NSString alloc] initWithUTF8String:(const char *)sqlite3_column_text(statement, 5)];
-    
+//    NSString *name = [NSString stringWithFormat:@"%s",(const char*)sqlite3_column_text(statement, 6)];
+//    
+//    if (name == NULL || name == nil || [name isKindOfClass:[NSNull class]]) {
+//        name =@"";
+//    }
+    chatThreadList_Object.displayName  = [NSString stringWithFormat:@"%s",(const char*)sqlite3_column_text(statement, 6)];
     
     return chatThreadList_Object;
 }

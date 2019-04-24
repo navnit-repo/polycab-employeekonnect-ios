@@ -16,7 +16,11 @@ NS_ASSUME_NONNULL_BEGIN
     NSString *chatThreadId;
     NSString *withChatPersonName;
     NSString * chatStatus;
+    NSMutableArray *chatHistoryArray;
+    NSString *nameLbltext;
 }
+@property NSString *nameLbltext;
+@property NSMutableArray *chatHistoryArray;
 @property (weak, nonatomic) IBOutlet UIButton *popupAcceptButtonOulate;
 @property (weak, nonatomic) IBOutlet UILabel *popupSubjectLbl;
 @property NSString *chatStatus;

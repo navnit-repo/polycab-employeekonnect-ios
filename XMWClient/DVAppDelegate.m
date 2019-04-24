@@ -33,8 +33,14 @@
 #import "DashBoardVC.h"
 #import "LeftViewVC.h"
 #import <Fabric/Fabric.h>
-
-
+#import "ChatBoxVC.h"
+#import "ChatRoomsVC.h"
+#import "ChatHistory_Object.h"
+#import "ChatHistory_DB.h"
+#import "ChatThreadList_Object.h"
+#import "ChatThreadList_DB.h"
+#import "ContactList_DB.h"
+#import "ContactList_Object.h"
 CGFloat deviceWidthRation;
 CGFloat deviceHeightRation;
 CGFloat bottomBarHeight;
@@ -234,6 +240,196 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
     
+    //for polycab push handling
+    
+    if (launchOptions != nil)
+    {
+        // opened from a push notification when the app is closed
+        NSDictionary* userInfo = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+        if (userInfo != nil)
+        {
+            NSLog(@"userInfo->%@", [userInfo objectForKey:@"aps"]);
+            NSLog(@"didReceiveRemoteNotification :%@", userInfo);
+            
+            // polycab notification code
+            NSString *jsonStr =[userInfo objectForKey:@"CONTENT_MSG"];
+            SBJsonParser* sbparser = [[SBJsonParser alloc] init];
+            NSDictionary* mainDict = [sbparser objectWithString:jsonStr];
+            // NSDictionary* mainDict = [userInfo objectForKey:@"CONTENT_MSG"];
+            NSLog(@"%@",mainDict);
+            
+            
+            if ([[mainDict objectForKey:@"OPERATION"] isEqualToString:@"8"] ) {
+                if ([[mainDict objectForKey:@"NOTIFY_CALLNAME"] isEqualToString:@"NEW_MESSAGE"]) {
+                    
+                    NSMutableDictionary *responsedict = [[NSMutableDictionary alloc]init];
+                    [responsedict setDictionary:[mainDict objectForKey:@"NOTIFY_MESSAGE_KEY"]];
+                    NSString * timeStampValue = [[NSString stringWithFormat:@"%ld", (long)[[NSDate date] timeIntervalSince1970]]stringByAppendingString:@"000"];
+                    NSLog(@"Time Stamp Value == %@", timeStampValue);
+                    [ChatHistory_DB createInstance : @"ChatHistory_DB_STORAGE" : true :[[responsedict valueForKey:@"chatThread"] integerValue]];
+                    ChatHistory_DB *chatHistory_DBStorage = [ChatHistory_DB getInstance];
+                    ChatHistory_Object* chatHistory_Object = [[ChatHistory_Object alloc] init];
+                    chatHistory_Object.chatThreadId =  [[responsedict valueForKey:@"chatThread"] integerValue] ;
+                    chatHistory_Object.from =   [ NSString stringWithFormat:@"%@", [responsedict valueForKey:@"from"]];
+                    chatHistory_Object.to =  [ NSString stringWithFormat:@"%@",[responsedict valueForKey:@"to"]];
+                    chatHistory_Object.message =[ NSString stringWithFormat:@"%@",[responsedict valueForKey:@"message"]];
+                    chatHistory_Object.messageDate =[ NSString stringWithFormat:@"%@",timeStampValue];
+                    chatHistory_Object.messageType =[ NSString stringWithFormat:@"%@", [responsedict valueForKey:@"messageType"]];
+                    chatHistory_Object.messageId =  [[responsedict valueForKey:@"messageId"] integerValue] ;
+                    [chatHistory_DBStorage insertDoc:chatHistory_Object];
+                    //
+                 //   NSMutableArray *chatHistoryStorageData = [chatHistory_DBStorage getRecentDocumentsData : @"False"];
+                    
+                    
+                    
+//                    UIViewController *root;
+//                    root = [[[[UIApplication sharedApplication]windows]objectAtIndex:0]rootViewController];
+//                    SWRevealViewController *reveal = (SWRevealViewController*)root;
+//                    UINavigationController *check =(UINavigationController*)reveal.frontViewController;
+//                    NSArray* viewsList = check.viewControllers;
+//                    UIViewController *checkView = (UIViewController *) [viewsList objectAtIndex:viewsList.count - 1];
+//
+//                    if ([checkView isKindOfClass:[ChatRoomsVC class]]) {
+//                        // do this
+//                        ChatRoomsVC *vc = (ChatRoomsVC*) checkView;
+//                        vc.chatHistoryArray = [[NSMutableArray alloc]init];
+//                        [vc.chatHistoryArray addObjectsFromArray:chatHistoryStorageData];
+//                        [vc.chatRoomTableView reloadData];
+//
+//                    } else {
+//                        // do nothing
+//                    }
+                }
+                
+                else if ([[mainDict valueForKey:@"NOTIFY_CALLNAME"] isEqualToString:@"NEW_THREAD"]) {
+                    [ContactList_DB createInstance : @"ContactList_DB_STORAGE" : true];
+                    ContactList_DB *contactListStorage = [ContactList_DB getInstance];
+                    ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
+                    NSMutableDictionary *responsedict = [[NSMutableDictionary alloc]init];
+                    [responsedict setDictionary:[mainDict objectForKey:@"NOTIFY_MESSAGE_KEY"]];
+                    
+                    [ChatThreadList_DB createInstance : @"ChatThread_DB_STORAGE" : true];
+                    ChatThreadList_DB *chatThreadListStorage = [ChatThreadList_DB getInstance];
+                    
+                    NSArray *array = [[responsedict valueForKey:@"from"] componentsSeparatedByString:@"@"];
+                    NSString *ownUserId = [clientVariables.CLIENT_USER_LOGIN userName] ;
+                    NSString *parseId= @"";// for get username from contact db
+                    
+                    if ([[array objectAtIndex:0] isEqualToString:ownUserId]) {
+                        parseId = [responsedict valueForKey:@"to"];
+                    }
+                    
+                    else{
+                        parseId =[responsedict valueForKey:@"from"];;
+                    }
+                    
+                    
+                    NSArray *contactListStorageData = [contactListStorage getContactDisplayName:@"False" :parseId];
+                    ContactList_Object *obj;
+                    if (contactListStorageData.count==0) {
+                        obj = [[ContactList_Object alloc]init];
+                    }
+                    else{
+                        obj = (ContactList_Object*) [contactListStorageData objectAtIndex:0];
+                    }
+                    
+                    
+                    ChatThreadList_Object* chatThreadList_Object = [[ChatThreadList_Object alloc] init];
+                    chatThreadList_Object.chatThreadId = [[[responsedict valueForKey:@"message"] valueForKey:@"chatThread"] integerValue];
+                    chatThreadList_Object.from =        [responsedict valueForKey:@"from"];
+                    chatThreadList_Object.to =          [responsedict valueForKey:@"to"];
+                    chatThreadList_Object.subject =     [responsedict  valueForKey:@"subject"];
+                    chatThreadList_Object.displayName = obj.userName;
+                    NSString * timeStampValue = [[NSString stringWithFormat:@"%ld", (long)[[NSDate date] timeIntervalSince1970]]stringByAppendingString:@"000"];
+                    NSLog(@"Time Stamp Value == %@", timeStampValue);
+                    
+                    chatThreadList_Object.lastMessageOn = timeStampValue;
+                    chatThreadList_Object.status = @"";
+                    
+                    [chatThreadListStorage insertDoc:chatThreadList_Object];
+                    
+                   // NSMutableArray *chatThreadListStorageData = [chatThreadListStorage getRecentDocumentsData : @"False"];
+                    
+//                    UIViewController *root;
+//                    root = [[[[UIApplication sharedApplication]windows]objectAtIndex:0]rootViewController];
+//                    SWRevealViewController *reveal = (SWRevealViewController*)root;
+//                    UINavigationController *check =(UINavigationController*)reveal.frontViewController;
+//                    NSArray* viewsList = check.viewControllers;
+//                    UIViewController *checkView = (UIViewController *) [viewsList objectAtIndex:viewsList.count - 1];
+//
+//                    if ([checkView isKindOfClass:[ChatBoxVC class]]) {
+//                        // do this
+//                        ChatBoxVC *vc = (ChatBoxVC*) checkView;
+//                        vc.chatThreadDict = [[NSMutableArray alloc]init];
+//                        [vc.chatThreadDict addObjectsFromArray:chatThreadListStorageData];
+//                        [vc.threadListTableView reloadData];
+//
+//                    } else {
+//                        // do nothing
+//                    }
+                }
+                
+                
+                
+                else if ([[mainDict valueForKey:@"NOTIFY_CALLNAME"] isEqualToString:@"CHAT_THREAD_STATUS_UPDATE"]) {
+                    NSMutableDictionary *responsedict = [[NSMutableDictionary alloc]init];
+                    [responsedict setDictionary:[mainDict objectForKey:@"NOTIFY_MESSAGE_KEY"]];
+                    
+                    [ChatThreadList_DB createInstance : @"ChatThread_DB_STORAGE" : true];
+                    ChatThreadList_DB *chatThreadListStorage = [ChatThreadList_DB getInstance];
+                    
+                    
+                    ChatThreadList_Object* chatThreadList_Object = [[ChatThreadList_Object alloc] init];
+                    chatThreadList_Object.chatThreadId =[[responsedict valueForKey:@"chatThreadId"] integerValue] ;
+                    chatThreadList_Object.status =[responsedict valueForKey:@"status"];
+                    [chatThreadListStorage updateDoc:chatThreadList_Object];
+                  //  NSMutableArray *chatThreadListStorageData = [chatThreadListStorage getRecentDocumentsData : @"False"];
+                    
+//                    UIViewController *root;
+//                    root = [[[[UIApplication sharedApplication]windows]objectAtIndex:0]rootViewController];
+//                    SWRevealViewController *reveal = (SWRevealViewController*)root;
+//                    UINavigationController *check =(UINavigationController*)reveal.frontViewController;
+//                    NSArray* viewsList = check.viewControllers;
+//                    UIViewController *checkView = (UIViewController *) [viewsList objectAtIndex:viewsList.count - 1];
+//
+//                    if ([checkView isKindOfClass:[ChatBoxVC class]]) {
+//                        // do this
+//                        ChatBoxVC *vc = (ChatBoxVC*) checkView;
+//                        vc.chatThreadDict = [[NSMutableArray alloc]init];
+//                        [vc.chatThreadDict addObjectsFromArray:chatThreadListStorageData];
+//                        [vc.threadListTableView reloadData];
+//
+//                    }
+//                    else if ([checkView isKindOfClass:[ChatRoomsVC class]])
+//                    { ChatRoomsVC *vc = (ChatRoomsVC*) checkView;
+//                        if ([vc.chatThreadId integerValue]== [[responsedict valueForKey:@"chatThreadId"] integerValue]) {
+//                            [vc.bottomView removeFromSuperview];
+//                        }
+//                    }
+//                    else {
+//                        // do nothing
+//                    }
+                    
+                    
+                }
+                
+                
+                
+                
+            }
+            
+            
+            
+            
+        }
+    }
+    else
+    {
+        // work pending
+        // opened app without a push notification.
+    }
+    
+    
 
     
     return YES;
@@ -332,6 +528,173 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
     NSLog(@"didReceiveRemoteNotification :%@", userInfo);
+    
+    // polycab notification code
+    NSString *jsonStr =[userInfo objectForKey:@"CONTENT_MSG"];
+    SBJsonParser* sbparser = [[SBJsonParser alloc] init];
+    NSDictionary* mainDict = [sbparser objectWithString:jsonStr];
+    // NSDictionary* mainDict = [userInfo objectForKey:@"CONTENT_MSG"];
+     NSLog(@"%@",mainDict);
+    
+    
+    if ([[mainDict objectForKey:@"OPERATION"] isEqualToString:@"8"] ) {
+        if ([[mainDict objectForKey:@"NOTIFY_CALLNAME"] isEqualToString:@"NEW_MESSAGE"]) {
+            
+            NSMutableDictionary *responsedict = [[NSMutableDictionary alloc]init];
+            [responsedict setDictionary:[mainDict objectForKey:@"NOTIFY_MESSAGE_KEY"]];
+            NSString * timeStampValue = [[NSString stringWithFormat:@"%ld", (long)[[NSDate date] timeIntervalSince1970]]stringByAppendingString:@"000"];
+            NSLog(@"Time Stamp Value == %@", timeStampValue);
+            [ChatHistory_DB createInstance : @"ChatHistory_DB_STORAGE" : true :[[responsedict valueForKey:@"chatThread"] integerValue]];
+            ChatHistory_DB *chatHistory_DBStorage = [ChatHistory_DB getInstance];
+            ChatHistory_Object* chatHistory_Object = [[ChatHistory_Object alloc] init];
+            chatHistory_Object.chatThreadId =  [[responsedict valueForKey:@"chatThread"] integerValue] ;
+            chatHistory_Object.from =   [ NSString stringWithFormat:@"%@", [responsedict valueForKey:@"from"]];
+            chatHistory_Object.to =  [ NSString stringWithFormat:@"%@",[responsedict valueForKey:@"to"]];
+            chatHistory_Object.message =[ NSString stringWithFormat:@"%@",[responsedict valueForKey:@"message"]];
+            chatHistory_Object.messageDate =[ NSString stringWithFormat:@"%@",timeStampValue];
+            chatHistory_Object.messageType =[ NSString stringWithFormat:@"%@", [responsedict valueForKey:@"messageType"]];
+            chatHistory_Object.messageId =  [[responsedict valueForKey:@"messageId"] integerValue] ;
+            [chatHistory_DBStorage insertDoc:chatHistory_Object];
+//
+            NSMutableArray *chatHistoryStorageData = [chatHistory_DBStorage getRecentDocumentsData : @"False"];
+ 
+            
+    
+            UIViewController *root;
+            root = [[[[UIApplication sharedApplication]windows]objectAtIndex:0]rootViewController];
+            SWRevealViewController *reveal = (SWRevealViewController*)root;
+            UINavigationController *check =(UINavigationController*)reveal.frontViewController;
+            NSArray* viewsList = check.viewControllers;
+            UIViewController *checkView = (UIViewController *) [viewsList objectAtIndex:viewsList.count - 1];
+         
+                if ([checkView isKindOfClass:[ChatRoomsVC class]]) {
+                    // do this
+                    ChatRoomsVC *vc = (ChatRoomsVC*) checkView;
+                    vc.chatHistoryArray = [[NSMutableArray alloc]init];
+                    [vc.chatHistoryArray addObjectsFromArray:chatHistoryStorageData];
+                    vc.popupTextView.text = @"";
+                    [vc.chatRoomTableView reloadData];
+                    
+                } else {
+                    // do nothing
+                }
+        }
+        
+        else if ([[mainDict valueForKey:@"NOTIFY_CALLNAME"] isEqualToString:@"NEW_THREAD"]) {
+            [ContactList_DB createInstance : @"ContactList_DB_STORAGE" : true];
+            ContactList_DB *contactListStorage = [ContactList_DB getInstance];
+            ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
+            NSMutableDictionary *responsedict = [[NSMutableDictionary alloc]init];
+            [responsedict setDictionary:[mainDict objectForKey:@"NOTIFY_MESSAGE_KEY"]];
+          
+            [ChatThreadList_DB createInstance : @"ChatThread_DB_STORAGE" : true];
+            ChatThreadList_DB *chatThreadListStorage = [ChatThreadList_DB getInstance];
+            NSArray *array = [[responsedict valueForKey:@"from"] componentsSeparatedByString:@"@"];
+            NSString *ownUserId = [clientVariables.CLIENT_USER_LOGIN userName] ;
+            NSString *parseId= @"";// for get username from contact db
+            
+            if ([[array objectAtIndex:0] isEqualToString:ownUserId]) {
+                parseId = [responsedict valueForKey:@"to"];
+            }
+    
+            else{
+                parseId =[responsedict valueForKey:@"from"];;
+            }
+            
+            
+            
+            NSArray *contactListStorageData = [contactListStorage getContactDisplayName:@"False" :parseId];
+            ContactList_Object *obj;
+            if (contactListStorageData.count==0) {
+                obj = [[ContactList_Object alloc]init];
+            }
+            else{
+              obj = (ContactList_Object*) [contactListStorageData objectAtIndex:0];
+            }
+            
+            
+            
+            ChatThreadList_Object* chatThreadList_Object = [[ChatThreadList_Object alloc] init];
+            chatThreadList_Object.chatThreadId = [[[responsedict valueForKey:@"message"] valueForKey:@"chatThread"] integerValue];
+            chatThreadList_Object.from =        [responsedict valueForKey:@"from"];
+            chatThreadList_Object.to =          [responsedict valueForKey:@"to"];
+            chatThreadList_Object.subject =     [responsedict  valueForKey:@"subject"];
+            chatThreadList_Object.displayName = obj.userName;
+            NSString * timeStampValue = [[NSString stringWithFormat:@"%ld", (long)[[NSDate date] timeIntervalSince1970]]stringByAppendingString:@"000"];
+            NSLog(@"Time Stamp Value == %@", timeStampValue);
+            
+            chatThreadList_Object.lastMessageOn = timeStampValue;
+            chatThreadList_Object.status = @"";
+            
+            [chatThreadListStorage insertDoc:chatThreadList_Object];
+            
+            NSMutableArray *chatThreadListStorageData = [chatThreadListStorage getRecentDocumentsData : @"False"];
+            
+            UIViewController *root;
+            root = [[[[UIApplication sharedApplication]windows]objectAtIndex:0]rootViewController];
+            SWRevealViewController *reveal = (SWRevealViewController*)root;
+            UINavigationController *check =(UINavigationController*)reveal.frontViewController;
+            NSArray* viewsList = check.viewControllers;
+            UIViewController *checkView = (UIViewController *) [viewsList objectAtIndex:viewsList.count - 1];
+            
+            if ([checkView isKindOfClass:[ChatBoxVC class]]) {
+                // do this
+                ChatBoxVC *vc = (ChatBoxVC*) checkView;
+                vc.chatThreadDict = [[NSMutableArray alloc]init];
+                [vc.chatThreadDict addObjectsFromArray:chatThreadListStorageData];
+                [vc.threadListTableView reloadData];
+                
+            } else {
+                // do nothing
+            }
+        }
+        
+        
+         else if ([[mainDict valueForKey:@"NOTIFY_CALLNAME"] isEqualToString:@"CHAT_THREAD_STATUS_UPDATE"]) {
+             NSMutableDictionary *responsedict = [[NSMutableDictionary alloc]init];
+             [responsedict setDictionary:[mainDict objectForKey:@"NOTIFY_MESSAGE_KEY"]];
+             
+             [ChatThreadList_DB createInstance : @"ChatThread_DB_STORAGE" : true];
+             ChatThreadList_DB *chatThreadListStorage = [ChatThreadList_DB getInstance];
+             
+             
+             ChatThreadList_Object* chatThreadList_Object = [[ChatThreadList_Object alloc] init];
+             chatThreadList_Object.chatThreadId =[[responsedict valueForKey:@"chatThreadId"] integerValue] ;
+             chatThreadList_Object.status =[responsedict valueForKey:@"status"];
+             [chatThreadListStorage updateDoc:chatThreadList_Object];
+             NSMutableArray *chatThreadListStorageData = [chatThreadListStorage getRecentDocumentsData : @"False"];
+             
+             UIViewController *root;
+             root = [[[[UIApplication sharedApplication]windows]objectAtIndex:0]rootViewController];
+             SWRevealViewController *reveal = (SWRevealViewController*)root;
+             UINavigationController *check =(UINavigationController*)reveal.frontViewController;
+             NSArray* viewsList = check.viewControllers;
+             UIViewController *checkView = (UIViewController *) [viewsList objectAtIndex:viewsList.count - 1];
+             
+             if ([checkView isKindOfClass:[ChatBoxVC class]]) {
+                 // do this
+                 ChatBoxVC *vc = (ChatBoxVC*) checkView;
+                 vc.chatThreadDict = [[NSMutableArray alloc]init];
+                 [vc.chatThreadDict addObjectsFromArray:chatThreadListStorageData];
+                 [vc.threadListTableView reloadData];
+                 
+             }
+             else if ([checkView isKindOfClass:[ChatRoomsVC class]])
+             { ChatRoomsVC *vc = (ChatRoomsVC*) checkView;
+                 if ([vc.chatThreadId integerValue]== [[responsedict valueForKey:@"chatThreadId"] integerValue]) {
+                     [vc.bottomView removeFromSuperview];
+                 }
+             }
+             else {
+                 // do nothing
+             }
+             
+             
+         }
+        
+    }
+    
+
     
      [[NSNotificationCenter defaultCenter] postNotificationName:@"FETCH_PENDING_NOTF" object:nil];
     // we got the remote notification here, do here what to do

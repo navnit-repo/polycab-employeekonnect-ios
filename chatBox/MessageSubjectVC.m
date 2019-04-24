@@ -17,6 +17,9 @@
 #import "ChatBoxVC.h"
 #import "ChatThreadList_Object.h"
 #import "ChatThreadList_DB.h"
+#import "ContactList_DB.h"
+#import "ContactList_Object.h"
+#import "LayoutClass.h"
 @interface MessageSubjectVC ()
 
 @end
@@ -30,6 +33,7 @@
     NetworkHelper *networkHelper;
     LoadingView *loadingView;
 }
+@synthesize nameLblText;
 @synthesize userIDUnique;
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -51,7 +55,7 @@
         self.view.frame = CGRectMake(0, 64, 414, 672);
     }
     else if(isiPhone6) {
-        self.view.frame = CGRectMake(0, 64, 375, 600);
+        self.view.frame = CGRectMake(0, 64, 375, 603);
     } else if(isiPhone5) {
         self.view.frame = CGRectMake(0, 64, 320, 504);
     } else {
@@ -101,8 +105,18 @@
 }
 -(void)createView
 {
+    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, 110)];
+    headerView.backgroundColor = [UIColor whiteColor];
     
-    subjectTextField = [[UITextField alloc]initWithFrame:CGRectMake(16, 100, self.view.frame.size.width-32, 30)];
+    UILabel *nameLbl = [[UILabel alloc]initWithFrame:CGRectMake(16, 10, self.view.frame.size.width-32, 20)];
+    [nameLbl setFont:[UIFont fontWithName:@"Helvetica-Bold" size:14.0f]];
+    [nameLbl setTextColor:[UIColor blackColor]];
+    nameLbl.text = nameLblText;
+    [headerView addSubview:nameLbl];
+    
+    [self.view addSubview:headerView];
+    
+    subjectTextField = [[UITextField alloc]initWithFrame:CGRectMake(16, 40, self.view.frame.size.width-32, 50)];
     subjectTextField.borderStyle = UITextBorderStyleRoundedRect;
     subjectTextField.returnKeyType = UIReturnKeyDefault;
     subjectTextField.autocapitalizationType = UITextAutocapitalizationTypeWords;
@@ -113,7 +127,9 @@
     subjectTextField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
     subjectTextField.font = [UIFont systemFontOfSize:16.0];
     subjectTextField.adjustsFontSizeToFitWidth = YES;
-    subjectTextField.textColor =[UIColor colorWithRed:119.0/255 green:119.0/255 blue:119.0/255 alpha:1.0];
+//    subjectTextField.textColor =[UIColor colorWithRed:119.0/255 green:119.0/255 blue:119.0/255 alpha:1.0];
+    subjectTextField.textColor = [UIColor blackColor];
+    subjectTextField.backgroundColor =[UIColor colorWithRed:224.0/255 green:224.0/255 blue:224.0/255 alpha:1.0];
     subjectTextField.placeholder = @"New message subject";
     subjectTextField.delegate = self;
     //set textfield border
@@ -122,12 +138,19 @@
     subjectTextField.layer.borderColor= [[UIColor lightGrayColor]CGColor];
     subjectTextField.layer.borderWidth= 1.0f;
     
-   UIView * bottomView = [[UIView alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height-40+self.view.frame.origin.y, self.view.frame.size.width, 40)];
+    [headerView addSubview:subjectTextField];
+    
+    UIView *headerborderLine =  [[UIView alloc]initWithFrame:CGRectMake(0,headerView.frame.size.height-5, self.view.frame.size.width, 5)];
+    headerborderLine.backgroundColor = [UIColor colorWithRed:230.0/255 green:230.0/255 blue:230.0/255 alpha:1.0];
+    [headerView addSubview:headerborderLine];
+    
+    
+   UIView * bottomView = [[UIView alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height-80+self.view.frame.origin.y, self.view.frame.size.width, 80)];
     UIView *borderLine =  [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 5)];
     borderLine.backgroundColor = [UIColor colorWithRed:230.0/255 green:230.0/255 blue:230.0/255 alpha:1.0];
     [bottomView addSubview:borderLine];
     
-    textView = [[UITextView alloc]initWithFrame:CGRectMake(0, 6, bottomView.frame.size.width-50, 30)];
+    textView = [[UITextView alloc]initWithFrame:CGRectMake(0, 6, bottomView.frame.size.width-50, 70)];
     textView.returnKeyType = UIReturnKeyDefault;
     textView.autocapitalizationType = UITextAutocapitalizationTypeWords;
     textView.autocorrectionType = UITextAutocorrectionTypeNo;
@@ -138,17 +161,19 @@
     textView.delegate = self;
     [bottomView addSubview:textView];
 //    UIViewContentModeCenter
-    UIButton *sendButton = [[UIButton alloc]initWithFrame:CGRectMake(bottomView.frame.size.width-50,6, 30, 30)];
+    UIButton *sendButton = [[UIButton alloc]initWithFrame:CGRectMake(bottomView.frame.size.width-50,20, 30, 30)];
     [sendButton setBackgroundImage:[UIImage imageNamed:@"send"] forState:UIControlStateNormal];
     sendButton.contentMode = UIViewContentModeScaleAspectFit;
     [sendButton addTarget:self action:@selector(sendButtonHandler:) forControlEvents:UIControlEventTouchUpInside];
     [bottomView addSubview:sendButton];
     [self.view addSubview:bottomView];
-    [self.view addSubview:subjectTextField];
+//    [self.view addSubview:subjectTextField];
 }
 
 -(void)sendButtonHandler:(id)sender
 {
+   
+    
     NSLog(@"Send Button Clicked");
 
     loadingView = [LoadingView loadingViewInView:self.view];
@@ -183,7 +208,8 @@
     networkHelper.serviceURLString = @"http://polycab.dotvik.com:8080/PushMessage/api/createChatThread";
     [networkHelper genericJSONPayloadRequestWith:sendSubjectData :self :@"sendSubjectData"];
     
-    
+    [textView resignFirstResponder];
+    textView.text = defaultTextViewText;
 }
 
 
@@ -286,15 +312,22 @@
         if ([[respondedObject objectForKey:@"status"] boolValue] == YES) {
             NSMutableDictionary *dict = [[NSMutableDictionary alloc]init];
             [dict setDictionary: [respondedObject valueForKey:@"responseData"]];
+            
+            [ContactList_DB createInstance : @"ContactList_DB_STORAGE" : true];
+            ContactList_DB *contactListStorage = [ContactList_DB getInstance];
+            
             [ChatThreadList_DB createInstance : @"ChatThread_DB_STORAGE" : true];
              ChatThreadList_DB *chatThreadListStorage = [ChatThreadList_DB getInstance];
             
-
+      NSMutableArray *contactListStorageData = [contactListStorage getContactDisplayName:@"False" :[dict valueForKey:@"to"]];
+            
+            ContactList_Object *obj = (ContactList_Object*) [contactListStorageData objectAtIndex:0];
                 ChatThreadList_Object* chatThreadList_Object = [[ChatThreadList_Object alloc] init];
                 chatThreadList_Object.chatThreadId = [[dict valueForKey:@"chatThreadId"] integerValue];
-                chatThreadList_Object.from =         [dict valueForKey:@"from"];
-                chatThreadList_Object.to =           [dict valueForKey:@"to"];
+                chatThreadList_Object.from =         [dict valueForKey:@"to"];
+                chatThreadList_Object.to =           [dict valueForKey:@"from"];
                 chatThreadList_Object.subject = subjectTextField.text;
+                chatThreadList_Object.displayName = obj.userName;
           
             NSString * timeStampValue = [[NSString stringWithFormat:@"%ld", (long)[[NSDate date] timeIntervalSince1970]]stringByAppendingString:@"000"];
             NSLog(@"Time Stamp Value == %@", timeStampValue);

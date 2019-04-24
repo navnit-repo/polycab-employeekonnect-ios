@@ -29,10 +29,13 @@
     NSString *defaultTextViewText;
     NetworkHelper *networkHelper;
     LoadingView *loadingView;
-    NSMutableArray *chatHistoryArray;
+//    NSMutableArray *chatHistoryArray;
     NSString *userId;
     NSString *isFromStr;
+    UITextView *acceptTextView;
 }
+@synthesize popupTextView;
+@synthesize nameLbltext;
 @synthesize acceptButtonOutlet;
 @synthesize chatStatus;
 @synthesize withChatPersonName;
@@ -40,6 +43,7 @@
 @synthesize chatRoomTableView;
 @synthesize subject;
 @synthesize bottomView;
+@synthesize chatHistoryArray;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -81,7 +85,7 @@
     [LayoutClass buttonLayout:self.acceptButtonOutlet forFontWeight:UIFontWeightBold];
     NSString *acceptButton = [[NSUserDefaults standardUserDefaults] valueForKey:@"Accept_Chat_Button"];
     
-    if (acceptButton==nil) {
+    if ([acceptButton isEqualToString:@"NO"]) {
         self.acceptButtonOutlet.userInteractionEnabled = NO;
         self.acceptButtonOutlet.hidden  =YES;
     }
@@ -96,17 +100,19 @@
     [LayoutClass setLayoutForIPhone6:self.chatRoomTableView];
     [LayoutClass setLayoutForIPhone6:self.bottomView];
 
-   // self.popupTextView.delegate = self;
+    self.popupTextView.delegate = self;
     chatRoomTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     chatRoomTableView.bounces = NO;
     
+    UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
+    [chatRoomTableView addGestureRecognizer:gestureRecognizer];
     [self setHeaderDetailsData];
 }
 -(void)setHeaderDetailsData
 {
     ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
     userId =[[clientVariables.CLIENT_USER_LOGIN userName] stringByAppendingString:@"@employee"];
-    self.nameLbl.text = withChatPersonName;
+    self.nameLbl.text = nameLbltext;
     self.subjectLbl.text = subject;
     
     
@@ -127,8 +133,10 @@
         ChatHistory_Object *obj = (ChatHistory_Object *)[chatHistoryArray objectAtIndex:chatHistoryArray.count-1];
         
         self.popupSubjectLbl.text  =subject;
-        if ([obj.from isEqualToString:[[clientVariables.CLIENT_USER_LOGIN userName] stringByAppendingString:@"@employee"]]) {
-             self.popupTextView.text  = obj.message;
+        NSString *ownUserId = [clientVariables.CLIENT_USER_LOGIN userName];
+        NSArray *array = [obj.from componentsSeparatedByString:@"@"];
+        if ([[array objectAtIndex:0] isEqualToString:ownUserId]) {
+           self.popupTextView.text  = obj.message;
         }
        
     }
@@ -201,9 +209,9 @@
     
     [acceptMessageData setValue:@"1" forKey:@"requestId"];
     NSMutableDictionary *requestData = [[NSMutableDictionary alloc]init];
-    [requestData setObject:chatThreadId forKey:@"chatThread"];
+    [requestData setObject:chatThreadId forKey:@"chatThreadId"];
     [requestData setObject:@"Accept" forKey:@"status"];
-    [requestData setObject:@"" forKey:@"closingMessage"];
+    [requestData setObject:popupTextView.text forKey:@"closingMessage"];
     
     [acceptMessageData setObject:requestData forKey:@"requestData"];
     
@@ -213,7 +221,7 @@
     [networkHelper genericJSONPayloadRequestWith:acceptMessageData :self :@"acceptMessageData"];
 }
 - (IBAction)acceptButtonHandler:(id)sender {
-
+    bottomView.hidden = YES;
     self.acceptButtonPopUpView.hidden  = NO;
 }
 
@@ -248,6 +256,7 @@
     networkHelper.serviceURLString = @"http://polycab.dotvik.com:8080/PushMessage/api/pushMessage";
     [networkHelper genericJSONPayloadRequestWith:sendMessageData :self :@"sendMessageData"];
     
+   
     
 }
 
@@ -273,14 +282,17 @@
             NSMutableArray *obj = [chatHistoryArray objectAtIndex:chatHistoryArray.count-1];
             
             self.popupSubjectLbl.text  =subject;
-            if ([[obj valueForKey:@"from"] isEqualToString:[[clientVariables.CLIENT_USER_LOGIN userName] stringByAppendingString:@"@employee"]]) {
-                self.popupTextView.text  = [obj valueForKey:@"message"];
+            NSString *ownUserId = [clientVariables.CLIENT_USER_LOGIN userName];
+            NSArray *array = [[obj valueForKey:@"from"] componentsSeparatedByString:@"@"];
+            if ([[array objectAtIndex:0] isEqualToString:ownUserId]) {
+                self.popupTextView.text  = [obj valueForKey:@"message"] ;
             }
             
+        
             
             [ChatHistory_DB createInstance : @"ChatHistory_DB_STORAGE" : true :[chatThreadId integerValue]];
             ChatHistory_DB *chatHistory_DBStorage = [ChatHistory_DB getInstance];
-             [chatHistory_DBStorage dropTable:@"ChatHistory_DB_STORAGE"];
+             //[chatHistory_DBStorage dropTable:@"ChatHistory_DB_STORAGE"];
             for(int i =0; i<[chatHistoryArray count];i++)
             {
                 ChatHistory_Object* chatHistory_Object = [[ChatHistory_Object alloc] init];
@@ -290,6 +302,8 @@
                 chatHistory_Object.message =[ NSString stringWithFormat:@"%@",[[chatHistoryArray objectAtIndex:i] valueForKey:@"message"]];
                 chatHistory_Object.messageDate =[ NSString stringWithFormat:@"%@",[[chatHistoryArray objectAtIndex:i] valueForKey:@"messageDate"]];
                 chatHistory_Object.messageType =[ NSString stringWithFormat:@"%@",[[chatHistoryArray objectAtIndex:i] valueForKey:@"messageType"]];
+                
+                chatHistory_Object.messageId =  [[[chatHistoryArray objectAtIndex:i] valueForKey:@"id"] integerValue] ;
                 [chatHistory_DBStorage insertDoc:chatHistory_Object];
                 
             }
@@ -324,26 +338,16 @@
             chatHistory_Object.message =[ NSString stringWithFormat:@"%@",textView.text];
             chatHistory_Object.messageDate =[ NSString stringWithFormat:@"%@",timeStampValue];
             chatHistory_Object.messageType =@"TEXT";
+            chatHistory_Object.messageId =[[dict valueForKey:@"serverMessageId"] integerValue] ;
             [chatHistory_DBStorage insertDoc:chatHistory_Object];
             
             NSMutableArray *chatHistoryStorageData = [chatHistory_DBStorage getRecentDocumentsData : @"False"];
             chatHistoryArray = [[NSMutableArray alloc]init];
             [chatHistoryArray addObjectsFromArray:chatHistoryStorageData];
             [chatRoomTableView reloadData];
-            
-//             ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
-//          //Pending
-//            NSTimeInterval timeStamp = [[NSDate date] timeIntervalSince1970];
-//            // NSTimeInterval is defined as double
-//            NSNumber *timeStampObj = [NSNumber numberWithDouble: timeStamp];
-//            NSMutableDictionary *dict = [[NSMutableDictionary alloc]init];
-//            [dict setObject:[[clientVariables.CLIENT_USER_LOGIN userName] stringByAppendingString:@"@employee"] forKey:@"from"];
-//            [dict setObject:textView.text forKey:@"message"];
-//            [dict setObject:timeStampObj forKey:@"messageDate"];
-//
-//            [chatHistoryArray addObject:dict];
-//             [chatRoomTableView reloadData];
-        
+            self.popupTextView.text =textView.text;
+            [textView resignFirstResponder];
+            textView.text = defaultTextViewText;
         }
        
         else
@@ -397,6 +401,9 @@
 #pragma -mark textview Delagate
 
 - (BOOL) textViewShouldBeginEditing:(UITextView *)textView {
+    if (textView.tag==10) {
+        acceptTextView = textView;
+    }
     if ([textView.text isEqualToString:defaultTextViewText]) {
         textView.text = @"";
     }
@@ -427,6 +434,9 @@
 
 -(void) textViewShouldEndEditing:(UITextView *)textView {
     
+    if (textView.tag==10) {
+        acceptTextView = nil;
+    }
     if(textView.text.length == 0) {
         textView.textColor = [UIColor lightGrayColor];
         textView.text = @"Type your message here.";
@@ -435,11 +445,16 @@
 }
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     self.acceptButtonPopUpView.hidden = YES;
+    bottomView.hidden = NO;
+    [popupTextView resignFirstResponder];
 }
 #pragma mark - keyboard movements
 - (void)keyboardWillShow:(NSNotification *)notification
 {
-   
+    if (acceptTextView!=nil) {
+        
+    }
+    else{
         CGSize keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
         
         [UIView animateWithDuration:0.3 animations:^{
@@ -447,7 +462,7 @@
             f.origin.y = -keyboardSize.height;
             self.view.frame = f;
         }];
-    
+    }
 }
 
 -(void)keyboardWillHide:(NSNotification *)notification
@@ -541,7 +556,11 @@
         ccell.messageLabel.text = obj.message;
     }
 }
-
+- (void) hideKeyboard {
+    [textView resignFirstResponder];
+ 
+   
+}
 -(void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
 }

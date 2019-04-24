@@ -16,4 +16,5 @@
 @synthesize message;
 @synthesize messageDate;
 @synthesize messageType;
+@synthesize messageId;
 @end

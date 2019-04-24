@@ -16,7 +16,11 @@ NS_ASSUME_NONNULL_BEGIN
     NSString *emailId;
     NSString *userId;
     NSString *name;
+    int isHidden;
+    NSString *userName;
 }
+@property NSString *userName;
+@property int isHidden;
 @property NSString *emailId;
 @property NSString *userId;
 @property NSString *name;

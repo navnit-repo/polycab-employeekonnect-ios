@@ -35,6 +35,8 @@ static ChatHistory_DB* DEFAULT_INSTANCE = 0;
     query = [query stringByAppendingString : @"message TEXT, "];
     query = [query stringByAppendingString : @"messageDate TEXT, "];
     query = [query stringByAppendingString : @"messageType TEXT, "];
+    query = [query stringByAppendingString : @"messageId INTEGER, "];
+    
     query =  [query stringByAppendingString : @"REC_TS DATETIME DEFAULT CURRENT_TIMESTAMP); "];     // adding Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
     
     char *errMsg;
@@ -90,8 +92,8 @@ static ChatHistory_DB* DEFAULT_INSTANCE = 0;
     
     NSString* query = @"INSERT INTO ";
     query =  [query stringByAppendingString : [self getTableName]];
-    query = [query stringByAppendingString : @"(chatThreadId, fromId, toId, message, messageDate, messageType) "];
-    query = [query stringByAppendingString : @"VALUES(:chatThreadId, :fromId, :toId, :message, :messageDate, :messageType);"];
+    query = [query stringByAppendingString : @"(chatThreadId, fromId, toId, message, messageDate, messageType, messageId) "];
+    query = [query stringByAppendingString : @"VALUES(:chatThreadId, :fromId, :toId, :message, :messageDate, :messageType , :messageId);"];
     
     sqlite3_stmt *statement = nil;
     if (sqlite3_prepare_v2([self sqlConnection], [query UTF8String], -1, &statement, nil) == SQLITE_OK)
@@ -109,7 +111,7 @@ static ChatHistory_DB* DEFAULT_INSTANCE = 0;
         sqlite3_bind_text(statement, sqlite3_bind_parameter_index(statement, ":messageDate"), [chatHistory_Object.messageDate UTF8String], chatHistory_Object.messageDate.length, nil);
         sqlite3_bind_text(statement, sqlite3_bind_parameter_index(statement, ":messageType"), [chatHistory_Object.messageType UTF8String], chatHistory_Object.messageType.length, nil);
         
-        
+         sqlite3_bind_int(statement, sqlite3_bind_parameter_index(statement, ":messageId"), chatHistory_Object.messageId);
         
         
         if (sqlite3_step(statement) == SQLITE_DONE)
@@ -128,10 +130,11 @@ static ChatHistory_DB* DEFAULT_INSTANCE = 0;
 -(NSMutableArray*)  getRecentDocumentsData : (NSString *)delete_stringFlag
 {
     NSMutableArray* list = [[NSMutableArray alloc] init];
-    NSString* query = @"SELECT chatThreadId,  fromId, toId, message, messageDate, messageType from ";
+    NSString* query = @"SELECT Distinct chatThreadId,  fromId, toId, message, messageDate, messageType , messageId from ";
 //    NSString *whereClause =[[[ @" where chatThreadId =" stringByAppendingString:@"'"]stringByAppendingString:[NSString stringWithFormat@"%@",chatThreatIdToRetrieveHistory]]stringByAppendingString:@"'"];
     NSString *whereClause = [@" where chatThreadId="stringByAppendingString:[NSString stringWithFormat:@"%d",chatThreatIdToRetrieveHistory]];
     query = [[[query stringByAppendingString : [self getTableName]]stringByAppendingString:whereClause]stringByAppendingString:@";"];
+    NSLog(@"%@",query);
     // NSString* query = [@"SELECT * from " stringByAppendingString:[self getTableName]];
     
     // query = [query stringByAppendingString : @" ;"];
@@ -173,7 +176,7 @@ static ChatHistory_DB* DEFAULT_INSTANCE = 0;
     
     chatHistory_Object.messageType  = [[NSString alloc] initWithUTF8String:(const char *)sqlite3_column_text(statement, 5)];
     
-    
+    chatHistory_Object.messageId  = sqlite3_column_int(statement, 6);
     return chatHistory_Object;
 }
 

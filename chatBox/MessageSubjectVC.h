@@ -13,7 +13,9 @@ NS_ASSUME_NONNULL_BEGIN
 @interface MessageSubjectVC : UIViewController<UITextViewDelegate,UITextFieldDelegate>
 {
     NSString *userIDUnique;
+    NSString *nameLblText;
 }
+@property NSString *nameLblText;
 @property NSString *userIDUnique;
 @end
 

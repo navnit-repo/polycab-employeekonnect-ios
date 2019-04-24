@@ -21,7 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property  NSString* contextId;
 @property  NSMutableArray* contactList;
 
-
+-(NSMutableArray*)  getContactDisplayName : (NSString *)delete_stringFlag :(NSString *)userID;
 -(void)dropTable :(NSString*) context;
 -(BOOL) createTable;
 + (void) createInstance : (NSString*) contextId :  (BOOL) isDefault;

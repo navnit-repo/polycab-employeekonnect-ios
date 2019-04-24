@@ -30,10 +30,11 @@ static ContactList_DB* DEFAULT_INSTANCE = 0;
     
     NSString* query = @"CREATE TABLE IF NOT EXISTS ";
     query =  [query stringByAppendingString : [self getTableName]];
-  //  query = [query stringByAppendingString : @"(KEY_ID INTEGER PRIMARY KEY AUTOINCREMENT, "];
-    query = [query stringByAppendingString : @"(emailId TEXT, "];
+    query = [query stringByAppendingString : @"(KEY_ID INTEGER PRIMARY KEY AUTOINCREMENT, "];
+    query = [query stringByAppendingString : @"emailId TEXT, "];
     query = [query stringByAppendingString : @"name TEXT, "];
     query = [query stringByAppendingString : @"userId TEXT, "];
+    query = [query stringByAppendingString : @"isHidden INTEGER, "];
     query =  [query stringByAppendingString : @"REC_TS DATETIME DEFAULT CURRENT_TIMESTAMP); "];     // adding Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
     
     char *errMsg;
@@ -89,8 +90,8 @@ static ContactList_DB* DEFAULT_INSTANCE = 0;
     
     NSString* query = @"INSERT INTO ";
     query =  [query stringByAppendingString : [self getTableName]];
-    query = [query stringByAppendingString : @"(emailId, name, userId) "];
-    query = [query stringByAppendingString : @"VALUES(:emailId, :name, :userId);"];
+    query = [query stringByAppendingString : @"(emailId, name, userId, isHidden) "];
+    query = [query stringByAppendingString : @"VALUES(:emailId, :name, :userId, :isHidden);"];
     
     sqlite3_stmt *statement = nil;
     if (sqlite3_prepare_v2([self sqlConnection], [query UTF8String], -1, &statement, nil) == SQLITE_OK)
@@ -100,6 +101,12 @@ static ContactList_DB* DEFAULT_INSTANCE = 0;
         //sqlite3_bind_int(statement, sqlite3_bind_parameter_index(statement, ":maxDocNo"), recentRequest.maxDocNo);
         sqlite3_bind_text(statement, sqlite3_bind_parameter_index(statement, ":userId"), [contactListObject.userId UTF8String], contactListObject.userId.length, nil);
         
+//        sqlite3_bind_int(statement, sqlite3_bind_parameter_index(statement, ":chatThreadId"), chatThreadList_Object.chatThreadId);
+        
+        sqlite3_bind_int(statement, sqlite3_bind_parameter_index(statement,":isHidden"), contactListObject.isHidden);
+        
+//        sqlite3_bind_text(statement, sqlite3_bind_parameter_index(statement, ":isHidden"), [contactListObject.isHidden UTF8String], contactListObject.isHidden.length, nil);
+//
         
         
         if (sqlite3_step(statement) == SQLITE_DONE)
@@ -121,7 +128,9 @@ static ContactList_DB* DEFAULT_INSTANCE = 0;
     NSMutableArray* list = [[NSMutableArray alloc] init];
     NSString* query = @"SELECT emailId, name, userId from ";
     query = [query stringByAppendingString : [self getTableName]];
-    
+    NSString *whereClause= @" Where isHidden = 0;";
+    query = [query stringByAppendingString:whereClause];
+    NSLog(@"%@",query);
     // query = [query stringByAppendingString : @" ;"];
     
     //query =[query stringByAppendingString : @" where KEY_DELETE = :id1 order by datetime(REC_TS) DESC;"];//code comment by me(tushar)
@@ -151,6 +160,46 @@ static ContactList_DB* DEFAULT_INSTANCE = 0;
     contactList_Object.name  = [[NSString alloc] initWithUTF8String:(const char *)sqlite3_column_text(statement, 1)];
     contactList_Object.userId  = [[NSString alloc] initWithUTF8String:(const char *)sqlite3_column_text(statement, 2)];
    
+    
+    return contactList_Object;
+}
+- (NSMutableArray *)getContactDisplayName:(NSString *)delete_stringFlag :(NSString*) userID
+{
+    NSMutableArray* list = [[NSMutableArray alloc] init];
+    NSString* query = @"SELECT emailId, name from ";
+    query = [query stringByAppendingString : [self getTableName]];
+    NSString *whereClause= @" Where userId ='";
+    whereClause = [[whereClause stringByAppendingString:userID]stringByAppendingString:@"';"];
+    query = [query stringByAppendingString:whereClause];
+    NSLog(@"%@",query);
+    // query = [query stringByAppendingString : @" ;"];
+    
+    //query =[query stringByAppendingString : @" where KEY_DELETE = :id1 order by datetime(REC_TS) DESC;"];//code comment by me(tushar)
+    
+    
+    sqlite3_stmt *statement = nil;
+    if (sqlite3_prepare_v2([self sqlConnection], [query UTF8String], -1, &statement, nil) == SQLITE_OK)
+    {
+        sqlite3_bind_text(statement, sqlite3_bind_parameter_index(statement, ":id1"), [delete_stringFlag UTF8String], delete_stringFlag.length, nil);
+        while(sqlite3_step(statement) == SQLITE_ROW) {
+            [list addObject: [self retrieveContactName : statement]];
+        }
+        sqlite3_finalize(statement);
+        [self close];
+    }
+    else{
+        NSLog(@"Error: Property Message '%s'.", sqlite3_errmsg([self sqlConnection]));
+    }
+    return list;
+}
+- (ContactList_Object*) retrieveContactName : (sqlite3_stmt *) statement {
+    ContactList_Object* contactList_Object = [[ContactList_Object alloc] init];
+    
+    //    contactList_Object.KEY_ID = sqlite3_column_int(statement, 0);
+    contactList_Object.emailId = [[NSString alloc] initWithUTF8String:(const char *)sqlite3_column_text(statement, 0)];
+    contactList_Object.userName  = [[NSString alloc] initWithUTF8String:(const char *)sqlite3_column_text(statement, 1)];
+  
+    
     
     return contactList_Object;
 }
