@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
     NSMutableArray *chatHistoryArray;
     NSString *nameLbltext;
 }
+@property (weak, nonatomic) IBOutlet UIView *headerView;
 @property NSString *nameLbltext;
 @property NSMutableArray *chatHistoryArray;
 @property (weak, nonatomic) IBOutlet UIButton *popupAcceptButtonOulate;

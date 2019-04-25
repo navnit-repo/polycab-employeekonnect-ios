@@ -10,11 +10,16 @@
 #import "PageViewController.h"
 #import "LogInVC.h"
 #import "SWRevealViewController.h"
+#import <UserNotifications/UserNotifications.h>
+#import "ChatHistory_Object.h"
+extern ChatHistory_Object *puchNotifiactionChatHistory_Object;
 extern CGFloat deviceWidthRation;
 extern CGFloat deviceHeightRation;
 extern CGFloat bottomBarHeight;
+extern BOOL ChatBoxPushNotifiactionFlag;
+extern BOOL ChatRoomPushNotifiactionFlag;
 extern BOOL regIDCheck;
-@interface DVAppDelegate : UIResponder <UIApplicationDelegate, HttpEventListener>
+@interface DVAppDelegate : UIResponder <UIApplicationDelegate, HttpEventListener,UNUserNotificationCenterDelegate>
 {
      NSString *launchUrlString;
 }

@@ -548,6 +548,7 @@
 		90FA56DA17D727B3002B7601 /* SearchViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 90FA56D717D727B3002B7601 /* SearchViewController.h */; };
 		90FA56DB17D727B3002B7601 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90FA56D817D727B3002B7601 /* SearchViewController.m */; };
 		90FA56DC17D727B3002B7601 /* SearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90FA56D917D727B3002B7601 /* SearchViewController.xib */; };
+		F01549C2227065F8001570BE /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F01549C1227065F7001570BE /* UserNotifications.framework */; };
 		F01D9C0B21A3F7C200D41B2A /* PaymentOutstandingReportView.h in Headers */ = {isa = PBXBuildFile; fileRef = F01D9C0921A3F7C200D41B2A /* PaymentOutstandingReportView.h */; };
 		F01D9C0C21A3F7C200D41B2A /* PaymentOutstandingReportView.m in Sources */ = {isa = PBXBuildFile; fileRef = F01D9C0A21A3F7C200D41B2A /* PaymentOutstandingReportView.m */; };
 		F01D9C1321A4016F00D41B2A /* PaymentOutstandingTabbularSection.h in Headers */ = {isa = PBXBuildFile; fileRef = F01D9C1121A4016F00D41B2A /* PaymentOutstandingTabbularSection.h */; };
@@ -1042,6 +1043,19 @@
 		F0FE2BA61F7141A600D8FCEF /* DivisionVC.h in Headers */ = {isa = PBXBuildFile; fileRef = F0FE2BA41F7141A600D8FCEF /* DivisionVC.h */; };
 		F0FE2BA71F7141A600D8FCEF /* DivisionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F0FE2BA51F7141A600D8FCEF /* DivisionVC.m */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		F01549D522719142001570BE /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 8;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		38A6BFE81EFD1D3F00537D62 /* ImageUploadFormViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageUploadFormViewController.h; sourceTree = "<group>"; };
@@ -1671,6 +1685,7 @@
 		90FA56D817D727B3002B7601 /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SearchViewController.m; path = UITableViewCell/SearchViewController.m; sourceTree = "<group>"; };
 		90FA56D917D727B3002B7601 /* SearchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SearchViewController.xib; path = UITableViewCell/SearchViewController.xib; sourceTree = "<group>"; };
 		9D69B9DC1A317394B132FD86 /* Pods_XMWClient.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_XMWClient.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F01549C1227065F7001570BE /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/UserNotifications.framework; sourceTree = DEVELOPER_DIR; };
 		F01D9C0921A3F7C200D41B2A /* PaymentOutstandingReportView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PaymentOutstandingReportView.h; sourceTree = "<group>"; };
 		F01D9C0A21A3F7C200D41B2A /* PaymentOutstandingReportView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PaymentOutstandingReportView.m; sourceTree = "<group>"; };
 		F01D9C1121A4016F00D41B2A /* PaymentOutstandingTabbularSection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PaymentOutstandingTabbularSection.h; sourceTree = "<group>"; };
@@ -2171,6 +2186,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F01549C2227065F8001570BE /* UserNotifications.framework in Frameworks */,
 				F0B2FB5221885103006A7C6B /* MapKit.framework in Frameworks */,
 				F07510B61FCD458300586EBC /* MediaPlayer.framework in Frameworks */,
 				F07510B41FCD457000586EBC /* libiconv.2.4.0.tbd in Frameworks */,
@@ -3142,6 +3158,7 @@
 		9092BB281749FB9B00320B1C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F01549C1227065F7001570BE /* UserNotifications.framework */,
 				F0B2FB5121885103006A7C6B /* MapKit.framework */,
 				F07510B51FCD458300586EBC /* MediaPlayer.framework */,
 				F07510B31FCD457000586EBC /* libiconv.2.4.0.tbd */,
@@ -4650,6 +4667,7 @@
 				90F47D661796A1BB00C6B76C /* Headers */,
 				D26F507405F90DB31C36D692 /* [CP] Embed Pods Frameworks */,
 				85D831681A9F94EB00C9ACBB /* Fabric Script */,
+				F01549D522719142001570BE /* Embed App Extensions */,
 			);
 			buildRules = (
 			);

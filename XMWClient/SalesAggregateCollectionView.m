@@ -151,7 +151,7 @@
     [ftdPost setAdapterId:@"DOT_REPORT_CUSTOMER_WISE_SALE"];
     [ftdPost setAdapterType:@"CLASSLOADER"];
     [ftdPost setModuleId:AppConst_MOBILET_ID_DEFAULT];
-    
+    [ftdPost setDocDesc:@"FTD"];
     NSMutableDictionary *sendData = [[NSMutableDictionary alloc]init];
     [sendData setObject:@"" forKey:@"CUSTOMER_ACCOUNT"];
     [sendData setObject:fromDate forKey:@"FROM_DATE"];
@@ -224,7 +224,7 @@
     [mtdPost setAdapterId:@"DOT_REPORT_CUSTOMER_WISE_SALE"];
     [mtdPost setAdapterType:@"CLASSLOADER"];
     [mtdPost setModuleId:AppConst_MOBILET_ID_DEFAULT];
-    
+    [mtdPost setDocDesc:@"MTD"];
     NSMutableDictionary *sendData = [[NSMutableDictionary alloc]init];
     [sendData setObject:@"" forKey:@"CUSTOMER_ACCOUNT"];
     [sendData setObject:fromDate forKey:@"FROM_DATE"];
@@ -328,7 +328,7 @@
     [ytdPost setAdapterId:@"DOT_REPORT_CUSTOMER_WISE_SALE"];
     [ytdPost setAdapterType:@"CLASSLOADER"];
     [ytdPost setModuleId:AppConst_MOBILET_ID_DEFAULT];
-    
+    [ytdPost setDocDesc:@"YTD"];
     NSMutableDictionary *sendData = [[NSMutableDictionary alloc]init];
     [sendData setObject:@"" forKey:@"CUSTOMER_ACCOUNT"];
     [sendData setObject:fromDate forKey:@"FROM_DATE"];
@@ -370,7 +370,7 @@
     [lftdPost setAdapterId:@"DOT_REPORT_CUSTOMER_WISE_SALE"];
     [lftdPost setAdapterType:@"CLASSLOADER"];
     [lftdPost setModuleId:AppConst_MOBILET_ID_DEFAULT];
-    
+    [lftdPost setDocDesc:@"LFTD"];
     NSMutableDictionary *sendData = [[NSMutableDictionary alloc]init];
     [sendData setObject:@"" forKey:@"CUSTOMER_ACCOUNT"];
     [sendData setObject:LFTD_From_Date forKey:@"FROM_DATE"];

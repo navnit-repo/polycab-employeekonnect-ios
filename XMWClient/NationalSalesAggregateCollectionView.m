@@ -72,7 +72,7 @@
     [ftdPost setAdapterId:AppConst_EMPLOYEE_SALES_AGGREGATE_CARD_DOC_ID];
     [ftdPost setAdapterType:@"CLASSLOADER"];
     [ftdPost setModuleId:AppConst_MOBILET_ID_DEFAULT];
-    
+    [ftdPost setDocDesc:@"FTD"];
     NSMutableDictionary *sendData = [[NSMutableDictionary alloc]init];
     [sendData setObject:@"" forKey:@"CUSTOMER_ACCOUNT"];
     [sendData setObject:fromDate forKey:@"FROM_DATE"];
@@ -145,7 +145,7 @@
     [mtdPost setAdapterId:AppConst_EMPLOYEE_SALES_AGGREGATE_CARD_DOC_ID];
     [mtdPost setAdapterType:@"CLASSLOADER"];
     [mtdPost setModuleId:AppConst_MOBILET_ID_DEFAULT];
-    
+    [mtdPost setDocDesc:@"MTD"];
     NSMutableDictionary *sendData = [[NSMutableDictionary alloc]init];
     [sendData setObject:@"" forKey:@"CUSTOMER_ACCOUNT"];
     [sendData setObject:fromDate forKey:@"FROM_DATE"];
@@ -250,7 +250,8 @@
     [ytdPost setAdapterId:AppConst_EMPLOYEE_SALES_AGGREGATE_CARD_DOC_ID];
     [ytdPost setAdapterType:@"CLASSLOADER"];
     [ytdPost setModuleId:AppConst_MOBILET_ID_DEFAULT];
-    
+    [ytdPost setDocDesc:@"YTD"];
+
     NSMutableDictionary *sendData = [[NSMutableDictionary alloc]init];
     [sendData setObject:@"" forKey:@"CUSTOMER_ACCOUNT"];
     [sendData setObject:fromDate forKey:@"FROM_DATE"];
@@ -292,7 +293,7 @@
     [lftdPost setAdapterId:AppConst_EMPLOYEE_SALES_AGGREGATE_CARD_DOC_ID];
     [lftdPost setAdapterType:@"CLASSLOADER"];
     [lftdPost setModuleId:AppConst_MOBILET_ID_DEFAULT];
-    
+    [lftdPost setDocDesc:@"LFTD"];
     NSMutableDictionary *sendData = [[NSMutableDictionary alloc]init];
     [sendData setObject:@"" forKey:@"CUSTOMER_ACCOUNT"];
     [sendData setObject:LFTD_From_Date forKey:@"FROM_DATE"];

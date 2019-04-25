@@ -41,10 +41,14 @@
 #import "ChatThreadList_DB.h"
 #import "ContactList_DB.h"
 #import "ContactList_Object.h"
+#import <UserNotifications/UserNotifications.h>
 CGFloat deviceWidthRation;
 CGFloat deviceHeightRation;
 CGFloat bottomBarHeight;
+BOOL ChatBoxPushNotifiactionFlag;
+BOOL ChatRoomPushNotifiactionFlag;
 BOOL regIDCheck;
+ChatHistory_Object *puchNotifiactionChatHistory_Object;
 static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
 
 #define LOCAL_PLAY_ALERT_TAG 9001
@@ -85,8 +89,33 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-  
-   
+
+//    if ([application respondsToSelector:@selector(isRegisteredForRemoteNotifications)])
+//    {
+//        UNUserNotificationCenter* center = [UNUserNotificationCenter currentNotificationCenter];
+//        center.delegate = self;
+//        [center requestAuthorizationWithOptions:(UNAuthorizationOptionAlert + UNAuthorizationOptionSound + UNAuthorizationOptionBadge)
+//                              completionHandler:^(BOOL granted, NSError * _Nullable error) {
+//                                  if (granted) {
+//                                      NSLog(@"Notifications permission granted.");
+//                                  }
+//                                  else
+//                                  {
+//                                      NSLog(@"Notifications permission denied because: %@.",error.localizedDescription);
+//                                  }
+//                               
+//                                  
+//                                  // Enable or disable features based on authorization.
+//                              }];
+//        // IOS8 and 9 was:
+//        /*
+//         [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
+//         [application registerForRemoteNotifications];
+//         */
+//    }
+
+    
+    
     
     [NSThread sleepForTimeInterval:3.0];
     [Crashlytics startWithAPIKey:@"cc9f075af7ebdd5493d67c5fc8b720e55f346463"];
@@ -277,28 +306,10 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
                     chatHistory_Object.messageType =[ NSString stringWithFormat:@"%@", [responsedict valueForKey:@"messageType"]];
                     chatHistory_Object.messageId =  [[responsedict valueForKey:@"messageId"] integerValue] ;
                     [chatHistory_DBStorage insertDoc:chatHistory_Object];
-                    //
-                 //   NSMutableArray *chatHistoryStorageData = [chatHistory_DBStorage getRecentDocumentsData : @"False"];
-                    
-                    
-                    
-//                    UIViewController *root;
-//                    root = [[[[UIApplication sharedApplication]windows]objectAtIndex:0]rootViewController];
-//                    SWRevealViewController *reveal = (SWRevealViewController*)root;
-//                    UINavigationController *check =(UINavigationController*)reveal.frontViewController;
-//                    NSArray* viewsList = check.viewControllers;
-//                    UIViewController *checkView = (UIViewController *) [viewsList objectAtIndex:viewsList.count - 1];
-//
-//                    if ([checkView isKindOfClass:[ChatRoomsVC class]]) {
-//                        // do this
-//                        ChatRoomsVC *vc = (ChatRoomsVC*) checkView;
-//                        vc.chatHistoryArray = [[NSMutableArray alloc]init];
-//                        [vc.chatHistoryArray addObjectsFromArray:chatHistoryStorageData];
-//                        [vc.chatRoomTableView reloadData];
-//
-//                    } else {
-//                        // do nothing
-//                    }
+                    puchNotifiactionChatHistory_Object = chatHistory_Object;
+                
+                    ChatRoomPushNotifiactionFlag = YES;
+
                 }
                 
                 else if ([[mainDict valueForKey:@"NOTIFY_CALLNAME"] isEqualToString:@"NEW_THREAD"]) {
@@ -347,26 +358,8 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
                     chatThreadList_Object.status = @"";
                     
                     [chatThreadListStorage insertDoc:chatThreadList_Object];
-                    
-                   // NSMutableArray *chatThreadListStorageData = [chatThreadListStorage getRecentDocumentsData : @"False"];
-                    
-//                    UIViewController *root;
-//                    root = [[[[UIApplication sharedApplication]windows]objectAtIndex:0]rootViewController];
-//                    SWRevealViewController *reveal = (SWRevealViewController*)root;
-//                    UINavigationController *check =(UINavigationController*)reveal.frontViewController;
-//                    NSArray* viewsList = check.viewControllers;
-//                    UIViewController *checkView = (UIViewController *) [viewsList objectAtIndex:viewsList.count - 1];
-//
-//                    if ([checkView isKindOfClass:[ChatBoxVC class]]) {
-//                        // do this
-//                        ChatBoxVC *vc = (ChatBoxVC*) checkView;
-//                        vc.chatThreadDict = [[NSMutableArray alloc]init];
-//                        [vc.chatThreadDict addObjectsFromArray:chatThreadListStorageData];
-//                        [vc.threadListTableView reloadData];
-//
-//                    } else {
-//                        // do nothing
-//                    }
+
+                    ChatBoxPushNotifiactionFlag = YES;
                 }
                 
                 
@@ -383,32 +376,8 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
                     chatThreadList_Object.chatThreadId =[[responsedict valueForKey:@"chatThreadId"] integerValue] ;
                     chatThreadList_Object.status =[responsedict valueForKey:@"status"];
                     [chatThreadListStorage updateDoc:chatThreadList_Object];
-                  //  NSMutableArray *chatThreadListStorageData = [chatThreadListStorage getRecentDocumentsData : @"False"];
-                    
-//                    UIViewController *root;
-//                    root = [[[[UIApplication sharedApplication]windows]objectAtIndex:0]rootViewController];
-//                    SWRevealViewController *reveal = (SWRevealViewController*)root;
-//                    UINavigationController *check =(UINavigationController*)reveal.frontViewController;
-//                    NSArray* viewsList = check.viewControllers;
-//                    UIViewController *checkView = (UIViewController *) [viewsList objectAtIndex:viewsList.count - 1];
-//
-//                    if ([checkView isKindOfClass:[ChatBoxVC class]]) {
-//                        // do this
-//                        ChatBoxVC *vc = (ChatBoxVC*) checkView;
-//                        vc.chatThreadDict = [[NSMutableArray alloc]init];
-//                        [vc.chatThreadDict addObjectsFromArray:chatThreadListStorageData];
-//                        [vc.threadListTableView reloadData];
-//
-//                    }
-//                    else if ([checkView isKindOfClass:[ChatRoomsVC class]])
-//                    { ChatRoomsVC *vc = (ChatRoomsVC*) checkView;
-//                        if ([vc.chatThreadId integerValue]== [[responsedict valueForKey:@"chatThreadId"] integerValue]) {
-//                            [vc.bottomView removeFromSuperview];
-//                        }
-//                    }
-//                    else {
-//                        // do nothing
-//                    }
+
+                    ChatBoxPushNotifiactionFlag = YES;
                     
                     
                 }
@@ -443,7 +412,7 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
+    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 }
 
@@ -1027,4 +996,26 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
     
 }
 
+
+
+
+#pragma  - mark UNUserNotificationCenter methods
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center openSettingsForNotification:(UNNotification *)notification
+{
+
+}
+
+
+//Called when a notification is delivered to a foreground app.
+-(void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions options))completionHandler{
+    NSLog(@"User Info : %@",notification.request.content.userInfo);
+    completionHandler(UNAuthorizationOptionSound | UNAuthorizationOptionAlert | UNAuthorizationOptionBadge);
+}
+
+//Called to let your app know which action was selected by the user for a given notification.
+-(void)userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void(^)())completionHandler{
+    NSLog(@"User Info : %@",response.notification.request.content.userInfo);
+    [self application:self didReceiveRemoteNotification:response.notification.request.content.userInfo];
+    completionHandler();
+}
 @end

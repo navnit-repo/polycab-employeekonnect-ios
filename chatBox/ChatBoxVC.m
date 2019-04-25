@@ -21,6 +21,7 @@
 #import "ChatThreadList_DB.h"
 #import "ContactList_DB.h"
 #import "ContactList_Object.h"
+#import "ChatHistory_Object.h"
 @interface ChatBoxVC ()
 
 @end
@@ -38,7 +39,108 @@
     [self drawHeaderItem];
     [self contactListNetworkCall];
     [self initializeView];
+ //  [self performSelector:@selector(historyCheck) withObject:nil afterDelay:0.5];
     // Do any additional setup after loading the view from its nib.
+}
+
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    if (ChatBoxPushNotifiactionFlag == YES) {
+//        ChatBoxPushNotifiactionFlag = NO;
+        [self performSelector:@selector(pushHandling) withObject:nil afterDelay:0.5];
+    }
+    else if (ChatRoomPushNotifiactionFlag== YES)
+    {
+//        ChatRoomPushNotifiactionFlag= NO;
+ [self performSelector:@selector(pushHandling) withObject:nil afterDelay:0.5];
+    }
+    // [self performSelector:@selector(pushHandling) withObject:nil afterDelay:0.5];
+}
+-(void)historyCheck
+{
+     ChatHistory_Object* chatHistory_Object = (ChatHistory_Object*) [[NSUserDefaults standardUserDefaults ] objectForKey:@"CHATHISTORY_OBJECT"];
+     ChatThreadList_Object *obj;
+    UITableViewCell *cell = [(UITableViewCell *) self.view viewWithTag:chatHistory_Object.chatThreadId];
+    NSIndexPath *index = [self.threadListTableView indexPathForCell:cell];
+    NSLog(@"%i", index.row);
+    obj = (ChatThreadList_Object *)[chatThreadDict objectAtIndex:index.row];
+    
+    ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
+    NSString *ownUserId = [clientVariables.CLIENT_USER_LOGIN userName];
+    NSString *parseId= @"";// for get username from contact db
+    NSArray *array = [obj.from componentsSeparatedByString:@"@"];
+    if ([[array objectAtIndex:0] isEqualToString:ownUserId]) {
+        parseId =obj.to;
+    }
+    else{
+        parseId =obj.from;
+    }
+    NSArray *array2 = [parseId componentsSeparatedByString:@"@"];//// for accept button check.
+    if ([[array2 objectAtIndex:1] isEqualToString:@"employee"]) {
+        [[NSUserDefaults standardUserDefaults] setObject:@"NO" forKey:@"Accept_Chat_Button"];
+    }
+    else
+    {
+        [[NSUserDefaults standardUserDefaults] setObject:@"YES" forKey:@"Accept_Chat_Button"];
+    }
+    
+    // ChatThreadList_Object *obj = (ChatThreadList_Object *)[chatThreadDict objectAtIndex:indexPath.row];
+    ChatRoomsVC *vc = [[ChatRoomsVC alloc]init];
+    vc.subject =obj.subject;
+    vc.withChatPersonName = parseId;
+    vc.chatThreadId =[NSString stringWithFormat:@"%d",obj.chatThreadId];
+    vc.chatStatus = obj.status;
+    vc.nameLbltext = obj.displayName;
+    [[self navigationController ] pushViewController:vc animated:YES];
+}
+
+-(void)pushHandling
+{
+    ChatThreadList_Object *obj;
+    if (ChatBoxPushNotifiactionFlag == YES) {
+        ChatBoxPushNotifiactionFlag = NO;
+      obj = (ChatThreadList_Object *)[chatThreadDict objectAtIndex:0];
+    }
+    else if (ChatRoomPushNotifiactionFlag== YES)
+    {
+        ChatRoomPushNotifiactionFlag= NO;
+        
+        ChatHistory_Object* chatHistory_Object = (ChatHistory_Object*) puchNotifiactionChatHistory_Object;
+        
+        UITableViewCell *cell = [(UITableViewCell *) self.view viewWithTag:chatHistory_Object.chatThreadId];
+        NSIndexPath *index = [self.threadListTableView indexPathForCell:cell];
+        NSLog(@"%i", index.row);
+        obj = (ChatThreadList_Object *)[chatThreadDict objectAtIndex:index.row];
+    }
+ 
+    ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
+    NSString *ownUserId = [clientVariables.CLIENT_USER_LOGIN userName];
+    NSString *parseId= @"";// for get username from contact db
+    NSArray *array = [obj.from componentsSeparatedByString:@"@"];
+    if ([[array objectAtIndex:0] isEqualToString:ownUserId]) {
+        parseId =obj.to;
+    }
+    else{
+        parseId =obj.from;
+    }
+    NSArray *array2 = [parseId componentsSeparatedByString:@"@"];//// for accept button check.
+    if ([[array2 objectAtIndex:1] isEqualToString:@"employee"]) {
+        [[NSUserDefaults standardUserDefaults] setObject:@"NO" forKey:@"Accept_Chat_Button"];
+    }
+    else
+    {
+        [[NSUserDefaults standardUserDefaults] setObject:@"YES" forKey:@"Accept_Chat_Button"];
+    }
+    
+    // ChatThreadList_Object *obj = (ChatThreadList_Object *)[chatThreadDict objectAtIndex:indexPath.row];
+    ChatRoomsVC *vc = [[ChatRoomsVC alloc]init];
+    vc.subject =obj.subject;
+    vc.withChatPersonName = parseId;
+    vc.chatThreadId =[NSString stringWithFormat:@"%d",obj.chatThreadId];
+    vc.chatStatus = obj.status;
+    vc.nameLbltext = obj.displayName;
+    [[self navigationController ] pushViewController:vc animated:YES];
 }
 -(void)initializeView
 {
@@ -53,6 +155,7 @@
   
 //    [self setHeaderDetailsData];
 }
+
 -(void)contactListNetworkCall
 {
     [ContactList_DB createInstance : @"ContactList_DB_STORAGE" : true];
@@ -199,7 +302,7 @@
         }
         else
         {
-            UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"" message:[[respondedObject valueForKey:@"responseData"] valueForKey:@"displayMessage"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil , nil];
+            UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"" message:[[respondedObject valueForKey:@"errorData"] valueForKey:@"displayMessage"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil , nil];
             [myAlertView show];
         }
         
@@ -254,7 +357,7 @@
         }
         else
         {
-            UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"" message:[[respondedObject valueForKey:@"responseData"] valueForKey:@"displayMessage"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil , nil];
+            UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"" message:[[respondedObject valueForKey:@"errorData"] valueForKey:@"displayMessage"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil , nil];
             [myAlertView show];
         }
     }
@@ -350,11 +453,11 @@
         cell.tag = obj.chatThreadId;
         
         if ([obj.status isEqualToString:@"Accept"] || [obj.status isEqualToString:@"Close"]) {
-            cell.backgroundColor = [UIColor colorWithRed:230.0f/255 green:230.0f/255 blue:230.0f/255 alpha:1.0];
-        }
-
+            cell.subjectLbl.textColor    =[UIColor colorWithRed:211.0f/255 green:211.0f/255 blue:211.0f/255 alpha:1.0];
+            cell.chatPersonLbl.textColor =[UIColor colorWithRed:211.0f/255 green:211.0f/255 blue:211.0f/255 alpha:1.0];
+            cell.timeStampLbl.textColor  =[UIColor colorWithRed:211.0f/255 green:211.0f/255 blue:211.0f/255 alpha:1.0];
         
-    //}
+    }
     return cell;
 }
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath

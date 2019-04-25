@@ -35,6 +35,8 @@
 #import "OverDueCollectionView.h"
 #import "NationalDashboardVC.h"
 #import "ChatBoxVC.h"
+#import "ChatRoomsVC.h"
+#import "ChatHistory_Object.h"
 #define TAG_LOGOUT_DIALOG 1000
 @interface DashBoardVC ()
 @end
@@ -102,8 +104,66 @@
 
     
     [self fetchPendingNotifications];
+    
 }
-
+- (void)viewWillAppear:(BOOL)animated
+{
+    if (ChatBoxPushNotifiactionFlag == YES) {
+        ChatBoxVC *vc = [[ChatBoxVC alloc]init];
+        UIViewController *root;
+        root = [[[[UIApplication sharedApplication]windows]objectAtIndex:0]rootViewController];
+        SWRevealViewController *reveal = (SWRevealViewController*)root;
+        [(UINavigationController*)reveal.frontViewController pushViewController:vc animated:YES];
+    }
+    else if (ChatRoomPushNotifiactionFlag== YES)
+    {
+        ChatBoxVC *vc = [[ChatBoxVC alloc]init];
+        UIViewController *root;
+        root = [[[[UIApplication sharedApplication]windows]objectAtIndex:0]rootViewController];
+        SWRevealViewController *reveal = (SWRevealViewController*)root;
+        [(UINavigationController*)reveal.frontViewController pushViewController:vc animated:YES];
+//        ChatRoomPushNotifiactionFlag=NO;
+//        ChatHistory_Object *obj = (ChatHistory_Object*) [NSUserDefaults valueForKey:@"CHATHISTORY_OBJECT"];
+//        //CHATHISTORY_OBJECT
+//
+////        ChatThreadList_Object *obj = (ChatThreadList_Object *)[chatThreadDict objectAtIndex:indexPath.row];
+//        ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
+//        NSString *ownUserId = [clientVariables.CLIENT_USER_LOGIN userName];
+//        NSString *parseId= @"";// for get username from contact db
+//        NSArray *array = [obj.from componentsSeparatedByString:@"@"];
+//        if ([[array objectAtIndex:0] isEqualToString:ownUserId]) {
+//            parseId =obj.to;
+//        }
+//        else{
+//            parseId =obj.from;
+//        }
+//        NSArray *array2 = [parseId componentsSeparatedByString:@"@"];//// for accept button check.
+//        if ([[array2 objectAtIndex:1] isEqualToString:@"employee"]) {
+//            [[NSUserDefaults standardUserDefaults] setObject:@"NO" forKey:@"Accept_Chat_Button"];
+//        }
+//        else
+//        {
+//            [[NSUserDefaults standardUserDefaults] setObject:@"YES" forKey:@"Accept_Chat_Button"];
+//        }
+//
+////        // ChatThreadList_Object *obj = (ChatThreadList_Object *)[chatThreadDict objectAtIndex:indexPath.row];
+////        ChatRoomsVC *vc = [[ChatRoomsVC alloc]init];
+////        vc.subject =obj.subject;
+////        vc.withChatPersonName = parseId;
+////        vc.chatThreadId =[NSString stringWithFormat:@"%d",obj.chatThreadId];
+////        vc.chatStatus = obj.status;
+////        vc.nameLbltext = obj.displayName;
+//
+//
+//        ChatRoomsVC *vc = [[ChatRoomsVC alloc]init];
+//
+//        UIViewController *root;
+//        root = [[[[UIApplication sharedApplication]windows]objectAtIndex:0]rootViewController];
+//
+//        SWRevealViewController *reveal = (SWRevealViewController*)root;
+//        [(UINavigationController*)reveal.frontViewController pushViewController:vc animated:YES];
+    }
+}
 -(void) fetchPendingNotifications
 {
     NSString *bundleIdentifier =   [[NSBundle mainBundle] bundleIdentifier];

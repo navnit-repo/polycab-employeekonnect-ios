@@ -15,6 +15,7 @@
                 <outlet property="acceptButtonPopUpView" destination="zkd-4q-2A5" id="rW5-IA-8ki"/>
                 <outlet property="bottomView" destination="4bB-C0-XLf" id="ZSu-bL-Ms3"/>
                 <outlet property="chatRoomTableView" destination="bFq-Ra-rqH" id="pmD-n2-Pbb"/>
+                <outlet property="headerView" destination="17c-mY-CA0" id="P4U-Qk-Yb2"/>
                 <outlet property="lineView1" destination="kOs-d7-Cvb" id="tci-Qi-YM5"/>
                 <outlet property="lineView2" destination="ayb-ji-30q" id="RUY-7Z-lfX"/>
                 <outlet property="nameLbl" destination="cbh-Yy-0tl" id="mba-co-QnR"/>

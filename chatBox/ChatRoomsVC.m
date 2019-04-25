@@ -34,6 +34,7 @@
     NSString *isFromStr;
     UITextView *acceptTextView;
 }
+@synthesize headerView;
 @synthesize popupTextView;
 @synthesize nameLbltext;
 @synthesize acceptButtonOutlet;
@@ -307,14 +308,14 @@
                 [chatHistory_DBStorage insertDoc:chatHistory_Object];
                 
             }
-            NSMutableArray *chatHistoryStorageData = [chatHistory_DBStorage getRecentDocumentsData : @"False"];
+            NSMutableArray *chatHistoryStorageData = [chatHistory_DBStorage getRecentDocumentsData : @"True"];
             chatHistoryArray = [[NSMutableArray alloc]init];
             [chatHistoryArray addObjectsFromArray:chatHistoryStorageData];
             [chatRoomTableView reloadData];
         }
         else
         {
-            UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"" message:[[respondedObject valueForKey:@"responseData"] valueForKey:@"displayMessage"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil , nil];
+            UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"" message:[[respondedObject valueForKey:@"errorData"] valueForKey:@"displayMessage"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil , nil];
             [myAlertView show];
         }
     }
@@ -352,7 +353,7 @@
        
         else
         {
-            UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"" message:[[respondedObject valueForKey:@"responseData"] valueForKey:@"displayMessage"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil , nil];
+            UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"" message:[[respondedObject valueForKey:@"errorData"] valueForKey:@"displayMessage"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil , nil];
             [myAlertView show];
         }
     }
@@ -382,7 +383,7 @@
         }
         else
         {
-                UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"" message:[[respondedObject valueForKey:@"responseData"] valueForKey:@"displayMessage"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil , nil];
+                UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"" message:[[respondedObject valueForKey:@"errorData"] valueForKey:@"displayMessage"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil , nil];
     [myAlertView show];
 
          }
@@ -399,6 +400,16 @@
 
 
 #pragma -mark textview Delagate
+//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+//{
+//    return headerView.frame.size.height *deviceHeightRation;
+//}
+//-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+//{
+//    UIView *v = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+//    v.backgroundColor = [UIColor redColor];
+//    return  v;
+//}
 
 - (BOOL) textViewShouldBeginEditing:(UITextView *)textView {
     if (textView.tag==10) {
@@ -452,7 +463,11 @@
 - (void)keyboardWillShow:(NSNotification *)notification
 {
     if (acceptTextView!=nil) {
-        
+        [UIView animateWithDuration:0.3 animations:^{
+            CGRect f = self.view.frame;
+            f.origin.y = -80;
+            self.view.frame = f;
+        }];
     }
     else{
         CGSize keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
