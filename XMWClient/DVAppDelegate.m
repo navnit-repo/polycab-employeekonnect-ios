@@ -537,12 +537,21 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
             UIViewController *checkView = (UIViewController *) [viewsList objectAtIndex:viewsList.count - 1];
          
                 if ([checkView isKindOfClass:[ChatRoomsVC class]]) {
-                    // do this
+                   
                     ChatRoomsVC *vc = (ChatRoomsVC*) checkView;
-                    vc.chatHistoryArray = [[NSMutableArray alloc]init];
-                    [vc.chatHistoryArray addObjectsFromArray:chatHistoryStorageData];
-                    vc.popupTextView.text = @"";
-                    [vc.chatRoomTableView reloadData];
+                    if ([vc.chatThreadId integerValue]==chatHistory_Object.chatThreadId) { // check for same chatthread ID
+                        vc.chatHistoryArray = [[NSMutableArray alloc]init];
+                        [vc.chatHistoryArray addObjectsFromArray:chatHistoryStorageData];
+                        vc.popupTextView.text = @"";
+                        [vc.chatRoomTableView reloadData];
+                    }
+                  
+                   
+                    
+                   else
+                   {
+                       // no need to reload data
+                   }
                     
                 } else {
                     // do nothing
@@ -1017,5 +1026,9 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
     NSLog(@"User Info : %@",response.notification.request.content.userInfo);
     [self application:self didReceiveRemoteNotification:response.notification.request.content.userInfo];
     completionHandler();
+}
+
+- (void)didReceiveNotificationRequest:(UNNotificationRequest *)request withContentHandler:(void (^)(UNNotificationContent * _Nonnull))contentHandler {
+    
 }
 @end

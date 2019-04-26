@@ -4,15 +4,40 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>NotificationExtension.xcscheme_^#shared#^_</key>
+		<key>NotificationExtension.xcscheme</key>
 		<dict>
+			<key>isShown</key>
+			<false/>
 			<key>orderHint</key>
 			<integer>4</integer>
 		</dict>
-		<key>NotificationServiceExtension.xcscheme_^#shared#^_</key>
+		<key>NotificationServiceExtension-Polycab.xcscheme</key>
 		<dict>
+			<key>isShown</key>
+			<false/>
+			<key>orderHint</key>
+			<integer>7</integer>
+		</dict>
+		<key>NotificationServiceExtension.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
 			<key>orderHint</key>
 			<integer>3</integer>
+		</dict>
+		<key>NotificationServiceExtension_Polycab.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+			<key>orderHint</key>
+			<integer>5</integer>
+		</dict>
+		<key>PushNotificationServiceExtension.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+			<key>orderHint</key>
+			<integer>8</integer>
 		</dict>
 		<key>XMWClient.xcscheme</key>
 		<dict>
@@ -28,6 +53,16 @@
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>8579E707174CD04600D7945F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F0154A3B2272D48B001570BE</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F0154A692272FA47001570BE</key>
 		<dict>
 			<key>primary</key>
 			<true/>

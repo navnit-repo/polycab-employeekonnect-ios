@@ -246,29 +246,35 @@ NSMutableDictionary *masterDataForEmployee;
 - (IBAction)signInButton:(id)sender {
     
     
-    
-    
     if([userName.text isEqualToString:@"Polycab#123"]) {
         SelectServerVC* selectServerVC =[[SelectServerVC alloc] initWithNibName:@"SelectServerVC" bundle:nil];
         [[self navigationController] pushViewController:selectServerVC  animated:YES];
         return;
     }
     
-   else if ([userName.text isEqualToString:@""]||[password.text isEqualToString:@""]) {
-        UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Polycab Authentication!" message:@"Blank Field" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil , nil];
-        [myAlertView show];
-    }
     
+    NSString* trimmedString = [userName.text  stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    m_username = trimmedString;
     
-  
-    
-    
-    
-    else{
+    if( [trimmedString length] > 0) {
         ClientUserLogin* userLogin = [[ClientUserLogin alloc] init];
-        NSString* trimmedString = [userName.text  stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-        m_username = trimmedString;
-        userLogin.userName = trimmedString;
+        
+        
+        if([trimmedString compare:XmwcsConst_DEMO_USER options:NSCaseInsensitiveSearch]==NSOrderedSame) {
+            userLogin.userName = XmwcsConst_DEMO_USER;
+            
+            // also set developer / qa server URLs here
+            XmwcsConst_SERVICE_URL = XmwcsConst_SERVICE_URL_DEMO;
+            XmwcsConst_SERVICE_URL_NOTIFY_CONTEXT = XmwcsConst_SERVICE_URL_NOTIFY_CONTEXT_DEMO;
+            XmwcsConst_PRODUCT_TREE_SERVICE_URL = XmwcsConst_PRODUCT_TREE_SERVICE_URL_DEMO;
+            XmwcsConst_SERVICE_URL_APP_CONTROL = XmwcsConst_SERVICE_URL_APP_CONTROL_DEMO;
+            XmwcsConst_OPCODE_URL = XmwcsConst_SERVICE_URL_OPCODE_SERVICE_DEMO;
+            XmwcsConst_FILE_UPLOAD_URL =XmwcsConst_SERVICE_URL_FILE_UPLOAD_SERVICE_DEMO;
+            
+            
+        } else {
+            userLogin.userName = trimmedString;
+        }
         userLogin.password = password.text;
         userLogin.deviceInfoMap = [[NSMutableDictionary alloc]init];
         //start for default auth
@@ -294,8 +300,60 @@ NSMutableDictionary *masterDataForEmployee;
         
         networkHelper = [[NetworkHelper alloc] init];
         [networkHelper makeXmwNetworkCall:userLogin :self : vendorId.UUIDString :XmwcsConst_CALL_NAME_FOR_LOGIN];
-    
+        
+        
     }
+    
+    
+    else if ([userName.text isEqualToString:@""]||[password.text isEqualToString:@""]) {
+        UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Polycab Authentication!" message:@"Blank Field" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil , nil];
+        [myAlertView show];
+    }
+    
+    
+//    if([userName.text isEqualToString:@"Polycab#123"]) {
+//        SelectServerVC* selectServerVC =[[SelectServerVC alloc] initWithNibName:@"SelectServerVC" bundle:nil];
+//        [[self navigationController] pushViewController:selectServerVC  animated:YES];
+//        return;
+//    }
+//
+//   else if ([userName.text isEqualToString:@""]||[password.text isEqualToString:@""]) {
+//        UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Polycab Authentication!" message:@"Blank Field" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil , nil];
+//        [myAlertView show];
+//    }
+//
+//    else{
+//        ClientUserLogin* userLogin = [[ClientUserLogin alloc] init];
+//        NSString* trimmedString = [userName.text  stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+//        m_username = trimmedString;
+//        userLogin.userName = trimmedString;
+//        userLogin.password = password.text;
+//        userLogin.deviceInfoMap = [[NSMutableDictionary alloc]init];
+//        //start for default auth
+//        NSString* uniqueID = @"000000000000000";
+//        [userLogin.deviceInfoMap setObject:uniqueID forKey:XmwcsConst_IMEI];
+//        //close
+//        NSUUID* vendorId = [UIDevice currentDevice].identifierForVendor;
+//
+//        // [userLogin.deviceInfoMap setObject:XmwcsConst_IMEI forKey:vendorId.UUIDString];
+//        [userLogin.deviceInfoMap setObject:vendorId.UUIDString forKey:XmwcsConst_IMEI];
+//        [userLogin.deviceInfoMap setObject:@"1" forKey:@"IS_NOT_IMEI"];
+//
+//        [userLogin.deviceInfoMap setObject:@"IPhone" forKey:XmwcsConst_DEVICE_MODEL];
+//        [userLogin.deviceInfoMap setObject:@"DEVICE_DETAIL" forKey:XmwcsConst_DEVICE_DETAIL];
+//
+//        userLogin.language = AppConst_LANGUAGE_DEFAULT;
+//        userLogin.moduleId = AppConst_MOBILET_ID_DEFAULT;
+//
+//        loadingView = [LoadingView loadingViewInView:self.view];
+//        ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
+//        clientVariables.CLIENT_USER_LOGIN = userLogin;
+//
+//
+//        networkHelper = [[NetworkHelper alloc] init];
+//        [networkHelper makeXmwNetworkCall:userLogin :self : vendorId.UUIDString :XmwcsConst_CALL_NAME_FOR_LOGIN];
+//
+//    }
 }
 - (void) httpResponseObjectHandler : (NSString*) callName : (id) respondedObject : (id) requestedObject
 {

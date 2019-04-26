@@ -33,8 +33,8 @@ NSString* XmwcsConst_SERVICE_URL_APP_CONTROL = @"https://pconnect.polycab.com:44
 NSString* XmwcsConst_SERVICE_URL_DEAL_STORE = @"https://pconnect.polycab.com:443/xmwpolycab/deal/home.html";
 NSString* XmwcsConst_OPCODE_URL  = @"https://pconnect.polycab.com:443/xmwpolycab/jsonservice";
 NSString* XmwcsConst_FILE_UPLOAD_URL  = @"https://pconnect.polycab.com:443/xmwpolycab/xmwfileupload";
-NSString* const XmwcsConst_DEMO_USER = @"demouser";
-NSString* const XmwcsConst_DEMO_USER_MAPPED = @"11850";
+NSString* const XmwcsConst_DEMO_USER = @"testuser";
+NSString* const XmwcsConst_DEMO_USER_MAPPED = @"111152";
 
 
 #ifdef CONFIG_PROD

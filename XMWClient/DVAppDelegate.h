@@ -27,7 +27,7 @@ extern BOOL regIDCheck;
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) LogInVC *viewController;
 @property (nonatomic, retain) UINavigationController *navController;
-
+- (void)didReceiveNotificationRequest:(UNNotificationRequest *)request withContentHandler:(void (^)(UNNotificationContent * _Nonnull))contentHandler;
 
 + (NSString*) currentModuleContext;
 + (void) pushModuleContext : (NSString*) moduleCtx;
