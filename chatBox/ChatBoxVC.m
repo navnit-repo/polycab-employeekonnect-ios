@@ -43,7 +43,10 @@
     // Do any additional setup after loading the view from its nib.
 }
 
-
+- (void)viewDidAppear:(BOOL)animated
+{
+    [threadListTableView reloadData];
+}
 - (void)viewWillAppear:(BOOL)animated
 {
     if (ChatBoxPushNotifiactionFlag == YES) {
@@ -56,6 +59,7 @@
  [self performSelector:@selector(pushHandling) withObject:nil afterDelay:0.5];
     }
     // [self performSelector:@selector(pushHandling) withObject:nil afterDelay:0.5];
+    
 }
 -(void)historyCheck
 {
@@ -92,6 +96,7 @@
     vc.chatThreadId =[NSString stringWithFormat:@"%d",obj.chatThreadId];
     vc.chatStatus = obj.status;
     vc.nameLbltext = obj.displayName;
+    [[NSUserDefaults standardUserDefaults] setObject:@"NO" forKey:[NSString stringWithFormat:@"NEW_PUSH_%d",obj.chatThreadId]];
     [[self navigationController ] pushViewController:vc animated:YES];
 }
 
@@ -334,11 +339,15 @@
                 else{
                      parseId =[[chatThreadDict objectAtIndex:i] valueForKey:@"fromUserId"];
                 }
-                
+                ContactList_Object *obj;
                  NSArray *contactListStorageData = [contactListStorage getContactDisplayName:@"False" :parseId];
-                
-                ContactList_Object *obj = (ContactList_Object*) [contactListStorageData objectAtIndex:0];
-                
+                if (contactListStorageData.count==0) {
+                    obj = [[ContactList_Object alloc]init];
+                }
+                else{
+                    obj = (ContactList_Object*) [contactListStorageData objectAtIndex:0];
+                    
+                }
                 ChatThreadList_Object* chatThreadList_Object = [[ChatThreadList_Object alloc] init];
                 chatThreadList_Object.chatThreadId =[[[chatThreadDict objectAtIndex:i] valueForKey:@"id"] integerValue] ;
                 chatThreadList_Object.from =   [ NSString stringWithFormat:@"%@", [[chatThreadDict objectAtIndex:i] valueForKey:@"fromUserId"]];
@@ -401,6 +410,10 @@
     vc.chatStatus = obj.status;
     vc.nameLbltext = obj.displayName;
     [[self navigationController ] pushViewController:vc animated:YES];
+    
+    ChatThreadCell *cellView =[( ChatThreadCell * ) self.view viewWithTag:obj.chatThreadId];
+    cellView.pushView.backgroundColor = [UIColor clearColor];
+     [[NSUserDefaults standardUserDefaults] setObject:@"NO" forKey:[NSString stringWithFormat:@"NEW_PUSH_%d",obj.chatThreadId]];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -457,6 +470,14 @@
             cell.chatPersonLbl.textColor =[UIColor colorWithRed:211.0f/255 green:211.0f/255 blue:211.0f/255 alpha:1.0];
             cell.timeStampLbl.textColor  =[UIColor colorWithRed:211.0f/255 green:211.0f/255 blue:211.0f/255 alpha:1.0];
         
+    }
+    NSString *newPushCheck = [[NSUserDefaults standardUserDefaults] valueForKey:[NSString stringWithFormat:@"NEW_PUSH_%d",obj.chatThreadId]];
+    if ([newPushCheck isEqualToString:@"YES"]) {
+        
+    }
+    else
+    {
+        cell.pushView.backgroundColor = [UIColor clearColor];
     }
     return cell;
 }

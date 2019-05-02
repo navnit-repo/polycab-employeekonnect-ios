@@ -49,6 +49,13 @@
 #import "NationalDashboardVC.h"
 #import "ForgotPasswordVC.h"
 #import "WideReportVC.h"
+#import "ChatThreadList_Object.h"
+#import "ChatThreadList_DB.h"
+#import "ContactList_DB.h"
+#import "ContactList_Object.h"
+#import <Security/Security.h>
+#import "KeychainWrapper.h"
+#import "KeychainItemWrapper.h"
 @interface LogInVC ()
 
 @end
@@ -65,6 +72,7 @@ NSMutableDictionary *masterDataForEmployee;
     CGSize keyboardSize;
     int movedbyHeight;
     UITextField* activeTextField;
+    KeychainWrapper *keychainWrapper;
 }
 @synthesize userName;
 @synthesize password;
@@ -166,6 +174,7 @@ NSMutableDictionary *masterDataForEmployee;
 
 
 -(void)revealViewControllConfig{
+    loadingView = [LoadingView loadingViewInView:self.view];
     //for SWRevealViewController
     UIViewController *frontViewController;
     NSString *roleName =[NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] valueForKey:@"ROLE_NAME"]];
@@ -458,6 +467,10 @@ NSMutableDictionary *masterDataForEmployee;
 //                        else if([clientLoginResponse.userLoginStatus isEqualToString:@"1"]) //successfully login
                     else
                     {
+                        KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:@"com.polycab.xmw.employee" accessGroup:nil];
+                        [keychainItem setObject:m_username forKey:kSecAttrAccount];
+        
+                        [[NSUserDefaults standardUserDefaults] setObject:m_username forKey:@"CURRENT_USER_LOGEDIN_ID"];
                          [masterDataForEmployee setDictionary:clientLoginResponse.clientMasterDetail.masterDataRefresh];
                         
                         [[NSUserDefaults standardUserDefaults] setObject:[[clientLoginResponse.clientMasterDetail.masterDataRefresh valueForKey:@"USER_PROFILE"]valueForKey:@"customer_name"]  forKey:@"customer_name"];
@@ -473,7 +486,25 @@ NSMutableDictionary *masterDataForEmployee;
                         [self registerCustomFormVC];
                         menuDetailsDict =clientLoginResponse.menuDetail;
                         
-                        [self revealViewControllConfig];
+                         [self contactListNetworkCall];
+                        
+                       
+                        
+                        NSString *lastUserLogedIn = [[NSUserDefaults standardUserDefaults] valueForKey:@"LAST_LOGIN_USER"];
+                        if ([lastUserLogedIn isEqualToString:m_username]) {
+                            // no need to clear chat local db data
+                        }
+                        else
+                        {
+                            [[NSFileManager defaultManager] removeItemAtPath:[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"ContactList_DB.sqlite.db"]] error:NULL];
+                            
+                            [[NSFileManager defaultManager] removeItemAtPath:[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"ChatHistory_DB.sqlite.db"]] error:NULL];
+                            
+                            [[NSFileManager defaultManager] removeItemAtPath:[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"ChatThreadList_DB.sqlite.db"]] error:NULL];
+                        }
+                        
+                      
+                   
                         
                         dispatch_async(dispatch_get_main_queue(), ^{
                             //code to be executed in the background
@@ -482,8 +513,146 @@ NSMutableDictionary *masterDataForEmployee;
                     }
                     }
                 }
+        
+        
+    else if ([callName isEqualToString:@"requestUserList"])
+    {
+        NSMutableArray * contactsList = [[NSMutableArray alloc]init];
+        
+        if ([[respondedObject objectForKey:@"status"] boolValue] == YES) {
+            [contactsList addObjectsFromArray:[[respondedObject valueForKey:@"responseData"] valueForKey:@"contacts"]];
+            
+            [ContactList_DB createInstance : @"ContactList_DB_STORAGE" : true];
+            ContactList_DB *contactListStorage = [ContactList_DB getInstance];
+            [contactListStorage dropTable:@"ContactList_DB_STORAGE"];
+            
+            for(int i =0; i<[contactsList count];i++) //for unhidden contact  insert into db
+            {
+                ContactList_Object* contactList_Object = [[ContactList_Object alloc] init];
+                contactList_Object.emailId = [[contactsList objectAtIndex:i] valueForKey:@"emailId"];
+                contactList_Object.name =    [[contactsList objectAtIndex:i] valueForKey:@"name"];
+                contactList_Object.userId =  [[contactsList objectAtIndex:i] valueForKey:@"userId"];
+                contactList_Object.isHidden = 0;
+                [contactListStorage insertDoc:contactList_Object];
+            }
+            
+            contactsList = [[NSMutableArray alloc]init];
+            [contactsList addObjectsFromArray:[[respondedObject valueForKey:@"responseData"] valueForKey:@"hiddenContacts"]];
+            
+            for(int i =0; i<[contactsList count];i++) //for hidden contact  insert into db
+            {
+                ContactList_Object* contactList_Object = [[ContactList_Object alloc] init];
+                contactList_Object.emailId = [[contactsList objectAtIndex:i] valueForKey:@"emailId"];
+                contactList_Object.name =    [[contactsList objectAtIndex:i] valueForKey:@"name"];
+                contactList_Object.userId =  [[contactsList objectAtIndex:i] valueForKey:@"userId"];
+                contactList_Object.isHidden = 1;
+                [contactListStorage insertDoc:contactList_Object];
+            }
+            
+            NSMutableArray *contactListStorageData = [contactListStorage getRecentDocumentsData : @"False"];
+            contactsList = [[NSMutableArray alloc]init];
+            [contactsList addObjectsFromArray:contactListStorageData];
+             [self chatThreadListNetworkCall];
+        }
+    }
+    else if ([callName isEqualToString:@"chatThreadRequestData"])
+    {
+        NSMutableArray *  chatThreadDict = [[NSMutableArray alloc]init];
+        if ([[respondedObject objectForKey:@"status"] boolValue] == YES) {
+            
+            [ContactList_DB createInstance : @"ContactList_DB_STORAGE" : true];
+            ContactList_DB *contactListStorage = [ContactList_DB getInstance];
+            
+            
+            
+            chatThreadDict = [[NSMutableArray alloc]init];
+            [chatThreadDict addObjectsFromArray:[[respondedObject valueForKey:@"responseData"] valueForKey:@"list"]];
+            // [threadListTableView reloadData];
+            [ChatThreadList_DB createInstance : @"ChatThread_DB_STORAGE" : true];
+            ChatThreadList_DB *chatThreadListStorage = [ChatThreadList_DB getInstance];
+            [chatThreadListStorage dropTable:@"ChatThread_DB_STORAGE"];
+            ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
+            for(int i =0; i<[chatThreadDict count];i++)
+            {
+                NSString *ownUserId = [[clientVariables.CLIENT_USER_LOGIN userName] stringByAppendingString:@"@employee"];
+                NSString *parseId= @"";// for get username from contact db
+                if ([[[chatThreadDict objectAtIndex:i] valueForKey:@"fromUserId"] isEqualToString:ownUserId]) {
+                    parseId =[[chatThreadDict objectAtIndex:i] valueForKey:@"toUserId"];
+                }
+                else{
+                    parseId =[[chatThreadDict objectAtIndex:i] valueForKey:@"fromUserId"];
+                }
+                ContactList_Object *obj;
+                NSArray *contactListStorageData = [contactListStorage getContactDisplayName:@"False" :parseId];
+                if (contactListStorageData.count==0) {
+                    obj = [[ContactList_Object alloc]init];
+                }
+                else{
+                    obj = (ContactList_Object*) [contactListStorageData objectAtIndex:0];
+                    
+                }
+                ChatThreadList_Object* chatThreadList_Object = [[ChatThreadList_Object alloc] init];
+                chatThreadList_Object.chatThreadId =[[[chatThreadDict objectAtIndex:i] valueForKey:@"id"] integerValue] ;
+                chatThreadList_Object.from =   [ NSString stringWithFormat:@"%@", [[chatThreadDict objectAtIndex:i] valueForKey:@"fromUserId"]];
+                chatThreadList_Object.to =  [ NSString stringWithFormat:@"%@",[[chatThreadDict objectAtIndex:i] valueForKey:@"toUserId"]];
+                chatThreadList_Object.subject =[ NSString stringWithFormat:@"%@",[[chatThreadDict objectAtIndex:i] valueForKey:@"subject"]];
+                chatThreadList_Object.lastMessageOn =[ NSString stringWithFormat:@"%@",[[chatThreadDict objectAtIndex:i] valueForKey:@"lastMessageOn"]];
+                chatThreadList_Object.status =[ NSString stringWithFormat:@"%@",[[chatThreadDict objectAtIndex:i] valueForKey:@"status"]];
+                chatThreadList_Object.displayName = obj.userName;
+                [chatThreadListStorage insertDoc:chatThreadList_Object];
+                
+            }
+            NSMutableArray *chatThreadListStorageData = [chatThreadListStorage getRecentDocumentsData : @"False"];
+            chatThreadDict = [[NSMutableArray alloc]init];
+            [chatThreadDict addObjectsFromArray:chatThreadListStorageData];
+            
+             [self revealViewControllConfig];
+        }
+    }
     }
 }
+#pragma  mark - fetch local db data from server
+-(void)contactListNetworkCall
+{   loadingView = [LoadingView loadingViewInView:self.view];
+    ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
+    NSString * version = [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleShortVersionString"];
+    NSMutableDictionary *requstData = [[NSMutableDictionary alloc]init];
+    
+    [requstData setValue:@"45" forKey:@"requestId"];
+    NSMutableDictionary *data = [[NSMutableDictionary alloc]init];
+    [data setValue:[[clientVariables.CLIENT_USER_LOGIN userName] stringByAppendingString:@"@employee"] forKey:@"userId"];
+    [data setValue:@"1" forKey:@"apiVersion"];
+    [data setValue:[[clientVariables.CLIENT_USER_LOGIN deviceInfoMap] valueForKey:@"IMEI"]  forKey:@"deviceId"];
+    [data setValue:XmwcsConst_DEVICE_TYPE_IPHONE forKey:@"osType"];
+    [data setValue:version forKey:@"appVersion"];
+    
+    [requstData setObject:data forKey:@"requestData"];
+    networkHelper = [[NetworkHelper alloc]init];
+    NSString * url=XmwcsConst_OPCODE_URL;
+    networkHelper.serviceURLString = @"http://polycab.dotvik.com:8080/PushMessage/api/getContacts";
+    [networkHelper genericJSONPayloadRequestWith:requstData :self :@"requestUserList"];
+}
+-(void)chatThreadListNetworkCall
+{
+    loadingView = [LoadingView loadingViewInView:self.view];
+    ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
+    NSString * version = [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleShortVersionString"];
+    NSMutableDictionary *chatThreadRequestData = [[NSMutableDictionary alloc]init];
+    NSMutableDictionary *reqstData = [[NSMutableDictionary alloc]init];
+    [chatThreadRequestData setValue:@"1" forKey:@"requestId"];
+    [reqstData setValue:[[clientVariables.CLIENT_USER_LOGIN userName] stringByAppendingString:@"@employee"] forKey:@"userId"];
+    [reqstData setValue:[[clientVariables.CLIENT_USER_LOGIN deviceInfoMap] valueForKey:@"IMEI"] forKey:@"deviceId"];
+    [reqstData setValue:XmwcsConst_DEVICE_TYPE_IPHONE forKey:@"osType"];
+    [reqstData setValue:version forKey:@"appVersion"];
+    [reqstData setValue:@"1" forKey:@"apiVersion"];
+    [chatThreadRequestData setObject:reqstData forKey:@"requestData"];
+    
+    networkHelper = [[NetworkHelper alloc]init];
+    NSString * url=XmwcsConst_OPCODE_URL;
+    networkHelper.serviceURLString = @"http://polycab.dotvik.com:8080/PushMessage/api/chatThreads";
+    [networkHelper genericJSONPayloadRequestWith:chatThreadRequestData :self :@"chatThreadRequestData"];
+}
+
 - (void) httpFailureHandler : (NSString*) callName : (NSString*) message {
     [loadingView removeView];
     UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Polycab Authentication!" message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil , nil];
@@ -492,8 +661,12 @@ NSMutableDictionary *masterDataForEmployee;
 }
 -(void)registerDeviceToken
 {
+   KeychainWrapper* keychainWrapper = [[KeychainWrapper alloc]init];
+    NSString *deviceId = [keychainWrapper myObjectForKey:(__bridge id)(kSecAttrAccount)];
+    
     NSString *bundleIdentifier =   [[NSBundle mainBundle] bundleIdentifier];
-    NSString* deviceTokenString =[[NSUserDefaults standardUserDefaults] objectForKey:@"PUSH_TOKEN"];
+    NSString* deviceTokenString =deviceId;
+    
     ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
     if(deviceTokenString!=nil) {
         NotificationDeviceRegister* deviceRegister = [[NotificationDeviceRegister alloc] init];

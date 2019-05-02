@@ -20,7 +20,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property  NSString* dbFileName;
 @property  NSString* contextId;
 @property  NSMutableArray* contactList;
-
+-(id) initWithDBName : (NSString*) dbName;
+-(BOOL)createDB;
+-(BOOL) updateDocLastMessageTime : (ChatThreadList_Object*) chatThreadList_Object;
 -(BOOL) updateDoc : (ChatThreadList_Object*) chatThreadList_Object;
 -(void)dropTable :(NSString*) context;
 -(BOOL) createTable;

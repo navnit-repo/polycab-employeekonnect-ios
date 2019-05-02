@@ -953,7 +953,6 @@
 		EFD27594B5D6CD11B071504AB6E3CBED /* ZXAI013103decoder.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ZXAI013103decoder.m; path = ZXingObjC/oned/rss/expanded/decoders/ZXAI013103decoder.m; sourceTree = "<group>"; };
 		EFDAB607DEB4DAF8D8F7549CACE88390 /* ZXDataMatrixSymbolInfo144.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ZXDataMatrixSymbolInfo144.m; path = ZXingObjC/datamatrix/encoder/ZXDataMatrixSymbolInfo144.m; sourceTree = "<group>"; };
 		F00078D003AF16213E46A920431C38E7 /* ZXQRCodeErrorCorrectionLevel.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ZXQRCodeErrorCorrectionLevel.m; path = ZXingObjC/qrcode/decoder/ZXQRCodeErrorCorrectionLevel.m; sourceTree = "<group>"; };
-		F0154A5D2272F9DE001570BE /* com.polycab.xmw.employee.NotificationServiceExtension-Polycab.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "com.polycab.xmw.employee.NotificationServiceExtension-Polycab.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F040CCAB5AA64DEEA57D533795335E6C /* ZXPerspectiveTransform.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ZXPerspectiveTransform.h; path = ZXingObjC/common/ZXPerspectiveTransform.h; sourceTree = "<group>"; };
 		F07B0AB64B086C517FB6BC60E461D57C /* ZXQRCodeDecoderMetaData.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ZXQRCodeDecoderMetaData.h; path = ZXingObjC/qrcode/decoder/ZXQRCodeDecoderMetaData.h; sourceTree = "<group>"; };
 		F128567AF9479E3D269B3B745731B7C8 /* ZXBizcardResultParser.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ZXBizcardResultParser.m; path = ZXingObjC/client/result/ZXBizcardResultParser.m; sourceTree = "<group>"; };
@@ -1010,13 +1009,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				6CF32A81A82CF3BDD8586AECE4ACF1CF /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F0154A5A2272F9DE001570BE /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1118,7 +1110,6 @@
 			children = (
 				C9719D908294BD0CC7B08EF7727C1DCD /* Pods_XMWClient.framework */,
 				C0C08B3936453E4BB19A9D0617D8DA08 /* ZXingObjC.framework */,
-				F0154A5D2272F9DE001570BE /* com.polycab.xmw.employee.NotificationServiceExtension-Polycab.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1929,23 +1920,6 @@
 			productReference = C0C08B3936453E4BB19A9D0617D8DA08 /* ZXingObjC.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		F0154A5C2272F9DE001570BE /* com.polycab.xmw.employee.NotificationServiceExtension-Polycab */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = F0154A652272F9DE001570BE /* Build configuration list for PBXNativeTarget "com.polycab.xmw.employee.NotificationServiceExtension-Polycab" */;
-			buildPhases = (
-				F0154A592272F9DE001570BE /* Sources */,
-				F0154A5A2272F9DE001570BE /* Frameworks */,
-				F0154A5B2272F9DE001570BE /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "com.polycab.xmw.employee.NotificationServiceExtension-Polycab";
-			productName = "com.polycab.xmw.employee.NotificationServiceExtension-Polycab";
-			productReference = F0154A5D2272F9DE001570BE /* com.polycab.xmw.employee.NotificationServiceExtension-Polycab.appex */;
-			productType = "com.apple.product-type.app-extension";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -1954,13 +1928,6 @@
 			attributes = {
 				LastSwiftUpdateCheck = 0930;
 				LastUpgradeCheck = 0930;
-				TargetAttributes = {
-					F0154A5C2272F9DE001570BE = {
-						CreatedOnToolsVersion = 10.2.1;
-						DevelopmentTeam = XP362JQVP7;
-						ProvisioningStyle = Automatic;
-					};
-				};
 			};
 			buildConfigurationList = 2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1977,7 +1944,6 @@
 			targets = (
 				16F72A892F71429F9FD2E9DD50094769 /* Pods-XMWClient */,
 				A4CC73F934152EFBB49ACFBAADBF8EC8 /* ZXingObjC */,
-				F0154A5C2272F9DE001570BE /* com.polycab.xmw.employee.NotificationServiceExtension-Polycab */,
 			);
 		};
 /* End PBXProject section */
@@ -1991,13 +1957,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		7F12B828BC0200559E16DEF51ABBF300 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F0154A5B2272F9DE001570BE /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -2241,13 +2200,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				7C2DE226B135A6946FB0DFE2C7839D03 /* Pods-XMWClient-dummy.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F0154A592272F9DE001570BE /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2518,45 +2470,6 @@
 			};
 			name = Debug;
 		};
-		F0154A632272F9DE001570BE /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = XP362JQVP7;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "com.polycab.xmw.employee.NotificationServiceExtension-Polycab/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "personal.com-polycab-xmw-employee-NotificationServiceExtension-Polycab";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		F0154A642272F9DE001570BE /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = XP362JQVP7;
-				INFOPLIST_FILE = "com.polycab.xmw.employee.NotificationServiceExtension-Polycab/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "personal.com-polycab-xmw-employee-NotificationServiceExtension-Polycab";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -2583,15 +2496,6 @@
 			buildConfigurations = (
 				00AC6BCD58C98DE5E8BB7F7F06AF27DF /* Debug */,
 				A7B48264158BAAF89ECE9A9E844246AF /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		F0154A652272F9DE001570BE /* Build configuration list for PBXNativeTarget "com.polycab.xmw.employee.NotificationServiceExtension-Polycab" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				F0154A632272F9DE001570BE /* Debug */,
-				F0154A642272F9DE001570BE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

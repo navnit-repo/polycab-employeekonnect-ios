@@ -14,6 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UILabel *subjectLbl;
 @property (weak, nonatomic) IBOutlet UILabel *timeStampLbl;
 @property (weak, nonatomic) IBOutlet UILabel *chatPersonLbl;
+@property (weak, nonatomic) IBOutlet UIView *pushView;
+
 
 @end
 

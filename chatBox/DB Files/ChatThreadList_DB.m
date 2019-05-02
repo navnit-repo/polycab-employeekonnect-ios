@@ -13,8 +13,46 @@ static ChatThreadList_DB* DEFAULT_INSTANCE = 0;
 @synthesize dbFileName;
 @synthesize contextId;
 @synthesize contactList;
+
+-(id) initWithDBName : (NSString*) dbName {
+    self = [super init];
+    
+    if(self!=nil) {
+        
+        NSString *appGroupId = @"group.com.polycab.xmw.employee.push.group";
+        NSURL *appGroupDirectoryPath = [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:appGroupId];
+        NSString *appGroupDirectoryPathString = appGroupDirectoryPath.absoluteString;
+        
+        self.databasePath = [[NSString alloc] initWithString:
+                             [appGroupDirectoryPathString stringByAppendingPathComponent: dbName]];
+        [self createDB];
+        
+        return self;
+    }
+    return nil;
+}
+- (BOOL)createDB
+{
+    BOOL isSuccess = YES;
+    NSFileManager *filemgr = [NSFileManager defaultManager];
+    if ([filemgr fileExistsAtPath: databasePath ] == NO)
+    {
+        const char *dbpath = [databasePath UTF8String];
+        if (sqlite3_open(dbpath, &database) == SQLITE_OK)
+        {
+            sqlite3_close(database);
+            database = nil;
+            return  isSuccess;
+        }
+        else {
+            isSuccess = NO;
+            NSLog(@"Failed to open/create database");
+        }
+    }
+    return isSuccess;
+}
 -(id) initWithContext : (NSString*) inContextId : (NSString*) dbName {
-    self = [super initWithDBName:dbName];
+    self = [self initWithDBName:dbName];
     if(self !=nil) {
         self.contextId = inContextId;
         self.dbFileName = dbName;
@@ -34,7 +72,10 @@ static ChatThreadList_DB* DEFAULT_INSTANCE = 0;
     query = [query stringByAppendingString : @"subject TEXT, "];
     query = [query stringByAppendingString : @"lastMessageOn TEXT, "];
     query = [query stringByAppendingString : @"displayName TEXT, "];
-    query =  [query stringByAppendingString : @"REC_TS DATETIME DEFAULT CURRENT_TIMESTAMP); "];     // adding Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
+    query = [query stringByAppendingString : @"filterByLatestTime INTEGER, "];
+    query =  [query stringByAppendingString : @"REC_TS DATETIME DEFAULT CURRENT_TIMESTAMP); "];
+    
+    // adding Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
     
     char *errMsg;
     const char *sql_stmt = [query UTF8String];
@@ -79,7 +120,37 @@ static ChatThreadList_DB* DEFAULT_INSTANCE = 0;
         DEFAULT_INSTANCE = newInstance;
     }
 }
-
+- (BOOL)updateDocLastMessageTime:(ChatThreadList_Object *)chatThreadList_Object
+{
+    NSString* query = @"UPDATE ";
+    query =  [query stringByAppendingString : [self getTableName]];
+    //update  tableName set status = '212' where chatThreadId = 10;
+    //  chatThreadId, fromId, toId, status, subject, lastMessageOn
+    query = [[[[query stringByAppendingString : @" SET "] stringByAppendingString:@" lastMessageOn ='"]stringByAppendingString:chatThreadList_Object.lastMessageOn] stringByAppendingString:@"'"];
+      query = [[[[query stringByAppendingString:@" ,"] stringByAppendingString:@"filterByLatestTime ="]stringByAppendingString:chatThreadList_Object.lastMessageOn]stringByAppendingString:@""];
+    NSString *whereClaue = [[@" where chatThreadId =" stringByAppendingString:[NSString stringWithFormat:@"%d",chatThreadList_Object.chatThreadId]] stringByAppendingString:@";"];
+    
+    query = [query stringByAppendingString:whereClaue];
+    
+    
+    sqlite3_stmt *statement = nil;
+    if (sqlite3_prepare_v2([self sqlConnection], [query UTF8String], -1, &statement, nil) == SQLITE_OK)
+    {
+        sqlite3_bind_text(statement, sqlite3_bind_parameter_index(statement, ":KEY_READ"), [chatThreadList_Object.status UTF8String], chatThreadList_Object.status.length, nil);
+        
+        if (sqlite3_step(statement) == SQLITE_DONE)
+        {
+            sqlite3_finalize(statement);
+            [self close];
+            return true;
+        }
+    }
+    else {
+        //NSLog(@"Error: failed to prepare statement with message '%s'.", sqlite3_errmsg([self sqlConnection]));
+    }
+    
+    return false;
+}
 -(BOOL) updateDoc : (ChatThreadList_Object*) chatThreadList_Object
 {
     NSString* query = @"UPDATE ";
@@ -119,8 +190,8 @@ static ChatThreadList_DB* DEFAULT_INSTANCE = 0;
     
     NSString* query = @"INSERT INTO ";
     query =  [query stringByAppendingString : [self getTableName]];
-    query = [query stringByAppendingString : @"(chatThreadId, fromId, toId, status, subject, lastMessageOn, displayName) "];
-    query = [query stringByAppendingString : @"VALUES(:chatThreadId, :fromId, :toId, :status, :subject, :lastMessageOn, :displayName);"];
+    query = [query stringByAppendingString : @"(chatThreadId, fromId, toId, status, subject, lastMessageOn, displayName, filterByLatestTime) "];
+    query = [query stringByAppendingString : @"VALUES(:chatThreadId, :fromId, :toId, :status, :subject, :lastMessageOn, :displayName, :filterByLatestTime);"];
     
     sqlite3_stmt *statement = nil;
     if (sqlite3_prepare_v2([self sqlConnection], [query UTF8String], -1, &statement, nil) == SQLITE_OK)
@@ -138,7 +209,8 @@ static ChatThreadList_DB* DEFAULT_INSTANCE = 0;
         
          sqlite3_bind_text(statement, sqlite3_bind_parameter_index(statement, ":displayName"), [chatThreadList_Object.displayName UTF8String], chatThreadList_Object.displayName.length, nil);
         
-        
+        int filterTime = [chatThreadList_Object.lastMessageOn integerValue];
+        sqlite3_bind_int(statement, sqlite3_bind_parameter_index(statement, ":filterByLatestTime"), filterTime);
         if (sqlite3_step(statement) == SQLITE_DONE)
         {
             insertId = (int)sqlite3_last_insert_rowid([self sqlConnection]);
@@ -156,7 +228,7 @@ static ChatThreadList_DB* DEFAULT_INSTANCE = 0;
 {
     NSMutableArray* list = [[NSMutableArray alloc] init];
     NSString* query = @"SELECT chatThreadId,  fromId, toId, status, subject, lastMessageOn, displayName from ";
-    query = [[query stringByAppendingString : [self getTableName]]stringByAppendingString:@" ORDER BY chatThreadId DESC;"];
+    query = [[query stringByAppendingString : [self getTableName]]stringByAppendingString:@" ORDER BY filterByLatestTime DESC;"];
    // NSString* query = [@"SELECT * from " stringByAppendingString:[self getTableName]];
     
     // query = [query stringByAppendingString : @" ;"];

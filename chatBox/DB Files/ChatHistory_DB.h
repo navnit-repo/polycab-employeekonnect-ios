@@ -22,7 +22,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property  NSString* contextId;
 @property  NSMutableArray* contactList;
 @property  int chatThreatIdToRetrieveHistory;
+-(id) initWithDBName : (NSString*) dbName;
+-(BOOL)createDB;
 -(void)dropTable :(NSString*) context;
+-(void)dropRows  :(NSString*) context;
 -(BOOL) createTable;
 + (void) createInstance : (NSString*) contextId :  (BOOL) isDefault :(int)chatThreadId;
 

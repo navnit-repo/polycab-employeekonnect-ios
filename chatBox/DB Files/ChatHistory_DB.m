@@ -14,8 +14,46 @@ static ChatHistory_DB* DEFAULT_INSTANCE = 0;
 @synthesize contextId;
 @synthesize contactList;
 @synthesize chatThreatIdToRetrieveHistory;
+
+-(id) initWithDBName : (NSString*) dbName {
+    self = [super init];
+    
+    if(self!=nil) {
+        
+        NSString *appGroupId = @"group.com.polycab.xmw.employee.push.group";
+        NSURL *appGroupDirectoryPath = [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:appGroupId];
+        NSString *appGroupDirectoryPathString = appGroupDirectoryPath.absoluteString;
+        
+        self.databasePath = [[NSString alloc] initWithString:
+                             [appGroupDirectoryPathString stringByAppendingPathComponent: dbName]];
+        [self createDB];
+        
+        return self;
+    }
+    return nil;
+}
+- (BOOL)createDB
+{
+    BOOL isSuccess = YES;
+    NSFileManager *filemgr = [NSFileManager defaultManager];
+    if ([filemgr fileExistsAtPath: databasePath ] == NO)
+    {
+        const char *dbpath = [databasePath UTF8String];
+        if (sqlite3_open(dbpath, &database) == SQLITE_OK)
+        {
+            sqlite3_close(database);
+            database = nil;
+            return  isSuccess;
+        }
+        else {
+            isSuccess = NO;
+            NSLog(@"Failed to open/create database");
+        }
+    }
+    return isSuccess;
+}
 -(id) initWithContext : (NSString*) inContextId : (NSString*) dbName :(int)threadID {
-    self = [super initWithDBName:dbName];
+    self = [self initWithDBName:dbName];
     if(self !=nil) {
         self.contextId = inContextId;
         self.dbFileName = dbName;
@@ -185,6 +223,27 @@ static ChatHistory_DB* DEFAULT_INSTANCE = 0;
     contextId = context;
     NSString* query = @"DELETE from ";
     query = [[query stringByAppendingString : [self getTableName]] stringByAppendingString:@";"];
+    
+    char *errMsg;
+    const char *sql_stmt = [query UTF8String];
+    
+    if (sqlite3_exec([self sqlConnection], sql_stmt, NULL, NULL, &errMsg)
+        != SQLITE_OK)
+    {
+        NSLog(@"Failed to drop table");
+    }
+    [self close];
+}
+
+- (void)dropRows:(NSString *)context
+{
+    contextId = context;
+    NSString* query = @"DELETE from ";
+    query = [query stringByAppendingString : [self getTableName]];
+    NSString *whereClause;
+    whereClause = [NSString stringWithFormat:@" where chatThreadId = %d ;",chatThreatIdToRetrieveHistory];
+    query = [query stringByAppendingString:whereClause];
+    NSLog(@"%@",query);
     
     char *errMsg;
     const char *sql_stmt = [query UTF8String];

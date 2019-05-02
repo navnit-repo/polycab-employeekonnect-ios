@@ -19,6 +19,7 @@
 #import "ChatThreadList_Object.h"
 #import "ChatThreadList_DB.h"
 #import "ChatBoxVC.h"
+#import "NewInstanceNsUserDefault.h"
 @interface ChatRoomsVC ()
 
 @end
@@ -52,10 +53,12 @@
      [self initializeView];
     // Do any additional setup after loading the view from its nib.
 }
+
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+   
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -128,7 +131,8 @@
     chatHistoryArray = [[NSMutableArray alloc]init];
     [chatHistoryArray addObjectsFromArray:chatHistoryStorageData];
     
-    if (chatHistoryArray.count!=0) {
+    NSString *first_time_networkcall_check = [[NSUserDefaults standardUserDefaults] valueForKey:[NSString stringWithFormat:@"CHAT_HISTORY_FIRST_TIME_FETCH_%@",chatThreadId]];
+    if (chatHistoryArray.count!=0 && [first_time_networkcall_check isEqualToString:@"YES"] ) {
         // show loacl save data
         ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
         ChatHistory_Object *obj = (ChatHistory_Object *)[chatHistoryArray objectAtIndex:chatHistoryArray.count-1];
@@ -293,6 +297,8 @@
             
             [ChatHistory_DB createInstance : @"ChatHistory_DB_STORAGE" : true :[chatThreadId integerValue]];
             ChatHistory_DB *chatHistory_DBStorage = [ChatHistory_DB getInstance];
+            [chatHistory_DBStorage dropRows:@"ChatHistory_DB_STORAGE"];
+           
              //[chatHistory_DBStorage dropTable:@"ChatHistory_DB_STORAGE"];
             for(int i =0; i<[chatHistoryArray count];i++)
             {
@@ -312,6 +318,15 @@
             chatHistoryArray = [[NSMutableArray alloc]init];
             [chatHistoryArray addObjectsFromArray:chatHistoryStorageData];
             [chatRoomTableView reloadData];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                //code to be executed in the background
+                [self scrollToBottom];
+            });
+       
+            
+            [[NSUserDefaults standardUserDefaults] setObject:@"YES" forKey:[NSString stringWithFormat:@"CHAT_HISTORY_FIRST_TIME_FETCH_%@",[[chatHistoryArray objectAtIndex:0] valueForKey:@"chatThreadId"]]];
+          
+            
         }
         else
         {
@@ -349,6 +364,27 @@
             self.popupTextView.text =textView.text;
             [textView resignFirstResponder];
             textView.text = defaultTextViewText;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                //code to be executed in the background
+                [self scrollToBottom];
+            });
+            
+            [ChatThreadList_DB createInstance : @"ChatThread_DB_STORAGE" : true];
+            ChatThreadList_DB *chatThreadListStorage = [ChatThreadList_DB getInstance];
+            ChatThreadList_Object* chatThreadList_Object = [[ChatThreadList_Object alloc] init];
+            chatThreadList_Object.chatThreadId =  chatHistory_Object.chatThreadId;
+            chatThreadList_Object.lastMessageOn = [ NSString stringWithFormat:@"%@",timeStampValue];
+            [chatThreadListStorage updateDocLastMessageTime:chatThreadList_Object];
+            
+            UIViewController *root;
+            root = [[[[UIApplication sharedApplication]windows]objectAtIndex:0]rootViewController];
+            SWRevealViewController *reveal = (SWRevealViewController*)root;
+            UINavigationController *check =(UINavigationController*)reveal.frontViewController;
+            NSArray* viewsList = check.viewControllers;
+            UIViewController *checkView = (UIViewController *) [viewsList objectAtIndex:viewsList.count - 2];
+            NSMutableArray *chatThreadListStorageData = [chatThreadListStorage getRecentDocumentsData : @"False"];
+            ChatBoxVC *vc =  (ChatBoxVC*) checkView;
+            vc.chatThreadDict = chatThreadListStorageData;
         }
        
         else
@@ -578,5 +614,15 @@
 }
 -(void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
+}
+- (void)scrollToBottom
+{
+    CGFloat yOffset = 0;
+    
+    if (chatRoomTableView.contentSize.height > chatRoomTableView.bounds.size.height) {
+        yOffset = chatRoomTableView.contentSize.height - chatRoomTableView.bounds.size.height;
+    }
+    
+    [chatRoomTableView setContentOffset:CGPointMake(0, yOffset) animated:NO];
 }
 @end

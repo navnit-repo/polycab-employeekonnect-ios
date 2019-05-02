@@ -39,10 +39,16 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qa5-nG-UbW">
+                        <rect key="frame" x="307" y="33" width="10" height="10"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" red="0.80000000000000004" green="0.16078431372549018" blue="0.16862745098039217" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </view>
                 </subviews>
             </tableViewCellContentView>
             <connections>
                 <outlet property="chatPersonLbl" destination="Yd5-gQ-uY8" id="Pfz-PY-bwB"/>
+                <outlet property="pushView" destination="qa5-nG-UbW" id="dbh-Eq-Jkt"/>
                 <outlet property="subjectLbl" destination="mTM-uL-flY" id="sIj-bk-oqk"/>
                 <outlet property="timeStampLbl" destination="9wI-yi-XcC" id="R5O-rS-8CO"/>
             </connections>

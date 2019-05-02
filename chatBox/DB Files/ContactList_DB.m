@@ -17,8 +17,47 @@ static ContactList_DB* DEFAULT_INSTANCE = 0;
 @synthesize contextId;
 @synthesize contactList;
 
+
+
+-(id) initWithDBName : (NSString*) dbName {
+    self = [super init];
+
+    if(self!=nil) {
+        
+        NSString *appGroupId = @"group.com.polycab.xmw.employee.push.group";
+        NSURL *appGroupDirectoryPath = [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:appGroupId];
+        NSString *appGroupDirectoryPathString = appGroupDirectoryPath.absoluteString;
+        
+        self.databasePath = [[NSString alloc] initWithString:
+                             [appGroupDirectoryPathString stringByAppendingPathComponent: dbName]];
+        [self createDB];
+
+        return self;
+    }
+    return nil;
+}
+- (BOOL)createDB
+{
+    BOOL isSuccess = YES;
+    NSFileManager *filemgr = [NSFileManager defaultManager];
+    if ([filemgr fileExistsAtPath: databasePath ] == NO)
+    {
+        const char *dbpath = [databasePath UTF8String];
+        if (sqlite3_open(dbpath, &database) == SQLITE_OK)
+        {
+            sqlite3_close(database);
+            database = nil;
+            return  isSuccess;
+        }
+        else {
+            isSuccess = NO;
+            NSLog(@"Failed to open/create database");
+        }
+    }
+    return isSuccess;
+}
 -(id) initWithContext : (NSString*) inContextId : (NSString*) dbName {
-    self = [super initWithDBName:dbName];
+    self = [self initWithDBName:dbName];
     if(self !=nil) {
         self.contextId = inContextId;
         self.dbFileName = dbName;

@@ -20,7 +20,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property  NSString* dbFileName;
 @property  NSString* contextId;
 @property  NSMutableArray* contactList;
-
+-(id) initWithDBName : (NSString*) dbName;
+-(BOOL)createDB;
 -(NSMutableArray*)  getContactDisplayName : (NSString *)delete_stringFlag :(NSString *)userID;
 -(void)dropTable :(NSString*) context;
 -(BOOL) createTable;

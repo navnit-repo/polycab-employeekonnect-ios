@@ -10,13 +10,17 @@
 #import "LayoutClass.h"
 #import "DVAppDelegate.h"
 @implementation ChatThreadCell
-
+@synthesize pushView;
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
     [LayoutClass labelLayout:self.subjectLbl forFontWeight:UIFontWeightBold];
     [LayoutClass labelLayout:self.timeStampLbl forFontWeight:UIFontWeightRegular];
     [LayoutClass labelLayout:self.chatPersonLbl forFontWeight:UIFontWeightRegular];
+    [LayoutClass setLayoutForIPhone6:self.pushView];
+    
+    pushView.layer.cornerRadius = 5;  // half the width/height
+
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
