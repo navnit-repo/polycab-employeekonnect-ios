@@ -39,6 +39,9 @@
             NSMutableDictionary *responsedict = [[NSMutableDictionary alloc]init];
             [responsedict setDictionary:[mainDict objectForKey:@"NOTIFY_MESSAGE_KEY"]];
             NSString * timeStampValue = [[NSString stringWithFormat:@"%ld", (long)[[NSDate date] timeIntervalSince1970]]stringByAppendingString:@"000"];
+           // long int filterTime =[[NSString stringWithFormat:@"%ld", (long)[[NSDate date] timeIntervalSince1970]]stringByAppendingString:@"000"];
+            long int filterTime = (long)[[NSDate date] timeIntervalSince1970] + 000;
+            
             NSLog(@"Time Stamp Value == %@", timeStampValue);
             [ChatHistory_DB createInstance : @"ChatHistory_DB_STORAGE" : true :[[responsedict valueForKey:@"chatThread"] integerValue]];
             
@@ -58,7 +61,7 @@
              ChatThreadList_Object* chatThreadList_Object = [[ChatThreadList_Object alloc] init];
              chatThreadList_Object.chatThreadId =  chatHistory_Object.chatThreadId;
              chatThreadList_Object.lastMessageOn = [ NSString stringWithFormat:@"%@",timeStampValue];
-            
+//             chatThreadList_Object.filterTimeStamp = filterTime;
             [chatThreadListStorage updateDocLastMessageTime:chatThreadList_Object];
         }
         

@@ -66,14 +66,14 @@ static ChatHistory_DB* DEFAULT_INSTANCE = 0;
     
     NSString* query = @"CREATE TABLE IF NOT EXISTS ";
     query =  [query stringByAppendingString : [self getTableName]];
-    query = [query stringByAppendingString : @"(KEY_ID INTEGER PRIMARY KEY AUTOINCREMENT, "];
-    query = [query stringByAppendingString : @"chatThreadId INTEGER, "];
+   // query = [query stringByAppendingString : @"(KEY_ID INTEGER PRIMARY KEY AUTOINCREMENT, "];
+    query = [query stringByAppendingString : @"(chatThreadId INTEGER , "];
     query = [query stringByAppendingString : @"fromId TEXT, "];
     query = [query stringByAppendingString : @"toId TEXT, "];
     query = [query stringByAppendingString : @"message TEXT, "];
     query = [query stringByAppendingString : @"messageDate TEXT, "];
     query = [query stringByAppendingString : @"messageType TEXT, "];
-    query = [query stringByAppendingString : @"messageId INTEGER, "];
+    query = [query stringByAppendingString : @"messageId INTEGER PRIMARY KEY, "];
     
     query =  [query stringByAppendingString : @"REC_TS DATETIME DEFAULT CURRENT_TIMESTAMP); "];     // adding Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
     

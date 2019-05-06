@@ -1142,6 +1142,25 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
                 }
                 else{
                     [[NSUserDefaults standardUserDefaults] setObject:@"YES" forKey:[NSString stringWithFormat:@"NEW_PUSH_%d",[[responsedict valueForKey:@"chatThread"] integerValue]]];
+                    UIViewController *root;
+                    root = [[[[UIApplication sharedApplication]windows]objectAtIndex:0]rootViewController];
+                    SWRevealViewController *reveal = (SWRevealViewController*)root;
+                    UINavigationController *check =(UINavigationController*)reveal.frontViewController;
+                    NSArray* viewsList = check.viewControllers;
+                    UIViewController *current = (UIViewController *) [viewsList objectAtIndex:0];
+                    
+                    UIBarButtonItem *item = (UIBarButtonItem*) [current.navigationItem.rightBarButtonItems objectAtIndex:1];
+                    
+                    UIButton *chatButton = (UIButton *) item.customView;
+                    //  [[chatButton.layer.sublayers objectAtIndex:1] removeFromSuperlayer];
+                    
+                    UIView *view = [[UIView alloc]initWithFrame:CGRectMake( 15.0f, -5.0f, 10.0f, 10.0f)];
+                    view.tag = 10000000;
+                    view.backgroundColor = [UIColor whiteColor];
+                    view.layer.cornerRadius = 5;
+                    CALayer *myLayer = view.layer;
+                    
+                    [chatButton.layer addSublayer:myLayer];
                 }
                 
             }
@@ -1181,6 +1200,26 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
                     [vc.chatThreadDict addObjectsFromArray:chatThreadListStorageData];
                     [vc.threadListTableView reloadData];
                 }
+                
+                UIViewController *root;
+                root = [[[[UIApplication sharedApplication]windows]objectAtIndex:0]rootViewController];
+                SWRevealViewController *reveal = (SWRevealViewController*)root;
+                UINavigationController *check =(UINavigationController*)reveal.frontViewController;
+                NSArray* viewsList = check.viewControllers;
+                UIViewController *current = (UIViewController *) [viewsList objectAtIndex:0];
+                
+                UIBarButtonItem *item = (UIBarButtonItem*) [current.navigationItem.rightBarButtonItems objectAtIndex:1];
+                
+                UIButton *chatButton = (UIButton *) item.customView;
+                //  [[chatButton.layer.sublayers objectAtIndex:1] removeFromSuperlayer];
+                
+                UIView *view = [[UIView alloc]initWithFrame:CGRectMake( 15.0f, -5.0f, 10.0f, 10.0f)];
+                view.tag = 10000000;
+                view.backgroundColor = [UIColor whiteColor];
+                view.layer.cornerRadius = 5;
+                CALayer *myLayer = view.layer;
+                
+                [chatButton.layer addSublayer:myLayer];
             }
             [[NSUserDefaults standardUserDefaults] setObject:@"YES" forKey:[NSString stringWithFormat:@"NEW_PUSH_%d",[[[responsedict valueForKey:@"message"] valueForKey:@"chatThread"] integerValue]]];
         }
@@ -1218,6 +1257,25 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
             }
             else {
                 // do nothing
+                UIViewController *root;
+                root = [[[[UIApplication sharedApplication]windows]objectAtIndex:0]rootViewController];
+                SWRevealViewController *reveal = (SWRevealViewController*)root;
+                UINavigationController *check =(UINavigationController*)reveal.frontViewController;
+                NSArray* viewsList = check.viewControllers;
+                UIViewController *current = (UIViewController *) [viewsList objectAtIndex:0];
+                
+                UIBarButtonItem *item = (UIBarButtonItem*) [current.navigationItem.rightBarButtonItems objectAtIndex:1];
+                
+                UIButton *chatButton = (UIButton *) item.customView;
+                //  [[chatButton.layer.sublayers objectAtIndex:1] removeFromSuperlayer];
+                
+                UIView *view = [[UIView alloc]initWithFrame:CGRectMake( 15.0f, -5.0f, 10.0f, 10.0f)];
+                view.tag = 10000000;
+                view.backgroundColor = [UIColor whiteColor];
+                view.layer.cornerRadius = 5;
+                CALayer *myLayer = view.layer;
+                
+                [chatButton.layer addSublayer:myLayer];
             }
             
             
@@ -1225,7 +1283,7 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
         
     }
     
-    completionHandler(UNAuthorizationOptionSound | UNAuthorizationOptionAlert | UNAuthorizationOptionBadge);
+ //   completionHandler(UNAuthorizationOptionSound | UNAuthorizationOptionAlert | UNAuthorizationOptionBadge);
 }
 
 //Called to let your app know which action was selected by the user for a given notification.
@@ -1303,7 +1361,28 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
                     [[NSUserDefaults standardUserDefaults] setObject:@"YES" forKey:[NSString stringWithFormat:@"NEW_PUSH_%d",[[responsedict valueForKey:@"chatThread"] integerValue]]];
                      }
                 else{
+
                        [[NSUserDefaults standardUserDefaults] setObject:@"YES" forKey:[NSString stringWithFormat:@"NEW_PUSH_%d",[[responsedict valueForKey:@"chatThread"] integerValue]]];
+                    
+                    UIViewController *root;
+                    root = [[[[UIApplication sharedApplication]windows]objectAtIndex:0]rootViewController];
+                    SWRevealViewController *reveal = (SWRevealViewController*)root;
+                    UINavigationController *check =(UINavigationController*)reveal.frontViewController;
+                    NSArray* viewsList = check.viewControllers;
+                    UIViewController *current = (UIViewController *) [viewsList objectAtIndex:0];
+                    
+                    UIBarButtonItem *item = (UIBarButtonItem*) [current.navigationItem.rightBarButtonItems objectAtIndex:1];
+                    
+                    UIButton *chatButton = (UIButton *) item.customView;
+                  //  [[chatButton.layer.sublayers objectAtIndex:1] removeFromSuperlayer];
+
+                    UIView *view = [[UIView alloc]initWithFrame:CGRectMake( 15.0f, -5.0f, 10.0f, 10.0f)];
+                    view.tag = 10000000;
+                    view.backgroundColor = [UIColor whiteColor];
+                    view.layer.cornerRadius = 5;
+                    CALayer *myLayer = view.layer;
+                    
+                    [chatButton.layer addSublayer:myLayer];
                 }
             
             }
@@ -1342,6 +1421,26 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
                     [vc.chatThreadDict addObjectsFromArray:chatThreadListStorageData];
                     [vc.threadListTableView reloadData];
                 }
+                
+                UIViewController *root;
+                root = [[[[UIApplication sharedApplication]windows]objectAtIndex:0]rootViewController];
+                SWRevealViewController *reveal = (SWRevealViewController*)root;
+                UINavigationController *check =(UINavigationController*)reveal.frontViewController;
+                NSArray* viewsList = check.viewControllers;
+                UIViewController *current = (UIViewController *) [viewsList objectAtIndex:0];
+                
+                UIBarButtonItem *item = (UIBarButtonItem*) [current.navigationItem.rightBarButtonItems objectAtIndex:1];
+                
+                UIButton *chatButton = (UIButton *) item.customView;
+                //  [[chatButton.layer.sublayers objectAtIndex:1] removeFromSuperlayer];
+                
+                UIView *view = [[UIView alloc]initWithFrame:CGRectMake( 15.0f, -5.0f, 10.0f, 10.0f)];
+                view.tag = 10000000;
+                view.backgroundColor = [UIColor whiteColor];
+                view.layer.cornerRadius = 5;
+                CALayer *myLayer = view.layer;
+                
+                [chatButton.layer addSublayer:myLayer];
             }
             [[NSUserDefaults standardUserDefaults] setObject:@"YES" forKey:[NSString stringWithFormat:@"NEW_PUSH_%d",[[[responsedict valueForKey:@"message"] valueForKey:@"chatThread"] integerValue]]];
         }
@@ -1379,6 +1478,25 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
             }
             else {
                 // do nothing
+                UIViewController *root;
+                root = [[[[UIApplication sharedApplication]windows]objectAtIndex:0]rootViewController];
+                SWRevealViewController *reveal = (SWRevealViewController*)root;
+                UINavigationController *check =(UINavigationController*)reveal.frontViewController;
+                NSArray* viewsList = check.viewControllers;
+                UIViewController *current = (UIViewController *) [viewsList objectAtIndex:0];
+                
+                UIBarButtonItem *item = (UIBarButtonItem*) [current.navigationItem.rightBarButtonItems objectAtIndex:1];
+                
+                UIButton *chatButton = (UIButton *) item.customView;
+                //  [[chatButton.layer.sublayers objectAtIndex:1] removeFromSuperlayer];
+                
+                UIView *view = [[UIView alloc]initWithFrame:CGRectMake( 15.0f, -5.0f, 10.0f, 10.0f)];
+                view.tag = 10000000;
+                view.backgroundColor = [UIColor whiteColor];
+                view.layer.cornerRadius = 5;
+                CALayer *myLayer = view.layer;
+                
+                [chatButton.layer addSublayer:myLayer];
             }
             
             

@@ -8,7 +8,6 @@
 
 #import "NotificationService.h"
 #import "PushNotificationHandler.h"
-#import "KeychainItemWrapper.h"
 @interface NotificationService ()
 
 @property (nonatomic, strong) void (^contentHandler)(UNNotificationContent *contentToDeliver);

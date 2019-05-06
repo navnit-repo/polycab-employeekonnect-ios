@@ -145,7 +145,10 @@
     vc.chatThreadId =[NSString stringWithFormat:@"%d",obj.chatThreadId];
     vc.chatStatus = obj.status;
     vc.nameLbltext = obj.displayName;
+    [[NSUserDefaults standardUserDefaults] setObject:@"NO" forKey:[NSString stringWithFormat:@"NEW_PUSH_%d",obj.chatThreadId]];
+
     [[self navigationController ] pushViewController:vc animated:YES];
+    
 }
 -(void)initializeView
 {
@@ -418,11 +421,27 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    NSInteger numOfSections = 0;
+    if (chatThreadDict.count >0)
+    {
+    // do nothing
+        numOfSections = 1;
+    }
+    else
+    {
+        UILabel *noDataLabel         = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, threadListTableView.bounds.size.width, threadListTableView.bounds.size.height)];
+        noDataLabel.text             = @"No chat threads available.";
+        noDataLabel.textColor        = [UIColor blackColor];
+        noDataLabel.textAlignment    = NSTextAlignmentCenter;
+        threadListTableView.backgroundView  = noDataLabel;
+        threadListTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    }
+    return numOfSections;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return [chatThreadDict count];
+ 
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -460,7 +479,7 @@
         NSTimeInterval timeInterval=timeStamp/1000;
         NSDate *date = [NSDate dateWithTimeIntervalSince1970:timeInterval];
         NSDateFormatter *dateformatter=[[NSDateFormatter alloc]init];
-        [dateformatter setDateFormat:@"dd-LLL, HH:mm"];
+        [dateformatter setDateFormat:@"dd LLL,yy HH:mm"];
         NSString *dateString=[dateformatter stringFromDate:date];
         cell.timeStampLbl.text =dateString;
         cell.tag = obj.chatThreadId;

@@ -64,8 +64,8 @@ static ChatThreadList_DB* DEFAULT_INSTANCE = 0;
     
     NSString* query = @"CREATE TABLE IF NOT EXISTS ";
     query =  [query stringByAppendingString : [self getTableName]];
-    query = [query stringByAppendingString : @"(KEY_ID INTEGER PRIMARY KEY AUTOINCREMENT, "];
-    query = [query stringByAppendingString : @"chatThreadId INTEGER, "];
+   // query = [query stringByAppendingString : @"(KEY_ID INTEGER PRIMARY KEY AUTOINCREMENT, "];
+    query = [query stringByAppendingString : @"(chatThreadId INTEGER PRIMARY KEY, "];
     query = [query stringByAppendingString : @"fromId TEXT, "];
     query = [query stringByAppendingString : @"toId TEXT, "];
     query = [query stringByAppendingString : @"status TEXT, "];
@@ -209,8 +209,10 @@ static ChatThreadList_DB* DEFAULT_INSTANCE = 0;
         
          sqlite3_bind_text(statement, sqlite3_bind_parameter_index(statement, ":displayName"), [chatThreadList_Object.displayName UTF8String], chatThreadList_Object.displayName.length, nil);
         
-        int filterTime = [chatThreadList_Object.lastMessageOn integerValue];
-        sqlite3_bind_int(statement, sqlite3_bind_parameter_index(statement, ":filterByLatestTime"), filterTime);
+       double filterTime = [chatThreadList_Object.lastMessageOn doubleValue];
+        
+        sqlite3_bind_int64(statement, sqlite3_bind_parameter_index(statement, ":filterByLatestTime"), filterTime);
+
         if (sqlite3_step(statement) == SQLITE_DONE)
         {
             insertId = (int)sqlite3_last_insert_rowid([self sqlConnection]);

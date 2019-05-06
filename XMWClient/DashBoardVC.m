@@ -198,29 +198,85 @@
     [revealController panGestureRecognizer];
     [revealController tapGestureRecognizer];
     
+    
+    
     UIBarButtonItem* menuButton = [[UIBarButtonItem alloc] initWithImage:[UIImage
                                                                           imageNamed:@"polycab_menu"] style:UIBarButtonItemStylePlain target:revealController
                                                                   action:@selector(revealToggle:)];
-    
-    
-    
+
+
+
     //menuButton.tintColor = [UIColor colorWithRed:119.0/255 green:119.0/255 blue:119.0/255 alpha:1.0];
       menuButton.tintColor = [UIColor whiteColor];
     
     
-    UIBarButtonItem* notificationButton = [[UIBarButtonItem alloc] initWithImage:[UIImage
-                                                                          imageNamed:@"polycab_notification"] style:UIBarButtonItemStylePlain target:self
-                                                                  action:@selector(notificationHandler:)];
+    // For right side menu button
+     UIImage *notificationButtonIconImage = [[UIImage imageNamed:@"polycab_notification"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    UIButton *notificationButton  = [UIButton buttonWithType:UIButtonTypeCustom];
+    [notificationButton setFrame:CGRectMake( 0.0f, 0.0f, 25.0f, 25.0f)];
+    [notificationButton setBackgroundImage:notificationButtonIconImage forState:UIControlStateNormal];
+    [notificationButton addTarget:self action:@selector(notificationHandler:) forControlEvents:UIControlEventTouchUpInside];
+     notificationButton.tintColor =[UIColor whiteColor];
+    UIBarButtonItem *notificationButtonItem = [[UIBarButtonItem alloc] initWithCustomView:notificationButton];
+    notificationButtonItem.target           = self;
     
-   // notificationButton.tintColor =  [UIColor colorWithRed:119.0/255 green:119.0/255 blue:119.0/255 alpha:1.0];
-     notificationButton.tintColor = [UIColor whiteColor];
+   
+    // for logout button
+//    UIView *view = [[UIView alloc]initWithFrame:CGRectMake( 15.0f, -5.0f, 10.0f, 10.0f)];
+//    view.tag = 10000000;
+//     view.backgroundColor = [UIColor whiteColor];
+//    view.layer.cornerRadius = 5;
+     UIImage *chatButtonIconImage = [[UIImage imageNamed:@"Artboard"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    UIButton *chatButton  = [UIButton buttonWithType:UIButtonTypeCustom];
+    [chatButton setFrame:CGRectMake( 0.0f, 0.0f, 25.0f, 25.0f)];
+    [chatButton setBackgroundImage:chatButtonIconImage forState:UIControlStateNormal];
+    [chatButton addTarget:self action:@selector(chatHandler:) forControlEvents:UIControlEventTouchUpInside];
+    chatButton.tintColor = [UIColor whiteColor];
+    chatButton.tag = 20;
+//    CALayer *myLayer = view.layer;
+//
+//    [chatButton.layer addSublayer:myLayer];
+    UIBarButtonItem *chatButtonItem = [[UIBarButtonItem alloc] initWithCustomView:chatButton];
+    chatButtonItem.target           = self;
+    
+    
+    [self.navigationItem setRightBarButtonItems:[NSArray arrayWithObjects:notificationButtonItem, chatButtonItem, nil] animated:YES];
+    
+//
+    
+    
+    
+    
+//    UIBarButtonItem* notificationButton = [[UIBarButtonItem alloc] initWithImage:[UIImage
+//                                                                          imageNamed:@"polycab_notification"] style:UIBarButtonItemStylePlain target:self
+//                                                                  action:@selector(notificationHandler:)];
+//
+//   // notificationButton.tintColor =  [UIColor colorWithRed:119.0/255 green:119.0/255 blue:119.0/255 alpha:1.0];
+//     notificationButton.tintColor = [UIColor whiteColor];
     
     UIImageView *polycabLogo = [[UIImageView alloc] initWithImage:[UIImage  imageNamed:@"polycab_logo"]];
     self.navigationItem.titleView.contentMode = UIViewContentModeCenter;
     self.navigationItem.titleView = polycabLogo;
-    [self.navigationItem setLeftBarButtonItem:menuButton];
-    [self.navigationItem setRightBarButtonItem:notificationButton];
+   [self.navigationItem setLeftBarButtonItem:menuButton];
+   // [self.navigationItem setRightBarButtonItem:notificationButton];
     [self.navigationController.navigationBar setFrame:CGRectMake(0, 20, self.view.frame.size.width,48)];
+}
+- (void) chatHandler : (id) sender
+{
+    NSLog(@"chatHandler button clicked");
+    //pending
+    ChatBoxVC *chatVC = [[ChatBoxVC alloc]init];
+    
+    UIViewController *root;
+    root = [[[[UIApplication sharedApplication]windows]objectAtIndex:0]rootViewController];
+    
+    SWRevealViewController *reveal = (SWRevealViewController*)root;
+    [(UINavigationController*)reveal.frontViewController pushViewController:chatVC animated:YES];
+    UIButton *button = (UIButton*) sender;
+    if (button.layer.sublayers.count >=2 ) {
+      [[button.layer.sublayers objectAtIndex:1] removeFromSuperlayer];
+    }
+
 }
 
 - (void) notificationHandler : (id) sender

@@ -140,8 +140,8 @@ static CGFloat messageTextSize = 14.0;
         nameLabelFrame = CGRectMake(15.0f, 5.0f, 100, 20);
         
         timeLabelFrame = CGRectMake(100.0f,balloonViewFrame.size.height, dateSize.width, dateSize.height);
-        self.balloonView.backgroundColor=[self colorWithHexString:@"e0e0e0"];
-
+        
+        self.balloonView.backgroundColor=[self colorWithHexString:@"f5e4dc"];
 
     } else {
         
@@ -154,7 +154,8 @@ static CGFloat messageTextSize = 14.0;
         nameLabelFrame = CGRectMake(15.0f, 5.0f, 100, 20);
         
         timeLabelFrame = CGRectMake(100.0f,balloonViewFrame.size.height, dateSize.width, dateSize.height);
-            self.balloonView.backgroundColor=[self colorWithHexString:@"f5e4dc"];
+        
+        self.balloonView.backgroundColor=[self colorWithHexString:@"e0e0e0"];
 
     }
     

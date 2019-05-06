@@ -69,10 +69,10 @@ static ContactList_DB* DEFAULT_INSTANCE = 0;
     
     NSString* query = @"CREATE TABLE IF NOT EXISTS ";
     query =  [query stringByAppendingString : [self getTableName]];
-    query = [query stringByAppendingString : @"(KEY_ID INTEGER PRIMARY KEY AUTOINCREMENT, "];
-    query = [query stringByAppendingString : @"emailId TEXT, "];
+    //query = [query stringByAppendingString : @"(KEY_ID INTEGER PRIMARY KEY AUTOINCREMENT, "];
+    query = [query stringByAppendingString : @"(emailId TEXT, "];
     query = [query stringByAppendingString : @"name TEXT, "];
-    query = [query stringByAppendingString : @"userId TEXT, "];
+    query = [query stringByAppendingString : @"userId TEXT PRIMARY KEY, "];
     query = [query stringByAppendingString : @"isHidden INTEGER, "];
     query =  [query stringByAppendingString : @"REC_TS DATETIME DEFAULT CURRENT_TIMESTAMP); "];     // adding Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
     

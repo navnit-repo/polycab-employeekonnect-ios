@@ -34,6 +34,7 @@
     NSString *userId;
     NSString *isFromStr;
     UITextView *acceptTextView;
+    NSIndexPath *pathToLastRow;
 }
 @synthesize headerView;
 @synthesize popupTextView;
@@ -52,6 +53,12 @@
     [self drawHeaderItem];
      [self initializeView];
     // Do any additional setup after loading the view from its nib.
+}
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self scrollToBottom];
+   
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -192,7 +199,7 @@
         textView.delegate = self;
         [bottomView addSubview:textView];
         
-        UIButton *sendButton = [[UIButton alloc]initWithFrame:CGRectMake(bottomView.frame.size.width-50,6, 30, 30)];
+        UIButton *sendButton = [[UIButton alloc]initWithFrame:CGRectMake(bottomView.frame.size.width-50,12, 40, 40)];
         [sendButton setBackgroundImage:[UIImage imageNamed:@"send"] forState:UIControlStateNormal];
         sendButton.contentMode = UIViewContentModeScaleAspectFit;
         [sendButton addTarget:self action:@selector(sendButtonHandler:) forControlEvents:UIControlEventTouchUpInside];
@@ -204,7 +211,16 @@
 
 }
 - (IBAction)popupAcceptButtonHandler:(id)sender {
+    
     NSLog(@"accept Button Clicked");
+    
+     NSString* messageTextString = [popupTextView.text  stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    if (messageTextString.length<0 || [messageTextString isEqualToString:@""] || [messageTextString isKindOfClass:[NSNull class]] )
+    {
+        UIAlertView *emptyMessage = [[UIAlertView alloc]initWithTitle:@"" message:@"empty message" delegate:self cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
+        [emptyMessage show];
+    }
+    else{
     
     loadingView = [LoadingView loadingViewInView:self.view];
     ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
@@ -224,6 +240,7 @@
     NSString * url=XmwcsConst_OPCODE_URL;
     networkHelper.serviceURLString = @"http://polycab.dotvik.com:8080/PushMessage/api/updateChatThreadStatus";
     [networkHelper genericJSONPayloadRequestWith:acceptMessageData :self :@"acceptMessageData"];
+    }
 }
 - (IBAction)acceptButtonHandler:(id)sender {
     bottomView.hidden = YES;
@@ -232,6 +249,15 @@
 
 -(void)sendButtonHandler:(id)sender
 {
+    
+     NSString* messageTextString = [textView.text  stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    if (messageTextString.length<0 || [messageTextString isEqualToString:@""] || [messageTextString isKindOfClass:[NSNull class]] || [messageTextString isEqualToString:defaultTextViewText])
+    {
+        UIAlertView *emptyMessage = [[UIAlertView alloc]initWithTitle:@"" message:@"empty message" delegate:self cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
+        [emptyMessage show];
+    }
+    else{
+    
     NSLog(@"Send Button Clicked");
     
     loadingView = [LoadingView loadingViewInView:self.view];
@@ -241,14 +267,14 @@
     NSMutableDictionary *sendMessageData = [[NSMutableDictionary alloc]init];
     NSMutableDictionary *messageData = [[NSMutableDictionary alloc]init];
     
-    [sendMessageData setValue:@"1" forKey:@"requestId"];
+    [sendMessageData setValue:@"" forKey:@"requestId"];
     NSMutableDictionary *requestData = [[NSMutableDictionary alloc]init];
     [requestData setObject:chatThreadId forKey:@"chatThread"];
     [requestData setObject:[[clientVariables.CLIENT_USER_LOGIN userName] stringByAppendingString:@"@employee"] forKey:@"from"];
     [requestData setObject:withChatPersonName forKey:@"to"];
     [requestData setObject:textView.text forKey:@"message"];
     [requestData setObject:@"Text" forKey:@"messageType"];
-    [requestData setObject:@"5" forKey:@"hiddenMessage"];
+    [requestData setObject:@"" forKey:@"hiddenMessage"];
     [requestData setObject:[[clientVariables.CLIENT_USER_LOGIN deviceInfoMap] valueForKey:@"IMEI"] forKey:@"deviceId"];
     [requestData setObject:XmwcsConst_DEVICE_TYPE_IPHONE forKey:@"osType"];
     [requestData setObject:version forKey:@"appVersion"];
@@ -261,7 +287,7 @@
     networkHelper.serviceURLString = @"http://polycab.dotvik.com:8080/PushMessage/api/pushMessage";
     [networkHelper genericJSONPayloadRequestWith:sendMessageData :self :@"sendMessageData"];
     
-   
+    }
     
 }
 
@@ -318,10 +344,9 @@
             chatHistoryArray = [[NSMutableArray alloc]init];
             [chatHistoryArray addObjectsFromArray:chatHistoryStorageData];
             [chatRoomTableView reloadData];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                //code to be executed in the background
-                [self scrollToBottom];
-            });
+            [self performSelector:@selector(scrollToBottom) withObject:nil afterDelay:4.0];
+            
+
        
             
             [[NSUserDefaults standardUserDefaults] setObject:@"YES" forKey:[NSString stringWithFormat:@"CHAT_HISTORY_FIRST_TIME_FETCH_%@",[[chatHistoryArray objectAtIndex:0] valueForKey:@"chatThreadId"]]];
@@ -364,10 +389,6 @@
             self.popupTextView.text =textView.text;
             [textView resignFirstResponder];
             textView.text = defaultTextViewText;
-            dispatch_async(dispatch_get_main_queue(), ^{
-                //code to be executed in the background
-                [self scrollToBottom];
-            });
             
             [ChatThreadList_DB createInstance : @"ChatThread_DB_STORAGE" : true];
             ChatThreadList_DB *chatThreadListStorage = [ChatThreadList_DB getInstance];
@@ -385,6 +406,7 @@
             NSMutableArray *chatThreadListStorageData = [chatThreadListStorage getRecentDocumentsData : @"False"];
             ChatBoxVC *vc =  (ChatBoxVC*) checkView;
             vc.chatThreadDict = chatThreadListStorageData;
+              [self performSelector:@selector(scrollToBottom) withObject:nil afterDelay:0.0];
         }
        
         else
@@ -415,7 +437,7 @@
 
             SWRevealViewController *reveal = (SWRevealViewController*)root;
             [(UINavigationController*)reveal.frontViewController pushViewController:chatVC animated:YES];
-
+               [self performSelector:@selector(scrollToBottom) withObject:nil afterDelay:0.0];
         }
         else
         {
@@ -546,7 +568,14 @@
     }
     
     [self configureCell:cell atIndexPath:indexPath];
+    NSInteger lastSectionIndex = [tableView numberOfSections] - 1;
     
+    // Then grab the number of rows in the last section
+    NSInteger lastRowIndex = [tableView numberOfRowsInSection:lastSectionIndex] - 1;
+    
+    // Now just construct the index path
+    pathToLastRow = [NSIndexPath indexPathForRow:lastRowIndex inSection:lastSectionIndex];
+  
     return cell;
     
 }
@@ -584,7 +613,7 @@
     NSTimeInterval timeInterval=timeStamp/1000;
     NSDate *date = [NSDate dateWithTimeIntervalSince1970:timeInterval];
     NSDateFormatter *dateformatter=[[NSDateFormatter alloc]init];
-    [dateformatter setDateFormat:@"dd-LLLL-yyyy, HH:mm"];
+    [dateformatter setDateFormat:@"dd LLL,yy HH:mm"];
     NSString *dateString=[dateformatter stringFromDate:date];
     NSString *time=dateString;
     
@@ -606,23 +635,17 @@
         ccell.timeLabel.text = time;
         ccell.messageLabel.text = obj.message;
     }
+
 }
 - (void) hideKeyboard {
     [textView resignFirstResponder];
  
-   
 }
 -(void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
 }
 - (void)scrollToBottom
 {
-    CGFloat yOffset = 0;
-    
-    if (chatRoomTableView.contentSize.height > chatRoomTableView.bounds.size.height) {
-        yOffset = chatRoomTableView.contentSize.height - chatRoomTableView.bounds.size.height;
-    }
-    
-    [chatRoomTableView setContentOffset:CGPointMake(0, yOffset) animated:NO];
+      [chatRoomTableView scrollToRowAtIndexPath:pathToLastRow atScrollPosition:UITableViewScrollPositionTop animated:NO];
 }
 @end

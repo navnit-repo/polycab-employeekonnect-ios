@@ -161,7 +161,7 @@
     textView.delegate = self;
     [bottomView addSubview:textView];
 //    UIViewContentModeCenter
-    UIButton *sendButton = [[UIButton alloc]initWithFrame:CGRectMake(bottomView.frame.size.width-50,20, 30, 30)];
+    UIButton *sendButton = [[UIButton alloc]initWithFrame:CGRectMake(bottomView.frame.size.width-50,20, 40, 40)];
     [sendButton setBackgroundImage:[UIImage imageNamed:@"send"] forState:UIControlStateNormal];
     sendButton.contentMode = UIViewContentModeScaleAspectFit;
     [sendButton addTarget:self action:@selector(sendButtonHandler:) forControlEvents:UIControlEventTouchUpInside];
@@ -172,8 +172,18 @@
 
 -(void)sendButtonHandler:(id)sender
 {
-   
-    
+   NSString* subjectString = [subjectTextField.text  stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+     NSString* messageTextString = [textView.text  stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    if (subjectString.length<0 || [subjectString isEqualToString:@""] || [subjectString isKindOfClass:[NSNull class]]) {
+        UIAlertView *emptySubjectAlert = [[UIAlertView alloc]initWithTitle:@"" message:@"empty subject" delegate:self cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
+        [emptySubjectAlert show];
+    }
+    else if (messageTextString.length<0 || [messageTextString isEqualToString:@""] || [messageTextString isKindOfClass:[NSNull class]] || [messageTextString isEqualToString:defaultTextViewText])
+    {
+        UIAlertView *emptyMessage = [[UIAlertView alloc]initWithTitle:@"" message:@"empty message" delegate:self cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
+        [emptyMessage show];
+    }
+    else{
     NSLog(@"Send Button Clicked");
 
     loadingView = [LoadingView loadingViewInView:self.view];
@@ -210,6 +220,7 @@
     
     [textView resignFirstResponder];
     textView.text = defaultTextViewText;
+    }
 }
 
 
