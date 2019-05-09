@@ -20,6 +20,7 @@
 #import "ChatThreadList_DB.h"
 #import "ChatBoxVC.h"
 #import "NewInstanceNsUserDefault.h"
+#import "ExpendObjectClass.h"
 @interface ChatRoomsVC ()
 
 @end
@@ -47,6 +48,7 @@
 @synthesize subject;
 @synthesize bottomView;
 @synthesize chatHistoryArray;
+@synthesize remarkView;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -101,17 +103,29 @@
         self.acceptButtonOutlet.hidden  =YES;
     }
     [LayoutClass textviewLayout:self.popupTextView forFontWeight:UIFontWeightRegular];
+     [LayoutClass textviewLayout:self.remarkView forFontWeight:UIFontWeightRegular];
      [LayoutClass labelLayout:self.popupSubjectLbl forFontWeight:UIFontWeightMedium];
     [LayoutClass buttonLayout:self.popupAcceptButtonOulate forFontWeight:UIFontWeightBold];
     [LayoutClass setLayoutForIPhone6:self.acceptButtonPopUpView];
+     [LayoutClass setLayoutForIPhone6:self.mainPopView];
+    [LayoutClass setLayoutForIPhone6:self.borderLineVIew];
     [LayoutClass setLayoutForIPhone6:self.lineView1];
     [LayoutClass setLayoutForIPhone6:self.lineView2];
     [LayoutClass labelLayout:self.nameLbl forFontWeight:UIFontWeightBold];
     [LayoutClass labelLayout:self.subjectLbl forFontWeight:UIFontWeightRegular];
     [LayoutClass setLayoutForIPhone6:self.chatRoomTableView];
     [LayoutClass setLayoutForIPhone6:self.bottomView];
-
+    
+    remarkView.layer.borderColor =[UIColor colorWithRed:0.76 green:0.76 blue:0.76 alpha:1.0].CGColor;
+    remarkView.layer.borderWidth = 1.0;
+    remarkView.layer.cornerRadius = 5.0;
+    popupTextView.layer.borderColor = [UIColor colorWithRed:0.76 green:0.76 blue:0.76 alpha:1.0].CGColor;
+    popupTextView.layer.borderWidth = 1.0;
+    popupTextView.layer.cornerRadius = 5.0;
+    
     self.popupTextView.delegate = self;
+    self.remarkView.delegate = self;
+    self.remarkView.text = @"Remarks";
     chatRoomTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     chatRoomTableView.bounces = NO;
     
@@ -146,10 +160,26 @@
         
         self.popupSubjectLbl.text  =subject;
         NSString *ownUserId = [clientVariables.CLIENT_USER_LOGIN userName];
-        NSArray *array = [obj.from componentsSeparatedByString:@"@"];
-        if ([[array objectAtIndex:0] isEqualToString:ownUserId]) {
-           self.popupTextView.text  = obj.message;
+
+        
+        for (  NSInteger i = chatHistoryArray.count - 1; i>=0; i--) {
+            ChatHistory_Object *obj = (ChatHistory_Object *)[chatHistoryArray objectAtIndex:i];
+             NSArray *array = [obj.from componentsSeparatedByString:@"@"];
+            if ([[array objectAtIndex:0] isEqualToString:ownUserId]) {
+                
+                //  Base64 string to original string
+                NSData *base64Data = [[NSData alloc] initWithBase64EncodedString:obj.message options:NSDataBase64DecodingIgnoreUnknownCharacters];
+                NSString *originalString =[[NSString alloc] initWithData:base64Data encoding:NSUTF8StringEncoding];
+                
+                NSLog(@"Result: %@",originalString);
+                
+                self.popupTextView.text  = originalString;
+                break;
+            }
+            
         }
+       
+       
        
     }
     else{
@@ -176,20 +206,21 @@
 
 -(void)createView
 {
-    if ([chatStatus isEqualToString:@"Accept"] || [chatStatus isEqualToString:@"Close"]) {
-       
-        chatRoomTableView.frame = CGRectMake(chatRoomTableView.frame.origin.x, chatRoomTableView.frame.origin.y, chatRoomTableView.frame.size.width, chatRoomTableView.frame.size.height + bottomView.frame.size.height);
-         [acceptButtonOutlet removeFromSuperview];
-         [bottomView removeFromSuperview];
-    }
-    else
-    {
+//    if ([chatStatus isEqualToString:@"Accept"] || [chatStatus isEqualToString:@"Close"]) {
+//
+//        chatRoomTableView.frame = CGRectMake(chatRoomTableView.frame.origin.x, chatRoomTableView.frame.origin.y, chatRoomTableView.frame.size.width, chatRoomTableView.frame.size.height + bottomView.frame.size.height);
+//         [acceptButtonOutlet removeFromSuperview];
+//         [bottomView removeFromSuperview];
+//    }
+//    else
+//    {
         UIView *borderLine =  [[UIView alloc]initWithFrame:CGRectMake(0, 0, bottomView.frame.size.width, 5)];
         borderLine.backgroundColor = [UIColor colorWithRed:230.0/255 green:230.0/255 blue:230.0/255 alpha:1.0];
         [bottomView addSubview:borderLine];
         
         textView = [[UITextView alloc]initWithFrame:CGRectMake(0, 6, bottomView.frame.size.width-50, 50)];
         textView.returnKeyType = UIReturnKeyDefault;
+        textView.keyboardType = UIKeyboardTypeDefault;
         textView.autocapitalizationType = UITextAutocapitalizationTypeWords;
         textView.autocorrectionType = UITextAutocorrectionTypeNo;
         textView.font = [UIFont systemFontOfSize:16.0];
@@ -205,7 +236,11 @@
         [sendButton addTarget:self action:@selector(sendButtonHandler:) forControlEvents:UIControlEventTouchUpInside];
         [bottomView addSubview:sendButton];
         [self.view addSubview:bottomView];
+    
+    if ([chatStatus isEqualToString:@"Accept"] || [chatStatus isEqualToString:@"Close"]) {
+          [acceptButtonOutlet removeFromSuperview];
     }
+//    }
     
 
 
@@ -215,9 +250,15 @@
     NSLog(@"accept Button Clicked");
     
      NSString* messageTextString = [popupTextView.text  stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-    if (messageTextString.length<0 || [messageTextString isEqualToString:@""] || [messageTextString isKindOfClass:[NSNull class]] )
+    NSString* remarkTextString = [remarkView.text  stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    if (messageTextString.length<0 || [messageTextString isEqualToString:@""] || [messageTextString isKindOfClass:[NSNull class]] || [messageTextString isEqualToString:defaultTextViewText] || [messageTextString isEqualToString:@"Remarks"])
     {
         UIAlertView *emptyMessage = [[UIAlertView alloc]initWithTitle:@"" message:@"empty message" delegate:self cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
+        [emptyMessage show];
+    }
+    else if (remarkTextString.length<0 || [remarkTextString isEqualToString:@""] || [remarkTextString isKindOfClass:[NSNull class]] || [remarkTextString isEqualToString:defaultTextViewText] || [remarkTextString isEqualToString:@"Remarks"])
+    {
+        UIAlertView *emptyMessage = [[UIAlertView alloc]initWithTitle:@"" message:@"empty remark" delegate:self cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
         [emptyMessage show];
     }
     else{
@@ -233,7 +274,7 @@
     [requestData setObject:chatThreadId forKey:@"chatThreadId"];
     [requestData setObject:@"Accept" forKey:@"status"];
     [requestData setObject:popupTextView.text forKey:@"closingMessage"];
-    
+     [requestData setObject:remarkView.text forKey:@"closingRemark"];
     [acceptMessageData setObject:requestData forKey:@"requestData"];
     
     networkHelper = [[NetworkHelper alloc]init];
@@ -245,6 +286,7 @@
 - (IBAction)acceptButtonHandler:(id)sender {
     bottomView.hidden = YES;
     self.acceptButtonPopUpView.hidden  = NO;
+    
 }
 
 -(void)sendButtonHandler:(id)sender
@@ -290,10 +332,53 @@
     }
     
 }
-
+-(NSMutableArray*)groupData :(NSArray*)dataArray
+{
+    NSMutableArray*distinctName = [[NSMutableArray alloc]init];
+    for (int i=0; i<dataArray.count; i++) {
+        ChatThreadList_Object *obj = (ChatThreadList_Object*) [dataArray objectAtIndex:i];
+        
+        if (![distinctName  containsObject:obj.displayName]) {
+            [distinctName addObject:obj.displayName];
+        }
+    }
+    
+    NSMutableArray *groupObject = [[NSMutableArray alloc]init];
+    for (int i=0; i<distinctName.count; i++) {
+        NSMutableArray *array = [[NSMutableArray alloc]init];
+        ExpendObjectClass * expendObj = [[ExpendObjectClass alloc]init];
+        for (int j=0; j<dataArray.count; j++) {
+            ChatThreadList_Object *obj = (ChatThreadList_Object*) [dataArray objectAtIndex:j];
+            if ([obj.displayName isEqualToString:[distinctName objectAtIndex:i]] ) {
+                [array addObject:obj];
+            }
+            
+        }
+        expendObj.MENU_NAME =[distinctName objectAtIndex:i];
+        expendObj.childCategories = array;
+        [groupObject addObject:expendObj];
+    }
+    return groupObject;
+}
 
 - (void) backHandler : (id) sender
 {
+    UIViewController *root;
+    root = [[[[UIApplication sharedApplication]windows]objectAtIndex:0]rootViewController];
+    SWRevealViewController *reveal = (SWRevealViewController*)root;
+    UINavigationController *check =(UINavigationController*)reveal.frontViewController;
+    NSArray* viewsList = check.viewControllers;
+    UIViewController *checkView = (UIViewController *) [viewsList objectAtIndex:viewsList.count - 2];
+    if ([checkView isKindOfClass:[ChatBoxVC class]]) {
+        ChatBoxVC *vc  = (ChatBoxVC *) checkView;
+        [ChatThreadList_DB createInstance : @"ChatThread_DB_STORAGE" : true];
+        ChatThreadList_DB *chatThreadListStorage = [ChatThreadList_DB getInstance];
+        NSMutableArray *chatThreadListStorageData = [chatThreadListStorage getRecentDocumentsData : @"False"];
+        vc.chatThreadDict = [[NSMutableArray alloc]init];
+        [vc.chatThreadDict addObjectsFromArray:[self groupData:chatThreadListStorageData]];
+        [vc.threadListTableView reloadData];
+    }
+    
     [ [self navigationController]  popViewControllerAnimated:YES];
     
 }
@@ -314,10 +399,19 @@
             
             self.popupSubjectLbl.text  =subject;
             NSString *ownUserId = [clientVariables.CLIENT_USER_LOGIN userName];
-            NSArray *array = [[obj valueForKey:@"from"] componentsSeparatedByString:@"@"];
-            if ([[array objectAtIndex:0] isEqualToString:ownUserId]) {
-                self.popupTextView.text  = [obj valueForKey:@"message"] ;
+            for (  NSInteger i = chatHistoryArray.count - 1; i>=0; i--) {
+                NSMutableArray *obj = [chatHistoryArray objectAtIndex:i];
+                NSArray *array = [[obj valueForKey:@"from"] componentsSeparatedByString:@"@"];
+                if ([[array objectAtIndex:0] isEqualToString:ownUserId]) {
+                    self.popupTextView.text  = [obj valueForKey:@"message"] ;
+                    break;
+                }
+                
             }
+//            NSArray *array = [[obj valueForKey:@"from"] componentsSeparatedByString:@"@"];
+//            if ([[array objectAtIndex:0] isEqualToString:ownUserId]) {
+//                self.popupTextView.text  = [obj valueForKey:@"message"] ;
+//            }
             
         
             
@@ -328,11 +422,23 @@
              //[chatHistory_DBStorage dropTable:@"ChatHistory_DB_STORAGE"];
             for(int i =0; i<[chatHistoryArray count];i++)
             {
+                NSString *messageString = [[chatHistoryArray objectAtIndex:i] valueForKey:@"message"];
+                NSData *messageData = [messageString dataUsingEncoding:NSUTF8StringEncoding];
+                NSString *base64MessageString = [messageData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+                
+                //Base64 string to original string
+//                NSData *base64Data = [[NSData alloc] initWithBase64EncodedString:base64String options:NSDataBase64DecodingIgnoreUnknownCharacters];
+//                NSString *originalString =[[NSString alloc] initWithData:base64Data encoding:NSUTF8StringEncoding];
+//
+//                NSLog(@"Result: %@",originalString);
+                
+                
+                
                 ChatHistory_Object* chatHistory_Object = [[ChatHistory_Object alloc] init];
                 chatHistory_Object.chatThreadId =  [[[chatHistoryArray objectAtIndex:i] valueForKey:@"chatThreadId"] integerValue] ;
                 chatHistory_Object.from =   [ NSString stringWithFormat:@"%@", [[chatHistoryArray objectAtIndex:i] valueForKey:@"from"]];
                 chatHistory_Object.to =  [ NSString stringWithFormat:@"%@",[[chatHistoryArray objectAtIndex:i] valueForKey:@"to"]];
-                chatHistory_Object.message =[ NSString stringWithFormat:@"%@",[[chatHistoryArray objectAtIndex:i] valueForKey:@"message"]];
+                chatHistory_Object.message =base64MessageString;
                 chatHistory_Object.messageDate =[ NSString stringWithFormat:@"%@",[[chatHistoryArray objectAtIndex:i] valueForKey:@"messageDate"]];
                 chatHistory_Object.messageType =[ NSString stringWithFormat:@"%@",[[chatHistoryArray objectAtIndex:i] valueForKey:@"messageType"]];
                 
@@ -368,6 +474,9 @@
 
             NSString * timeStampValue = [[NSString stringWithFormat:@"%ld", (long)[[NSDate date] timeIntervalSince1970]]stringByAppendingString:@"000"];
             NSLog(@"Time Stamp Value == %@", timeStampValue);
+            NSString *messageString = textView.text;
+            NSData *messageData = [messageString dataUsingEncoding:NSUTF8StringEncoding];
+            NSString *base64MessageString = [messageData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
             
             [ChatHistory_DB createInstance : @"ChatHistory_DB_STORAGE" : true :[[dict valueForKey:@"chatThreadId"] integerValue]];
             ChatHistory_DB *chatHistory_DBStorage = [ChatHistory_DB getInstance];
@@ -376,7 +485,7 @@
             chatHistory_Object.chatThreadId =  [[dict valueForKey:@"chatThreadId"] integerValue] ;
             chatHistory_Object.from =   [ NSString stringWithFormat:@"%@", [dict valueForKey:@"from"]];
             chatHistory_Object.to =  [ NSString stringWithFormat:@"%@",[dict valueForKey:@"to"]];
-            chatHistory_Object.message =[ NSString stringWithFormat:@"%@",textView.text];
+            chatHistory_Object.message =base64MessageString;
             chatHistory_Object.messageDate =[ NSString stringWithFormat:@"%@",timeStampValue];
             chatHistory_Object.messageType =@"TEXT";
             chatHistory_Object.messageId =[[dict valueForKey:@"serverMessageId"] integerValue] ;
@@ -470,13 +579,15 @@
 //}
 
 - (BOOL) textViewShouldBeginEditing:(UITextView *)textView {
-    if (textView.tag==10) {
+    if (textView.tag==10||textView.tag==11) {
         acceptTextView = textView;
     }
     if ([textView.text isEqualToString:defaultTextViewText]) {
         textView.text = @"";
     }
-    
+    if ([textView.text isEqualToString:@"Remarks"]) {
+        textView.text = @"";
+    }
     textView.textColor = [UIColor blackColor];
     [textView resignFirstResponder];
     
@@ -516,6 +627,7 @@
     self.acceptButtonPopUpView.hidden = YES;
     bottomView.hidden = NO;
     [popupTextView resignFirstResponder];
+    [remarkView resignFirstResponder];
 }
 #pragma mark - keyboard movements
 - (void)keyboardWillShow:(NSNotification *)notification
@@ -523,10 +635,11 @@
     if (acceptTextView!=nil) {
         [UIView animateWithDuration:0.3 animations:^{
             CGRect f = self.view.frame;
-            f.origin.y = -80;
+            f.origin.y = -120;
             self.view.frame = f;
         }];
     }
+  
     else{
         CGSize keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
         
@@ -616,12 +729,19 @@
     [dateformatter setDateFormat:@"dd LLL,yy HH:mm"];
     NSString *dateString=[dateformatter stringFromDate:date];
     NSString *time=dateString;
+    NSString *objString = obj.message;
+    
+  //  Base64 string to original string
+                    NSData *base64Data = [[NSData alloc] initWithBase64EncodedString:objString options:NSDataBase64DecodingIgnoreUnknownCharacters];
+                    NSString *originalString =[[NSString alloc] initWithData:base64Data encoding:NSUTF8StringEncoding];
+    
+                    NSLog(@"Result: %@",originalString);
     
     if([senderId isEqualToString:userId]) {
         ccell.sent = NO;
         
         ccell.timeLabel.text = time;
-        ccell.messageLabel.text = obj.message;
+        ccell.messageLabel.text = originalString;
     }
     else {
         ccell.sent = YES;
@@ -633,7 +753,7 @@
 //        }
        
         ccell.timeLabel.text = time;
-        ccell.messageLabel.text = obj.message;
+        ccell.messageLabel.text = originalString;
     }
 
 }

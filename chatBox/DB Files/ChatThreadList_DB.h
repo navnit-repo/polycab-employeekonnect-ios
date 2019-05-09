@@ -23,6 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 -(id) initWithDBName : (NSString*) dbName;
 -(BOOL)createDB;
 -(BOOL) updateDocLastMessageTime : (ChatThreadList_Object*) chatThreadList_Object;
+-(BOOL) updateDeletedTheadFlag   : (ChatThreadList_Object*) chatThreadList_Object;
 -(BOOL) updateDoc : (ChatThreadList_Object*) chatThreadList_Object;
 -(void)dropTable :(NSString*) context;
 -(BOOL) createTable;

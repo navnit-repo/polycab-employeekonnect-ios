@@ -532,8 +532,8 @@ NSString *g_DeviceSessionId = nil;
         }
     }
     
-    NSData *requestData = [NSData dataWithBytes:[postData UTF8String] length:[postData length]];
-    
+//    NSData *requestData = [NSData dataWithBytes:[postData UTF8String] length:[postData length]];
+    NSData *requestData = [postData dataUsingEncoding:NSUTF8StringEncoding];
     [request setHTTPBody:requestData];
     
     urlConnection = [[NSURLConnection alloc] initWithRequest:request delegate:self];

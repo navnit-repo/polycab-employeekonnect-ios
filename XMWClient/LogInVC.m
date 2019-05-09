@@ -591,13 +591,20 @@ NSMutableDictionary *masterDataForEmployee;
                     obj = (ContactList_Object*) [contactListStorageData objectAtIndex:0];
                     
                 }
+                NSString *subjectString = [[chatThreadDict objectAtIndex:i] valueForKey:@"subject"];
+                NSData *subjectData = [subjectString dataUsingEncoding:NSUTF8StringEncoding];
+                NSString *base64SubjectString = [subjectData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+                
                 ChatThreadList_Object* chatThreadList_Object = [[ChatThreadList_Object alloc] init];
                 chatThreadList_Object.chatThreadId =[[[chatThreadDict objectAtIndex:i] valueForKey:@"id"] integerValue] ;
                 chatThreadList_Object.from =   [ NSString stringWithFormat:@"%@", [[chatThreadDict objectAtIndex:i] valueForKey:@"fromUserId"]];
                 chatThreadList_Object.to =  [ NSString stringWithFormat:@"%@",[[chatThreadDict objectAtIndex:i] valueForKey:@"toUserId"]];
-                chatThreadList_Object.subject =[ NSString stringWithFormat:@"%@",[[chatThreadDict objectAtIndex:i] valueForKey:@"subject"]];
+                chatThreadList_Object.subject =base64SubjectString;
                 chatThreadList_Object.lastMessageOn =[ NSString stringWithFormat:@"%@",[[chatThreadDict objectAtIndex:i] valueForKey:@"lastMessageOn"]];
                 chatThreadList_Object.status =[ NSString stringWithFormat:@"%@",[[chatThreadDict objectAtIndex:i] valueForKey:@"status"]];
+                BOOL flag = [[[chatThreadDict objectAtIndex:i] valueForKey:@"deleted"] boolValue];
+                
+                chatThreadList_Object.deletedFlag =[ NSString stringWithFormat:@"%@",flag ? @"YES" : @"NO"];
                 chatThreadList_Object.displayName = obj.userName;
                 [chatThreadListStorage insertDoc:chatThreadList_Object];
                 

@@ -73,6 +73,7 @@ static ChatThreadList_DB* DEFAULT_INSTANCE = 0;
     query = [query stringByAppendingString : @"lastMessageOn TEXT, "];
     query = [query stringByAppendingString : @"displayName TEXT, "];
     query = [query stringByAppendingString : @"filterByLatestTime INTEGER, "];
+    query = [query stringByAppendingString : @"deleteFlag TEXT, "];
     query =  [query stringByAppendingString : @"REC_TS DATETIME DEFAULT CURRENT_TIMESTAMP); "];
     
     // adding Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
@@ -151,6 +152,31 @@ static ChatThreadList_DB* DEFAULT_INSTANCE = 0;
     
     return false;
 }
+- (BOOL)updateDeletedTheadFlag:(ChatThreadList_Object *)chatThreadList_Object
+{   NSString* query = @"UPDATE ";
+    query =  [query stringByAppendingString : [self getTableName]];
+    query = [[query stringByAppendingString : @" SET "] stringByAppendingString:@" deleteFlag = '"];
+    query = [[query stringByAppendingString:chatThreadList_Object.deletedFlag] stringByAppendingString:@"'"];
+    NSString *whereClause = [[@" where chatThreadId =" stringByAppendingString:[NSString stringWithFormat:@"%d",chatThreadList_Object.chatThreadId]] stringByAppendingString:@";"];
+     query = [query stringByAppendingString:whereClause];
+    sqlite3_stmt *statement = nil;
+    if (sqlite3_prepare_v2([self sqlConnection], [query UTF8String], -1, &statement, nil) == SQLITE_OK)
+    {
+        sqlite3_bind_text(statement, sqlite3_bind_parameter_index(statement, ":KEY_READ"), [chatThreadList_Object.status UTF8String], chatThreadList_Object.status.length, nil);
+        
+        if (sqlite3_step(statement) == SQLITE_DONE)
+        {
+            sqlite3_finalize(statement);
+            [self close];
+            return true;
+        }
+    }
+    else {
+        //NSLog(@"Error: failed to prepare statement with message '%s'.", sqlite3_errmsg([self sqlConnection]));
+    }
+    
+    return false;
+}
 -(BOOL) updateDoc : (ChatThreadList_Object*) chatThreadList_Object
 {
     NSString* query = @"UPDATE ";
@@ -190,8 +216,8 @@ static ChatThreadList_DB* DEFAULT_INSTANCE = 0;
     
     NSString* query = @"INSERT INTO ";
     query =  [query stringByAppendingString : [self getTableName]];
-    query = [query stringByAppendingString : @"(chatThreadId, fromId, toId, status, subject, lastMessageOn, displayName, filterByLatestTime) "];
-    query = [query stringByAppendingString : @"VALUES(:chatThreadId, :fromId, :toId, :status, :subject, :lastMessageOn, :displayName, :filterByLatestTime);"];
+    query = [query stringByAppendingString : @"(chatThreadId, fromId, toId, status, subject, lastMessageOn, displayName, filterByLatestTime, deleteFlag) "];
+    query = [query stringByAppendingString : @"VALUES(:chatThreadId, :fromId, :toId, :status, :subject, :lastMessageOn, :displayName, :filterByLatestTime, :deleteFlag);"];
     
     sqlite3_stmt *statement = nil;
     if (sqlite3_prepare_v2([self sqlConnection], [query UTF8String], -1, &statement, nil) == SQLITE_OK)
@@ -212,7 +238,7 @@ static ChatThreadList_DB* DEFAULT_INSTANCE = 0;
        double filterTime = [chatThreadList_Object.lastMessageOn doubleValue];
         
         sqlite3_bind_int64(statement, sqlite3_bind_parameter_index(statement, ":filterByLatestTime"), filterTime);
-
+        sqlite3_bind_text(statement, sqlite3_bind_parameter_index(statement, ":deleteFlag"), [chatThreadList_Object.deletedFlag UTF8String], chatThreadList_Object.deletedFlag.length, nil);
         if (sqlite3_step(statement) == SQLITE_DONE)
         {
             insertId = (int)sqlite3_last_insert_rowid([self sqlConnection]);
@@ -229,8 +255,8 @@ static ChatThreadList_DB* DEFAULT_INSTANCE = 0;
 -(NSMutableArray*)  getRecentDocumentsData : (NSString *)delete_stringFlag
 {
     NSMutableArray* list = [[NSMutableArray alloc] init];
-    NSString* query = @"SELECT chatThreadId,  fromId, toId, status, subject, lastMessageOn, displayName from ";
-    query = [[query stringByAppendingString : [self getTableName]]stringByAppendingString:@" ORDER BY filterByLatestTime DESC;"];
+    NSString* query = @"SELECT chatThreadId,  fromId, toId, status, subject, lastMessageOn, displayName, deleteFlag from ";
+    query = [[query stringByAppendingString : [self getTableName]]stringByAppendingString:@" where deleteFlag ='NO' ORDER BY filterByLatestTime DESC;"];
    // NSString* query = [@"SELECT * from " stringByAppendingString:[self getTableName]];
     
     // query = [query stringByAppendingString : @" ;"];
@@ -276,7 +302,7 @@ static ChatThreadList_DB* DEFAULT_INSTANCE = 0;
 //        name =@"";
 //    }
     chatThreadList_Object.displayName  = [NSString stringWithFormat:@"%s",(const char*)sqlite3_column_text(statement, 6)];
-    
+    chatThreadList_Object.deletedFlag  = [NSString stringWithFormat:@"%s",(const char*)sqlite3_column_text(statement, 7)];
     return chatThreadList_Object;
 }
 - (void)dropTable:(NSString *)context

@@ -17,4 +17,5 @@
 @synthesize subject;
 @synthesize lastMessageOn;
 @synthesize displayName;
+@synthesize deletedFlag;
 @end

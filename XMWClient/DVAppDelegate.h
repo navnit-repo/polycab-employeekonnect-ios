@@ -18,6 +18,7 @@ extern CGFloat deviceHeightRation;
 extern CGFloat bottomBarHeight;
 extern BOOL ChatBoxPushNotifiactionFlag;
 extern BOOL ChatRoomPushNotifiactionFlag;
+extern BOOL SELF_EXTEND;
 extern BOOL regIDCheck;
 @interface DVAppDelegate : UIResponder <UIApplicationDelegate, HttpEventListener,UNUserNotificationCenterDelegate>
 {

@@ -37,6 +37,7 @@
 #import "ChatBoxVC.h"
 #import "ChatRoomsVC.h"
 #import "ChatHistory_Object.h"
+#import "NewChatBoxVC.h"
 #define TAG_LOGOUT_DIALOG 1000
 @interface DashBoardVC ()
 @end
@@ -785,8 +786,8 @@
     
     else if ([formId isEqualToString:@"DOT_FORM_CHAIRMAN_CHAT"])
     {
-        ChatBoxVC *chatVC = [[ChatBoxVC alloc]init];
-        
+       ChatBoxVC *chatVC = [[ChatBoxVC alloc]init];
+//        NewChatBoxVC *chatVC = [[NewChatBoxVC alloc]init];
         UIViewController *root;
         root = [[[[UIApplication sharedApplication]windows]objectAtIndex:0]rootViewController];
         

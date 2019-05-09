@@ -10,7 +10,7 @@
 #import "PTSMessagingCell.h"
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ChatRoomsVC : UIViewController <UITableViewDataSource,UITableViewDelegate,UITextViewDelegate>
+@interface ChatRoomsVC : UIViewController <UITableViewDataSource,UITableViewDelegate,UITextViewDelegate,UITextFieldDelegate>
 {
     NSString *subject;
     NSString *chatThreadId;
@@ -37,6 +37,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UIView *bottomView;
 @property (weak, nonatomic) IBOutlet UIView *acceptButtonPopUpView;
 @property (weak, nonatomic) IBOutlet UITextView *popupTextView;
+@property (weak, nonatomic) IBOutlet UIView *mainPopView;
+@property (weak, nonatomic) IBOutlet UIView *borderLineVIew;
+@property (weak, nonatomic) IBOutlet UITextView *remarkView;
 
 @end
 

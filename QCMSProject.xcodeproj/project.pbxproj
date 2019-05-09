@@ -670,6 +670,15 @@
 		F03484E5221E8C36007E7653 /* EmpolyeeSalesReportVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F03484E3221E8C36007E7653 /* EmpolyeeSalesReportVC.m */; };
 		F03484E7221E8DB8007E7653 /* EmployeeSalesFormVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = F03484E6221E8DB7007E7653 /* EmployeeSalesFormVC.xib */; };
 		F03484E9221E9352007E7653 /* EmpolyeeSalesReportHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F03484E8221E9352007E7653 /* EmpolyeeSalesReportHeaderView.xib */; };
+		F036CDCC22815F4D000F2448 /* Tick_Mark.png in Resources */ = {isa = PBXBuildFile; fileRef = F036CDCB22815F4C000F2448 /* Tick_Mark.png */; };
+		F036CDE42281869C000F2448 /* NewChatBoxVC.h in Headers */ = {isa = PBXBuildFile; fileRef = F036CDE12281869C000F2448 /* NewChatBoxVC.h */; };
+		F036CDE52281869C000F2448 /* NewChatBoxVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F036CDE22281869C000F2448 /* NewChatBoxVC.m */; };
+		F036CDE62281869C000F2448 /* NewChatBoxVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = F036CDE32281869C000F2448 /* NewChatBoxVC.xib */; };
+		F036CDE92281BDE6000F2448 /* ExpendObjectClass.h in Headers */ = {isa = PBXBuildFile; fileRef = F036CDE72281BDE6000F2448 /* ExpendObjectClass.h */; };
+		F036CDEA2281BDE6000F2448 /* ExpendObjectClass.m in Sources */ = {isa = PBXBuildFile; fileRef = F036CDE82281BDE6000F2448 /* ExpendObjectClass.m */; };
+		F036CDEC2282CBC8000F2448 /* close.png in Resources */ = {isa = PBXBuildFile; fileRef = F036CDEB2282CBC8000F2448 /* close.png */; };
+		F036CDEE2282CBD2000F2448 /* close@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F036CDED2282CBD1000F2448 /* close@2x.png */; };
+		F036CDF02282CBDA000F2448 /* close@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F036CDEF2282CBDA000F2448 /* close@3x.png */; };
 		F038EF3E2150C1C400AFB080 /* polycab_arrow_closed.png in Resources */ = {isa = PBXBuildFile; fileRef = F038EF3C2150C1C300AFB080 /* polycab_arrow_closed.png */; };
 		F038EF3F2150C1C400AFB080 /* polycab_arrow_open.png in Resources */ = {isa = PBXBuildFile; fileRef = F038EF3D2150C1C300AFB080 /* polycab_arrow_open.png */; };
 		F038EF422150C2B200AFB080 /* polycab_arrow_closed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F038EF402150C2B200AFB080 /* polycab_arrow_closed@2x.png */; };
@@ -1833,6 +1842,15 @@
 		F03484E3221E8C36007E7653 /* EmpolyeeSalesReportVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EmpolyeeSalesReportVC.m; sourceTree = "<group>"; };
 		F03484E6221E8DB7007E7653 /* EmployeeSalesFormVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmployeeSalesFormVC.xib; sourceTree = "<group>"; };
 		F03484E8221E9352007E7653 /* EmpolyeeSalesReportHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmpolyeeSalesReportHeaderView.xib; sourceTree = "<group>"; };
+		F036CDCB22815F4C000F2448 /* Tick_Mark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Tick_Mark.png; sourceTree = "<group>"; };
+		F036CDE12281869C000F2448 /* NewChatBoxVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NewChatBoxVC.h; sourceTree = "<group>"; };
+		F036CDE22281869C000F2448 /* NewChatBoxVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NewChatBoxVC.m; sourceTree = "<group>"; };
+		F036CDE32281869C000F2448 /* NewChatBoxVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewChatBoxVC.xib; sourceTree = "<group>"; };
+		F036CDE72281BDE6000F2448 /* ExpendObjectClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ExpendObjectClass.h; sourceTree = "<group>"; };
+		F036CDE82281BDE6000F2448 /* ExpendObjectClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ExpendObjectClass.m; sourceTree = "<group>"; };
+		F036CDEB2282CBC8000F2448 /* close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = close.png; sourceTree = "<group>"; };
+		F036CDED2282CBD1000F2448 /* close@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "close@2x.png"; sourceTree = "<group>"; };
+		F036CDEF2282CBDA000F2448 /* close@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "close@3x.png"; sourceTree = "<group>"; };
 		F038EF3C2150C1C300AFB080 /* polycab_arrow_closed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = polycab_arrow_closed.png; sourceTree = "<group>"; };
 		F038EF3D2150C1C300AFB080 /* polycab_arrow_open.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = polycab_arrow_open.png; sourceTree = "<group>"; };
 		F038EF402150C2B200AFB080 /* polycab_arrow_closed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "polycab_arrow_closed@2x.png"; sourceTree = "<group>"; };
@@ -4375,6 +4393,9 @@
 				F0B4256A22671C220011D3E4 /* MessageSubjectVC.xib */,
 				F034774222781C180040A660 /* NewInstanceNsUserDefault.h */,
 				F034774322781C180040A660 /* NewInstanceNsUserDefault.m */,
+				F036CDE12281869C000F2448 /* NewChatBoxVC.h */,
+				F036CDE22281869C000F2448 /* NewChatBoxVC.m */,
+				F036CDE32281869C000F2448 /* NewChatBoxVC.xib */,
 			);
 			path = chatBox;
 			sourceTree = SOURCE_ROOT;
@@ -4394,6 +4415,8 @@
 				F0B4257922671C230011D3E4 /* ChatHistory_DB.m */,
 				F0B4257622671C230011D3E4 /* ChatHistory_Object.h */,
 				F0B4257C22671C230011D3E4 /* ChatHistory_Object.m */,
+				F036CDE72281BDE6000F2448 /* ExpendObjectClass.h */,
+				F036CDE82281BDE6000F2448 /* ExpendObjectClass.m */,
 			);
 			path = "DB Files";
 			sourceTree = "<group>";
@@ -4401,6 +4424,7 @@
 		F0B4258222671C240011D3E4 /* chat@assets */ = {
 			isa = PBXGroup;
 			children = (
+				F036CDCB22815F4C000F2448 /* Tick_Mark.png */,
 				F0B4258322671C240011D3E4 /* @1x */,
 				F0B4258822671C240011D3E4 /* @2x */,
 				F0B4258D22671C240011D3E4 /* @3x */,
@@ -4411,6 +4435,7 @@
 		F0B4258322671C240011D3E4 /* @1x */ = {
 			isa = PBXGroup;
 			children = (
+				F036CDEB2282CBC8000F2448 /* close.png */,
 				F0B425CE2267343D0011D3E4 /* Artboard.png */,
 				F0B4258422671C240011D3E4 /* avatar_unfilled.png */,
 				F0B4258522671C240011D3E4 /* avatar_filled.png */,
@@ -4423,6 +4448,7 @@
 		F0B4258822671C240011D3E4 /* @2x */ = {
 			isa = PBXGroup;
 			children = (
+				F036CDED2282CBD1000F2448 /* close@2x.png */,
 				F0B425D02267344A0011D3E4 /* Artboard@2x.png */,
 				F0B4258922671C240011D3E4 /* chat_add@2x.png */,
 				F0B4258A22671C240011D3E4 /* send@2x.png */,
@@ -4435,6 +4461,7 @@
 		F0B4258D22671C240011D3E4 /* @3x */ = {
 			isa = PBXGroup;
 			children = (
+				F036CDEF2282CBDA000F2448 /* close@3x.png */,
 				F0B425D2226734550011D3E4 /* Artboard@3x.png */,
 				F0B4258E22671C240011D3E4 /* avatar_unfilled@3x.png */,
 				F0B4258F22671C240011D3E4 /* avatar_filled@3x.png */,
@@ -4669,6 +4696,7 @@
 				F0B2FB3D218850F5006A7C6B /* CustomCompareFormVC.h in Headers */,
 				F0A8EA80211D6C8F001C4FAD /* CreateOrderVC2.h in Headers */,
 				F02E353922155EBD0007573D /* NationalSalesAggregatePieView.h in Headers */,
+				F036CDE92281BDE6000F2448 /* ExpendObjectClass.h in Headers */,
 				851F3AF51A768B7500B08BD8 /* DotHAxis.h in Headers */,
 				85AC9667198FFDDF00AC0338 /* ReportTabularDataSection.h in Headers */,
 				85AC965D198FFDDF00AC0338 /* ReportFooterSection.h in Headers */,
@@ -4722,6 +4750,7 @@
 				858082A71A5D892800207EAB /* DotVBarChart.h in Headers */,
 				F09B7B35213024B7006D9372 /* CreateDetailsCell.h in Headers */,
 				F039CAE520F49AF2005CEC02 /* Records.h in Headers */,
+				F036CDE42281869C000F2448 /* NewChatBoxVC.h in Headers */,
 				901F6E3B180282E500293AB9 /* XMWFaqWebViewController.h in Headers */,
 				85AC965B198FFDDF00AC0338 /* ReportBaseSection.h in Headers */,
 				F039CADA20F475D9005CEC02 /* TrackClaimVC.h in Headers */,
@@ -4917,9 +4946,11 @@
 				F023B77C211C1A4100D54B38 /* HamperSchemeCollectionView.xib in Resources */,
 				F059CC9C214F70D000E303F6 /* 07-proofofdelivery.png in Resources */,
 				F03029642101B0280089A4E4 /* 01_splash.jpg in Resources */,
+				F036CDEC2282CBC8000F2448 /* close.png in Resources */,
 				85DB6AC41E634CB90018710B /* WideReportVC.xib in Resources */,
 				90E810B0174F451D003BDF77 /* back.png in Resources */,
 				F0B425AE22671C240011D3E4 /* chat_add.png in Resources */,
+				F036CDF02282CBDA000F2448 /* close@3x.png in Resources */,
 				F088F61F21060C6D000E26F4 /* CreateSubUserVC.xib in Resources */,
 				F088F5D92105CCC0000E26F4 /* LaunchScreen.xib in Resources */,
 				90E810B2174F451D003BDF77 /* blueButton.png in Resources */,
@@ -5056,6 +5087,7 @@
 				F02E353622155AB10007573D /* NationalSalesAggregateCollectionView.xib in Resources */,
 				F059CD2E214F710600E303F6 /* cart@3x.png in Resources */,
 				F0B425B322671C240011D3E4 /* avatar_unfilled@2x.png in Resources */,
+				F036CDE62281869C000F2448 /* NewChatBoxVC.xib in Resources */,
 				857A3ED01A6CFC3500279931 /* arrow_closed2@2x.png in Resources */,
 				F059CCDB214F70F600E303F6 /* black-showpasswordicon@2x.png in Resources */,
 				857A3EFC1A6CFC3500279931 /* ThirdDashView.xib in Resources */,
@@ -5078,6 +5110,7 @@
 				905FFDC8199A081300E95BFB /* downloadImage3.png in Resources */,
 				857A3EE51A6CFC3500279931 /* FirstDashView.xib in Resources */,
 				F059CD22214F710600E303F6 /* 03-order@3x.png in Resources */,
+				F036CDCC22815F4D000F2448 /* Tick_Mark.png in Resources */,
 				F059CC94214F70D000E303F6 /* polycab_notification.png in Resources */,
 				F0580206221D2DE000682D07 /* CreateOrderStatusVC.xib in Resources */,
 				857A3EF61A6CFC3500279931 /* SecondDashView.xib in Resources */,
@@ -5309,6 +5342,7 @@
 				85FBB0661A9EF9B900E962D6 /* flip.png in Resources */,
 				F038EF432150C2B200AFB080 /* polycab_arrow_open@2x.png in Resources */,
 				857F8C5F1A828CBD0018A54C /* popular_scheme_L@2x.png in Resources */,
+				F036CDEE2282CBD2000F2448 /* close@2x.png in Resources */,
 				855A2A851A851C68003888ED /* SecondDashDataView.xib in Resources */,
 				85D5DA6618E6F5EF00BE344F /* Icon-Cal@2x.png in Resources */,
 				850357AF1E8B77EE005500B9 /* PODTableViewCell.xib in Resources */,
@@ -5542,9 +5576,11 @@
 				8555ED2219E75FCD00EB9507 /* MCSwipeTableViewCell.m in Sources */,
 				F0C76ED920DD0BF700390528 /* CustomerClaimInvoiceFetchDetailsVC.m in Sources */,
 				F05E97E81FEA47FA00E06ADE /* CreateOrderDashView.m in Sources */,
+				F036CDE52281869C000F2448 /* NewChatBoxVC.m in Sources */,
 				F0B2FB31218850F5006A7C6B /* SalesComparisonReport.m in Sources */,
 				902D3F641755E92200E079AB /* AlertButtonTableViewCell.m in Sources */,
 				855A8E461B495022001152F2 /* CreateOrderVC.m in Sources */,
+				F036CDEA2281BDE6000F2448 /* ExpendObjectClass.m in Sources */,
 				F03477902279729C0040A660 /* KeychainItemWrapper.m in Sources */,
 				F00849A422770EBA009E723C /* PushNotificationHandler.m in Sources */,
 				902D3F651755E92200E079AB /* ButtonTableViewCell.m in Sources */,

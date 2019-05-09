@@ -42,6 +42,9 @@
            // long int filterTime =[[NSString stringWithFormat:@"%ld", (long)[[NSDate date] timeIntervalSince1970]]stringByAppendingString:@"000"];
             long int filterTime = (long)[[NSDate date] timeIntervalSince1970] + 000;
             
+            NSString *messageString = [responsedict valueForKey:@"message"];
+            NSData *messageData = [messageString dataUsingEncoding:NSUTF8StringEncoding];
+            NSString *base64MessageString = [messageData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
             NSLog(@"Time Stamp Value == %@", timeStampValue);
             [ChatHistory_DB createInstance : @"ChatHistory_DB_STORAGE" : true :[[responsedict valueForKey:@"chatThread"] integerValue]];
             
@@ -50,7 +53,7 @@
             chatHistory_Object.chatThreadId =  [[responsedict valueForKey:@"chatThread"] integerValue] ;
             chatHistory_Object.from =   [ NSString stringWithFormat:@"%@", [responsedict valueForKey:@"from"]];
             chatHistory_Object.to =  [ NSString stringWithFormat:@"%@",[responsedict valueForKey:@"to"]];
-            chatHistory_Object.message =[ NSString stringWithFormat:@"%@",[responsedict valueForKey:@"message"]];
+            chatHistory_Object.message =base64MessageString;
             chatHistory_Object.messageDate =[ NSString stringWithFormat:@"%@",timeStampValue];
             chatHistory_Object.messageType =[ NSString stringWithFormat:@"%@", [responsedict valueForKey:@"messageType"]];
             chatHistory_Object.messageId =  [[responsedict valueForKey:@"messageId"] integerValue] ;
@@ -63,6 +66,16 @@
              chatThreadList_Object.lastMessageOn = [ NSString stringWithFormat:@"%@",timeStampValue];
 //             chatThreadList_Object.filterTimeStamp = filterTime;
             [chatThreadListStorage updateDocLastMessageTime:chatThreadList_Object];
+            
+     // update delete thread flag
+            
+  
+                ChatThreadList_Object* chatThreadList_Object2 = [[ChatThreadList_Object alloc] init];
+                chatThreadList_Object2.chatThreadId = chatHistory_Object.chatThreadId ;
+                chatThreadList_Object2.deletedFlag =@"NO";
+                [chatThreadListStorage updateDeletedTheadFlag:chatThreadList_Object2];
+      
+            
         }
         
         else if ([[mainDict valueForKey:@"NOTIFY_CALLNAME"] isEqualToString:@"NEW_THREAD"]) {
@@ -97,12 +110,15 @@
             }
             
             
+            NSString *subjectString = [responsedict  valueForKey:@"subject"];
+            NSData *subjectData = [subjectString dataUsingEncoding:NSUTF8StringEncoding];
+            NSString *base64SubjectString = [subjectData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
             
             ChatThreadList_Object* chatThreadList_Object = [[ChatThreadList_Object alloc] init];
             chatThreadList_Object.chatThreadId = [[[responsedict valueForKey:@"message"] valueForKey:@"chatThread"] integerValue];
             chatThreadList_Object.from =        [responsedict valueForKey:@"from"];
             chatThreadList_Object.to =          [responsedict valueForKey:@"to"];
-            chatThreadList_Object.subject =     [responsedict  valueForKey:@"subject"];
+            chatThreadList_Object.subject =     base64SubjectString;
             chatThreadList_Object.displayName = obj.userName;
             NSString * timeStampValue = [[NSString stringWithFormat:@"%ld", (long)[[NSDate date] timeIntervalSince1970]]stringByAppendingString:@"000"];
             NSLog(@"Time Stamp Value == %@", timeStampValue);
