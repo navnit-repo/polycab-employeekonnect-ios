@@ -256,13 +256,14 @@
         UIAlertView *emptyMessage = [[UIAlertView alloc]initWithTitle:@"" message:@"empty message" delegate:self cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
         [emptyMessage show];
     }
-    else if (remarkTextString.length<0 || [remarkTextString isEqualToString:@""] || [remarkTextString isKindOfClass:[NSNull class]] || [remarkTextString isEqualToString:defaultTextViewText] || [remarkTextString isEqualToString:@"Remarks"])
-    {
-        UIAlertView *emptyMessage = [[UIAlertView alloc]initWithTitle:@"" message:@"empty remark" delegate:self cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
-        [emptyMessage show];
-    }
+   
     else{
     
+        if ( [remarkTextString isEqualToString:defaultTextViewText] || [remarkTextString isEqualToString:@"Remarks"])
+        {
+            remarkView.text =@"";
+        }
+        
     loadingView = [LoadingView loadingViewInView:self.view];
     ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
     NSString * version = [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleShortVersionString"];

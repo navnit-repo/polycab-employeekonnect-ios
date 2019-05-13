@@ -20,6 +20,7 @@
 #import "ContactList_DB.h"
 #import "ContactList_Object.h"
 #import "LayoutClass.h"
+#import "ExpendObjectClass.h"
 @interface MessageSubjectVC ()
 
 @end
@@ -331,13 +332,15 @@
              ChatThreadList_DB *chatThreadListStorage = [ChatThreadList_DB getInstance];
             
       NSMutableArray *contactListStorageData = [contactListStorage getContactDisplayName:@"False" :[dict valueForKey:@"to"]];
-            
+            NSString *subjectString = subjectTextField.text;
+            NSData *subjectData = [subjectString dataUsingEncoding:NSUTF8StringEncoding];
+            NSString *base64SubjectString = [subjectData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
             ContactList_Object *obj = (ContactList_Object*) [contactListStorageData objectAtIndex:0];
                 ChatThreadList_Object* chatThreadList_Object = [[ChatThreadList_Object alloc] init];
                 chatThreadList_Object.chatThreadId = [[dict valueForKey:@"chatThreadId"] integerValue];
                 chatThreadList_Object.from =         [dict valueForKey:@"to"];
                 chatThreadList_Object.to =           [dict valueForKey:@"from"];
-                chatThreadList_Object.subject = subjectTextField.text;
+                chatThreadList_Object.subject = base64SubjectString;
                 chatThreadList_Object.displayName = obj.userName;
           
             NSString * timeStampValue = [[NSString stringWithFormat:@"%ld", (long)[[NSDate date] timeIntervalSince1970]]stringByAppendingString:@"000"];
@@ -345,9 +348,14 @@
 
                 chatThreadList_Object.lastMessageOn = timeStampValue;
                 chatThreadList_Object.status = @"";
-            
+                chatThreadList_Object.deletedFlag = @"NO";
                 [chatThreadListStorage insertDoc:chatThreadList_Object];
+                [chatThreadListStorage updateDocLastMessageTime:chatThreadList_Object];
+            NSMutableArray *chatThreadListStorageData = [chatThreadListStorage getRecentDocumentsData : @"False"];
         ChatBoxVC *vc = [[ChatBoxVC  alloc]init];
+            vc.chatThreadDict = [[NSMutableArray alloc]init];
+            [vc.chatThreadDict addObjectsFromArray:[self groupData:chatThreadListStorageData]];
+            [vc.threadListTableView reloadData];
         [[self navigationController] pushViewController:vc animated:YES];
         }
         else
@@ -362,5 +370,33 @@
     UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"" message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil , nil];
     [myAlertView show];
     
+}
+-(NSMutableArray*)groupData :(NSArray*)dataArray
+{
+    NSMutableArray*distinctName = [[NSMutableArray alloc]init];
+    for (int i=0; i<dataArray.count; i++) {
+        ChatThreadList_Object *obj = (ChatThreadList_Object*) [dataArray objectAtIndex:i];
+        
+        if (![distinctName  containsObject:obj.displayName]) {
+            [distinctName addObject:obj.displayName];
+        }
+    }
+    
+    NSMutableArray *groupObject = [[NSMutableArray alloc]init];
+    for (int i=0; i<distinctName.count; i++) {
+        NSMutableArray *array = [[NSMutableArray alloc]init];
+        ExpendObjectClass * expendObj = [[ExpendObjectClass alloc]init];
+        for (int j=0; j<dataArray.count; j++) {
+            ChatThreadList_Object *obj = (ChatThreadList_Object*) [dataArray objectAtIndex:j];
+            if ([obj.displayName isEqualToString:[distinctName objectAtIndex:i]] ) {
+                [array addObject:obj];
+            }
+            
+        }
+        expendObj.MENU_NAME =[distinctName objectAtIndex:i];
+        expendObj.childCategories = array;
+        [groupObject addObject:expendObj];
+    }
+    return groupObject;
 }
 @end

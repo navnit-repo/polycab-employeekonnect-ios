@@ -123,46 +123,6 @@
         root = [[[[UIApplication sharedApplication]windows]objectAtIndex:0]rootViewController];
         SWRevealViewController *reveal = (SWRevealViewController*)root;
         [(UINavigationController*)reveal.frontViewController pushViewController:vc animated:YES];
-//        ChatRoomPushNotifiactionFlag=NO;
-//        ChatHistory_Object *obj = (ChatHistory_Object*) [NSUserDefaults valueForKey:@"CHATHISTORY_OBJECT"];
-//        //CHATHISTORY_OBJECT
-//
-////        ChatThreadList_Object *obj = (ChatThreadList_Object *)[chatThreadDict objectAtIndex:indexPath.row];
-//        ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
-//        NSString *ownUserId = [clientVariables.CLIENT_USER_LOGIN userName];
-//        NSString *parseId= @"";// for get username from contact db
-//        NSArray *array = [obj.from componentsSeparatedByString:@"@"];
-//        if ([[array objectAtIndex:0] isEqualToString:ownUserId]) {
-//            parseId =obj.to;
-//        }
-//        else{
-//            parseId =obj.from;
-//        }
-//        NSArray *array2 = [parseId componentsSeparatedByString:@"@"];//// for accept button check.
-//        if ([[array2 objectAtIndex:1] isEqualToString:@"employee"]) {
-//            [[NSUserDefaults standardUserDefaults] setObject:@"NO" forKey:@"Accept_Chat_Button"];
-//        }
-//        else
-//        {
-//            [[NSUserDefaults standardUserDefaults] setObject:@"YES" forKey:@"Accept_Chat_Button"];
-//        }
-//
-////        // ChatThreadList_Object *obj = (ChatThreadList_Object *)[chatThreadDict objectAtIndex:indexPath.row];
-////        ChatRoomsVC *vc = [[ChatRoomsVC alloc]init];
-////        vc.subject =obj.subject;
-////        vc.withChatPersonName = parseId;
-////        vc.chatThreadId =[NSString stringWithFormat:@"%d",obj.chatThreadId];
-////        vc.chatStatus = obj.status;
-////        vc.nameLbltext = obj.displayName;
-//
-//
-//        ChatRoomsVC *vc = [[ChatRoomsVC alloc]init];
-//
-//        UIViewController *root;
-//        root = [[[[UIApplication sharedApplication]windows]objectAtIndex:0]rootViewController];
-//
-//        SWRevealViewController *reveal = (SWRevealViewController*)root;
-//        [(UINavigationController*)reveal.frontViewController pushViewController:vc animated:YES];
     }
 }
 -(void) fetchPendingNotifications
@@ -221,12 +181,6 @@
     UIBarButtonItem *notificationButtonItem = [[UIBarButtonItem alloc] initWithCustomView:notificationButton];
     notificationButtonItem.target           = self;
     
-   
-    // for logout button
-//    UIView *view = [[UIView alloc]initWithFrame:CGRectMake( 15.0f, -5.0f, 10.0f, 10.0f)];
-//    view.tag = 10000000;
-//     view.backgroundColor = [UIColor whiteColor];
-//    view.layer.cornerRadius = 5;
      UIImage *chatButtonIconImage = [[UIImage imageNamed:@"Artboard"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     UIButton *chatButton  = [UIButton buttonWithType:UIButtonTypeCustom];
     [chatButton setFrame:CGRectMake( 0.0f, 0.0f, 25.0f, 25.0f)];
@@ -901,8 +855,10 @@
     
     loadingView = [LoadingView loadingViewInView:self.view];
     
-  
-    
+    NSString *bundleIdentifier = [[NSBundle mainBundle] bundleIdentifier];
+    NSMutableDictionary *dict = [[NSMutableDictionary alloc]init];
+    [dict setObject:bundleIdentifier forKey:@"APP_ID"];
+    [dict setObject:@"1" forKey:@"FOR_NOTIFY_DEVICE_DEREGISTER"];
     DotFormPost *logOutPost = [[DotFormPost alloc]init];
     [logOutPost setAdapterType:@"JDBC"];
     [logOutPost setAdapterId:@"ADT_JDBC_LOGOUT"];
@@ -910,6 +866,7 @@
     [logOutPost setDocId:@"DOT_FORM_LOGOUT"];
     [logOutPost setDocDesc:@"Logout"];
     [logOutPost setReportCacheRefresh:@"false"];
+    [logOutPost setPostData:dict];
     
     networkHelper = [[NetworkHelper alloc] init];
     [networkHelper makeXmwNetworkCall:logOutPost :self :self  :@"FOR_LOGOUT"];

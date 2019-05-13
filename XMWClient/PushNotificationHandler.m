@@ -20,6 +20,9 @@
 @implementation PushNotificationHandler
 + (void)notificationDict:(NSDictionary *)dict
 {
+    @synchronized (self) {
+        
+ 
   KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:@"com.polycab.xmw.employee" accessGroup:nil ];
     NSString *userId = [keychainItem objectForKey:kSecAttrAccount];
     
@@ -125,6 +128,7 @@
             
             chatThreadList_Object.lastMessageOn = timeStampValue;
             chatThreadList_Object.status = @"";
+            chatThreadList_Object.deletedFlag = @"NO";
             [chatThreadListStorage insertDoc:chatThreadList_Object];
             [chatThreadListStorage updateDocLastMessageTime:chatThreadList_Object];
         }
@@ -146,6 +150,7 @@
             
         }
         
+    }
     }
 }
 

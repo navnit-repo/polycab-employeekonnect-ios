@@ -155,6 +155,7 @@ static ChatHistory_DB* DEFAULT_INSTANCE = 0;
         if (sqlite3_step(statement) == SQLITE_DONE)
         {
             insertId = (int)sqlite3_last_insert_rowid([self sqlConnection]);
+            [self close];
         }
         sqlite3_finalize(statement);
         [self close];
@@ -162,6 +163,7 @@ static ChatHistory_DB* DEFAULT_INSTANCE = 0;
     else
     {
         NSLog(@"Error: failed to prepare statement with message '%s'.", sqlite3_errmsg([self sqlConnection]));
+        [self close];
     }
     return insertId;
 }
@@ -192,6 +194,7 @@ static ChatHistory_DB* DEFAULT_INSTANCE = 0;
     }
     else{
         NSLog(@"Error: Property Message '%s'.", sqlite3_errmsg([self sqlConnection]));
+        [self close];
     }
     return list;
 }

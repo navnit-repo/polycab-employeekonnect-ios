@@ -493,6 +493,9 @@
     {
     // do nothing
         numOfSections = 1;
+        UIView *view = [UIView new];
+        view.backgroundColor = [UIColor whiteColor];
+        threadListTableView.backgroundView  = view;
     }
     else
     {

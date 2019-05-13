@@ -362,6 +362,8 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
 {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+//    for notification count
+        [[[NSUserDefaults standardUserDefaults] initWithSuiteName:@"group.com.polycab.xmw.employee.push.group"] setObject:[NSString stringWithFormat:@"%d",0] forKey:@"Notification_Count"];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
@@ -397,38 +399,44 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
 
     UIViewController *root;
     root = [[[[UIApplication sharedApplication]windows]objectAtIndex:0]rootViewController];
-    SWRevealViewController *reveal = (SWRevealViewController*)root;
-    UINavigationController *check =(UINavigationController*)reveal.frontViewController;
-    NSArray* viewsList = check.viewControllers;
-    UIViewController *checkView = (UIViewController *) [viewsList objectAtIndex:viewsList.count - 1];
-    if ([checkView isKindOfClass:[ChatBoxVC class]]) {
-        ChatBoxVC *vc  = (ChatBoxVC *) checkView;
-        [ChatThreadList_DB createInstance : @"ChatThread_DB_STORAGE" : true];
-        ChatThreadList_DB *chatThreadListStorage = [ChatThreadList_DB getInstance];
-        NSMutableArray *chatThreadListStorageData = [chatThreadListStorage getRecentDocumentsData : @"False"];
-        vc.chatThreadDict = [[NSMutableArray alloc]init];
-        [vc.chatThreadDict addObjectsFromArray:[self groupData:chatThreadListStorageData]];
-        [vc.threadListTableView reloadData];
-        [[NSUserDefaults standardUserDefaults] setObject:@"YES" forKey:@"NEW_PUSH"];
-        [[NSUserDefaults standardUserDefaults] setObject:fromForNewPushDisplayAlert forKey:@"objExpendMenuName"];
+    if ([root isKindOfClass:[SWRevealViewController class]]) {
+        SWRevealViewController *reveal = (SWRevealViewController*)root;
+        UINavigationController *check =(UINavigationController*)reveal.frontViewController;
+        NSArray* viewsList = check.viewControllers;
+        UIViewController *checkView = (UIViewController *) [viewsList objectAtIndex:viewsList.count - 1];
+        if ([checkView isKindOfClass:[ChatBoxVC class]]) {
+            ChatBoxVC *vc  = (ChatBoxVC *) checkView;
+            [ChatThreadList_DB createInstance : @"ChatThread_DB_STORAGE" : true];
+            ChatThreadList_DB *chatThreadListStorage = [ChatThreadList_DB getInstance];
+            NSMutableArray *chatThreadListStorageData = [chatThreadListStorage getRecentDocumentsData : @"False"];
+            vc.chatThreadDict = [[NSMutableArray alloc]init];
+            [vc.chatThreadDict addObjectsFromArray:[self groupData:chatThreadListStorageData]];
+            [vc.threadListTableView reloadData];
+            [[NSUserDefaults standardUserDefaults] setObject:@"YES" forKey:@"NEW_PUSH"];
+            [[NSUserDefaults standardUserDefaults] setObject:fromForNewPushDisplayAlert forKey:@"objExpendMenuName"];
+        }
+        else if ([checkView isKindOfClass:[ChatRoomsVC class]]) {
+            ChatRoomsVC *vc  = (ChatRoomsVC *) checkView;
+            
+            [ChatHistory_DB createInstance : @"ChatHistory_DB_STORAGE" : true :[vc.chatThreadId integerValue]];
+            ChatHistory_DB *chatHistory_DBStorage = [ChatHistory_DB getInstance];
+            NSMutableArray *chatHistoryStorageData = [chatHistory_DBStorage getRecentDocumentsData : @"False"];
+            vc.chatHistoryArray = [[NSMutableArray alloc]init];
+            vc.chatHistoryArray =chatHistoryStorageData;
+            [vc.chatRoomTableView reloadData];
+            [[NSUserDefaults standardUserDefaults] setObject:@"YES" forKey:@"NEW_PUSH"];
+            [[NSUserDefaults standardUserDefaults] setObject:fromForNewPushDisplayAlert forKey:@"objExpendMenuName"];
+        }
+        else
+        {
+            [[NSUserDefaults standardUserDefaults] setObject:@"YES" forKey:@"NEW_PUSH"];
+            [[NSUserDefaults standardUserDefaults] setObject:fromForNewPushDisplayAlert forKey:@"objExpendMenuName"];
+        }
+        
+        //    for notification count
+        [[[NSUserDefaults standardUserDefaults] initWithSuiteName:@"group.com.polycab.xmw.employee.push.group"] setObject:[NSString stringWithFormat:@"%d",0] forKey:@"Notification_Count"];
     }
-   else if ([checkView isKindOfClass:[ChatRoomsVC class]]) {
-       ChatRoomsVC *vc  = (ChatRoomsVC *) checkView;
-       
-       [ChatHistory_DB createInstance : @"ChatHistory_DB_STORAGE" : true :[vc.chatThreadId integerValue]];
-       ChatHistory_DB *chatHistory_DBStorage = [ChatHistory_DB getInstance];
-       NSMutableArray *chatHistoryStorageData = [chatHistory_DBStorage getRecentDocumentsData : @"False"];
-       vc.chatHistoryArray = [[NSMutableArray alloc]init];
-       vc.chatHistoryArray =chatHistoryStorageData;
-       [vc.chatRoomTableView reloadData];
-       [[NSUserDefaults standardUserDefaults] setObject:@"YES" forKey:@"NEW_PUSH"];
-       [[NSUserDefaults standardUserDefaults] setObject:fromForNewPushDisplayAlert forKey:@"objExpendMenuName"];
-    }
-    else
-    {
-        [[NSUserDefaults standardUserDefaults] setObject:@"YES" forKey:@"NEW_PUSH"];
-        [[NSUserDefaults standardUserDefaults] setObject:fromForNewPushDisplayAlert forKey:@"objExpendMenuName"];
-    }
+   
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
@@ -454,6 +462,9 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
         }
     }
      [userDef synchronize];
+    
+    //    for notification count
+    [[[NSUserDefaults standardUserDefaults] initWithSuiteName:@"group.com.polycab.xmw.employee.push.group"] setObject:[NSString stringWithFormat:@"%d",0] forKey:@"Notification_Count"];
 }
 
 
@@ -478,7 +489,7 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
     
     [[NSUserDefaults standardUserDefaults] setObject:tokenStr forKey:@"PUSH_TOKEN"];
      [[NSUserDefaults standardUserDefaults] synchronize];
-    
+
 }
 
 - (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
@@ -1182,8 +1193,8 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
                 // do nothing
                 if ([checkView isKindOfClass:[ChatBoxVC class]]){
                     [ChatThreadList_DB createInstance : @"ChatThread_DB_STORAGE" : true];
-                    ChatThreadList_DB *chatThreadListStorage = [ChatThreadList_DB getInstance];
-                    NSMutableArray *chatThreadListStorageData = [chatThreadListStorage getRecentDocumentsData : @"False"];
+                    ChatThreadList_DB *chatThreadListStorage2 = [ChatThreadList_DB getInstance];
+                    NSMutableArray *chatThreadListStorageData = [chatThreadListStorage2 getRecentDocumentsData : @"False"];
                     ChatBoxVC *vc =  (ChatBoxVC*) checkView;
                     vc.chatThreadDict = [self groupData:chatThreadListStorageData];
 //                    vc.chatThreadDict = chatThreadListStorageData;
@@ -1327,7 +1338,7 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
             else if ([checkView isKindOfClass:[ChatRoomsVC class]])
             { ChatRoomsVC *vc = (ChatRoomsVC*) checkView;
                 if ([vc.chatThreadId integerValue]== [[responsedict valueForKey:@"chatThreadId"] integerValue]) {
-                    [vc.bottomView removeFromSuperview];
+//                    [vc.bottomView removeFromSuperview];
                 }
             }
             else {
@@ -1648,7 +1659,7 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
             else if ([checkView isKindOfClass:[ChatRoomsVC class]])
             { ChatRoomsVC *vc = (ChatRoomsVC*) checkView;
                 if ([vc.chatThreadId integerValue]== [[responsedict valueForKey:@"chatThreadId"] integerValue]) {
-                    [vc.bottomView removeFromSuperview];
+//                    [vc.bottomView removeFromSuperview];
                 }
             }
             else {

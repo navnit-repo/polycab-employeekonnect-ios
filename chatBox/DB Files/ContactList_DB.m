@@ -135,6 +135,15 @@ static ContactList_DB* DEFAULT_INSTANCE = 0;
     sqlite3_stmt *statement = nil;
     if (sqlite3_prepare_v2([self sqlConnection], [query UTF8String], -1, &statement, nil) == SQLITE_OK)
     {
+        if ([contactListObject.emailId isKindOfClass:[NSNull class]]) {
+            contactListObject.emailId = @"";
+        }
+        if ([contactListObject.name isKindOfClass:[NSNull class]]) {
+            contactListObject.name = @"";
+        }
+        if ([contactListObject.userId isKindOfClass:[NSNull class]]) {
+            contactListObject.userId = @"";
+        }
         sqlite3_bind_text(statement, sqlite3_bind_parameter_index(statement, ":emailId"), [contactListObject.emailId UTF8String], contactListObject.emailId.length, nil);
         sqlite3_bind_text(statement, sqlite3_bind_parameter_index(statement, ":name"), [contactListObject.name UTF8String], contactListObject.name.length, nil);
         //sqlite3_bind_int(statement, sqlite3_bind_parameter_index(statement, ":maxDocNo"), recentRequest.maxDocNo);
@@ -151,6 +160,7 @@ static ContactList_DB* DEFAULT_INSTANCE = 0;
         if (sqlite3_step(statement) == SQLITE_DONE)
         {
             insertId = (int)sqlite3_last_insert_rowid([self sqlConnection]);
+            [self close];
         }
         sqlite3_finalize(statement);
         [self close];
@@ -158,6 +168,7 @@ static ContactList_DB* DEFAULT_INSTANCE = 0;
     else
     {
         NSLog(@"Error: failed to prepare statement with message '%s'.", sqlite3_errmsg([self sqlConnection]));
+        [self close];
     }
     return insertId;
 }
@@ -187,6 +198,7 @@ static ContactList_DB* DEFAULT_INSTANCE = 0;
     }
     else{
         NSLog(@"Error: Property Message '%s'.", sqlite3_errmsg([self sqlConnection]));
+        [self close];
     }
     return list;
 }
@@ -228,6 +240,7 @@ static ContactList_DB* DEFAULT_INSTANCE = 0;
     }
     else{
         NSLog(@"Error: Property Message '%s'.", sqlite3_errmsg([self sqlConnection]));
+        [self close];
     }
     return list;
 }
