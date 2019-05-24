@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
     NSMutableArray *chatThreadDict;
 }
+@property (weak, nonatomic) IBOutlet UIView *headerView;
 @property (weak, nonatomic) IBOutlet UIView *lineView1;
 @property (weak, nonatomic) IBOutlet UIView *lineView2;
 @property (weak, nonatomic) IBOutlet UILabel *nameLbl;

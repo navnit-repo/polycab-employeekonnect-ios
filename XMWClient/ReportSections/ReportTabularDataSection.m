@@ -576,10 +576,10 @@
     NSMutableArray *records = recordTableData;
     NSArray* rowData = [records objectAtIndex:indexPath.row];
     
-    if([[rowData objectAtIndex:0]isEqualToString:@"All"])//for polycab RECPT check
-    {
-        isDrillDown = NO;
-    }
+//    if([[rowData objectAtIndex:0]isEqualToString:@"All"])//for polycab RECPT check
+//    {
+//        isDrillDown = NO;
+//    }
     if([expandProperty isEqualToString:@""]!=0)
     {
         // handle expandable

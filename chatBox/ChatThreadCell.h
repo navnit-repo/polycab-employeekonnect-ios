@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UIView *pushView;
 @property (weak, nonatomic) IBOutlet UIImageView *acceptImageView;
 @property (weak, nonatomic) IBOutlet MXButton *closeButtonOutlate;
+@property (weak, nonatomic) IBOutlet UILabel *chatIdLbl;
 
 
 @end

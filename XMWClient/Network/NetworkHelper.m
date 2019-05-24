@@ -240,6 +240,7 @@ NSString *g_DeviceSessionId = nil;
     JSONNetworkRequestData* nwRequest = [[JSONNetworkRequestData alloc] init];
     nwRequest.requestData = requestObject;
     nwRequest.callName = callName;
+    nwRequest.osVersion = [[UIDevice currentDevice] systemVersion];
     
     if(g_DeviceSessionId == nil)
         nwRequest.dServiceId = sessionId;

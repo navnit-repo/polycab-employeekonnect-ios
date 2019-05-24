@@ -39,6 +39,38 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    CGFloat navBarHeight = self.navigationController.navigationBar.frame.size.height;
+    NSLog(@"Navigation Bar height : %f",navBarHeight);
+    CGFloat statusBarSize = [[UIApplication sharedApplication] statusBarFrame].size.height;
+    NSLog(@"statusBarSize Bar height : %f",statusBarSize);
+    CGFloat yorigin = navBarHeight +statusBarSize;
+    CGFloat totalViewHeight = [[UIApplication sharedApplication].keyWindow bounds].size.height;
+    if (isiPhoneXSMAX) {
+        self.view.frame = CGRectMake(0, yorigin, 414, totalViewHeight-yorigin);
+    }
+    else if(isiPhoneXR) {
+        self.view.frame = CGRectMake(0, yorigin, 414, totalViewHeight-yorigin);
+    }
+    
+    else if(isiPhoneXS) {
+        self.view.frame = CGRectMake(0, yorigin, 375, totalViewHeight-yorigin);
+    }
+    else if(isiPhone10) {
+        self.view.frame = CGRectMake(0, yorigin, 375, totalViewHeight-yorigin);
+    }
+    
+    else if(isiPhone6Plus) {
+        self.view.frame = CGRectMake(0, yorigin, 414, totalViewHeight-yorigin);
+    }
+    else if(isiPhone6) {
+        self.view.frame = CGRectMake(0, yorigin, 375, totalViewHeight-yorigin);
+    } else if(isiPhone5) {
+        self.view.frame = CGRectMake(0, yorigin, 320, totalViewHeight-yorigin);
+    } else {
+        // 0, 64, 320, 416
+        self.view.frame = CGRectMake(0, yorigin, 320, totalViewHeight-yorigin);
+    }
+    
     expendStatus = [[NSMutableDictionary alloc]init];
     [self drawHeaderItem];
     [self contactListNetworkCall];
@@ -119,19 +151,20 @@
     vc.chatThreadId =[NSString stringWithFormat:@"%d",obj.chatThreadId];
     vc.chatStatus = obj.status;
     vc.nameLbltext = obj.displayName;
-    [[NSUserDefaults standardUserDefaults] setObject:@"NO" forKey:[NSString stringWithFormat:@"NEW_PUSH_%d",obj.chatThreadId]];
+//    [[NSUserDefaults standardUserDefaults] setObject:@"NO" forKey:[NSString stringWithFormat:@"NEW_PUSH_%d",obj.chatThreadId]];
 
     [[self navigationController ] pushViewController:vc animated:YES];
     
 }
 -(void)initializeView
-{
+{   [LayoutClass setLayoutForIPhone6:self.headerView];
     [LayoutClass setLayoutForIPhone6:self.lineView1];
     [LayoutClass setLayoutForIPhone6:self.lineView2];
     [LayoutClass labelLayout:self.nameLbl forFontWeight:UIFontWeightBold];
     [LayoutClass labelLayout:self.constantLbl1 forFontWeight:UIFontWeightRegular];
     [LayoutClass setLayoutForIPhone6:self.threadListTableView];
-   
+    self.threadListTableView.frame = CGRectMake(self.threadListTableView.frame.origin.x, self.threadListTableView.frame.origin.y, self.threadListTableView.frame.size.width,self.view.frame.size.height-self.headerView.frame.size.height);
+    
     threadListTableView.delegate = self;
     threadListTableView.bounces = NO;
   
@@ -389,7 +422,7 @@
     if ([[chatThreadDict objectAtIndex: indexPath.row] isKindOfClass:[ExpendObjectClass class]]) {
         ExpendObjectClass *currObject = chatThreadDict[indexPath.row];
         if (currObject.childCategories>0) {
-            [[NSUserDefaults standardUserDefaults] setObject:@"NO" forKey:@"NEW_PUSH"];
+//            [[NSUserDefaults standardUserDefaults] setObject:@"NO" forKey:@"NEW_PUSH"];
             dotView.backgroundColor  = [UIColor clearColor];
             BOOL isAlreadyInserted=[self checkIfChildrenInserted:currObject];
             if(isAlreadyInserted) {
@@ -454,7 +487,7 @@
     
     ChatThreadCell *cellView =[( ChatThreadCell * ) self.view viewWithTag:obj.chatThreadId];
     cellView.pushView.backgroundColor = [UIColor clearColor];
-     [[NSUserDefaults standardUserDefaults] setObject:@"NO" forKey:[NSString stringWithFormat:@"NEW_PUSH_%d",obj.chatThreadId]];
+//     [[NSUserDefaults standardUserDefaults] setObject:@"NO" forKey:[NSString stringWithFormat:@"NEW_PUSH_%d",obj.chatThreadId]];
     }
 }
 - (BOOL)checkIfChildrenInserted: (ExpendObjectClass *)parentObject {
@@ -554,15 +587,19 @@
             ExpendObjectClass* obj =( ExpendObjectClass *) [chatThreadDict objectAtIndex:indexPath.row];
         UIView *view = [[UIView alloc]initWithFrame:CGRectMake(10, 0, cell.frame.size.width, cell.frame.size.height)];
         dotView = [[UIView alloc]initWithFrame:CGRectMake(0, 15, 10*deviceWidthRation, 10*deviceHeightRation)];
-        NSString *newPushCheck = [[NSUserDefaults standardUserDefaults] valueForKey:@"NEW_PUSH"];
-        NSString *menuName =[[NSUserDefaults standardUserDefaults] valueForKey:@"objExpendMenuName"];
-        if ([newPushCheck isEqualToString:@"YES"] && [menuName isEqualToString:obj.MENU_NAME]) {
-            dotView.backgroundColor = [UIColor colorWithRed:204.0f/255 green:41.0f/255 blue:43.0f/255 alpha:1.0];
-        }
-        else
-        {
-            dotView.backgroundColor = [UIColor clearColor];
-        }
+        
+        for (int i=0; i<obj.childCategories.count; i++) {
+            ChatThreadList_Object *threadObj = (ChatThreadList_Object*) [obj.childCategories objectAtIndex:i];
+            if (threadObj.unreadMessageCount >0) {
+                    dotView.backgroundColor = [UIColor colorWithRed:204.0f/255 green:41.0f/255 blue:43.0f/255 alpha:1.0];
+                    break;
+                }
+                else
+                {
+                    dotView.backgroundColor = [UIColor clearColor];
+                }
+            }
+      
         
         dotView.layer.cornerRadius = 5;
         UILabel *textLbl = [[UILabel alloc]initWithFrame:CGRectMake(15*deviceWidthRation, 0,cell.frame.size.width, cell.frame.size.height)];
@@ -615,10 +652,11 @@
                 //            cell.chatPersonLbl.textColor =[UIColor colorWithRed:211.0f/255 green:211.0f/255 blue:211.0f/255 alpha:1.0];
                 //            cell.timeStampLbl.textColor  =[UIColor colorWithRed:211.0f/255 green:211.0f/255 blue:211.0f/255 alpha:1.0];
                 [cell.acceptImageView setImage:[UIImage imageNamed:@"Tick_Mark"]];
+                cell.chatIdLbl.text = [NSString stringWithFormat:@"SPA No : %d",obj.chatThreadId];
             }
-            NSString *newPushCheck = [[NSUserDefaults standardUserDefaults] valueForKey:[NSString stringWithFormat:@"NEW_PUSH_%d",obj.chatThreadId]];
-            if ([newPushCheck isEqualToString:@"YES"]) {
-                
+//            NSString *newPushCheck = [[NSUserDefaults standardUserDefaults] valueForKey:[NSString stringWithFormat:@"NEW_PUSH_%d",obj.chatThreadId]];
+            if (obj.unreadMessageCount >0) {
+                cell.pushView.backgroundColor = [UIColor colorWithRed:204.0f/255 green:41.0f/255 blue:43.0f/255 alpha:1.0];
             }
             else
             {

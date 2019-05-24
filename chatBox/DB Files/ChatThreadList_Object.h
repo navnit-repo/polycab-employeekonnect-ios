@@ -22,7 +22,9 @@ NS_ASSUME_NONNULL_BEGIN
     int KEY_ID;
     NSString *displayName;
     NSString *deletedFlag;
+    int unreadMessageCount;
 }
+@property int unreadMessageCount;
 @property NSString *deletedFlag;
 @property NSString *displayName;
 @property int chatThreadId;

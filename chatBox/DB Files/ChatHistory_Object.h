@@ -21,7 +21,9 @@ NS_ASSUME_NONNULL_BEGIN
     NSString *messageType;
     int messageId;
     int KEY_ID;
+    NSString *messageRead;
 }
+@property NSString *messageRead;
 @property int messageId;
 @property int chatThreadId;
 @property NSString *from;

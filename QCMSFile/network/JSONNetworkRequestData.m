@@ -17,7 +17,7 @@
 @synthesize responseData;
 @synthesize status;
 @synthesize message;
-
+@synthesize osVersion;
 
 - (id) toJSON {
     NSMutableDictionary* jsonObject = [[NSMutableDictionary alloc] init];
@@ -39,7 +39,9 @@
         if(message!=nil) {
             [jsonObject setObject:message forKey:NtwkConst_MESSAGE];
         }
-        
+        if(osVersion!=nil) {
+            [jsonObject setObject:osVersion forKey:NtwkConst_OSVERSION];
+        }
         return jsonObject;
     }
     @catch (NSException* nse) {

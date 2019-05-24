@@ -49,17 +49,25 @@
                         <color key="backgroundColor" red="0.80000000000000004" green="0.16078431372549018" blue="0.16862745098039217" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6KK-uL-J3q" customClass="MXButton">
-                        <rect key="frame" x="275" y="20" width="40" height="40"/>
+                        <rect key="frame" x="275" y="1" width="40" height="40"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <state key="normal" image="close.png"/>
                         <connections>
                             <action selector="deleteButton:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Uca-si-jHa"/>
                         </connections>
                     </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2hC-3B-q3b">
+                        <rect key="frame" x="178" y="33" width="127" height="20"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
             </tableViewCellContentView>
             <connections>
                 <outlet property="acceptImageView" destination="RQL-cY-dAq" id="dyU-sd-C1h"/>
+                <outlet property="chatIdLbl" destination="2hC-3B-q3b" id="R24-2m-VjS"/>
                 <outlet property="closeButtonOutlate" destination="6KK-uL-J3q" id="qTv-La-aV8"/>
                 <outlet property="pushView" destination="qa5-nG-UbW" id="dbh-Eq-Jkt"/>
                 <outlet property="subjectLbl" destination="mTM-uL-flY" id="sIj-bk-oqk"/>

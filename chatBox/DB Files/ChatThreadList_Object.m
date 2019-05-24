@@ -18,4 +18,5 @@
 @synthesize lastMessageOn;
 @synthesize displayName;
 @synthesize deletedFlag;
+@synthesize unreadMessageCount;
 @end

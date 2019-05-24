@@ -7,6 +7,7 @@
 //
 
 #import "ChatHistory_DB.h"
+#import "KeychainItemWrapper.h"
 static NSMutableDictionary* INSTANCE_MAP = 0;
 static ChatHistory_DB* DEFAULT_INSTANCE = 0;
 @implementation ChatHistory_DB
@@ -74,6 +75,7 @@ static ChatHistory_DB* DEFAULT_INSTANCE = 0;
     query = [query stringByAppendingString : @"messageDate TEXT, "];
     query = [query stringByAppendingString : @"messageType TEXT, "];
     query = [query stringByAppendingString : @"messageId INTEGER PRIMARY KEY, "];
+    query = [query stringByAppendingString : @"messageRead TEXT, "];
     
     query =  [query stringByAppendingString : @"REC_TS DATETIME DEFAULT CURRENT_TIMESTAMP); "];     // adding Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
     
@@ -130,8 +132,8 @@ static ChatHistory_DB* DEFAULT_INSTANCE = 0;
     
     NSString* query = @"INSERT INTO ";
     query =  [query stringByAppendingString : [self getTableName]];
-    query = [query stringByAppendingString : @"(chatThreadId, fromId, toId, message, messageDate, messageType, messageId) "];
-    query = [query stringByAppendingString : @"VALUES(:chatThreadId, :fromId, :toId, :message, :messageDate, :messageType , :messageId);"];
+    query = [query stringByAppendingString : @"(chatThreadId, fromId, toId, message, messageDate, messageType, messageId, messageRead) "];
+    query = [query stringByAppendingString : @"VALUES(:chatThreadId, :fromId, :toId, :message, :messageDate, :messageType , :messageId, :messageRead);"];
     
     sqlite3_stmt *statement = nil;
     if (sqlite3_prepare_v2([self sqlConnection], [query UTF8String], -1, &statement, nil) == SQLITE_OK)
@@ -151,6 +153,7 @@ static ChatHistory_DB* DEFAULT_INSTANCE = 0;
         
          sqlite3_bind_int(statement, sqlite3_bind_parameter_index(statement, ":messageId"), chatHistory_Object.messageId);
         
+        sqlite3_bind_text(statement, sqlite3_bind_parameter_index(statement, ":messageRead"), [chatHistory_Object.messageRead UTF8String], chatHistory_Object.messageRead.length, nil);
         
         if (sqlite3_step(statement) == SQLITE_DONE)
         {
@@ -167,10 +170,54 @@ static ChatHistory_DB* DEFAULT_INSTANCE = 0;
     }
     return insertId;
 }
+- (NSMutableArray *)getRecentUnreadMessage:(NSString *)delete_stringFlag
+{
+    NSMutableArray* list = [[NSMutableArray alloc] init];
+    NSString* query = @"SELECT Distinct chatThreadId, messageId, messageRead from ";
+    
+    /* old query (if in feture needs show ticks then use old query and implement logic in chatroomvc class)
+    NSString *whereClause = [[@" where chatThreadId="stringByAppendingString:[NSString stringWithFormat:@"%d",chatThreatIdToRetrieveHistory]]stringByAppendingString:@" and messageRead='NO'"];
+    */
+    
+    //updated query
+    KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:@"com.polycab.xmw.employee" accessGroup:nil ];
+    NSString *userId = [[keychainItem objectForKey:kSecAttrAccount]stringByAppendingString:@"@employee"];
+    
+    NSString *whereClause = [[[[[@" where chatThreadId="stringByAppendingString:[NSString stringWithFormat:@"%d",chatThreatIdToRetrieveHistory]]stringByAppendingString:@" and messageRead='NO'"]stringByAppendingString:@" and toId = '"]stringByAppendingString:userId]stringByAppendingString:@"'"];
+    
+    query = [[[query stringByAppendingString : [self getTableName]]stringByAppendingString:whereClause]stringByAppendingString:@";"];
+    NSLog(@"%@",query);
+ 
+    
+    sqlite3_stmt *statement = nil;
+    if (sqlite3_prepare_v2([self sqlConnection], [query UTF8String], -1, &statement, nil) == SQLITE_OK)
+    {
+        sqlite3_bind_text(statement, sqlite3_bind_parameter_index(statement, ":id1"), [delete_stringFlag UTF8String], delete_stringFlag.length, nil);
+        while(sqlite3_step(statement) == SQLITE_ROW) {
+            [list addObject: [self retrieveItemUnreadMessage : statement]];
+        }
+        sqlite3_finalize(statement);
+        [self close];
+    }
+    else{
+        NSLog(@"Error: Property Message '%s'.", sqlite3_errmsg([self sqlConnection]));
+        [self close];
+    }
+    return list;
+}
+- (ChatHistory_Object*) retrieveItemUnreadMessage : (sqlite3_stmt *) statement {
+    ChatHistory_Object*  chatHistory_Object = [[ChatHistory_Object alloc] init];
+//    chatThreadId, messageId, messageRead
+    
+    chatHistory_Object.chatThreadId  = sqlite3_column_int(statement, 0);
+    chatHistory_Object.messageId  = sqlite3_column_int(statement, 1);
+    chatHistory_Object.messageRead =[[NSString alloc] initWithUTF8String:(const char *)sqlite3_column_text(statement, 2)];
+    return chatHistory_Object;
+}
 -(NSMutableArray*)  getRecentDocumentsData : (NSString *)delete_stringFlag
 {
     NSMutableArray* list = [[NSMutableArray alloc] init];
-    NSString* query = @"SELECT Distinct chatThreadId,  fromId, toId, message, messageDate, messageType , messageId from ";
+    NSString* query = @"SELECT Distinct chatThreadId,  fromId, toId, message, messageDate, messageType , messageId, messageRead from ";
 //    NSString *whereClause =[[[ @" where chatThreadId =" stringByAppendingString:@"'"]stringByAppendingString:[NSString stringWithFormat@"%@",chatThreatIdToRetrieveHistory]]stringByAppendingString:@"'"];
     NSString *whereClause = [@" where chatThreadId="stringByAppendingString:[NSString stringWithFormat:@"%d",chatThreatIdToRetrieveHistory]];
     query = [[[query stringByAppendingString : [self getTableName]]stringByAppendingString:whereClause]stringByAppendingString:@";"];
@@ -218,9 +265,36 @@ static ChatHistory_DB* DEFAULT_INSTANCE = 0;
     chatHistory_Object.messageType  = [[NSString alloc] initWithUTF8String:(const char *)sqlite3_column_text(statement, 5)];
     
     chatHistory_Object.messageId  = sqlite3_column_int(statement, 6);
+    chatHistory_Object.messageRead =[[NSString alloc] initWithUTF8String:(const char *)sqlite3_column_text(statement, 7)];
     return chatHistory_Object;
 }
-
+- (BOOL)updateUnreadMessageStatus:(ChatHistory_Object *)chatHistory_Object
+{
+    NSString* query = @"UPDATE ";
+    query =  [query stringByAppendingString : [self getTableName]];
+    query = [[query stringByAppendingString : @" SET "] stringByAppendingString:@" messageRead = 'YES'"];
+    NSString *whereClause = [[[[@"where messageId="stringByAppendingString:[NSString stringWithFormat:@"%d",chatHistory_Object.messageId]]stringByAppendingString:@" and chatThreadId="]stringByAppendingString:[NSString stringWithFormat:@"%d",chatThreatIdToRetrieveHistory]]stringByAppendingString:@";"];
+   
+    query = [query stringByAppendingString:whereClause];
+    NSLog(@"Unread message update query;-\n%@",query);
+    sqlite3_stmt *statement = nil;
+    if (sqlite3_prepare_v2([self sqlConnection], [query UTF8String], -1, &statement, nil) == SQLITE_OK)
+    {
+        
+        if (sqlite3_step(statement) == SQLITE_DONE)
+        {
+            sqlite3_finalize(statement);
+            [self close];
+            return true;
+        }
+        [self close];
+    }
+    else {
+        //NSLog(@"Error: failed to prepare statement with message '%s'.", sqlite3_errmsg([self sqlConnection]));
+    }
+    
+    return false;
+}
 - (void)dropTable:(NSString *)context
 {
     contextId = context;

@@ -74,6 +74,7 @@ static ChatThreadList_DB* DEFAULT_INSTANCE = 0;
     query = [query stringByAppendingString : @"displayName TEXT, "];
     query = [query stringByAppendingString : @"filterByLatestTime INTEGER, "];
     query = [query stringByAppendingString : @"deleteFlag TEXT, "];
+    query = [query stringByAppendingString : @"unreadMessageCount INTEGER, "];
     query =  [query stringByAppendingString : @"REC_TS DATETIME DEFAULT CURRENT_TIMESTAMP); "];
     
     // adding Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
@@ -219,8 +220,8 @@ static ChatThreadList_DB* DEFAULT_INSTANCE = 0;
     
     NSString* query = @"INSERT INTO ";
     query =  [query stringByAppendingString : [self getTableName]];
-    query = [query stringByAppendingString : @"(chatThreadId, fromId, toId, status, subject, lastMessageOn, displayName, filterByLatestTime, deleteFlag) "];
-    query = [query stringByAppendingString : @"VALUES(:chatThreadId, :fromId, :toId, :status, :subject, :lastMessageOn, :displayName, :filterByLatestTime, :deleteFlag);"];
+    query = [query stringByAppendingString : @"(chatThreadId, fromId, toId, status, subject, lastMessageOn, displayName, filterByLatestTime, deleteFlag, unreadMessageCount) "];
+    query = [query stringByAppendingString : @"VALUES(:chatThreadId, :fromId, :toId, :status, :subject, :lastMessageOn, :displayName, :filterByLatestTime, :deleteFlag, :unreadMessageCount);"];
     
     sqlite3_stmt *statement = nil;
     if (sqlite3_prepare_v2([self sqlConnection], [query UTF8String], -1, &statement, nil) == SQLITE_OK)
@@ -242,6 +243,9 @@ static ChatThreadList_DB* DEFAULT_INSTANCE = 0;
         
         sqlite3_bind_int64(statement, sqlite3_bind_parameter_index(statement, ":filterByLatestTime"), filterTime);
         sqlite3_bind_text(statement, sqlite3_bind_parameter_index(statement, ":deleteFlag"), [chatThreadList_Object.deletedFlag UTF8String], chatThreadList_Object.deletedFlag.length, nil);
+        
+        sqlite3_bind_int64(statement, sqlite3_bind_parameter_index(statement, ":unreadMessageCount"), chatThreadList_Object.unreadMessageCount);
+     
         if (sqlite3_step(statement) == SQLITE_DONE)
         {
             insertId = (int)sqlite3_last_insert_rowid([self sqlConnection]);
@@ -257,11 +261,38 @@ static ChatThreadList_DB* DEFAULT_INSTANCE = 0;
     }
     return insertId;
 }
+- (int)getCurrentUnreadCount:(ChatThreadList_Object *)object
+{
+    int count=0;
+    
+    NSString *query = @"SELECT unreadMessageCount from ";
+    query = [query stringByAppendingString:[self getTableName]];
+    NSString *whereClaues = [[@" where chatThreadId="stringByAppendingString:[NSString stringWithFormat:@"%d",object.chatThreadId]]stringByAppendingString:@";"];
+    query = [query stringByAppendingString:whereClaues];
+    NSLog(@"get unread count query :- %@",query);
+    
+    sqlite3_stmt *statement = nil;
+    if (sqlite3_prepare_v2([self sqlConnection], [query UTF8String], -1, &statement, nil) == SQLITE_OK)
+    {
+        count =sqlite3_column_int(statement, 0);
+//        while(sqlite3_step(statement) == SQLITE_ROW) {
+//           
+//        }
+        sqlite3_finalize(statement);
+        [self close];
+    }
+    else{
+        NSLog(@"getCurrentUnreadCount Error: Property Message '%s'.", sqlite3_errmsg([self sqlConnection]));
+        [self close];
+    }
+    
+    return count;
+}
 -(NSMutableArray*)  getRecentDocumentsData : (NSString *)delete_stringFlag
 {
     [NSThread sleepForTimeInterval:0.25];
     NSMutableArray* list = [[NSMutableArray alloc] init];
-    NSString* query = @"SELECT chatThreadId,  fromId, toId, status, subject, lastMessageOn, displayName, deleteFlag from ";
+    NSString* query = @"SELECT chatThreadId,  fromId, toId, status, subject, lastMessageOn, displayName, deleteFlag, unreadMessageCount from ";
     query = [[query stringByAppendingString : [self getTableName]]stringByAppendingString:@" where deleteFlag ='NO' ORDER BY filterByLatestTime DESC;"];
    // NSString* query = [@"SELECT * from " stringByAppendingString:[self getTableName]];
     
@@ -310,7 +341,34 @@ static ChatThreadList_DB* DEFAULT_INSTANCE = 0;
 //    }
     chatThreadList_Object.displayName  = [NSString stringWithFormat:@"%s",(const char*)sqlite3_column_text(statement, 6)];
     chatThreadList_Object.deletedFlag  = [NSString stringWithFormat:@"%s",(const char*)sqlite3_column_text(statement, 7)];
+    chatThreadList_Object.unreadMessageCount = sqlite3_column_int(statement, 8);
     return chatThreadList_Object;
+}
+
+- (BOOL)updateUnreadThread:(ChatThreadList_Object *)chatThreadList_Object :(int)unreadCount
+{
+    NSString* query = @"UPDATE ";
+    query =  [query stringByAppendingString : [self getTableName]];
+    query = [[[query stringByAppendingString : @" SET "] stringByAppendingString:@" unreadMessageCount ="]stringByAppendingString:[NSString stringWithFormat:@"%d",unreadCount]];
+    
+    NSString *whereClause = [[@" where chatThreadId =" stringByAppendingString:[NSString stringWithFormat:@"%d",chatThreadList_Object.chatThreadId]] stringByAppendingString:@";"];
+    query = [query stringByAppendingString:whereClause];
+    sqlite3_stmt *statement = nil;
+    if (sqlite3_prepare_v2([self sqlConnection], [query UTF8String], -1, &statement, nil) == SQLITE_OK)
+    {        
+        if (sqlite3_step(statement) == SQLITE_DONE)
+        {
+            sqlite3_finalize(statement);
+            [self close];
+            return true;
+        }
+        [self close];
+    }
+    else {
+        //NSLog(@"Error: failed to prepare statement with message '%s'.", sqlite3_errmsg([self sqlConnection]));
+    }
+    
+    return false;
 }
 - (void)dropTable:(NSString *)context
 {

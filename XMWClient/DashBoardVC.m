@@ -188,26 +188,13 @@
     [chatButton addTarget:self action:@selector(chatHandler:) forControlEvents:UIControlEventTouchUpInside];
     chatButton.tintColor = [UIColor whiteColor];
     chatButton.tag = 20;
-//    CALayer *myLayer = view.layer;
-//
-//    [chatButton.layer addSublayer:myLayer];
+
     UIBarButtonItem *chatButtonItem = [[UIBarButtonItem alloc] initWithCustomView:chatButton];
     chatButtonItem.target           = self;
     
     
     [self.navigationItem setRightBarButtonItems:[NSArray arrayWithObjects:notificationButtonItem, chatButtonItem, nil] animated:YES];
     
-//
-    
-    
-    
-    
-//    UIBarButtonItem* notificationButton = [[UIBarButtonItem alloc] initWithImage:[UIImage
-//                                                                          imageNamed:@"polycab_notification"] style:UIBarButtonItemStylePlain target:self
-//                                                                  action:@selector(notificationHandler:)];
-//
-//   // notificationButton.tintColor =  [UIColor colorWithRed:119.0/255 green:119.0/255 blue:119.0/255 alpha:1.0];
-//     notificationButton.tintColor = [UIColor whiteColor];
     
     UIImageView *polycabLogo = [[UIImageView alloc] initWithImage:[UIImage  imageNamed:@"polycab_logo"]];
     self.navigationItem.titleView.contentMode = UIViewContentModeCenter;
@@ -215,6 +202,12 @@
    [self.navigationItem setLeftBarButtonItem:menuButton];
    // [self.navigationItem setRightBarButtonItem:notificationButton];
     [self.navigationController.navigationBar setFrame:CGRectMake(0, 20, self.view.frame.size.width,48)];
+    
+    // this code for check user assigned chat feature or not
+    if ([[[NSUserDefaults standardUserDefaults] valueForKey:@"CHAIRMAN_CHAT"] isEqualToString:@"NO"]) {
+        [chatButton setBackgroundImage:nil forState:UIControlStateNormal];
+        chatButton.userInteractionEnabled = NO;
+    }
 }
 - (void) chatHandler : (id) sender
 {
@@ -228,9 +221,13 @@
     SWRevealViewController *reveal = (SWRevealViewController*)root;
     [(UINavigationController*)reveal.frontViewController pushViewController:chatVC animated:YES];
     UIButton *button = (UIButton*) sender;
-    if (button.layer.sublayers.count >=2 ) {
-      [[button.layer.sublayers objectAtIndex:1] removeFromSuperlayer];
+    long int totalButtonLayer = button.layer.sublayers.count;
+    for (int i=0; i<totalButtonLayer; i++) {
+        if (button.layer.sublayers.count >=2 ) {
+            [[button.layer.sublayers objectAtIndex:1] removeFromSuperlayer];
+        }
     }
+  
 
 }
 

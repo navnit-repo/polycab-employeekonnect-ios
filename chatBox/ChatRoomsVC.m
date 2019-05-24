@@ -21,6 +21,8 @@
 #import "ChatBoxVC.h"
 #import "NewInstanceNsUserDefault.h"
 #import "ExpendObjectClass.h"
+#import "SBJsonWriter.h"
+#import "ReadUnreadService.h"
 @interface ChatRoomsVC ()
 
 @end
@@ -122,6 +124,7 @@
     popupTextView.layer.borderColor = [UIColor colorWithRed:0.76 green:0.76 blue:0.76 alpha:1.0].CGColor;
     popupTextView.layer.borderWidth = 1.0;
     popupTextView.layer.cornerRadius = 5.0;
+
     
     self.popupTextView.delegate = self;
     self.remarkView.delegate = self;
@@ -143,6 +146,41 @@
     
     [self createView];
     [self chatHistory];
+    [self unreadMessageNetworkCall];
+}
+-(void)unreadMessageNetworkCall
+{   [ChatHistory_DB createInstance : @"ChatHistory_DB_STORAGE" : true :[chatThreadId integerValue]];
+    ChatHistory_DB *chatHistory_DBStorage = [ChatHistory_DB getInstance];
+    NSMutableArray *unreadMessageIdArray = [chatHistory_DBStorage getRecentUnreadMessage:@"False"];
+    if (unreadMessageIdArray.count>0) {
+        NSMutableArray *sendMessageIdsArray = [[NSMutableArray alloc]init];
+        for (int i=0; i<unreadMessageIdArray.count; i++) {
+            ChatHistory_Object *obj = (ChatHistory_Object*) [unreadMessageIdArray objectAtIndex:i];
+            [sendMessageIdsArray addObject:[NSString stringWithFormat:@"%d",obj.messageId]];
+        }
+        ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
+        NSString * version = [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleShortVersionString"];
+        NSMutableDictionary *chatMessageRqst = [[NSMutableDictionary alloc]init];
+        NSMutableDictionary *reqstData = [[NSMutableDictionary alloc]init];
+        [chatMessageRqst setValue:@"1" forKey:@"requestId"];
+        [reqstData setValue:[[clientVariables.CLIENT_USER_LOGIN userName] stringByAppendingString:@"@employee"] forKey:@"userId"];
+        [reqstData setValue:[[clientVariables.CLIENT_USER_LOGIN deviceInfoMap] valueForKey:@"IMEI"] forKey:@"deviceId"];
+        [reqstData setValue:XmwcsConst_DEVICE_TYPE_IPHONE forKey:@"osType"];
+        [reqstData setValue:version forKey:@"appVersion"];
+        [reqstData setValue:@"1" forKey:@"apiVersion"];
+        [reqstData setValue:chatThreadId forKey:@"chatThreadId"];
+        [reqstData setObject:sendMessageIdsArray forKey:@"messageIds"];
+        [chatMessageRqst setObject:reqstData forKey:@"requestData"];
+        
+        ReadUnreadService *service = [[ReadUnreadService alloc] initWithPostData:chatMessageRqst withContext:@"messagesUnreadCall"];
+        
+//        networkHelper = [[NetworkHelper alloc]init];
+//        NSString * url=XmwcsConst_OPCODE_URL;
+//        networkHelper.serviceURLString = @"http://polycab.dotvik.com:8080/PushMessage/api/messagesRead";
+//        [networkHelper genericJSONPayloadRequestWith:chatMessageRqst :self :@"messagesUnreadCall"];
+    }
+    
+   
 }
 -(void)chatHistory
 {
@@ -443,7 +481,12 @@
                 chatHistory_Object.messageDate =[ NSString stringWithFormat:@"%@",[[chatHistoryArray objectAtIndex:i] valueForKey:@"messageDate"]];
                 chatHistory_Object.messageType =[ NSString stringWithFormat:@"%@",[[chatHistoryArray objectAtIndex:i] valueForKey:@"messageType"]];
                 
+                
+                
                 chatHistory_Object.messageId =  [[[chatHistoryArray objectAtIndex:i] valueForKey:@"id"] integerValue] ;
+                BOOL messageReadStatus = [[[chatHistoryArray objectAtIndex:i] valueForKey:@"messageRead"] boolValue];
+                chatHistory_Object.messageRead =[ NSString stringWithFormat:@"%@",messageReadStatus ? @"YES" : @"NO"];
+                
                 [chatHistory_DBStorage insertDoc:chatHistory_Object];
                 
             }
@@ -457,6 +500,7 @@
        
             
             [[NSUserDefaults standardUserDefaults] setObject:@"YES" forKey:[NSString stringWithFormat:@"CHAT_HISTORY_FIRST_TIME_FETCH_%@",[[chatHistoryArray objectAtIndex:0] valueForKey:@"chatThreadId"]]];
+        
           
             
         }
@@ -490,6 +534,7 @@
             chatHistory_Object.messageDate =[ NSString stringWithFormat:@"%@",timeStampValue];
             chatHistory_Object.messageType =@"TEXT";
             chatHistory_Object.messageId =[[dict valueForKey:@"serverMessageId"] integerValue] ;
+            chatHistory_Object.messageRead =@"YES";
             [chatHistory_DBStorage insertDoc:chatHistory_Object];
             
             NSMutableArray *chatHistoryStorageData = [chatHistory_DBStorage getRecentDocumentsData : @"False"];
@@ -517,6 +562,7 @@
             ChatBoxVC *vc =  (ChatBoxVC*) checkView;
             vc.chatThreadDict = chatThreadListStorageData;
               [self performSelector:@selector(scrollToBottom) withObject:nil afterDelay:0.0];
+            
         }
        
         else
@@ -555,6 +601,56 @@
     [myAlertView show];
 
          }
+    }
+    
+    if ([callName isEqualToString:@"messagesUnreadCall"]) {
+        
+        if ([[respondedObject objectForKey:@"status"] boolValue] == YES) {
+            NSMutableDictionary *dict = [[NSMutableDictionary alloc]init];
+            [dict setDictionary:[respondedObject objectForKey:@"responseData"]];
+            NSMutableArray *updated = [dict valueForKey:@"updated"];
+            NSMutableArray *failedToUpdate = [dict valueForKey:@"failedToUpdate"];
+            for ( int i=0; i<updated.count; i++) {
+                [ChatHistory_DB createInstance : @"ChatHistory_DB_STORAGE" : true :[[dict valueForKey:@"chatThreadId"] integerValue]];
+                ChatHistory_DB *chatHistory_DBStorage = [ChatHistory_DB getInstance];
+                
+                ChatHistory_Object* chatHistory_Object = [[ChatHistory_Object alloc] init];
+                chatHistory_Object.chatThreadId = [[dict valueForKey:@"chatThreadId"] integerValue] ;
+                chatHistory_Object.messageId    =  [[updated objectAtIndex:i] integerValue];
+                [chatHistory_DBStorage updateUnreadMessageStatus:chatHistory_Object];
+            }
+            if (failedToUpdate.count>0) {
+
+            }
+            else
+            {
+            
+                [ChatThreadList_DB createInstance : @"ChatThread_DB_STORAGE" : true];
+                ChatThreadList_DB *chatThreadListStorage = [ChatThreadList_DB getInstance];
+                ChatThreadList_Object* chatThreadList_Object = [[ChatThreadList_Object alloc] init];
+                chatThreadList_Object.chatThreadId =[[dict valueForKey:@"chatThreadId"] integerValue] ;
+                [chatThreadListStorage updateUnreadThread:chatThreadList_Object :0];
+//                [chatThreadListStorage updateUnreadThread:chatThreadList_Object];
+                
+                UIViewController *root;
+                root = [[[[UIApplication sharedApplication]windows]objectAtIndex:0]rootViewController];
+                SWRevealViewController *reveal = (SWRevealViewController*)root;
+                UINavigationController *check =(UINavigationController*)reveal.frontViewController;
+                NSArray* viewsList = check.viewControllers;
+                if (viewsList.count==3) {
+                    UIViewController *checkView = (UIViewController *) [viewsList objectAtIndex:viewsList.count - 2];
+                    NSMutableArray *chatThreadListStorageData = [chatThreadListStorage getRecentDocumentsData : @"False"];
+                    if ([checkView isKindOfClass:[ChatBoxVC class]]) {
+                        ChatBoxVC *vc =  (ChatBoxVC*) checkView;
+                        vc.chatThreadDict = chatThreadListStorageData;
+                    }
+                }
+                
+               
+                
+            }
+        }
+
     }
     
 }

@@ -10,6 +10,7 @@
 #import "DVAppDelegate.h"
 #import "ClientVariable.h"
 #import "XmwReportService.h"
+#import "LayoutClass.h"
 @implementation EmpolyeeSalesReportVC
 {
     
@@ -24,43 +25,47 @@
 }
 
 
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
-    
-    if(section==1) {
-        UINib* headerNib = [UINib nibWithNibName:@"EmpolyeeSalesReportHeaderView" bundle:nil];
-        
-        UIView* view = [[headerNib instantiateWithOwner:nil options:nil] objectAtIndex:0];
-        
-        view.bounds = CGRectMake(0, 0, self.view.frame.size.width, 60.0f);
-        
-        
-        UIView* lView = nil;
-        UITapGestureRecognizer* tapGesture = nil;
-        
-        lView = [view viewWithTag:0];
-        
-        
-        lView = [view viewWithTag:1];
-        //     tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(changePeriodAction:)];
-        //  [lView addGestureRecognizer:tapGesture];
-        
-        
-        lView = [view viewWithTag:2];
-        //    tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(changePeriodAction:)];
-        //    [lView addGestureRecognizer:tapGesture];
-        
-        
-        lView = [view viewWithTag:3];
-        //    tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(changePeriodAction:)];
-        //    [lView addGestureRecognizer:tapGesture];
-        
-        
-        return view;
-    } else {
-        return nil;
-    }
-}
+//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+//{
+//
+//    if(section==1) {
+//        UINib* headerNib = [UINib nibWithNibName:@"EmpolyeeSalesReportHeaderView" bundle:nil];
+//
+//        UIView* view = [[headerNib instantiateWithOwner:nil options:nil] objectAtIndex:0];
+//
+//        view.bounds = CGRectMake(0, 0, self.view.frame.size.width*deviceWidthRation, 90.0f);
+//
+//
+//        UIView* lView = nil;
+//        UITapGestureRecognizer* tapGesture = nil;
+//
+//        lView = [view viewWithTag:0];
+//
+//
+//        lView = [view viewWithTag:1];
+//        //     tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(changePeriodAction:)];
+//        //  [lView addGestureRecognizer:tapGesture];
+//
+//
+//        lView = [view viewWithTag:2];
+//        //    tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(changePeriodAction:)];
+//        //    [lView addGestureRecognizer:tapGesture];
+//
+//
+//        lView = [view viewWithTag:3];
+//        //    tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(changePeriodAction:)];
+//        //    [lView addGestureRecognizer:tapGesture];
+//
+//         lView = [view viewWithTag:4];
+//         lView = [view viewWithTag:5];
+//         lView = [view viewWithTag:6];
+//         lView = [view viewWithTag:7];
+//
+//        return view;
+//    } else {
+//        return nil;
+//    }
+//}
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -72,10 +77,20 @@
     if(section==0 ) {
         return 0.0f;
     } else if(section==1) {
-        return 60.0f*deviceHeightRation;
+        return 100.0f*deviceHeightRation;
     }
     return 0.0f;
 }
+//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+//{
+//    if(section==0 ) {
+//        return 0.0f;
+//    } else if(section==1) {
+//        return 90.0f*deviceHeightRation;
+//    }
+//    return 0.0f;
+//}
+
 -(void) drawTitle:(NSString *)headerStr
 {
     NSDictionary *textAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -182,6 +197,21 @@
         } else {
             tupleObject.uomValue = @"";
         }
+        ReportPostResponse *resonse = (ReportPostResponse*) reportData;
+        if ([resonse.viewReportId isEqualToString:@"DR_BU_SALES_CUSTOMER_WISE_V2"]) {
+            if ([[rowData objectAtIndex:0] isEqualToString:@"All"]) {
+                fieldName = [rowData objectAtIndex:0];
+            }
+            else
+            {
+              fieldName =[[[rowData objectAtIndex:0] stringByAppendingString:@"-"]stringByAppendingString:[rowData objectAtIndex:1]];
+            }
+            
+    
+        }
+        else{
+            
+        }
         tupleObject.fieldName = fieldName;
         tupleObject.firstRawData = rowData;
     }
@@ -230,6 +260,20 @@
         } else {
             tupleObject.uomValue = @"";
         }
+        ReportPostResponse *resonse = (ReportPostResponse*) reportData;
+        if ([resonse.viewReportId isEqualToString:@"DR_BU_SALES_CUSTOMER_WISE_V2"]) {
+            if ([[rowData objectAtIndex:0] isEqualToString:@"All"]) {
+                fieldName = [rowData objectAtIndex:0];
+            }
+            else
+            {
+                fieldName =[[[rowData objectAtIndex:0] stringByAppendingString:@"-"]stringByAppendingString:[rowData objectAtIndex:1]];
+            }
+            
+        }
+        else{
+            
+        }
         tupleObject.fieldName = fieldName;
         tupleObject.secondRawData = rowData;
     }
@@ -276,6 +320,20 @@
             tupleObject.uomValue = [rowData objectAtIndex:3];
         } else {
             tupleObject.uomValue = @"";
+        }
+        ReportPostResponse *resonse = (ReportPostResponse*) reportData;
+        if ([resonse.viewReportId isEqualToString:@"DR_BU_SALES_CUSTOMER_WISE_V2"]) {
+            if ([[rowData objectAtIndex:0] isEqualToString:@"All"]) {
+                fieldName = [rowData objectAtIndex:0];
+            }
+            else
+            {
+                fieldName =[[[rowData objectAtIndex:0] stringByAppendingString:@"-"]stringByAppendingString:[rowData objectAtIndex:1]];
+            }
+            
+        }
+        else{
+            
         }
         tupleObject.fieldName = fieldName;
         tupleObject.thirdRawData = rowData;

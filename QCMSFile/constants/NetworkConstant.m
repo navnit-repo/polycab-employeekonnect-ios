@@ -24,6 +24,7 @@
  NSString *const NtwkConst_RESPONSE_DATA = @"RESPONSE_DATA";
  NSString *const NtwkConst_STATUS = @"STATUS";
  NSString *const NtwkConst_MESSAGE = @"MESSAGE";
+ NSString *const NtwkConst_OSVERSION = @"OSVERSION";
  NSString *const NtwkConst_STATUS_SUCCESS = @"SUCCESS";
  NSString *const NtwkConst_STATUS_FAIL = @"FAIL";
 

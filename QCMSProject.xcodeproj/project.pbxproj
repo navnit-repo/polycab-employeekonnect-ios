@@ -628,6 +628,8 @@
 		F0302BBC2229269000F73808 /* password@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F0302BBA2229268F00F73808 /* password@2x.png */; };
 		F0302BBF2229269800F73808 /* password@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F0302BBD2229269700F73808 /* password@3x.png */; };
 		F0302BC02229269800F73808 /* sales@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F0302BBE2229269800F73808 /* sales@3x.png */; };
+		F030A0E02297E3EB00E24A26 /* ReadUnreadService.h in Headers */ = {isa = PBXBuildFile; fileRef = F030A0DE2297E3EB00E24A26 /* ReadUnreadService.h */; };
+		F030A0E12297E3EB00E24A26 /* ReadUnreadService.m in Sources */ = {isa = PBXBuildFile; fileRef = F030A0DF2297E3EB00E24A26 /* ReadUnreadService.m */; };
 		F031562C2126931C005DE7F2 /* SearchProductBYNameVC.h in Headers */ = {isa = PBXBuildFile; fileRef = F03156292126931C005DE7F2 /* SearchProductBYNameVC.h */; };
 		F031562D2126931C005DE7F2 /* SearchProductBYNameVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F031562A2126931C005DE7F2 /* SearchProductBYNameVC.m */; };
 		F031562E2126931C005DE7F2 /* SearchProductBYNameVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = F031562B2126931C005DE7F2 /* SearchProductBYNameVC.xib */; };
@@ -1806,6 +1808,8 @@
 		F0302BBA2229268F00F73808 /* password@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "password@2x.png"; sourceTree = "<group>"; };
 		F0302BBD2229269700F73808 /* password@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "password@3x.png"; sourceTree = "<group>"; };
 		F0302BBE2229269800F73808 /* sales@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sales@3x.png"; sourceTree = "<group>"; };
+		F030A0DE2297E3EB00E24A26 /* ReadUnreadService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReadUnreadService.h; sourceTree = "<group>"; };
+		F030A0DF2297E3EB00E24A26 /* ReadUnreadService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReadUnreadService.m; sourceTree = "<group>"; };
 		F03156292126931C005DE7F2 /* SearchProductBYNameVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchProductBYNameVC.h; sourceTree = "<group>"; };
 		F031562A2126931C005DE7F2 /* SearchProductBYNameVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchProductBYNameVC.m; sourceTree = "<group>"; };
 		F031562B2126931C005DE7F2 /* SearchProductBYNameVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchProductBYNameVC.xib; sourceTree = "<group>"; };
@@ -4396,6 +4400,8 @@
 				F036CDE12281869C000F2448 /* NewChatBoxVC.h */,
 				F036CDE22281869C000F2448 /* NewChatBoxVC.m */,
 				F036CDE32281869C000F2448 /* NewChatBoxVC.xib */,
+				F030A0DE2297E3EB00E24A26 /* ReadUnreadService.h */,
+				F030A0DF2297E3EB00E24A26 /* ReadUnreadService.m */,
 			);
 			path = chatBox;
 			sourceTree = SOURCE_ROOT;
@@ -4694,6 +4700,7 @@
 				85D7DA9D18F749CB00CF7D94 /* DVTableFormView.h in Headers */,
 				8516FEDA1B60697500E605A6 /* SelectServerVC.h in Headers */,
 				F0B2FB3D218850F5006A7C6B /* CustomCompareFormVC.h in Headers */,
+				F030A0E02297E3EB00E24A26 /* ReadUnreadService.h in Headers */,
 				F0A8EA80211D6C8F001C4FAD /* CreateOrderVC2.h in Headers */,
 				F02E353922155EBD0007573D /* NationalSalesAggregatePieView.h in Headers */,
 				F036CDE92281BDE6000F2448 /* ExpendObjectClass.h in Headers */,
@@ -5501,6 +5508,7 @@
 				8579E772174CDC7800D7945F /* DotReportElement.m in Sources */,
 				8558B33A1D0730960017FA3A /* GoldCardTableFormDelegate.m in Sources */,
 				F01D9C1421A4016F00D41B2A /* PaymentOutstandingTabbularSection.m in Sources */,
+				F030A0E12297E3EB00E24A26 /* ReadUnreadService.m in Sources */,
 				F034778D227970E00040A660 /* KeychainWrapper.m in Sources */,
 				8579E778174CDC9100D7945F /* DotForm.m in Sources */,
 				F02903EC21491F36007D2B2D /* ProgressBarView.m in Sources */,

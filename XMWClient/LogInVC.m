@@ -366,11 +366,12 @@ NSMutableDictionary *masterDataForEmployee;
 }
 - (void) httpResponseObjectHandler : (NSString*) callName : (id) respondedObject : (id) requestedObject
 {
-    [loadingView removeView];
+  
     if(respondedObject)
     {
     if([callName isEqualToString: XmwcsConst_CALL_NAME_FOR_LOGIN]) {
-                    
+            [loadingView removeView];
+        
                     ClientLoginResponse* clientLoginResponse = (ClientLoginResponse*)respondedObject;
                 [LoginUtils setClientVariables :  clientLoginResponse : m_username];
         customer_name = [[clientLoginResponse.clientMasterDetail.masterDataRefresh valueForKey:@"USER_PROFILE"] valueForKey:@"customer_name"];
@@ -406,12 +407,16 @@ NSMutableDictionary *masterDataForEmployee;
                // break;
             }
         }
-       
         
-//        NSString *userRole = [[[clientLoginResponse.clientMasterDetail.masterDataRefresh valueForKey:@"LEVEL_WISE_ROLES"]objectAtIndex:0] valueForKey:@"rolename"];
-        
-        
-     //   [[NSUserDefaults standardUserDefaults ]setObject:userRole forKey:@"ROLE_NAME"];
+        //this code for chat feature check for chat button hide on dashboard
+        NSMutableArray *rolesArray= [[NSMutableArray alloc]init];
+        for (int i=0; i<roleList.count; i++) {
+            [rolesArray addObject:[[roleList objectAtIndex:i] valueForKey:@"rolename"]];
+        }
+         if (![rolesArray containsObject:@"CHAIRMAN_CHAT"]) {
+            [[NSUserDefaults standardUserDefaults] setObject:@"NO" forKey:@"CHAIRMAN_CHAT"];
+        }
+    
         
          [[NSUserDefaults standardUserDefaults ]setObject:customer_name forKey:@"CUSTOMER_NAME"];
         
@@ -517,6 +522,7 @@ NSMutableDictionary *masterDataForEmployee;
         
     else if ([callName isEqualToString:@"requestUserList"])
     {
+        [loadingView removeView];
         NSMutableArray * contactsList = [[NSMutableArray alloc]init];
         
         if ([[respondedObject objectForKey:@"status"] boolValue] == YES) {
@@ -556,7 +562,7 @@ NSMutableDictionary *masterDataForEmployee;
         }
     }
     else if ([callName isEqualToString:@"chatThreadRequestData"])
-    {
+    {   [loadingView removeView];
         NSMutableArray *  chatThreadDict = [[NSMutableArray alloc]init];
         if ([[respondedObject objectForKey:@"status"] boolValue] == YES) {
             
@@ -606,6 +612,7 @@ NSMutableDictionary *masterDataForEmployee;
                 
                 chatThreadList_Object.deletedFlag =[ NSString stringWithFormat:@"%@",flag ? @"YES" : @"NO"];
                 chatThreadList_Object.displayName = obj.userName;
+                chatThreadList_Object.unreadMessageCount =[[[chatThreadDict objectAtIndex:i] valueForKey:@"unreadMessageCount"] intValue] ;
                 [chatThreadListStorage insertDoc:chatThreadList_Object];
                 
             }
@@ -673,7 +680,7 @@ NSMutableDictionary *masterDataForEmployee;
     
     NSString *bundleIdentifier =   [[NSBundle mainBundle] bundleIdentifier];
     NSString* deviceTokenString =deviceId;
-    
+    NSString *currentDeviceVersion = [[UIDevice currentDevice] systemVersion];
     ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
     if(deviceTokenString!=nil) {
         NotificationDeviceRegister* deviceRegister = [[NotificationDeviceRegister alloc] init];

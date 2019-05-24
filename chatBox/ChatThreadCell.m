@@ -26,6 +26,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+     [LayoutClass labelLayout:self.chatIdLbl forFontWeight:UIFontWeightRegular];
     [LayoutClass labelLayout:self.subjectLbl forFontWeight:UIFontWeightRegular];
     [LayoutClass labelLayout:self.timeStampLbl forFontWeight:UIFontWeightRegular];
     [LayoutClass labelLayout:self.chatPersonLbl forFontWeight:UIFontWeightRegular];

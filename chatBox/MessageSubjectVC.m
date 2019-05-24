@@ -38,31 +38,38 @@
 @synthesize userIDUnique;
 - (void)viewDidLoad {
     [super viewDidLoad];
+    CGFloat navBarHeight = self.navigationController.navigationBar.frame.size.height;
+    NSLog(@"Navigation Bar height : %f",navBarHeight);
+    CGFloat statusBarSize = [[UIApplication sharedApplication] statusBarFrame].size.height;
+    NSLog(@"statusBarSize Bar height : %f",statusBarSize);
+    CGFloat yorigin = navBarHeight +statusBarSize;
+    CGFloat totalViewHeight = [[UIApplication sharedApplication].keyWindow bounds].size.height;
     if (isiPhoneXSMAX) {
-        self.view.frame = CGRectMake(0, 64, 414, 832);
+        self.view.frame = CGRectMake(0, yorigin, 414, totalViewHeight-yorigin);
     }
     else if(isiPhoneXR) {
-        self.view.frame = CGRectMake(0, 64, 414, 832);
+        self.view.frame = CGRectMake(0, yorigin, 414, totalViewHeight-yorigin);
     }
     
     else if(isiPhoneXS) {
-        self.view.frame = CGRectMake(0, 64, 375, 748);
+        self.view.frame = CGRectMake(0, yorigin, 375, totalViewHeight-yorigin);
     }
     else if(isiPhone10) {
-        self.view.frame = CGRectMake(0, 64, 375, 748);
+        self.view.frame = CGRectMake(0, yorigin, 375, totalViewHeight-yorigin);
     }
     
     else if(isiPhone6Plus) {
-        self.view.frame = CGRectMake(0, 64, 414, 672);
+        self.view.frame = CGRectMake(0, yorigin, 414, totalViewHeight-yorigin);
     }
     else if(isiPhone6) {
-        self.view.frame = CGRectMake(0, 64, 375, 603);
+        self.view.frame = CGRectMake(0, yorigin, 375, totalViewHeight-yorigin);
     } else if(isiPhone5) {
-        self.view.frame = CGRectMake(0, 64, 320, 504);
+        self.view.frame = CGRectMake(0, yorigin, 320, totalViewHeight-yorigin);
     } else {
         // 0, 64, 320, 416
-        self.view.frame = CGRectMake(0, 64, 320, 416);
+        self.view.frame = CGRectMake(0, yorigin, 320, totalViewHeight-yorigin);
     }
+
     
     [self drawHeaderItem];
     [self createView];
@@ -106,7 +113,7 @@
 }
 -(void)createView
 {
-    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, 110)];
+    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, self.view.frame.origin.y, self.view.frame.size.width, 110)];
     headerView.backgroundColor = [UIColor whiteColor];
     
     UILabel *nameLbl = [[UILabel alloc]initWithFrame:CGRectMake(16, 10, self.view.frame.size.width-32, 20)];
@@ -115,7 +122,7 @@
     nameLbl.text = nameLblText;
     [headerView addSubview:nameLbl];
     
-    [self.view addSubview:headerView];
+   
     
     subjectTextField = [[UITextField alloc]initWithFrame:CGRectMake(16, 40, self.view.frame.size.width-32, 50)];
     subjectTextField.borderStyle = UITextBorderStyleRoundedRect;
@@ -144,7 +151,7 @@
     UIView *headerborderLine =  [[UIView alloc]initWithFrame:CGRectMake(0,headerView.frame.size.height-5, self.view.frame.size.width, 5)];
     headerborderLine.backgroundColor = [UIColor colorWithRed:230.0/255 green:230.0/255 blue:230.0/255 alpha:1.0];
     [headerView addSubview:headerborderLine];
-    
+     [self.view addSubview:headerView];
     
    UIView * bottomView = [[UIView alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height-80+self.view.frame.origin.y, self.view.frame.size.width, 80)];
     UIView *borderLine =  [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 5)];
@@ -235,7 +242,7 @@
   CGSize keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
    
     [UIView animateWithDuration:0.3 animations:^{
-        CGRect f = self.view.frame;
+         CGRect f = self.view.frame;
        f.origin.y = -keyboardSize.height;
         self.view.frame = f;
     }];

@@ -22,7 +22,7 @@
     id responseData;
     NSString* status;
     NSString* message;
-    
+    NSString* osVersion;
 }
 
 @property NSString* callName;
@@ -31,6 +31,6 @@
 @property id responseData;
 @property NSString* status;
 @property NSString* message;
-
+@property NSString* osVersion;
 
 @end

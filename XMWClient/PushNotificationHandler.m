@@ -59,6 +59,7 @@
             chatHistory_Object.message =base64MessageString;
             chatHistory_Object.messageDate =[ NSString stringWithFormat:@"%@",timeStampValue];
             chatHistory_Object.messageType =[ NSString stringWithFormat:@"%@", [responsedict valueForKey:@"messageType"]];
+            chatHistory_Object.messageRead =@"NO";
             chatHistory_Object.messageId =  [[responsedict valueForKey:@"messageId"] integerValue] ;
             [chatHistory_DBStorage insertDoc:chatHistory_Object];
             
@@ -77,7 +78,10 @@
                 chatThreadList_Object2.chatThreadId = chatHistory_Object.chatThreadId ;
                 chatThreadList_Object2.deletedFlag =@"NO";
                 [chatThreadListStorage updateDeletedTheadFlag:chatThreadList_Object2];
-      
+
+                int unreadCount = [chatThreadListStorage getCurrentUnreadCount:chatThreadList_Object2];
+            
+                [chatThreadListStorage updateUnreadThread:chatThreadList_Object2 :unreadCount+1];
             
         }
         
@@ -129,6 +133,7 @@
             chatThreadList_Object.lastMessageOn = timeStampValue;
             chatThreadList_Object.status = @"";
             chatThreadList_Object.deletedFlag = @"NO";
+            chatThreadList_Object.unreadMessageCount = 1;
             [chatThreadListStorage insertDoc:chatThreadList_Object];
             [chatThreadListStorage updateDocLastMessageTime:chatThreadList_Object];
         }

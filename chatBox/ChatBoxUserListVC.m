@@ -234,7 +234,14 @@
     MessageSubjectVC *vc = [[MessageSubjectVC alloc]init];
    vc.userIDUnique = [[contactsList objectAtIndex:indexPath.row] valueForKey:@"userId"];
     vc.nameLblText = [[contactsList objectAtIndex:indexPath.row] valueForKey:@"name"];
-    [self.navigationController pushViewController:vc animated:YES];
+    
+    UIViewController *root;
+    root = [[[[UIApplication sharedApplication]windows]objectAtIndex:0]rootViewController];
+    
+    SWRevealViewController *reveal = (SWRevealViewController*)root;
+    [(UINavigationController*)reveal.frontViewController pushViewController:vc animated:YES];
+    
+//    [self.navigationController pushViewController:vc animated:YES];
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {

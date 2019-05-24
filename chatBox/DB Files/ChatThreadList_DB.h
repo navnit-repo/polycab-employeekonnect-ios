@@ -34,6 +34,8 @@ NS_ASSUME_NONNULL_BEGIN
 + (ChatThreadList_DB*) getInstance ;
 + (ChatThreadList_DB*) getInstance : (NSString*) contextId ;
 -(NSMutableArray*)  getRecentDocumentsData : (NSString *)delete_stringFlag;
+-(int)getCurrentUnreadCount:(ChatThreadList_Object*)object;
+-(BOOL) updateUnreadThread   : (ChatThreadList_Object*) chatThreadList_Object :(int)unreadCount;
 - (ChatThreadList_Object*) retrieveItem : (sqlite3_stmt *) statement ;
 @end
 

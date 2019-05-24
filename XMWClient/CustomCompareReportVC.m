@@ -232,22 +232,34 @@
         
         UILabel* tZero =  (UILabel*)[totalRow viewWithTag:200];
         [LayoutClass labelLayout:tZero forFontWeight:UIFontWeightSemibold];
-        tZero.text = @"Summary";
+        tZero.text = @"All";
         tZero.textAlignment = NSTextAlignmentCenter;
         
         UILabel* tFirst =  (UILabel*)[totalRow viewWithTag:201];
         [LayoutClass labelLayout:tFirst forFontWeight:UIFontWeightSemibold];
-        tFirst.text = [self totalHeaderValue:firstResponse];
+        NSString *tFirstText = [self totalHeaderValue:firstResponse];
+        if ([ tFirstText isEqualToString:@"0"]) {
+            tFirstText = @"0.0";
+        }
+        tFirst.text = tFirstText;
         tFirst.textAlignment = NSTextAlignmentCenter;
         
         UILabel* tSecond =  (UILabel*)[totalRow viewWithTag:202];
         [LayoutClass labelLayout:tSecond forFontWeight:UIFontWeightSemibold];
-        tSecond.text = [self totalHeaderValue:secondResponse];
+        NSString *tSecondText = [self totalHeaderValue:secondResponse];
+        if ([ tSecondText isEqualToString:@"0"]) {
+            tSecondText = @"0.0";
+        }
+        tSecond.text = tSecondText;
         tSecond.textAlignment = NSTextAlignmentCenter;
         
         UILabel* tThird =  (UILabel*)[totalRow viewWithTag:203];
         [LayoutClass labelLayout:tThird forFontWeight:UIFontWeightSemibold];
-        tThird.text = [self totalHeaderValue:thirdResponse];
+        NSString *tThirdText = [self totalHeaderValue:thirdResponse];
+        if ([ tThirdText isEqualToString:@"0"]) {
+            tThirdText = @"0.0";
+        }
+        tThird.text = tThirdText;
         tThird.textAlignment = NSTextAlignmentCenter;
         
     }

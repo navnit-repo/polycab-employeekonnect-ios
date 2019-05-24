@@ -35,6 +35,8 @@ NS_ASSUME_NONNULL_BEGIN
 + (ChatHistory_DB*) getInstance : (NSString*) contextId ;
 -(NSMutableArray*)  getRecentDocumentsData : (NSString *)delete_stringFlag;
 - (ChatHistory_Object*) retrieveItem : (sqlite3_stmt *) statement ;
+-(NSMutableArray*)  getRecentUnreadMessage : (NSString *)delete_stringFlag;
+-(BOOL) updateUnreadMessageStatus   : (ChatHistory_Object*) chatHistory_Object;
 @end
 
 NS_ASSUME_NONNULL_END
