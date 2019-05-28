@@ -154,11 +154,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XMWClient/LogInVC.m"
-            timestampString = "580379023.4736969"
+            timestampString = "580648994.994543"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "711"
-            endingLineNumber = "711"
+            startingLineNumber = "712"
+            endingLineNumber = "712"
             landmarkName = "-configureServerUrls"
             landmarkType = "7">
          </BreakpointContent>
@@ -346,7 +346,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XMWClient/DVAppDelegate.m"
-            timestampString = "580393380.300766"
+            timestampString = "580648994.994998"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "661"
@@ -1346,7 +1346,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XMWClient/SearchProductByCatalogNextViewVC.m"
-            timestampString = "573391292.240544"
+            timestampString = "580648994.9972349"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "306"
@@ -1522,11 +1522,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "chatBox/ChatBoxVC.m"
-            timestampString = "580379023.475989"
+            timestampString = "580648994.997647"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "409"
-            endingLineNumber = "409"
+            startingLineNumber = "410"
+            endingLineNumber = "410"
             landmarkName = "-httpResponseObjectHandler:::"
             landmarkType = "7">
          </BreakpointContent>
@@ -1554,7 +1554,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "chatBox/MessageSubjectVC.m"
-            timestampString = "579705372.10528"
+            timestampString = "580648994.9985549"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "327"
@@ -1570,7 +1570,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "chatBox/MessageSubjectVC.m"
-            timestampString = "579705372.105369"
+            timestampString = "580648994.99867"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "345"
@@ -1666,7 +1666,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XMWClient/DVAppDelegate.m"
-            timestampString = "580393380.303357"
+            timestampString = "580648994.999037"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "704"
@@ -1714,11 +1714,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XMWClient/DVAppDelegate.m"
-            timestampString = "580393380.303484"
+            timestampString = "580648994.999193"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1073"
-            endingLineNumber = "1073"
+            startingLineNumber = "1080"
+            endingLineNumber = "1080"
             landmarkName = "-userNotificationCenter:willPresentNotification:withCompletionHandler:"
             landmarkType = "7">
          </BreakpointContent>
@@ -1730,7 +1730,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XMWClient/DVAppDelegate.m"
-            timestampString = "580393380.303546"
+            timestampString = "580648994.999259"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "312"
@@ -1746,7 +1746,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XMWClient/DVAppDelegate.m"
-            timestampString = "580393380.303606"
+            timestampString = "580648994.999321"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "325"
@@ -1762,7 +1762,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "chatBox/MessageSubjectVC.m"
-            timestampString = "579705372.105736"
+            timestampString = "580648994.999382"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "230"
@@ -1842,11 +1842,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XMWClient/DVAppDelegate.m"
-            timestampString = "580393380.303803"
+            timestampString = "580648994.999674"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1234"
-            endingLineNumber = "1234"
+            startingLineNumber = "1241"
+            endingLineNumber = "1241"
             landmarkName = "-userNotificationCenter:didReceiveNotificationResponse:withCompletionHandler:"
             landmarkType = "7">
          </BreakpointContent>
@@ -1858,11 +1858,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XMWClient/DVAppDelegate.m"
-            timestampString = "580393380.303864"
+            timestampString = "580648994.99974"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1360"
-            endingLineNumber = "1360"
+            startingLineNumber = "1367"
+            endingLineNumber = "1367"
             landmarkName = "-userNotificationCenter:didReceiveNotificationResponse:withCompletionHandler:"
             landmarkType = "7">
          </BreakpointContent>
@@ -1874,11 +1874,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XMWClient/DVAppDelegate.m"
-            timestampString = "580393380.303924"
+            timestampString = "580648994.9998029"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1188"
-            endingLineNumber = "1188"
+            startingLineNumber = "1195"
+            endingLineNumber = "1195"
             landmarkName = "-userNotificationCenter:didReceiveNotificationResponse:withCompletionHandler:"
             landmarkType = "7">
          </BreakpointContent>
@@ -1890,7 +1890,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XMWClient/DVAppDelegate.m"
-            timestampString = "580393380.303985"
+            timestampString = "580648994.999863"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "369"
@@ -1906,11 +1906,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XMWClient/DVAppDelegate.m"
-            timestampString = "580393380.304044"
+            timestampString = "580648994.9999239"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1055"
-            endingLineNumber = "1055"
+            startingLineNumber = "1062"
+            endingLineNumber = "1062"
             landmarkName = "-userNotificationCenter:willPresentNotification:withCompletionHandler:"
             landmarkType = "7">
          </BreakpointContent>
@@ -1922,7 +1922,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XMWClient/DVAppDelegate.m"
-            timestampString = "580393380.304104"
+            timestampString = "580648994.999984"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "418"
@@ -1938,27 +1938,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "chatBox/DB Files/ChatThreadList_DB.m"
-            timestampString = "579781032.773932"
+            timestampString = "580648995.000048"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "288"
-            endingLineNumber = "288"
-            landmarkName = "-getCurrentUnreadCount:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "chatBox/DB Files/ChatThreadList_DB.m"
-            timestampString = "579781032.7745349"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "274"
-            endingLineNumber = "274"
+            startingLineNumber = "277"
+            endingLineNumber = "277"
             landmarkName = "-getCurrentUnreadCount:"
             landmarkType = "7">
          </BreakpointContent>
@@ -2088,6 +2072,22 @@
             startingLineNumber = "151"
             endingLineNumber = "151"
             landmarkName = "-unreadMessageNetworkCall"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "XMWClient/DVAppDelegate.m"
+            timestampString = "580648995.000405"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "937"
+            endingLineNumber = "937"
+            landmarkName = "-userNotificationCenter:willPresentNotification:withCompletionHandler:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

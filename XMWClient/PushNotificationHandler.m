@@ -134,6 +134,7 @@
             chatThreadList_Object.status = @"";
             chatThreadList_Object.deletedFlag = @"NO";
             chatThreadList_Object.unreadMessageCount = 1;
+            chatThreadList_Object.spaNo = [responsedict valueForKey:@"spaNo"];
             [chatThreadListStorage insertDoc:chatThreadList_Object];
             [chatThreadListStorage updateDocLastMessageTime:chatThreadList_Object];
         }

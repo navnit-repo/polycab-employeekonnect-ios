@@ -613,6 +613,7 @@ NSMutableDictionary *masterDataForEmployee;
                 chatThreadList_Object.deletedFlag =[ NSString stringWithFormat:@"%@",flag ? @"YES" : @"NO"];
                 chatThreadList_Object.displayName = obj.userName;
                 chatThreadList_Object.unreadMessageCount =[[[chatThreadDict objectAtIndex:i] valueForKey:@"unreadMessageCount"] intValue] ;
+                chatThreadList_Object.spaNo =[ NSString stringWithFormat:@"%@",[[chatThreadDict objectAtIndex:i] valueForKey:@"spaNo"]];
                 [chatThreadListStorage insertDoc:chatThreadList_Object];
                 
             }

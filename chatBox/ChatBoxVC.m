@@ -652,7 +652,7 @@
                 //            cell.chatPersonLbl.textColor =[UIColor colorWithRed:211.0f/255 green:211.0f/255 blue:211.0f/255 alpha:1.0];
                 //            cell.timeStampLbl.textColor  =[UIColor colorWithRed:211.0f/255 green:211.0f/255 blue:211.0f/255 alpha:1.0];
                 [cell.acceptImageView setImage:[UIImage imageNamed:@"Tick_Mark"]];
-                cell.chatIdLbl.text = [NSString stringWithFormat:@"SPA No : %d",obj.chatThreadId];
+                cell.chatIdLbl.text = [NSString stringWithFormat:@"SPA No : %@",obj.spaNo];
             }
 //            NSString *newPushCheck = [[NSUserDefaults standardUserDefaults] valueForKey:[NSString stringWithFormat:@"NEW_PUSH_%d",obj.chatThreadId]];
             if (obj.unreadMessageCount >0) {

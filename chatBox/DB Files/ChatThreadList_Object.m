@@ -19,4 +19,5 @@
 @synthesize displayName;
 @synthesize deletedFlag;
 @synthesize unreadMessageCount;
+@synthesize spaNo;
 @end

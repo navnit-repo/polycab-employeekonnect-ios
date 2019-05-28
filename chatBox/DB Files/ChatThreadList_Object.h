@@ -23,7 +23,9 @@ NS_ASSUME_NONNULL_BEGIN
     NSString *displayName;
     NSString *deletedFlag;
     int unreadMessageCount;
+    NSString *spaNo;
 }
+@property NSString *spaNo;
 @property int unreadMessageCount;
 @property NSString *deletedFlag;
 @property NSString *displayName;

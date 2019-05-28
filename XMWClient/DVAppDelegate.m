@@ -950,6 +950,13 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
     if (fromForNewPushDisplayAlert == nil || [fromForNewPushDisplayAlert isKindOfClass:[NSNull class]] || fromForNewPushDisplayAlert.length ==0 || [fromForNewPushDisplayAlert isEqualToString:@""]) {
         fromForNewPushDisplayAlert = @"";
     }
+    
+    UIViewController *root;
+    root = [[[[UIApplication sharedApplication]windows]objectAtIndex:0]rootViewController];
+    if ([root isKindOfClass:[UINavigationController class]]) {// this condition for check reveal view controller is already configured or not
+        
+    }
+    else {
     if ([[mainDict objectForKey:@"OPERATION"] isEqualToString:@"8"] ) {
         if ([[mainDict objectForKey:@"NOTIFY_CALLNAME"] isEqualToString:@"NEW_MESSAGE"]) {
             
@@ -1179,7 +1186,7 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
         }
         
     }
-    
+}
  //   completionHandler(UNAuthorizationOptionSound | UNAuthorizationOptionAlert | UNAuthorizationOptionBadge);
 }
 

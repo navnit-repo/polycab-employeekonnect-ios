@@ -356,6 +356,8 @@
                 chatThreadList_Object.lastMessageOn = timeStampValue;
                 chatThreadList_Object.status = @"";
                 chatThreadList_Object.deletedFlag = @"NO";
+                chatThreadList_Object.unreadMessageCount = 0;
+                chatThreadList_Object.spaNo = [dict valueForKey:@"spaNo"];
                 [chatThreadListStorage insertDoc:chatThreadList_Object];
                 [chatThreadListStorage updateDocLastMessageTime:chatThreadList_Object];
             NSMutableArray *chatThreadListStorageData = [chatThreadListStorage getRecentDocumentsData : @"False"];
