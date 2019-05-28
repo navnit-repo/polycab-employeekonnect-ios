@@ -26,7 +26,9 @@
     MXButton *uomDescriptionButton;
     NSString *itemNameString;
     NSString *billTo;
+    NSString *shipTo;
 }
+@property NSString *shipTo;
 @property NSMutableDictionary *catalogReqstData;
 @property MXButton *mxButton;
 @property MXTextField *coreTextField;

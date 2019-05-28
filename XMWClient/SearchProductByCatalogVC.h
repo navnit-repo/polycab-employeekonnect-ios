@@ -16,5 +16,5 @@
 @property (weak, nonatomic) IBOutlet UITableView *mainTableView;
 @property NSString *itmeName;
 @property NSString *itemNameString;
--(id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil parentForm:(FormVC*) parent formElement:(NSString *) formElementId elementData:(NSString *)masterValueMapping radioGroupData:(NSMutableArray *) keyValueDoubleArray :(NSString*)buttonSender :(NSString*)itemName :(NSString*)bill_To;
+-(id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil parentForm:(FormVC*) parent formElement:(NSString *) formElementId elementData:(NSString *)masterValueMapping radioGroupData:(NSMutableArray *) keyValueDoubleArray :(NSString*)buttonSender :(NSString*)itemName :(NSString*)bill_To :(NSString *)ship_To;
 @end

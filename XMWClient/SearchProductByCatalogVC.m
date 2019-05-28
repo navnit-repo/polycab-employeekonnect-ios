@@ -26,10 +26,10 @@
     NetworkHelper* networkHelper;
     LoadingView* loadingView;
     NSString *billTO;
-    
+    NSString *shipTO;
 }
 @synthesize itmeName;
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil parentForm:(FormVC *)parent formElement:(NSString *)formElementId elementData:(NSString *)masterValueMapping radioGroupData:(NSMutableArray *)keyValueDoubleArray :(NSString *)buttonSender :(NSString*)itemName :(NSString*)bill_To{
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil parentForm:(FormVC *)parent formElement:(NSString *)formElementId elementData:(NSString *)masterValueMapping radioGroupData:(NSMutableArray *)keyValueDoubleArray :(NSString *)buttonSender :(NSString*)itemName :(NSString*)bill_To :(NSString*)ship_To{
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     
     if(self!=nil) {
@@ -40,6 +40,7 @@
         searchButtonClickTag = buttonSender;
         NSLog(@"Button Tag %@ ",searchButtonClickTag);
         billTO = bill_To;
+        shipTO = ship_To;
         item= itemName;
         
         
@@ -95,8 +96,8 @@
         
         
         
-        [catalogQuery setObject:billTO forKey:@"SHIP_TO"];
-        
+        [catalogQuery setObject:billTO forKey:@"BILL_TO"];
+        [catalogQuery setObject:shipTO forKey:@"SHIP_TO"];
         // sample division fan, 45
     } else {
         [catalogQuery setObject:@"" forKey:@"CATALOGID"];
@@ -221,6 +222,7 @@
         vc.catalogReqstData = catalogQuery;
         vc.itemNameString = itemNameString;
         vc.billTo = billTO;
+        vc.shipTo = shipTO;
         [self.navigationController pushViewController:vc animated:YES];
     }
     else{
@@ -229,7 +231,8 @@
         DotFormPost *formPost = [[DotFormPost alloc]init];
         [formPost.postData setObject:@"" forKey:DotSearchConst_SEARCH_TEXT];
         [formPost.postData setObject:@"SBN" forKey:DotSearchConst_SEARCH_BY];
-        [formPost.postData setObject:billTO forKey:@"SHIP_TO"];
+        [formPost.postData setObject:billTO forKey:@"BILL_TO"];
+        [formPost.postData setObject:shipTO forKey:@"SHIP_TO"];
         [formPost.postData setObject:[ClientVariable getInstance].CLIENT_USER_LOGIN.userName forKey:@"USERNAME"];
         //[formPost.postData setObject:category.lobCode  forKey:@"CUSTOMER_NUMBER"];
         [formPost.postData setObject:self.productDivision forKey:@"BUSINESS_VERTICAL"];

@@ -500,8 +500,12 @@
 -(void)polycabButtonHandler:(NSNotification*)notification {
     
     NSString *bill_to;
+    NSString *ship_to;
     bill_to =[ NSString stringWithFormat:@"%@",[notification.userInfo valueForKey:@"BILL_TO"]];
     NSLog(@"%@",bill_to);
+    
+    ship_to = [ NSString stringWithFormat:@"%@",[notification.userInfo valueForKey:@"SHIP_TO"]];
+    NSLog(@"%@",ship_to);
     
     NSString *buttonTag = [NSString stringWithFormat:@"%@",[notification.userInfo valueForKey:@"ButtonTag"]];
     NSLog(@"%@",buttonTag);
@@ -523,7 +527,7 @@
     //for Search Product
     if ([buttonTag isEqualToString:@"101"]) {
         
-        SearchProductBYNameVC *searchProductBYNameVC = [[SearchProductBYNameVC alloc]initWithNibName:@"SearchProductBYNameVC" bundle:nil parentForm:formViewController formElement:elementId elementData:masterValueMapping radioGroupData:searchValues :buttonTag :itemName :bill_to];
+        SearchProductBYNameVC *searchProductBYNameVC = [[SearchProductBYNameVC alloc]initWithNibName:@"SearchProductBYNameVC" bundle:nil parentForm:formViewController formElement:elementId elementData:masterValueMapping radioGroupData:searchValues :buttonTag :itemName :bill_to :ship_to];
         
         NSMutableDictionary* dependentValueMap = nil;
         if(formElement.dependedCompValue !=nil   && ![formElement.dependedCompValue isEqualToString:@""]){
@@ -543,7 +547,7 @@
     
     // for add to catalog
     else if ([buttonTag isEqualToString:@"100"]){
-        SearchProductByCatalogVC * searchProductByCatalogVC = [[SearchProductByCatalogVC alloc]initWithNibName:@"SearchProductByCatalogVC" bundle:nil parentForm:formViewController formElement:elementId elementData:masterValueMapping radioGroupData:searchValues :buttonTag :item :bill_to] ;
+        SearchProductByCatalogVC * searchProductByCatalogVC = [[SearchProductByCatalogVC alloc]initWithNibName:@"SearchProductByCatalogVC" bundle:nil parentForm:formViewController formElement:elementId elementData:masterValueMapping radioGroupData:searchValues :buttonTag :item :bill_to :ship_to] ;
         
         
         

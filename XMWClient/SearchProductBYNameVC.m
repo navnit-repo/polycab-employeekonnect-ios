@@ -34,13 +34,14 @@
     NSString *item;
     int count;
     NSString *billTo;
+    NSString *shipTo;
 }
 @synthesize coreTextField,colorTextField,squareTextField,uomDescriptionTextField;
 @synthesize coreButton,colorButton,squareButton,uomDescriptionButton;
 @synthesize itemNameString;
 
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil parentForm:(FormVC *)parent formElement:(NSString *)formElementId elementData:(NSString *)masterValueMapping radioGroupData:(NSMutableArray *)keyValueDoubleArray :(NSString *)buttonSender :(NSString *)itemName :(NSString*)bill_To{
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil parentForm:(FormVC *)parent formElement:(NSString *)formElementId elementData:(NSString *)masterValueMapping radioGroupData:(NSMutableArray *)keyValueDoubleArray :(NSString *)buttonSender :(NSString *)itemName :(NSString*)bill_To :(NSString*)ship_To{
     
     
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -53,7 +54,7 @@
         searchButtonClickTag = buttonSender;
         NSLog(@"Button Tag %@ ",searchButtonClickTag);
         billTo = bill_To;
-        
+        shipTo = ship_To;
         
         item= itemName;
         
@@ -171,7 +172,8 @@
         DotFormPost *formPost = [[DotFormPost alloc]init];
         [formPost.postData setObject:searchInputField.text forKey:DotSearchConst_SEARCH_TEXT];
         [formPost.postData setObject:@"SBN" forKey:DotSearchConst_SEARCH_BY];
-        [formPost.postData setObject:billTo forKey:@"SHIP_TO"];
+        [formPost.postData setObject:billTo forKey:@"BILL_TO"];
+        [formPost.postData setObject:shipTo forKey:@"SHIP_TO"];
         [formPost.postData setObject:[ClientVariable getInstance].CLIENT_USER_LOGIN.userName forKey:@"USERNAME"];
         [formPost.postData setObject:self.productDivision forKey:@"BUSINESS_VERTICAL"];
         
@@ -207,7 +209,8 @@
         DotFormPost *formPost = [[DotFormPost alloc]init];
         [formPost.postData setObject:searchInputField.text forKey:DotSearchConst_SEARCH_TEXT];
         [formPost.postData setObject:@"SBN" forKey:DotSearchConst_SEARCH_BY];
-        [formPost.postData setObject:billTo forKey:@"SHIP_TO"];
+        [formPost.postData setObject:billTo forKey:@"BILL_TO"];
+        [formPost.postData setObject:shipTo forKey:@"SHIP_TO"];
         [formPost.postData setObject:[ClientVariable getInstance].CLIENT_USER_LOGIN.userName forKey:@"USERNAME"];
         [formPost.postData setObject:self.productDivision forKey:@"BUSINESS_VERTICAL"];
         
@@ -242,7 +245,8 @@
         DotFormPost *formPost = [[DotFormPost alloc]init];
         [formPost.postData setObject:searchInputField.text forKey:DotSearchConst_SEARCH_TEXT];
         [formPost.postData setObject:@"SBN" forKey:DotSearchConst_SEARCH_BY];
-        [formPost.postData setObject:billTo forKey:@"SHIP_TO"];
+        [formPost.postData setObject:billTo forKey:@"BILL_TO"];
+        [formPost.postData setObject:shipTo forKey:@"SHIP_TO"];
         [formPost.postData setObject:[ClientVariable getInstance].CLIENT_USER_LOGIN.userName forKey:@"USERNAME"];
         [formPost.postData setObject:self.productDivision forKey:@"BUSINESS_VERTICAL"];
         
@@ -330,7 +334,8 @@
     DotFormPost *formPost = [[DotFormPost alloc]init];
     [formPost.postData setObject:searchInputField.text forKey:DotSearchConst_SEARCH_TEXT];
     [formPost.postData setObject:@"SBN" forKey:DotSearchConst_SEARCH_BY];
-    [formPost.postData setObject:billTo forKey:@"SHIP_TO"];
+    [formPost.postData setObject:billTo forKey:@"BILL_TO"];
+    [formPost.postData setObject:shipTo forKey:@"SHIP_TO"];
     [formPost.postData setObject:[ClientVariable getInstance].CLIENT_USER_LOGIN.userName forKey:@"USERNAME"];
     [formPost.postData setObject:self.productDivision forKey:@"BUSINESS_VERTICAL"];
     [formPost setModuleId: [DVAppDelegate currentModuleContext]];
@@ -908,7 +913,8 @@
     
     
     [formPost.postData setObject:[ClientVariable getInstance].CLIENT_USER_LOGIN.userName forKey:@"USERNAME"];
-    [formPost.postData setObject:billTo forKey:@"SHIP_TO"];
+    [formPost.postData setObject:billTo forKey:@"BILL_TO"];
+    [formPost.postData setObject:shipTo forKey:@"SHIP_TO"];
     [formPost.postData setObject:self.productDivision forKey:@"BUSINESS_VERTICAL"];
     [formPost setModuleId: [DVAppDelegate currentModuleContext]];
     [formPost setDocId: @"MATERIAL_LOB_JDBC"];

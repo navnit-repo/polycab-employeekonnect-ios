@@ -38,5 +38,5 @@
 
 @property  MXButton *mxButton;
 @property (weak, nonatomic) IBOutlet UITableView *mainTableView;
--(id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil parentForm:(FormVC*) parent formElement:(NSString *) formElementId elementData:(NSString *)masterValueMapping radioGroupData:(NSMutableArray *) keyValueDoubleArray :(NSString*)buttonSender :(NSString*)itemName :(NSString*)bill_To;
+-(id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil parentForm:(FormVC*) parent formElement:(NSString *) formElementId elementData:(NSString *)masterValueMapping radioGroupData:(NSMutableArray *) keyValueDoubleArray :(NSString*)buttonSender :(NSString*)itemName :(NSString*)bill_To :(NSString*)ship_To;
 @end

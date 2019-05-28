@@ -109,8 +109,8 @@
     // buttonTag = @{@"ButtonTag": @(tag)};
     [buttonTag setObject:[NSString stringWithFormat:@"%ld",tag] forKey:@"ButtonTag"];
     [buttonTag setObject:[forwardedDataDisplay valueForKey:@"BUSINESS_VERTICAL"] forKey:@"BUSINESS_VERTICAL"];
-    [buttonTag setObject:[forwardedDataPost valueForKey:@"SHIP_TO"] forKey:@"BILL_TO"];
-    
+    [buttonTag setObject:[forwardedDataPost valueForKey:@"BILL_TO"] forKey:@"BILL_TO"];
+    [buttonTag setObject:[forwardedDataPost valueForKey:@"SHIP_TO"] forKey:@"SHIP_TO"];
     NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
     [nc postNotificationName:@"setButtonHandler" object:self userInfo:buttonTag];
     
@@ -125,7 +125,8 @@
     [buttonTag setObject:[NSString stringWithFormat:@"%ld",tag] forKey:@"ButtonTag"];
     [buttonTag setObject:self.itemName.text forKey:@"itemName"];
     [buttonTag setObject:[forwardedDataDisplay valueForKey:@"BUSINESS_VERTICAL"] forKey:@"BUSINESS_VERTICAL"];
-    [buttonTag setObject:[forwardedDataPost valueForKey:@"SHIP_TO"] forKey:@"BILL_TO"];
+    [buttonTag setObject:[forwardedDataPost valueForKey:@"BILL_TO"] forKey:@"BILL_TO"];
+    [buttonTag setObject:[forwardedDataPost valueForKey:@"SHIP_TO"] forKey:@"SHIP_TO"];
     NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
     [nc postNotificationName:@"setButtonHandler" object:self userInfo:buttonTag];
     

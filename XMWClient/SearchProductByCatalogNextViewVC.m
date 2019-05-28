@@ -33,6 +33,7 @@
     NetworkHelper* networkHelper;
     LoadingView* loadingView;
 }
+@synthesize shipTo;
 @synthesize billTo;
 @synthesize itemNameString;
 @synthesize catalogReqstData;
@@ -139,7 +140,8 @@
         DotFormPost *formPost = [[DotFormPost alloc]init];
         [formPost.postData setObject:@""forKey:DotSearchConst_SEARCH_TEXT];
         [formPost.postData setObject: @"SBN"forKey:DotSearchConst_SEARCH_BY];
-        [formPost.postData setObject:billTo forKey:@"SHIP_TO"];
+        [formPost.postData setObject:billTo forKey:@"BILL_TO"];
+        [formPost.postData setObject:shipTo forKey:@"SHIP_TO"];
         [formPost.postData setObject:[ClientVariable getInstance].CLIENT_USER_LOGIN.userName forKey:@"USERNAME"];
         [formPost.postData setObject:[catalogReqstData valueForKey:@"CUSTOMER_NUMBER"] forKey:@"BUSINESS_VERTICAL"];
         [formPost.postData setObject:[catalogReqstData valueForKey:@"PRY_ITEMCATEGORY"] forKey:@"PRY_ITEMCATEGORY"];
@@ -177,7 +179,8 @@
         DotFormPost *formPost = [[DotFormPost alloc]init];
         [formPost.postData setObject:@"" forKey:DotSearchConst_SEARCH_TEXT];
         [formPost.postData setObject:@"SBN" forKey:DotSearchConst_SEARCH_BY];
-        [formPost.postData setObject:billTo forKey:@"SHIP_TO"];
+        [formPost.postData setObject:billTo forKey:@"BILL_TO"];
+        [formPost.postData setObject:shipTo forKey:@"SHIP_TO"];
         [formPost.postData setObject:[ClientVariable getInstance].CLIENT_USER_LOGIN.userName forKey:@"USERNAME"];
         [formPost.postData setObject:[catalogReqstData valueForKey:@"CUSTOMER_NUMBER"] forKey:@"BUSINESS_VERTICAL"];
         [formPost.postData setObject:[catalogReqstData valueForKey:@"CUSTOMER_NUMBER"] forKey:@"BUSINESS_VERTICAL"];
@@ -215,7 +218,8 @@
         DotFormPost *formPost = [[DotFormPost alloc]init];
         [formPost.postData setObject:@"" forKey:DotSearchConst_SEARCH_TEXT];
         [formPost.postData setObject:@"SBN" forKey:DotSearchConst_SEARCH_BY];
-        [formPost.postData setObject:billTo forKey:@"SHIP_TO"];
+        [formPost.postData setObject:billTo forKey:@"BILL_TO"];
+        [formPost.postData setObject:shipTo forKey:@"SHIP_TO"];
         [formPost.postData setObject:[ClientVariable getInstance].CLIENT_USER_LOGIN.userName forKey:@"USERNAME"];
         [formPost.postData setObject:[catalogReqstData valueForKey:@"CUSTOMER_NUMBER"] forKey:@"BUSINESS_VERTICAL"];
         [formPost.postData setObject:[catalogReqstData valueForKey:@"CUSTOMER_NUMBER"] forKey:@"BUSINESS_VERTICAL"];
@@ -306,7 +310,8 @@
     DotFormPost *formPost = [[DotFormPost alloc]init];
     [formPost.postData setObject:@"" forKey:DotSearchConst_SEARCH_TEXT];
     [formPost.postData setObject:@"SBN" forKey:DotSearchConst_SEARCH_BY];
-    [formPost.postData setObject:billTo forKey:@"SHIP_TO"];
+    [formPost.postData setObject:billTo forKey:@"BILL_TO"];
+    [formPost.postData setObject:shipTo forKey:@"SHIP_TO"];
     [formPost.postData setObject:[ClientVariable getInstance].CLIENT_USER_LOGIN.userName forKey:@"USERNAME"];
     [formPost.postData setObject:[catalogReqstData valueForKey:@"CUSTOMER_NUMBER"] forKey:@"BUSINESS_VERTICAL"];
     [formPost.postData setObject:[catalogReqstData valueForKey:@"PRY_ITEMCATEGORY"] forKey:@"PRY_ITEMCATEGORY"];
@@ -861,7 +866,8 @@
     [formPost setModuleId: [DVAppDelegate currentModuleContext]];
     [formPost setDocId: @"MATERIAL_LOB_TREE_JDBC"];
      [formPost.postData setObject:[catalogReqstData valueForKey:@"CUSTOMER_NUMBER"] forKey:@"BUSINESS_VERTICAL"];
-     [formPost.postData setObject:billTo forKey:@"SHIP_TO"];
+     [formPost.postData setObject:billTo forKey:@"BILL_TO"];
+     [formPost.postData setObject:shipTo forKey:@"SHIP_TO"];
     [formPost.postData setObject:[catalogReqstData valueForKey:@"PRIMARY_CATEGORY"] forKey:@"PRIMARY_CATEGORY"];
     [formPost.postData setObject:[catalogReqstData valueForKey:@"PRIMARY_SUBCATEGORY"] forKey:@"PRIMARY_SUBCATEGORY"];
     [formPost.postData setObject:[catalogReqstData valueForKey:@"SECONDARY_CATEGORY"] forKey:@"SECONDARY_CATEGORY"];
