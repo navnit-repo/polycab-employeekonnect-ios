@@ -643,8 +643,9 @@ NSMutableDictionary *masterDataForEmployee;
     
     [requstData setObject:data forKey:@"requestData"];
     networkHelper = [[NetworkHelper alloc]init];
-    NSString * url=XmwcsConst_OPCODE_URL;
-    networkHelper.serviceURLString = @"http://polycab.dotvik.com:8080/PushMessage/api/getContacts";
+    NSString * url=[XmwcsConst_CHAT_URL stringByAppendingString:@"PushMessage/api/getContacts"];
+    networkHelper.serviceURLString = url;
+//    networkHelper.serviceURLString = @"http://polycab.dotvik.com:8080/PushMessage/api/getContacts";
     [networkHelper genericJSONPayloadRequestWith:requstData :self :@"requestUserList"];
 }
 -(void)chatThreadListNetworkCall
@@ -663,8 +664,9 @@ NSMutableDictionary *masterDataForEmployee;
     [chatThreadRequestData setObject:reqstData forKey:@"requestData"];
     
     networkHelper = [[NetworkHelper alloc]init];
-    NSString * url=XmwcsConst_OPCODE_URL;
-    networkHelper.serviceURLString = @"http://polycab.dotvik.com:8080/PushMessage/api/chatThreads";
+    NSString * url=[XmwcsConst_CHAT_URL stringByAppendingString:@"PushMessage/api/chatThreads"];;
+    networkHelper.serviceURLString = url;
+//    networkHelper.serviceURLString = @"http://polycab.dotvik.com:8080/PushMessage/api/chatThreads";
     [networkHelper genericJSONPayloadRequestWith:chatThreadRequestData :self :@"chatThreadRequestData"];
 }
 
@@ -711,6 +713,7 @@ NSMutableDictionary *masterDataForEmployee;
         XmwcsConst_SERVICE_URL_DEAL_STORE = XmwcsConst_SERVICE_URL_DEAL_STORE_DEV;
         XmwcsConst_OPCODE_URL = XmwcsConst_SERVICE_URL_OPCODE_SERVICE_DEV;
         XmwcsConst_FILE_UPLOAD_URL = XmwcsConst_SERVICE_URL_FILE_UPLOAD_SERVICE_DEV;
+        XmwcsConst_CHAT_URL =XmwcsConst_SERVICE_URL_CHAT_SERVICE_DEV;
     } else if([currentServerStr isEqualToString:@"QA"]) {
         XmwcsConst_SERVICE_URL = XmwcsConst_SERVICE_URL_DEMO;
         XmwcsConst_SERVICE_URL_NOTIFY_CONTEXT = XmwcsConst_SERVICE_URL_NOTIFY_CONTEXT_DEMO;
@@ -719,6 +722,7 @@ NSMutableDictionary *masterDataForEmployee;
         XmwcsConst_SERVICE_URL_DEAL_STORE = XmwcsConst_SERVICE_URL_DEAL_STORE_DEMO;
         XmwcsConst_OPCODE_URL = XmwcsConst_SERVICE_URL_OPCODE_SERVICE_DEMO;
         XmwcsConst_FILE_UPLOAD_URL =XmwcsConst_SERVICE_URL_FILE_UPLOAD_SERVICE_DEMO;
+        XmwcsConst_CHAT_URL =XmwcsConst_SERVICE_URL_CHAT_SERVICE_DEMO;
     } else {
         // also set production server URLs here.
         XmwcsConst_SERVICE_URL = XmwcsConst_SERVICE_URL_PROD;
@@ -728,6 +732,7 @@ NSMutableDictionary *masterDataForEmployee;
         XmwcsConst_SERVICE_URL_DEAL_STORE = XmwcsConst_SERVICE_URL_DEAL_STORE_PROD;
         XmwcsConst_OPCODE_URL = XmwcsConst_SERVICE_URL_OPCODE_SERVICE_PROD;
         XmwcsConst_FILE_UPLOAD_URL = XmwcsConst_SERVICE_URL_FILE_UPLOAD_SERVICE_PROD;
+        XmwcsConst_CHAT_URL =XmwcsConst_SERVICE_URL_CHAT_SERVICE_PROD;
     }
 }
 

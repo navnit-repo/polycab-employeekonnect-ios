@@ -236,8 +236,9 @@
     [chatMessageRqst setObject:reqstData forKey:@"requestData"];
     
     networkHelper = [[NetworkHelper alloc]init];
-    NSString * url=XmwcsConst_OPCODE_URL;
-    networkHelper.serviceURLString = @"http://polycab.dotvik.com:8080/PushMessage/api/messages";
+    NSString * url=[XmwcsConst_CHAT_URL stringByAppendingString:@"PushMessage/api/messages"];
+    networkHelper.serviceURLString = url;
+//    networkHelper.serviceURLString = @"http://polycab.dotvik.com:8080/PushMessage/api/messages";
     [networkHelper genericJSONPayloadRequestWith:chatMessageRqst :self :@"chatMessageRqst"];
 }
 }
@@ -317,8 +318,9 @@
     [acceptMessageData setObject:requestData forKey:@"requestData"];
     
     networkHelper = [[NetworkHelper alloc]init];
-    NSString * url=XmwcsConst_OPCODE_URL;
-    networkHelper.serviceURLString = @"http://polycab.dotvik.com:8080/PushMessage/api/updateChatThreadStatus";
+    NSString * url=[XmwcsConst_CHAT_URL stringByAppendingString:@"PushMessage/api/updateChatThreadStatus"];
+        networkHelper.serviceURLString = url;
+//    networkHelper.serviceURLString = @"http://polycab.dotvik.com:8080/PushMessage/api/updateChatThreadStatus";
     [networkHelper genericJSONPayloadRequestWith:acceptMessageData :self :@"acceptMessageData"];
     }
 }
@@ -364,8 +366,9 @@
     [sendMessageData setObject:requestData forKey:@"requestData"];
 
     networkHelper = [[NetworkHelper alloc]init];
-    NSString * url=XmwcsConst_OPCODE_URL;
-    networkHelper.serviceURLString = @"http://polycab.dotvik.com:8080/PushMessage/api/pushMessage";
+    NSString * url=[XmwcsConst_CHAT_URL stringByAppendingString:@"PushMessage/api/pushMessage"];
+        networkHelper.serviceURLString = url;
+//    networkHelper.serviceURLString = @"http://polycab.dotvik.com:8080/PushMessage/api/pushMessage";
     [networkHelper genericJSONPayloadRequestWith:sendMessageData :self :@"sendMessageData"];
     
     }

@@ -70,8 +70,9 @@
     [chatThreadRequestData setObject:reqstData forKey:@"requestData"];
     
     networkHelper = [[NetworkHelper alloc]init];
-    NSString * url=XmwcsConst_OPCODE_URL;
-    networkHelper.serviceURLString = @"http://polycab.dotvik.com:8080/PushMessage/api/deleteChatThreads";
+    NSString * url=[XmwcsConst_CHAT_URL stringByAppendingString:@"PushMessage/api/deleteChatThreads"];
+    networkHelper.serviceURLString = url;
+//    networkHelper.serviceURLString = @"http://polycab.dotvik.com:8080/PushMessage/api/deleteChatThreads";
     [networkHelper genericJSONPayloadRequestWith:chatThreadRequestData :self :@"deleteThread"];
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

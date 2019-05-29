@@ -124,8 +124,9 @@
     [chatThreadRequestData setObject:reqstData forKey:@"requestData"];
     
     networkHelper = [[NetworkHelper alloc]init];
-    NSString * url=XmwcsConst_OPCODE_URL;
-    networkHelper.serviceURLString = @"http://polycab.dotvik.com:8080/PushMessage/api/chatThreadsGroupByUser";
+    NSString * url=[XmwcsConst_CHAT_URL stringByAppendingString:@"PushMessage/api/chatThreadsGroupByUser"];
+    networkHelper.serviceURLString = url;
+//    networkHelper.serviceURLString = @"http://polycab.dotvik.com:8080/PushMessage/api/chatThreadsGroupByUser";
     [networkHelper genericJSONPayloadRequestWith:chatThreadRequestData :self :@"chatThreadRequestData"];
 }
 - (void) httpResponseObjectHandler : (NSString*) callName : (id) respondedObject : (id) requestedObject

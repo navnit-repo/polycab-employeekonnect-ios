@@ -125,6 +125,53 @@
 }
 
 
++ (NSArray*)  sortHashtableByValue: (NSMutableDictionary*) hashTable : (int) onSortType {
+    
+    NSArray* keys = [hashTable allKeys];
+    NSArray* values = [hashTable allValues];
+    
+    NSMutableArray* pairArray = [[NSMutableArray alloc] init];
+    for(int i=0; i<[keys count]; i++) {
+        NSMutableArray* pair = [[NSMutableArray alloc] init];
+        [pair addObject:[keys objectAtIndex:i]];
+        [pair addObject:[values objectAtIndex:i]];
+        [pairArray addObject:pair];
+    }
+    
+    
+    if(onSortType == XmwcsConst_SORT_AS_INTEGER){
+        NSArray* sortedPairs = [pairArray sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
+            NSMutableArray* pairA = a;
+            NSMutableArray* pairB = b;
+            
+            NSString* keyA = [pairA objectAtIndex:0];
+            NSString* keyB = [pairB objectAtIndex:0];
+            
+            NSString* valueA = [pairA objectAtIndex:1];
+            NSString* valueB = [pairB objectAtIndex:1];
+            
+            return valueA.intValue > valueB.intValue;
+        }];
+        return sortedPairs;
+    } else if(onSortType == XmwcsConst_SORT_AS_STRING) {
+        NSArray* sortedPairs = [pairArray sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
+            NSMutableArray* pairA = a;
+            NSMutableArray* pairB = b;
+            
+            NSString* keyA = [pairA objectAtIndex:0];
+            NSString* keyB = [pairB objectAtIndex:0];
+            
+            NSString* valueA = [pairA objectAtIndex:1];
+            NSString* valueB = [pairB objectAtIndex:1];
+            
+            return [valueA compare:valueB];
+        }];
+        return sortedPairs;
+    }
+    return nil;
+}
+
+
 + (NSArray*)  sortedDotFormElementIds: (NSMutableDictionary*) hashTable {
     
     NSArray* allElementNodes = [hashTable  allValues];

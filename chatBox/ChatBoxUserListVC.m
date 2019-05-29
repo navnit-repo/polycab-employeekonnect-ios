@@ -126,8 +126,9 @@
         
         [requstData setObject:data forKey:@"requestData"];
         networkHelper = [[NetworkHelper alloc]init];
-        NSString * url=XmwcsConst_OPCODE_URL;
-        networkHelper.serviceURLString = @"http://polycab.dotvik.com:8080/PushMessage/api/getContacts";
+        NSString * url=[XmwcsConst_CHAT_URL stringByAppendingString:@"PushMessage/api/getContacts"];
+         networkHelper.serviceURLString = url;
+//        networkHelper.serviceURLString = @"http://polycab.dotvik.com:8080/PushMessage/api/getContacts";
         [networkHelper genericJSONPayloadRequestWith:requstData :self :@"requestUserList"];
     }
     

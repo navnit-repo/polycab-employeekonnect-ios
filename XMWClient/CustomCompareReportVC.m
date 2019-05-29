@@ -41,14 +41,14 @@
 @interface CustomCompareReportVC () <UITableViewDataSource, UITableViewDelegate, DVPeriodCalendarDelegate>
 {
 //    NSString* firstColumnText;
-    NSString* secondColumnText;
-    NSString* thirdColumnText;
+//    NSString* secondColumnText;
+//    NSString* thirdColumnText;
     NSDateFormatter* dateFormatter;
     
     
 //    ReportPostResponse* firstResponse;
-    ReportPostResponse* secondResponse;
-    ReportPostResponse* thirdResponse;
+//    ReportPostResponse* secondResponse;
+//    ReportPostResponse* thirdResponse;
     
    // NSMutableDictionary* dataSet;
     
@@ -63,7 +63,8 @@
 @end
 
 @implementation CustomCompareReportVC
-
+@synthesize secondColumnText;
+@synthesize thirdColumnText;
 - (void)viewDidLoad {
     [LayoutClass setLayoutForIPhone6:self.mainTable];
     
@@ -232,7 +233,7 @@
         
         UILabel* tZero =  (UILabel*)[totalRow viewWithTag:200];
         [LayoutClass labelLayout:tZero forFontWeight:UIFontWeightSemibold];
-        tZero.text = @"All";
+        tZero.text = @"Summary";
         tZero.textAlignment = NSTextAlignmentCenter;
         
         UILabel* tFirst =  (UILabel*)[totalRow viewWithTag:201];

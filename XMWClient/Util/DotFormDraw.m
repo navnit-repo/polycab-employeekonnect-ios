@@ -638,9 +638,17 @@ int uiViewStartIdx = 1001;
             dropDownCell.dropDownField.elementId = currentCompName;
     
             
+            if(dotFormElement.defaultVal !=nil && [dotFormElement.defaultVal length]>0) {
+                NSDictionary* defMap = [XmwUtils getExtendedPropertyMap:dotFormElement.defaultVal];
+                NSString* displayValue = [defMap objectForKey:@"VALUE"];
+                NSString* postValue = [defMap objectForKey:@"KEY"];
+                dropDownCell.dropDownField.text = displayValue;   // this is display value
+                dropDownCell.dropDownField.keyvalue = postValue;
+            }
+            
             
             // patch for sorted division listing in the dropdown
-            if( ([dotFormElement masterValueMapping] != nil) && ([ [dotFormElement masterValueMapping] compare:@"DIVISION" options: NSCaseInsensitiveSearch ] == NSOrderedSame ))
+            if([dotFormElement masterValueMapping] != nil)
             {
                 NSArray* sortedMasterValues = [DotFormDraw getSortedMasterValueForComponent:[dotFormElement elementId] : [dotFormElement masterValueMapping]];
                 // hook for division_wise sale report form 'DOT_FORM_26', 23, 24 and elementId = SPART, we need to add "All"  "".
@@ -649,12 +657,7 @@ int uiViewStartIdx = 1001;
                      [formController.dotForm.formId isEqualToString:@"DOT_FORM_24"]) &&
                    [currentCompName isEqualToString:@"SPART"])
                 {
-                    NSMutableArray* keysArray = [sortedMasterValues objectAtIndex:0];
-                    NSMutableArray* valuesArray = [sortedMasterValues objectAtIndex:1];
-                    [keysArray insertObject:@"" atIndex:0];
-                    [valuesArray insertObject:@"All" atIndex:0];
-                    dropDownCell.dropDownField.text = @"All";
-                    dropDownCell.dropDownField.keyvalue = @"";
+          	
                 }
                 
                 dropDownCell.dropDownButton.attachedData = sortedMasterValues;
@@ -1426,9 +1429,26 @@ int uiViewStartIdx = 1001;
     NSMutableDictionary* ddKeyValue =[clientVariables.CLIENT_APP_MASTER_DATA objectForKey: elementId ];
     
     // NSArray* unsortedKeys = [ddKeyValue allKeys];
+    NSArray* sortedPairs = [XmwUtils sortHashtableByValue:ddKeyValue :XmwcsConst_SORT_AS_STRING];
+    if( [sortedPairs count] > 0) {
+        NSMutableArray* arrayValue = [[NSMutableArray alloc]init];
+        NSMutableArray* arrayKey = [[NSMutableArray alloc]init];
+        
+        for (int cntIndex = 0; cntIndex<[sortedPairs count]; cntIndex++)
+        {
+            NSArray* pair = (NSArray*) [sortedPairs objectAtIndex: cntIndex];  //.nextElement();
+            [arrayKey insertObject:[pair objectAtIndex:0] atIndex:cntIndex ];
+            [arrayValue insertObject:[pair objectAtIndex:1] atIndex:cntIndex];            
+        }
+        
+        NSMutableArray* finalObjArray = [[NSMutableArray alloc]init];
+        [finalObjArray insertObject:arrayKey atIndex:0 ];
+        [finalObjArray insertObject:arrayValue atIndex:1 ];
+        return finalObjArray;
+    }
+    
+    /*
     NSArray* sortedKeys = [XmwUtils sortHashtableKey:ddKeyValue :XmwcsConst_SORT_AS_STRING];
-    
-    
     if( [ddKeyValue count] > 0) {
         NSMutableArray* arrayValue = [[NSMutableArray alloc]init];
         NSMutableArray* arrayKey = [[NSMutableArray alloc]init];
@@ -1446,8 +1466,9 @@ int uiViewStartIdx = 1001;
         [finalObjArray insertObject:arrayKey atIndex:0 ];
         [finalObjArray insertObject:arrayValue atIndex:1 ];
         return finalObjArray;
-        
     }
+     */
+    
     return nil;
 }
 

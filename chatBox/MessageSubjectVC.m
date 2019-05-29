@@ -222,8 +222,9 @@
   
     [sendSubjectData setObject:data forKey:@"requestData"];
     networkHelper = [[NetworkHelper alloc]init];
-    NSString * url=XmwcsConst_OPCODE_URL;
-    networkHelper.serviceURLString = @"http://polycab.dotvik.com:8080/PushMessage/api/createChatThread";
+    NSString * url=[XmwcsConst_CHAT_URL stringByAppendingString:@"PushMessage/api/createChatThread"];
+        networkHelper.serviceURLString = url;
+//    networkHelper.serviceURLString = @"http://polycab.dotvik.com:8080/PushMessage/api/createChatThread";
     [networkHelper genericJSONPayloadRequestWith:sendSubjectData :self :@"sendSubjectData"];
     
     [textView resignFirstResponder];

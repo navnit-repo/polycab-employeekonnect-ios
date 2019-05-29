@@ -129,6 +129,7 @@
         XmwcsConst_SERVICE_URL_APP_CONTROL = XmwcsConst_SERVICE_URL_APP_CONTROL_DEV;
         XmwcsConst_OPCODE_URL = XmwcsConst_SERVICE_URL_OPCODE_SERVICE_DEV;
         XmwcsConst_FILE_UPLOAD_URL = XmwcsConst_SERVICE_URL_FILE_UPLOAD_SERVICE_DEV;
+        XmwcsConst_CHAT_URL= XmwcsConst_SERVICE_URL_CHAT_SERVICE_DEV;
     } else if([radioGroup.selectedKey isEqualToString:@"QA"]) {
         // also set developer / qa server URLs here
         XmwcsConst_SERVICE_URL = XmwcsConst_SERVICE_URL_DEMO;
@@ -137,6 +138,7 @@
         XmwcsConst_SERVICE_URL_APP_CONTROL = XmwcsConst_SERVICE_URL_APP_CONTROL_DEMO;
         XmwcsConst_OPCODE_URL = XmwcsConst_SERVICE_URL_OPCODE_SERVICE_DEMO;
         XmwcsConst_FILE_UPLOAD_URL =XmwcsConst_SERVICE_URL_FILE_UPLOAD_SERVICE_DEMO;
+        XmwcsConst_CHAT_URL= XmwcsConst_SERVICE_URL_CHAT_SERVICE_DEMO;
     } else {
         // also set production server URLs here.
         XmwcsConst_SERVICE_URL = XmwcsConst_SERVICE_URL_PROD;
@@ -145,6 +147,7 @@
         XmwcsConst_SERVICE_URL_APP_CONTROL = XmwcsConst_SERVICE_URL_APP_CONTROL_PROD;
         XmwcsConst_OPCODE_URL = XmwcsConst_SERVICE_URL_OPCODE_SERVICE_PROD;
         XmwcsConst_FILE_UPLOAD_URL = XmwcsConst_SERVICE_URL_FILE_UPLOAD_SERVICE_PROD;
+        XmwcsConst_CHAT_URL= XmwcsConst_SERVICE_URL_CHAT_SERVICE_PROD;
     }
     
     [self.navigationController popViewControllerAnimated:YES];

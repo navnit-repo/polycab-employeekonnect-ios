@@ -22,6 +22,7 @@
 //this is for the sort key element of the Map key is integer or String Value
 //returns the List of Sorted Key of Hash table.
 + (NSArray*)  sortHashtableKey: (NSMutableDictionary*) hashTable : (int) onSortType;
++ (NSArray*)  sortHashtableByValue: (NSMutableDictionary*) hashTable : (int) onSortType;
 
 + (NSArray*)  sortedDotFormElementIds: (NSMutableDictionary*) hashTable;
 

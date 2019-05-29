@@ -14,6 +14,7 @@
 #import "ChatThreadList_DB.h"
 #import "ChatBoxVC.h"
 #import "SWRevealViewController.h"
+#import "XmwcsConstant.h"
 @implementation ReadUnreadService
 {
     NetworkHelper *networkHelper;
@@ -32,7 +33,9 @@
 }
 -(void)networkCall
 {
-    networkHelper.serviceURLString =  @"http://polycab.dotvik.com:8080/PushMessage/api/messagesRead";
+    NSString *url = [XmwcsConst_CHAT_URL stringByAppendingString:@"PushMessage/api/messagesRead"];
+    networkHelper.serviceURLString =  url;
+//    networkHelper.serviceURLString =  @"http://polycab.dotvik.com:8080/PushMessage/api/messagesRead";
     [networkHelper genericJSONPayloadRequestWith:self.requestDict :self :self.callName];
 }
 - (void) httpResponseObjectHandler : (NSString*) callName : (id) respondedObject : (id) requestedObject

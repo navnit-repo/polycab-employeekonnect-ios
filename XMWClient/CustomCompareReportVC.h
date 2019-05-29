@@ -33,7 +33,15 @@
     int loaderCount;
     NSString* firstColumnText;
     ReportPostResponse* firstResponse;
+    NSString* secondColumnText;
+    NSString* thirdColumnText;
+    ReportPostResponse* secondResponse;
+    ReportPostResponse* thirdResponse;
 }
+@property  NSString* thirdColumnText;
+@property   ReportPostResponse* secondResponse;
+@property   ReportPostResponse* thirdResponse;
+@property NSString* secondColumnText;
 @property ReportPostResponse* firstResponse;
 @property NSString* firstColumnText;
 @property (weak, nonatomic) DotForm* dotForm;
@@ -59,4 +67,6 @@
 -(void) fetchFirstColumnData:(DotFormPost*) formPost;
 -(NSArray*) sortKeys;
 -(DotReport*) dotReport;
+-(NSString*) totalHeaderValue:(ReportPostResponse*) reportResponse;
+-(NSString*) zeroColumnHeading;
 @end

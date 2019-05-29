@@ -33,6 +33,7 @@
     LoadingView *loadingView;
     NSMutableDictionary *expendStatus;
     UIView *dotView;
+    UIButton *addContactButton;
 }
 @synthesize chatThreadDict;
 @synthesize threadListTableView;
@@ -85,6 +86,11 @@
 }
 - (void)viewWillAppear:(BOOL)animated
 {
+    addContactButton = [[UIButton alloc]initWithFrame:CGRectMake( self.view.frame.size.width-70*deviceWidthRation, self.view.frame.size.height-70*deviceHeightRation, 40*deviceWidthRation, 40*deviceHeightRation)];
+    [addContactButton setImage:[UIImage imageNamed:@"chat_add"] forState:UIControlStateNormal];
+    [addContactButton addTarget:self action:@selector(addButtonHandler:) forControlEvents:UIControlEventTouchUpInside];
+    [[[UIApplication sharedApplication] keyWindow] addSubview:addContactButton];
+    
     if (ChatBoxPushNotifiactionFlag == YES) {
 //        ChatBoxPushNotifiactionFlag = NO;
         [self performSelector:@selector(pushHandling) withObject:nil afterDelay:0.5];
@@ -97,6 +103,10 @@
     // [self performSelector:@selector(pushHandling) withObject:nil afterDelay:0.5];
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [addContactButton removeFromSuperview];
+}
 -(void)pushHandling
 {
     ChatThreadList_Object *obj;
@@ -199,8 +209,9 @@
     
     [requstData setObject:data forKey:@"requestData"];
     networkHelper = [[NetworkHelper alloc]init];
-    NSString * url=XmwcsConst_OPCODE_URL;
-    networkHelper.serviceURLString = @"http://polycab.dotvik.com:8080/PushMessage/api/getContacts";
+    NSString * url=[XmwcsConst_CHAT_URL stringByAppendingString:@"PushMessage/api/getContacts"];
+//    networkHelper.serviceURLString = @"http://polycab.dotvik.com:8080/PushMessage/api/getContacts";
+        networkHelper.serviceURLString = url;
     [networkHelper genericJSONPayloadRequestWith:requstData :self :@"requestUserList"];
     }
 }
@@ -261,8 +272,9 @@
     [chatThreadRequestData setObject:reqstData forKey:@"requestData"];
 
     networkHelper = [[NetworkHelper alloc]init];
-    NSString * url=XmwcsConst_OPCODE_URL;
-    networkHelper.serviceURLString = @"http://polycab.dotvik.com:8080/PushMessage/api/chatThreads";
+    NSString * url=[XmwcsConst_CHAT_URL stringByAppendingString:@"PushMessage/api/chatThreads"];
+    networkHelper.serviceURLString = url;
+//    networkHelper.serviceURLString = @"http://polycab.dotvik.com:8080/PushMessage/api/chatThreads";
     [networkHelper genericJSONPayloadRequestWith:chatThreadRequestData :self :@"chatThreadRequestData"];
     }
 }
@@ -278,8 +290,8 @@
     
     
     
-    UIBarButtonItem *addButon = [[UIBarButtonItem alloc]initWithTitle:@"Add" style:UIBarButtonItemStylePlain target:self action:@selector(addButtonHandler:)];
-    addButon.tintColor = [UIColor whiteColor];
+//    UIBarButtonItem *addButon = [[UIBarButtonItem alloc]initWithTitle:@"Add" style:UIBarButtonItemStylePlain target:self action:@selector(addButtonHandler:)];
+//    addButon.tintColor = [UIColor whiteColor];
     
     
     UIImageView *polycabLogo = [[UIImageView alloc] initWithImage:[UIImage  imageNamed:@"polycab_logo"]];
@@ -287,7 +299,7 @@
     self.navigationItem.titleView = polycabLogo;
     
     [self.navigationItem setLeftBarButtonItem:backButton];
-    [self.navigationItem setRightBarButtonItem:addButon];
+//    [self.navigationItem setRightBarButtonItem:addButon];
     
 }
 - (void) backHandler : (id) sender
