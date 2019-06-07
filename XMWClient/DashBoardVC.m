@@ -204,10 +204,17 @@
     [self.navigationController.navigationBar setFrame:CGRectMake(0, 20, self.view.frame.size.width,48)];
     
     // this code for check user assigned chat feature or not
-    if ([[[NSUserDefaults standardUserDefaults] valueForKey:@"CHAIRMAN_CHAT"] isEqualToString:@"NO"]) {
-        [chatButton setBackgroundImage:nil forState:UIControlStateNormal];
-        chatButton.userInteractionEnabled = NO;
+     ClientVariable *clientVariables = [ClientVariable getInstance:[DVAppDelegate currentModuleContext]];
+    NSMutableArray *roleList = [[NSMutableArray alloc]init];
+    [roleList addObjectsFromArray:[clientVariables.CLIENT_LOGIN_RESPONSE.clientMasterDetail.masterDataRefresh valueForKey:@"LEVEL_WISE_ROLES"]];
+    NSMutableArray *rolesArray= [[NSMutableArray alloc]init];
+    for (int i=0; i<roleList.count; i++) {
+        [rolesArray addObject:[[roleList objectAtIndex:i] valueForKey:@"rolename"]];
     }
+//    if (![rolesArray containsObject:@"CHAIRMAN_CHAT"]) {
+//        [chatButton setBackgroundImage:nil forState:UIControlStateNormal];
+//        chatButton.userInteractionEnabled = NO;
+//    }
 }
 - (void) chatHandler : (id) sender
 {
@@ -762,13 +769,13 @@
     {
         DocPostResponse *reportPostResponse = (DocPostResponse*) respondedObject;
         if ([[reportPostResponse submitStatus] isEqualToString:@"S"]) {
-            //for clear all default save data
-            NSUserDefaults * defs = [NSUserDefaults standardUserDefaults];
-            NSDictionary * dict = [defs dictionaryRepresentation];
-            for (id key in dict) {
-                [defs removeObjectForKey:key];
-            }
-            [defs synchronize];
+//            //for clear all default save data
+//            NSUserDefaults * defs = [NSUserDefaults standardUserDefaults];
+//            NSDictionary * dict = [defs dictionaryRepresentation];
+//            for (id key in dict) {
+//                [defs removeObjectForKey:key];
+//            }
+//            [defs synchronize];
             ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
             [[NSUserDefaults standardUserDefaults ] setObject:clientVariables.CLIENT_USER_LOGIN.userName forKey:@"LAST_LOGIN_USER"];
             
@@ -789,8 +796,8 @@
         }
         else
         {
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Logout" message:[reportPostResponse submittedMessage] delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-            [alert show];
+//            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Logout" message:[reportPostResponse submittedMessage] delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+//            [alert show];
         }
         
     }
@@ -824,7 +831,19 @@
     
     if([callName isEqualToString:XmwcsConst_CALL_NAME_FOR_UPDATE_APP_VERSION]) {
         
-    } else if([callName isEqualToString: XmwcsConst_CALL_NAME_FOR_FETCH_NOTIFICATION_LIST]) {
+    }
+    
+    else if ([callName isEqualToString:@"FOR_LOGOUT"])
+    {
+        LogInVC *loginVC = [[LogInVC alloc] initWithNibName:@"LogInVC" bundle:nil];
+        UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:loginVC];
+        DVAppDelegate* appDelegate =(DVAppDelegate*)[UIApplication sharedApplication].delegate;
+        appDelegate.navController = nc;
+        
+        
+        [[UIApplication sharedApplication] keyWindow].rootViewController = nc;//added by ashish tiwari on aug 2014
+    }
+    else if([callName isEqualToString: XmwcsConst_CALL_NAME_FOR_FETCH_NOTIFICATION_LIST]) {
         
     } else {
         UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Polycab Error!" message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil , nil];
@@ -837,12 +856,12 @@
    //  [ThirdDashView removeObsr];
     
     //for clear all default save data
-//    NSUserDefaults * defs = [NSUserDefaults standardUserDefaults];
-//    NSDictionary * dict = [defs dictionaryRepresentation];
-//    for (id key in dict) {
-//        [defs removeObjectForKey:key];
-//    }
-//    [defs synchronize];
+    NSUserDefaults * defs = [NSUserDefaults standardUserDefaults];
+    NSDictionary * dict2 = [defs dictionaryRepresentation];
+    for (id key in dict2) {
+        [defs removeObjectForKey:key];
+    }
+    [defs synchronize];
     
     //    [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"PASSWORD"];
     //    [[NSUserDefaults standardUserDefaults] setObject:@"NO" forKey:@"ISCHECKED"];

@@ -21,6 +21,8 @@
 #import "ContactList_Object.h"
 #import "LayoutClass.h"
 #import "ExpendObjectClass.h"
+#import "ChatBoxUserListVC.h"
+#import "ChatRoomsVC.h"
 @interface MessageSubjectVC ()
 
 @end
@@ -361,11 +363,51 @@
                 chatThreadList_Object.spaNo = [dict valueForKey:@"spaNo"];
                 [chatThreadListStorage insertDoc:chatThreadList_Object];
                 [chatThreadListStorage updateDocLastMessageTime:chatThreadList_Object];
-            NSMutableArray *chatThreadListStorageData = [chatThreadListStorage getRecentDocumentsData : @"False"];
-        ChatBoxVC *vc = [[ChatBoxVC  alloc]init];
-            vc.chatThreadDict = [[NSMutableArray alloc]init];
-            [vc.chatThreadDict addObjectsFromArray:[self groupData:chatThreadListStorageData]];
-            [vc.threadListTableView reloadData];
+            NSMutableArray *viewControllersArray = [NSMutableArray arrayWithArray:self.navigationController.viewControllers];
+            NSMutableArray *dummyViewControllers= [[NSMutableArray alloc]init];
+            for (int i=0; i<viewControllersArray.count; i++) {
+                UIViewController *view = [viewControllersArray objectAtIndex:i];
+                if ([view isKindOfClass:[MessageSubjectVC class]] || [view isKindOfClass:[ChatBoxUserListVC class]]) {
+                    
+                }
+                else
+                {
+                    [dummyViewControllers addObject:view];
+                }
+            }
+            
+            ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
+            NSString *ownUserId = [clientVariables.CLIENT_USER_LOGIN userName];
+            NSString *parseId= @"";// for get username from contact db
+            NSArray *array = [chatThreadList_Object.from componentsSeparatedByString:@"@"];
+            if ([[array objectAtIndex:0] isEqualToString:ownUserId]) {
+                parseId =chatThreadList_Object.to;
+            }
+            else{
+                parseId =chatThreadList_Object.from;
+            }
+            
+            ChatRoomsVC *vc = [[ChatRoomsVC alloc]init];
+            NSString*objString = chatThreadList_Object.subject;;
+            //  Base64 string to original string
+            NSData *base64Data = [[NSData alloc] initWithBase64EncodedString:objString options:NSDataBase64DecodingIgnoreUnknownCharacters];
+            NSString *originalString =[[NSString alloc] initWithData:base64Data encoding:NSUTF8StringEncoding];
+            
+            NSLog(@"Result: %@",originalString);
+            vc.subject =originalString;
+            vc.withChatPersonName = parseId;
+            vc.chatThreadId =[NSString stringWithFormat:@"%d",chatThreadList_Object.chatThreadId];
+            vc.chatStatus = chatThreadList_Object.status;
+            vc.nameLbltext = chatThreadList_Object.displayName;
+            
+            [dummyViewControllers addObject:vc];
+            [self.navigationController setViewControllers:dummyViewControllers animated:YES];
+            
+//            NSMutableArray *chatThreadListStorageData = [chatThreadListStorage getRecentDocumentsData : @"False"];
+//        ChatBoxVC *vc = [[ChatBoxVC  alloc]init];
+//            vc.chatThreadDict = [[NSMutableArray alloc]init];
+//            [vc.chatThreadDict addObjectsFromArray:[self groupData:chatThreadListStorageData]];
+//            [vc.threadListTableView reloadData];
         [[self navigationController] pushViewController:vc animated:YES];
         }
         else

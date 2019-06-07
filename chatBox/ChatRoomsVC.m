@@ -38,6 +38,9 @@
     NSString *isFromStr;
     UITextView *acceptTextView;
     NSIndexPath *pathToLastRow;
+    CGRect viewFrame;
+    CGFloat yorigin;
+    CGFloat totalViewHeight;
 }
 @synthesize headerView;
 @synthesize popupTextView;
@@ -53,10 +56,55 @@
 @synthesize remarkView;
 - (void)viewDidLoad {
     [super viewDidLoad];
+    CGFloat navBarHeight = self.navigationController.navigationBar.frame.size.height;
+    NSLog(@"Navigation Bar height : %f",navBarHeight);
+    CGFloat statusBarSize = [[UIApplication sharedApplication] statusBarFrame].size.height;
+    NSLog(@"statusBarSize Bar height : %f",statusBarSize);
+     yorigin = navBarHeight +statusBarSize;
+     totalViewHeight = [[UIApplication sharedApplication].keyWindow bounds].size.height;
+    if (isiPhoneXSMAX) {
+        self.view.frame = CGRectMake(0, yorigin, 414, totalViewHeight-yorigin);
+        viewFrame = CGRectMake(0, yorigin, 414, totalViewHeight);
+    }
+    else if(isiPhoneXR) {
+        self.view.frame = CGRectMake(0, yorigin, 414, totalViewHeight-yorigin);
+        viewFrame =CGRectMake(0, yorigin, 414, totalViewHeight);
+    }
     
+    else if(isiPhoneXS) {
+        self.view.frame = CGRectMake(0, yorigin, 375, totalViewHeight-yorigin);
+        viewFrame =CGRectMake(0, yorigin, 375, totalViewHeight);
+    }
+    else if(isiPhone10) {
+        self.view.frame = CGRectMake(0, yorigin, 375, totalViewHeight-yorigin);
+        viewFrame =CGRectMake(0, yorigin, 375, totalViewHeight);
+    }
+    
+    else if(isiPhone6Plus) {
+        self.view.frame = CGRectMake(0, yorigin, 414, totalViewHeight-yorigin);
+        viewFrame =CGRectMake(0, yorigin, 414, totalViewHeight);
+    }
+    else if(isiPhone6) {
+        self.view.frame = CGRectMake(0, yorigin, 375, totalViewHeight-yorigin);
+        viewFrame =CGRectMake(0, yorigin, 375, totalViewHeight);
+    } else if(isiPhone5) {
+        self.view.frame = CGRectMake(0, yorigin, 320, totalViewHeight-yorigin);
+        viewFrame =CGRectMake(0, yorigin, 320, totalViewHeight);
+    } else {
+        // 0, 64, 320, 416
+        self.view.frame = CGRectMake(0, yorigin, 320, totalViewHeight-yorigin);
+        viewFrame =CGRectMake(0, yorigin, 320, totalViewHeight);
+    }
     [self drawHeaderItem];
      [self initializeView];
     // Do any additional setup after loading the view from its nib.
+}
+-(void)autoLayoutIphoneMax
+{
+    self.headerView.frame =CGRectMake(self.headerView.frame.origin.x, viewFrame.origin.y, self.headerView.frame.size.width, self.headerView.frame.size.height);
+    bottomView.frame = CGRectMake(bottomView.frame.origin.x, viewFrame.size.height-bottomView.frame.size.height, bottomView.frame.size.width, bottomView.frame.size.height);
+    self.chatRoomTableView.frame = CGRectMake(self.chatRoomTableView.frame.origin.x, self.chatRoomTableView.frame.origin.y, self.chatRoomTableView.frame.size.width, viewFrame.size.height-(self.headerView.frame.size.height+self.bottomView.frame.size.height+yorigin));
+    _acceptButtonPopUpView.frame = viewFrame;
 }
 - (void)viewDidAppear:(BOOL)animated
 {
@@ -143,7 +191,7 @@
     self.nameLbl.text = nameLbltext;
     self.subjectLbl.text = subject;
     
-    
+    [self autoLayoutIphoneMax];
     [self createView];
     [self chatHistory];
     [self unreadMessageNetworkCall];
@@ -504,7 +552,7 @@
             
             [[NSUserDefaults standardUserDefaults] setObject:@"YES" forKey:[NSString stringWithFormat:@"CHAT_HISTORY_FIRST_TIME_FETCH_%@",[[chatHistoryArray objectAtIndex:0] valueForKey:@"chatThreadId"]]];
         
-          
+          [[NSUserDefaults standardUserDefaults] synchronize];
             
         }
         else

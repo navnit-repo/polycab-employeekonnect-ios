@@ -281,6 +281,7 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
     if (launchOptions != nil)
     {
         [[NSUserDefaults standardUserDefaults] setObject:@"YES" forKey:@"launchOptions"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
         // opened from a push notification when the app is closed
         NSDictionary* userInfo = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
         if (userInfo != nil)
@@ -1196,6 +1197,7 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
     if ([[[NSUserDefaults standardUserDefaults] valueForKey:@"launchOptions"] isEqualToString:@"YES"]) { // this check for check application launch option
         // do nothing
         [[NSUserDefaults standardUserDefaults] setObject:@"NO" forKey:@"launchOptions"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
     }
     else{
     
@@ -1284,7 +1286,7 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
                     {
                         [[NSUserDefaults standardUserDefaults] setObject:@"YES" forKey:@"Accept_Chat_Button"];
                     }
-                    
+                    [[NSUserDefaults standardUserDefaults] synchronize];
                     // ChatThreadList_Object *obj = (ChatThreadList_Object *)[chatThreadDict objectAtIndex:indexPath.row];
                     ChatRoomsVC *vc2 = [[ChatRoomsVC alloc]init];
                     NSString*objString = obj2.subject;
@@ -1390,7 +1392,7 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
                 {
                     [[NSUserDefaults standardUserDefaults] setObject:@"YES" forKey:@"Accept_Chat_Button"];
                 }
-                
+                [[NSUserDefaults standardUserDefaults] synchronize];
                 // ChatThreadList_Object *obj = (ChatThreadList_Object *)[chatThreadDict objectAtIndex:indexPath.row];
                 ChatRoomsVC *vc2 = [[ChatRoomsVC alloc]init];
                 NSString*objString = obj2.subject;

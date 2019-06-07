@@ -408,15 +408,15 @@ NSMutableDictionary *masterDataForEmployee;
             }
         }
         
-        //this code for chat feature check for chat button hide on dashboard
-        NSMutableArray *rolesArray= [[NSMutableArray alloc]init];
-        for (int i=0; i<roleList.count; i++) {
-            [rolesArray addObject:[[roleList objectAtIndex:i] valueForKey:@"rolename"]];
-        }
-         if (![rolesArray containsObject:@"CHAIRMAN_CHAT"]) {
-            [[NSUserDefaults standardUserDefaults] setObject:@"NO" forKey:@"CHAIRMAN_CHAT"];
-        }
-    
+//        //this code for chat feature check for chat button hide on dashboard
+//        NSMutableArray *rolesArray= [[NSMutableArray alloc]init];
+//        for (int i=0; i<roleList.count; i++) {
+//            [rolesArray addObject:[[roleList objectAtIndex:i] valueForKey:@"rolename"]];
+//        }
+//         if (![rolesArray containsObject:@"CHAIRMAN_CHAT"]) {
+//            [[NSUserDefaults standardUserDefaults] setObject:@"NO" forKey:@"CHAIRMAN_CHAT"];
+//        }
+//    
         
          [[NSUserDefaults standardUserDefaults ]setObject:customer_name forKey:@"CUSTOMER_NAME"];
         
@@ -435,7 +435,7 @@ NSMutableDictionary *masterDataForEmployee;
         [[NSUserDefaults standardUserDefaults] setObject:  [clientLoginResponse.clientMasterDetail.masterData valueForKey:@"COLOR"]  forKey:@"COLOR"];
         
         [[NSUserDefaults standardUserDefaults] setObject:  [clientLoginResponse.clientMasterDetail.masterData valueForKey:@"SQAUREMM"]  forKey:@"SQAUREMM"];
-        
+        [[NSUserDefaults standardUserDefaults] synchronize];
                     if([clientLoginResponse.userLoginStatus isEqualToString:@"0"])
                     {
                         UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Authentication!" message:clientLoginResponse.userLoginMessage delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil , nil];
@@ -491,7 +491,7 @@ NSMutableDictionary *masterDataForEmployee;
                         [self registerCustomFormVC];
                         menuDetailsDict =clientLoginResponse.menuDetail;
                         
-                         [self contactListNetworkCall];
+//                         [self contactListNetworkCall];
                         
                        
                         
@@ -520,13 +520,29 @@ NSMutableDictionary *masterDataForEmployee;
                 }
         
         
+       else if ([callName isEqualToString:XmwcsConst_CALL_NAME_FOR_NOTIFY_DEVICE_REGISTER]) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                //code to be executed in the background
+                [self contactListNetworkCall];
+                [self chatThreadListNetworkCall];
+                [self revealViewControllConfig];
+            });
+        }
+        
     else if ([callName isEqualToString:@"requestUserList"])
     {
         [loadingView removeView];
         NSMutableArray * contactsList = [[NSMutableArray alloc]init];
         
         if ([[respondedObject objectForKey:@"status"] boolValue] == YES) {
-            [contactsList addObjectsFromArray:[[respondedObject valueForKey:@"responseData"] valueForKey:@"contacts"]];
+            if ([[[respondedObject valueForKey:@"responseData"] valueForKey:@"contacts"] isKindOfClass:[NSNull class]]) {
+                // do nothing
+            }
+            else
+            {
+                [contactsList addObjectsFromArray:[[respondedObject valueForKey:@"responseData"] valueForKey:@"contacts"]];
+            }
+            
             
             [ContactList_DB createInstance : @"ContactList_DB_STORAGE" : true];
             ContactList_DB *contactListStorage = [ContactList_DB getInstance];
@@ -543,7 +559,12 @@ NSMutableDictionary *masterDataForEmployee;
             }
             
             contactsList = [[NSMutableArray alloc]init];
-            [contactsList addObjectsFromArray:[[respondedObject valueForKey:@"responseData"] valueForKey:@"hiddenContacts"]];
+            if ([[[respondedObject valueForKey:@"responseData"] valueForKey:@"hiddenContacts"] isKindOfClass:[NSNull class]]) {
+                // do nothing
+            }
+            else{
+                [contactsList addObjectsFromArray:[[respondedObject valueForKey:@"responseData"] valueForKey:@"hiddenContacts"]];
+            }
             
             for(int i =0; i<[contactsList count];i++) //for hidden contact  insert into db
             {
@@ -558,7 +579,7 @@ NSMutableDictionary *masterDataForEmployee;
             NSMutableArray *contactListStorageData = [contactListStorage getRecentDocumentsData : @"False"];
             contactsList = [[NSMutableArray alloc]init];
             [contactsList addObjectsFromArray:contactListStorageData];
-             [self chatThreadListNetworkCall];
+//             [self chatThreadListNetworkCall];
         }
     }
     else if ([callName isEqualToString:@"chatThreadRequestData"])
@@ -621,7 +642,7 @@ NSMutableDictionary *masterDataForEmployee;
             chatThreadDict = [[NSMutableArray alloc]init];
             [chatThreadDict addObjectsFromArray:chatThreadListStorageData];
             
-             [self revealViewControllConfig];
+//             [self revealViewControllConfig];
         }
     }
     }

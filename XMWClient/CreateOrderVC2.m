@@ -412,6 +412,7 @@
                 [alreadyAddDisplayCellData addObjectsFromArray:updatedArrayList];
                 //locally save cell
                 [[NSUserDefaults standardUserDefaults] setObject:alreadyAddDisplayCellData forKey:self.itemName.text];
+                [[NSUserDefaults standardUserDefaults] synchronize];
                 [mainTableView reloadData];
                 
             }
@@ -632,7 +633,7 @@
         
         [[NSUserDefaults standardUserDefaults] setObject:alreadyAddDisplayCellData forKey:self.itemName.text];
         
-        
+        [[NSUserDefaults standardUserDefaults] synchronize];
         
         [mainTableView reloadData];
     }
@@ -648,6 +649,7 @@
     
     NSLog(@"%@",alreadyAddDisplayCellData);
     [[NSUserDefaults standardUserDefaults] setObject:alreadyAddDisplayCellData forKey:self.itemName.text];
+    [[NSUserDefaults standardUserDefaults] synchronize];
     [mainTableView reloadData];
 }
 

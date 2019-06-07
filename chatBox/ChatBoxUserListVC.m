@@ -139,7 +139,14 @@
     [loadingView removeView];
     if ([callName isEqualToString:@"requestUserList"]) {
         if ([[respondedObject objectForKey:@"status"] boolValue] == YES) {
-            [contactsList addObjectsFromArray:[[respondedObject valueForKey:@"responseData"] valueForKey:@"contacts"]];
+            
+            if ([[[respondedObject valueForKey:@"responseData"] valueForKey:@"contacts"] isKindOfClass:[NSNull class]]) {
+                // do nothing
+            }
+            else
+            {
+                [contactsList addObjectsFromArray:[[respondedObject valueForKey:@"responseData"] valueForKey:@"contacts"]];
+            }
         
             [ContactList_DB createInstance : @"ContactList_DB_STORAGE" : true];
             ContactList_DB *contactListStorage = [ContactList_DB getInstance];
@@ -156,7 +163,12 @@
             }
             
             contactsList = [[NSMutableArray alloc]init];
-            [contactsList addObjectsFromArray:[[respondedObject valueForKey:@"responseData"] valueForKey:@"hiddenContacts"]];
+            if ([[[respondedObject valueForKey:@"responseData"] valueForKey:@"hiddenContacts"] isKindOfClass:[NSNull class]]) {
+                // do nothing
+            }
+            else{
+                [contactsList addObjectsFromArray:[[respondedObject valueForKey:@"responseData"] valueForKey:@"hiddenContacts"]];
+            }
             
             for(int i =0; i<[contactsList count];i++) //for hidden contact  insert into db
             {
