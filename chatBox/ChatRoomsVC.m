@@ -469,6 +469,9 @@
         [vc.threadListTableView reloadData];
     }
     
+    ChatRoomPushNotifiactionFlag = NO;
+    ChatBoxPushNotifiactionFlag = NO;
+    
     [ [self navigationController]  popViewControllerAnimated:YES];
     
 }

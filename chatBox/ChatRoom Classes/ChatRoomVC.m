@@ -8,6 +8,9 @@
 
 #import "ChatRoomVC.h"
 
+extern BOOL ChatBoxPushNotifiactionFlag;
+extern BOOL ChatRoomPushNotifiactionFlag;
+
 @interface ChatRoomVC()
 
 @end
@@ -49,6 +52,8 @@
     [self setUserData];
 //    [self getChatHistory];
 }
+
+
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:YES];
@@ -247,6 +252,9 @@
 }
 
 - (IBAction)backBtnHandler:(id)sender {
+    ChatRoomPushNotifiactionFlag = NO;
+    ChatBoxPushNotifiactionFlag = NO;
+    
     if([chat count])
     {
         [self.navigationController popViewControllerAnimated:YES];

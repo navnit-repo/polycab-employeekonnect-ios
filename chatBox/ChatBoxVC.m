@@ -95,10 +95,10 @@
 
         [self performSelector:@selector(pushHandling) withObject:nil afterDelay:0.5];
     }
-    else if (ChatRoomPushNotifiactionFlag== YES)
+    else if (ChatRoomPushNotifiactionFlag == YES)
     {
 
- [self performSelector:@selector(pushHandling) withObject:nil afterDelay:0.5];
+        [self performSelector:@selector(pushHandling) withObject:nil afterDelay:0.5];
     }
 
 }
@@ -604,9 +604,9 @@
     if ([[chatThreadDict objectAtIndex:indexPath.row] isKindOfClass:[ExpendObjectClass class]]  ) {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:str];
      
-            cell = [tableView dequeueReusableCellWithIdentifier:str];
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:str];
-            ExpendObjectClass* obj =( ExpendObjectClass *) [chatThreadDict objectAtIndex:indexPath.row];
+        cell = [tableView dequeueReusableCellWithIdentifier:str];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:str];
+        ExpendObjectClass* obj =( ExpendObjectClass *) [chatThreadDict objectAtIndex:indexPath.row];
         UIView *view = [[UIView alloc]initWithFrame:CGRectMake(10, 0, cell.frame.size.width, cell.frame.size.height)];
         dotView = [[UIView alloc]initWithFrame:CGRectMake(0, 15, 10*deviceWidthRation, 10*deviceHeightRation)];
         
@@ -620,7 +620,7 @@
                 {
                     dotView.backgroundColor = [UIColor clearColor];
                 }
-            }
+        }
       
         
         dotView.layer.cornerRadius = 5;
@@ -668,7 +668,7 @@
                 [cell.acceptImageView setImage:[UIImage imageNamed:@"Tick_Mark"]];
                 cell.chatIdLbl.text = [NSString stringWithFormat:@"SPA No : %@",obj.spaNo];
             }
-;
+
             if (obj.unreadMessageCount >0) {
                 cell.pushView.backgroundColor = [UIColor colorWithRed:204.0f/255 green:41.0f/255 blue:43.0f/255 alpha:1.0];
             }
