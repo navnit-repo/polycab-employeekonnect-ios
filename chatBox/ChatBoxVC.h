@@ -10,10 +10,12 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ChatBoxVC : UIViewController<UITableViewDelegate,UITableViewDataSource>
+@interface ChatBoxVC : UIViewController<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate>
 {
     NSMutableArray *chatThreadDict;
+    NSMutableDictionary *expendObjectOpenClosedStatusDict;
 }
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet UIView *headerView;
 @property (weak, nonatomic) IBOutlet UIView *lineView1;
 @property (weak, nonatomic) IBOutlet UIView *lineView2;
@@ -21,6 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UILabel *constantLbl1;
 @property (weak, nonatomic) IBOutlet UITableView *threadListTableView;
 @property NSMutableArray *chatThreadDict;
+@property NSMutableDictionary *expendObjectOpenClosedStatusDict;
 @end
 
 NS_ASSUME_NONNULL_END

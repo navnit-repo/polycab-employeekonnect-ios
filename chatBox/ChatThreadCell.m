@@ -125,6 +125,7 @@
             if ([checkView isKindOfClass:[ChatBoxVC class]]) {
                 ChatBoxVC *vc  = (ChatBoxVC *) checkView;
                 vc.chatThreadDict = [[NSMutableArray alloc]init];
+                vc.expendObjectOpenClosedStatusDict = [[NSMutableDictionary alloc]init];
                 [vc.chatThreadDict addObjectsFromArray:[self groupData:chatThreadListStorageData]];
                 [vc.threadListTableView reloadData];
             }

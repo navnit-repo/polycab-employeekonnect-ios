@@ -35,16 +35,18 @@
     NSString *defaultTextViewText;
     NetworkHelper *networkHelper;
     LoadingView *loadingView;
+    CGFloat yorigin;
 }
 @synthesize nameLblText;
 @synthesize userIDUnique;
 - (void)viewDidLoad {
     [super viewDidLoad];
+     self.navigationController.navigationBar.translucent = NO;
     CGFloat navBarHeight = self.navigationController.navigationBar.frame.size.height;
     NSLog(@"Navigation Bar height : %f",navBarHeight);
     CGFloat statusBarSize = [[UIApplication sharedApplication] statusBarFrame].size.height;
     NSLog(@"statusBarSize Bar height : %f",statusBarSize);
-    CGFloat yorigin = navBarHeight +statusBarSize;
+    yorigin = navBarHeight +statusBarSize;
     CGFloat totalViewHeight = [[UIApplication sharedApplication].keyWindow bounds].size.height;
     if (isiPhoneXSMAX) {
         self.view.frame = CGRectMake(0, yorigin, 414, totalViewHeight-yorigin);
@@ -115,7 +117,7 @@
 }
 -(void)createView
 {
-    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, self.view.frame.origin.y, self.view.frame.size.width, 110)];
+    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 110)];
     headerView.backgroundColor = [UIColor whiteColor];
     
     UILabel *nameLbl = [[UILabel alloc]initWithFrame:CGRectMake(16, 10, self.view.frame.size.width-32, 20)];
@@ -155,7 +157,7 @@
     [headerView addSubview:headerborderLine];
      [self.view addSubview:headerView];
     
-   UIView * bottomView = [[UIView alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height-80+self.view.frame.origin.y, self.view.frame.size.width, 80)];
+   UIView * bottomView = [[UIView alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height-80, self.view.frame.size.width, 80)];
     UIView *borderLine =  [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 5)];
     borderLine.backgroundColor = [UIColor colorWithRed:230.0/255 green:230.0/255 blue:230.0/255 alpha:1.0];
     [bottomView addSubview:borderLine];
@@ -246,7 +248,7 @@
    
     [UIView animateWithDuration:0.3 animations:^{
          CGRect f = self.view.frame;
-       f.origin.y = -keyboardSize.height;
+       f.origin.y = -keyboardSize.height+yorigin;
         self.view.frame = f;
     }];
     }
@@ -260,7 +262,7 @@
   else{
     [UIView animateWithDuration:0.3 animations:^{
         CGRect f = self.view.frame;
-        f.origin.y = 0.0f;
+        f.origin.y = yorigin;
         self.view.frame = f;
     }];
     }

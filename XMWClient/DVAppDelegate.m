@@ -89,10 +89,6 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
 @end
 
 @implementation DVAppDelegate
-{
-    NSString *fromForNewPushDisplayAlert;
-}
-
 @synthesize navController;
 
 
@@ -330,8 +326,6 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
             vc.chatThreadDict = [[NSMutableArray alloc]init];
             [vc.chatThreadDict addObjectsFromArray:[self groupData:chatThreadListStorageData]];
             [vc.threadListTableView reloadData];
-//            [[NSUserDefaults standardUserDefaults] setObject:@"YES" forKey:@"NEW_PUSH"];
-//            [[NSUserDefaults standardUserDefaults] setObject:fromForNewPushDisplayAlert forKey:@"objExpendMenuName"];
         }
         else if ([checkView isKindOfClass:[ChatRoomsVC class]]) {
             ChatRoomsVC *vc  = (ChatRoomsVC *) checkView;
@@ -342,13 +336,10 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
             vc.chatHistoryArray = [[NSMutableArray alloc]init];
             vc.chatHistoryArray =chatHistoryStorageData;
             [vc.chatRoomTableView reloadData];
-//            [[NSUserDefaults standardUserDefaults] setObject:@"YES" forKey:@"NEW_PUSH"];
-//            [[NSUserDefaults standardUserDefaults] setObject:fromForNewPushDisplayAlert forKey:@"objExpendMenuName"];
         }
         else
         {
-//            [[NSUserDefaults standardUserDefaults] setObject:@"YES" forKey:@"NEW_PUSH"];
-//            [[NSUserDefaults standardUserDefaults] setObject:fromForNewPushDisplayAlert forKey:@"objExpendMenuName"];
+            
         }
         
         //    for notification count
@@ -859,11 +850,6 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
     NSLog(@"%@",mainDict);
     NSMutableDictionary *responsedict2 = [[NSMutableDictionary alloc]init];
     [responsedict2 setDictionary:[mainDict objectForKey:@"NOTIFY_MESSAGE_KEY"]];
-    fromForNewPushDisplayAlert = @"";
-    fromForNewPushDisplayAlert = [responsedict2 valueForKey:@"fromDisplayName"];
-    if (fromForNewPushDisplayAlert == nil || [fromForNewPushDisplayAlert isKindOfClass:[NSNull class]] || fromForNewPushDisplayAlert.length ==0 || [fromForNewPushDisplayAlert isEqualToString:@""]) {
-        fromForNewPushDisplayAlert = @"";
-    }
     
     UIViewController *root;
     root = [[[[UIApplication sharedApplication] windows] objectAtIndex:0] rootViewController];
@@ -934,7 +920,20 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
 }
 
 
+#pragma mark - Update UIViewControllers Array
+-(void)updateUIViewControllersArray
+{
 
+    UIViewController *root;
+    root = [[[[UIApplication sharedApplication]windows]objectAtIndex:0]rootViewController];
+    SWRevealViewController *reveal = (SWRevealViewController*)root;
+    UINavigationController *check =(UINavigationController*)reveal.frontViewController;
+    NSArray* viewsList = check.viewControllers;
+    NSMutableArray *array = [[NSMutableArray alloc] init];
+    [array addObject:[viewsList objectAtIndex:0]];
+    [check setViewControllers:array];
+    [reveal setFrontViewController:check];
+}
 #pragma mark - PushChatMessage Handlers
 
 -(void) handlePushChatMessageFromRecieve:(NSDictionary*) mainDict
@@ -963,22 +962,20 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
 {
     if ([[mainDict objectForKey:@"NOTIFY_CALLNAME"] isEqualToString:@"NEW_MESSAGE"]) {
         
-        [self handlePushChatNewMessage:mainDict];
+        [self handlePushChatNewMessageWillPresent:mainDict];
         
     } else if ([[mainDict valueForKey:@"NOTIFY_CALLNAME"] isEqualToString:@"NEW_THREAD"]) {
         
-        [self handlePushChatNewThread:mainDict];
+        [self handlePushChatNewThreadWillPresent:mainDict];
         
     } else if ([[mainDict valueForKey:@"NOTIFY_CALLNAME"] isEqualToString:@"CHAT_THREAD_STATUS_UPDATE"]) {
         
-        [self handlePushChatNewThreadStatusUpdate:mainDict];
+        [self handlePushChatNewThreadStatusUpdateWillPresent:mainDict];
         
     }
     
 }
-
-
--(void) handlePushChatNewMessage:(NSDictionary*) mainDict
+-(void)handlePushChatNewMessageWillPresent:(NSDictionary*) mainDict
 {
     NSMutableDictionary *responsedict = [[NSMutableDictionary alloc] init];
     [responsedict setDictionary:[mainDict objectForKey:@"NOTIFY_MESSAGE_KEY"]];
@@ -992,14 +989,14 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
     NSArray* viewsList = check.viewControllers;
     UIViewController *checkView = (UIViewController *) [viewsList objectAtIndex:viewsList.count - 1];
     
-    if ([checkView isKindOfClass:[NationalDashboardVC class]]) {
+    if ([checkView isKindOfClass:[DashBoardVC class]]) {
         // work in progress
-        NationalDashboardVC *vc = (NationalDashboardVC*) checkView;
+        DashBoardVC *vc = (DashBoardVC*) checkView;
         [vc viewWillAppear:false];
         
         NSInteger threadId = [[responsedict valueForKey:@"chatThread"] integerValue];
         
-    
+        
         UINavigationController *check =(UINavigationController*)reveal.frontViewController;
         NSArray* viewsList = check.viewControllers;
         UIViewController *current = (UIViewController *) [viewsList objectAtIndex:0];
@@ -1032,6 +1029,7 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
             ChatBoxVC *vc =  (ChatBoxVC*) checkView;
             vc.chatThreadDict = [self groupData:chatThreadListStorageData];
             [vc.threadListTableView reloadData];
+            
         }
     } else  if ([checkView isKindOfClass:[ChatBoxVC class]]) {
         
@@ -1078,7 +1076,147 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
         }
         
     } else {
+        if ( ChatRoomPushNotifiactionFlag == YES)
+        {
+            [self updateUIViewControllersArray];
+        }
+        else
+        {
+            UIViewController *root;
+            root = [[[[UIApplication sharedApplication]windows]objectAtIndex:0]rootViewController];
+            SWRevealViewController *reveal = (SWRevealViewController*)root;
+            UINavigationController *check =(UINavigationController*)reveal.frontViewController;
+            NSArray* viewsList = check.viewControllers;
+            UIViewController *current = (UIViewController *) [viewsList objectAtIndex:0];
+            
+            UIBarButtonItem *item = (UIBarButtonItem*) [current.navigationItem.rightBarButtonItems objectAtIndex:1];
+            
+            UIButton *chatButton = (UIButton *) item.customView;
+            //  [[chatButton.layer.sublayers objectAtIndex:1] removeFromSuperlayer];
+            
+            UIView *view = [[UIView alloc]initWithFrame:CGRectMake( 15.0f, -5.0f, 10.0f, 10.0f)];
+            view.tag = 10000000;
+            view.backgroundColor = [UIColor whiteColor];
+            view.layer.cornerRadius = 5;
+            CALayer *myLayer = view.layer;
+            
+            [chatButton.layer addSublayer:myLayer];
+        }
+    }
+}
+
+-(void) handlePushChatNewMessage:(NSDictionary*) mainDict
+{
+    NSMutableDictionary *responsedict = [[NSMutableDictionary alloc] init];
+    [responsedict setDictionary:[mainDict objectForKey:@"NOTIFY_MESSAGE_KEY"]];
+    [ChatHistory_DB createInstance : @"ChatHistory_DB_STORAGE" : true :[[responsedict valueForKey:@"chatThread"] integerValue]];
+    ChatHistory_DB *chatHistory_DBStorage = [ChatHistory_DB getInstance];
+    NSMutableArray *chatHistoryStorageData = [chatHistory_DBStorage getRecentDocumentsData : @"False"];
+    
+    UIViewController* root = [[[[UIApplication sharedApplication]windows]objectAtIndex:0] rootViewController];
+    SWRevealViewController *reveal = (SWRevealViewController*)root;
+    UINavigationController *check =(UINavigationController*)reveal.frontViewController;
+    NSArray* viewsList = check.viewControllers;
+    UIViewController *checkView = (UIViewController *) [viewsList objectAtIndex:viewsList.count - 1];
+    
+    if ([checkView isKindOfClass:[DashBoardVC class]]) {
+        // work in progress
+        DashBoardVC *vc = (DashBoardVC*) checkView;
+        [vc viewWillAppear:false];
         
+        NSInteger threadId = [[responsedict valueForKey:@"chatThread"] integerValue];
+
+
+        UINavigationController *check =(UINavigationController*)reveal.frontViewController;
+        NSArray* viewsList = check.viewControllers;
+        UIViewController *current = (UIViewController *) [viewsList objectAtIndex:0];
+
+        UIBarButtonItem *item = (UIBarButtonItem*) [current.navigationItem.rightBarButtonItems objectAtIndex:1];
+
+        UIButton *chatButton = (UIButton *) item.customView;
+
+        UIView *view = [[UIView alloc]initWithFrame:CGRectMake( 15.0f, -5.0f, 10.0f, 10.0f)];
+        view.tag = 10000000;
+        view.backgroundColor = [UIColor whiteColor];
+        view.layer.cornerRadius = 5;
+        CALayer *myLayer = view.layer;
+
+        [chatButton.layer addSublayer:myLayer];
+
+        
+    } else if ([checkView isKindOfClass:[ChatRoomsVC class]]) {
+        ChatRoomsVC *vc = (ChatRoomsVC*) checkView;
+        if ([vc.chatThreadId integerValue]==[[responsedict valueForKey:@"chatThread"] integerValue]) { // check for same chatthread ID
+            vc.chatHistoryArray = [[NSMutableArray alloc]init];
+            [vc.chatHistoryArray addObjectsFromArray:chatHistoryStorageData];
+            //                    vc.popupTextView.text = @"";
+            [vc.chatRoomTableView reloadData];
+        } else {
+            [ChatThreadList_DB createInstance : @"ChatThread_DB_STORAGE" : true];
+            ChatThreadList_DB *chatThreadListStorage = [ChatThreadList_DB getInstance];
+            NSMutableArray *chatThreadListStorageData = [chatThreadListStorage getRecentDocumentsData : @"False"];
+            UIViewController *checkView = (UIViewController *) [viewsList objectAtIndex:viewsList.count - 2];
+            ChatBoxVC *vc =  (ChatBoxVC*) checkView;
+            vc.chatThreadDict = [self groupData:chatThreadListStorageData];
+            [vc.threadListTableView reloadData];
+            NSMutableArray *viewControllersArray = [NSMutableArray arrayWithArray:checkView.navigationController.viewControllers];
+            NSMutableArray *dummyViewControllers= [[NSMutableArray alloc]init];
+            [dummyViewControllers addObjectsFromArray:viewControllersArray];
+            [dummyViewControllers removeObjectAtIndex:dummyViewControllers.count -1];
+            [checkView.navigationController setViewControllers:dummyViewControllers animated:YES];
+            
+        }
+    } else  if ([checkView isKindOfClass:[ChatBoxVC class]]) {
+        
+        [ChatThreadList_DB createInstance : @"ChatThread_DB_STORAGE" : true];
+        ChatThreadList_DB *chatThreadListStorage = [ChatThreadList_DB getInstance];
+        NSMutableArray *chatThreadListStorageData = [chatThreadListStorage getRecentDocumentsData : @"False"];
+        ChatBoxVC *vc =  (ChatBoxVC*) checkView;
+        vc.chatThreadDict = [self groupData:chatThreadListStorageData];
+        [vc.threadListTableView reloadData];
+        ExpendObjectClass *obj = (ExpendObjectClass *) [vc.chatThreadDict objectAtIndex:0];
+        ChatThreadList_Object *obj2 = (ChatThreadList_Object *)[obj.childCategories objectAtIndex:0];
+        ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
+        NSString *ownUserId = [clientVariables.CLIENT_USER_LOGIN userName];
+        NSString *parseId= @"";// for get username from contact db
+        NSArray *array = [obj2.from componentsSeparatedByString:@"@"];
+        if ([[array objectAtIndex:0] isEqualToString:ownUserId]) {
+            parseId =obj2.to;
+        }
+        else{
+            parseId =obj2.from;
+        }
+        NSArray *array2 = [parseId componentsSeparatedByString:@"@"];//// for accept button check.
+        if ([[array2 objectAtIndex:1] isEqualToString:@"employee"]) {
+            [[NSUserDefaults standardUserDefaults] setObject:@"NO" forKey:@"Accept_Chat_Button"];
+        }
+        else
+        {
+            [[NSUserDefaults standardUserDefaults] setObject:@"YES" forKey:@"Accept_Chat_Button"];
+        }
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        // ChatThreadList_Object *obj = (ChatThreadList_Object *)[chatThreadDict objectAtIndex:indexPath.row];
+        if(ChatBoxPushNotifiactionFlag == YES || ChatRoomPushNotifiactionFlag == YES) {
+            ChatRoomsVC *vc2 = [[ChatRoomsVC alloc] init];
+            NSString*objString = obj2.subject;
+            //  Base64 string to original string
+            NSData *base64Data = [[NSData alloc] initWithBase64EncodedString:objString options:NSDataBase64DecodingIgnoreUnknownCharacters];
+            NSString *originalString =[[NSString alloc] initWithData:base64Data encoding:NSUTF8StringEncoding];
+            vc2.subject =originalString;
+            vc2.withChatPersonName = parseId;
+            vc2.chatThreadId =[NSString stringWithFormat:@"%d",obj2.chatThreadId];
+            vc2.chatStatus = obj2.status;
+            vc2.nameLbltext = obj2.displayName;
+            [[checkView navigationController ] pushViewController:vc2 animated:YES];
+        }
+        
+    } else {
+        if ( ChatRoomPushNotifiactionFlag == YES)
+        {
+            [self updateUIViewControllersArray];
+        }
+        else
+        {
         UIViewController *root;
         root = [[[[UIApplication sharedApplication]windows]objectAtIndex:0]rootViewController];
         SWRevealViewController *reveal = (SWRevealViewController*)root;
@@ -1099,11 +1237,10 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
         
         [chatButton.layer addSublayer:myLayer];
     }
-    
+    }
 }
 
-
--(void) handlePushChatNewThread:(NSDictionary*) mainDict
+-(void)handlePushChatNewThreadWillPresent:(NSDictionary*) mainDict
 {
     
     NSMutableDictionary *responsedict = [[NSMutableDictionary alloc]init];
@@ -1119,6 +1256,127 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
     UIViewController *checkView = (UIViewController *) [viewsList objectAtIndex:viewsList.count - 1];
     
     if ([checkView isKindOfClass:[ChatBoxVC class]]) {
+        // do this
+        ChatBoxVC *vc = (ChatBoxVC*) checkView;
+        vc.chatThreadDict = [[NSMutableArray alloc]init];
+        [vc.chatThreadDict addObjectsFromArray:[self groupData:chatThreadListStorageData]];
+        [vc.threadListTableView reloadData];
+//        ExpendObjectClass *obj = (ExpendObjectClass *) [vc.chatThreadDict objectAtIndex:0];
+//        ChatThreadList_Object *obj2 = (ChatThreadList_Object *)[obj.childCategories objectAtIndex:0];
+//        ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
+//        NSString *ownUserId = [clientVariables.CLIENT_USER_LOGIN userName];
+//        NSString *parseId= @"";// for get username from contact db
+//        NSArray *array = [obj2.from componentsSeparatedByString:@"@"];
+//        if ([[array objectAtIndex:0] isEqualToString:ownUserId]) {
+//            parseId =obj2.to;
+//        }
+//        else{
+//            parseId =obj2.from;
+//        }
+//        NSArray *array2 = [parseId componentsSeparatedByString:@"@"];//// for accept button check.
+//        if ([[array2 objectAtIndex:1] isEqualToString:@"employee"]) {
+//            [[NSUserDefaults standardUserDefaults] setObject:@"NO" forKey:@"Accept_Chat_Button"];
+//        }
+//        else
+//        {
+//            [[NSUserDefaults standardUserDefaults] setObject:@"YES" forKey:@"Accept_Chat_Button"];
+//        }
+//        [[NSUserDefaults standardUserDefaults] synchronize];
+//        // ChatThreadList_Object *obj = (ChatThreadList_Object *)[chatThreadDict objectAtIndex:indexPath.row];
+//        ChatRoomsVC *vc2 = [[ChatRoomsVC alloc]init];
+//        NSString*objString = obj2.subject;
+//        //  Base64 string to original string
+//        NSData *base64Data = [[NSData alloc] initWithBase64EncodedString:objString options:NSDataBase64DecodingIgnoreUnknownCharacters];
+//        NSString *originalString =[[NSString alloc] initWithData:base64Data encoding:NSUTF8StringEncoding];
+//        vc2.subject =originalString;
+//        vc2.withChatPersonName = parseId;
+//        vc2.chatThreadId =[NSString stringWithFormat:@"%d",obj2.chatThreadId];
+//        vc2.chatStatus = obj2.status;
+//        vc2.nameLbltext = obj2.displayName;
+//        [[checkView navigationController ] pushViewController:vc2 animated:YES];
+        
+    } else {
+        // do nothing
+        if ([checkView isKindOfClass:[ChatRoomsVC class]]) {
+            UIViewController *checkView = (UIViewController *) [viewsList objectAtIndex:viewsList.count - 2];
+            ChatBoxVC *vc = (ChatBoxVC*) checkView;
+            vc.chatThreadDict = [[NSMutableArray alloc]init];
+            [vc.chatThreadDict addObjectsFromArray:[self groupData:chatThreadListStorageData]];
+            [vc.threadListTableView reloadData];
+        }
+        
+        if ( ChatBoxPushNotifiactionFlag == YES)
+        {
+            [self updateUIViewControllersArray];
+        }
+        
+        
+        
+        UIViewController *root;
+        root = [[[[UIApplication sharedApplication]windows]objectAtIndex:0]rootViewController];
+        SWRevealViewController *reveal = (SWRevealViewController*)root;
+        UINavigationController *check =(UINavigationController*)reveal.frontViewController;
+        NSArray* viewsList = check.viewControllers;
+        UIViewController *current = (UIViewController *) [viewsList objectAtIndex:0];
+        
+        UIBarButtonItem *item = (UIBarButtonItem*) [current.navigationItem.rightBarButtonItems objectAtIndex:1];
+        
+        UIButton *chatButton = (UIButton *) item.customView;
+        //  [[chatButton.layer.sublayers objectAtIndex:1] removeFromSuperlayer];
+        
+        UIView *view = [[UIView alloc]initWithFrame:CGRectMake( 15.0f, -5.0f, 10.0f, 10.0f)];
+        view.tag = 10000000;
+        view.backgroundColor = [UIColor whiteColor];
+        view.layer.cornerRadius = 5;
+        CALayer *myLayer = view.layer;
+        
+        [chatButton.layer addSublayer:myLayer];
+        
+    }
+    
+}
+-(void) handlePushChatNewThread:(NSDictionary*) mainDict
+{
+    
+    NSMutableDictionary *responsedict = [[NSMutableDictionary alloc]init];
+    [responsedict setDictionary:[mainDict objectForKey:@"NOTIFY_MESSAGE_KEY"]];
+    [ChatThreadList_DB createInstance : @"ChatThread_DB_STORAGE" : true];
+    ChatThreadList_DB *chatThreadListStorage = [ChatThreadList_DB getInstance];
+    NSMutableArray *chatThreadListStorageData = [chatThreadListStorage getRecentDocumentsData : @"False"];
+    UIViewController *root;
+    root = [[[[UIApplication sharedApplication]windows]objectAtIndex:0]rootViewController];
+    SWRevealViewController *reveal = (SWRevealViewController*)root;
+    UINavigationController *check =(UINavigationController*)reveal.frontViewController;
+    NSArray* viewsList = check.viewControllers;
+    UIViewController *checkView = (UIViewController *) [viewsList objectAtIndex:viewsList.count - 1];
+    
+    
+    if ([checkView isKindOfClass:[DashBoardVC class]]) {
+        // work in progress
+        DashBoardVC *vc = (DashBoardVC*) checkView;
+        [vc viewWillAppear:false];
+        
+        UINavigationController *check =(UINavigationController*)reveal.frontViewController;
+        NSArray* viewsList = check.viewControllers;
+        UIViewController *current = (UIViewController *) [viewsList objectAtIndex:0];
+
+        UIBarButtonItem *item = (UIBarButtonItem*) [current.navigationItem.rightBarButtonItems objectAtIndex:1];
+
+        UIButton *chatButton = (UIButton *) item.customView;
+
+        UIView *view = [[UIView alloc]initWithFrame:CGRectMake( 15.0f, -5.0f, 10.0f, 10.0f)];
+        view.tag = 10000000;
+        view.backgroundColor = [UIColor whiteColor];
+        view.layer.cornerRadius = 5;
+        CALayer *myLayer = view.layer;
+
+        [chatButton.layer addSublayer:myLayer];
+        
+        
+    }
+    
+    
+   else if ([checkView isKindOfClass:[ChatBoxVC class]]) {
         // do this
         ChatBoxVC *vc = (ChatBoxVC*) checkView;
         vc.chatThreadDict = [[NSMutableArray alloc]init];
@@ -1168,30 +1426,97 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
             [vc.threadListTableView reloadData];
         }
         
+        if ( ChatBoxPushNotifiactionFlag == YES)
+        {
+            [self updateUIViewControllersArray];
+        }
+        
         UIViewController *root;
         root = [[[[UIApplication sharedApplication]windows]objectAtIndex:0]rootViewController];
         SWRevealViewController *reveal = (SWRevealViewController*)root;
         UINavigationController *check =(UINavigationController*)reveal.frontViewController;
         NSArray* viewsList = check.viewControllers;
         UIViewController *current = (UIViewController *) [viewsList objectAtIndex:0];
-        
+
         UIBarButtonItem *item = (UIBarButtonItem*) [current.navigationItem.rightBarButtonItems objectAtIndex:1];
-        
+
         UIButton *chatButton = (UIButton *) item.customView;
         //  [[chatButton.layer.sublayers objectAtIndex:1] removeFromSuperlayer];
-        
+
         UIView *view = [[UIView alloc]initWithFrame:CGRectMake( 15.0f, -5.0f, 10.0f, 10.0f)];
         view.tag = 10000000;
         view.backgroundColor = [UIColor whiteColor];
         view.layer.cornerRadius = 5;
         CALayer *myLayer = view.layer;
-        
+
         [chatButton.layer addSublayer:myLayer];
-        
+
     }
     
 }
-
+-(void)handlePushChatNewThreadStatusUpdateWillPresent:(NSDictionary*) mainDict
+{
+    NSMutableDictionary *responsedict = [[NSMutableDictionary alloc]init];
+    [responsedict setDictionary:[mainDict objectForKey:@"NOTIFY_MESSAGE_KEY"]];
+    
+    [ChatThreadList_DB createInstance : @"ChatThread_DB_STORAGE" : true];
+    ChatThreadList_DB *chatThreadListStorage = [ChatThreadList_DB getInstance];
+    
+    NSMutableArray *chatThreadListStorageData = [chatThreadListStorage getRecentDocumentsData : @"False"];
+    
+    UIViewController *root;
+    root = [[[[UIApplication sharedApplication]windows]objectAtIndex:0]rootViewController];
+    SWRevealViewController *reveal = (SWRevealViewController*)root;
+    UINavigationController *check =(UINavigationController*)reveal.frontViewController;
+    NSArray* viewsList = check.viewControllers;
+    UIViewController *checkView = (UIViewController *) [viewsList objectAtIndex:viewsList.count - 1];
+    
+    if ([checkView isKindOfClass:[ChatBoxVC class]]) {
+        // do this
+        ChatBoxVC *vc = (ChatBoxVC*) checkView;
+        vc.chatThreadDict = [[NSMutableArray alloc]init];
+        [vc.chatThreadDict addObjectsFromArray:[self groupData:chatThreadListStorageData]];
+        [vc.threadListTableView reloadData];
+        
+    }
+    else if ([checkView isKindOfClass:[ChatRoomsVC class]])
+    {
+        ChatRoomsVC *vc = (ChatRoomsVC*) checkView;
+        if ([vc.chatThreadId integerValue]== [[responsedict valueForKey:@"chatThreadId"] integerValue]) {
+            //                    [vc.bottomView removeFromSuperview];
+        }
+    } else {
+        // do nothing
+        if ( ChatBoxPushNotifiactionFlag == YES)
+        {
+            [self updateUIViewControllersArray];
+        }
+        else
+        {
+            
+            
+            UIViewController *root;
+            root = [[[[UIApplication sharedApplication]windows]objectAtIndex:0]rootViewController];
+            SWRevealViewController *reveal = (SWRevealViewController*)root;
+            UINavigationController *check =(UINavigationController*)reveal.frontViewController;
+            NSArray* viewsList = check.viewControllers;
+            UIViewController *current = (UIViewController *) [viewsList objectAtIndex:0];
+            
+            UIBarButtonItem *item = (UIBarButtonItem*) [current.navigationItem.rightBarButtonItems objectAtIndex:1];
+            
+            UIButton *chatButton = (UIButton *) item.customView;
+            //  [[chatButton.layer.sublayers objectAtIndex:1] removeFromSuperlayer];
+            
+            UIView *view = [[UIView alloc]initWithFrame:CGRectMake( 15.0f, -5.0f, 10.0f, 10.0f)];
+            view.tag = 10000000;
+            view.backgroundColor = [UIColor whiteColor];
+            view.layer.cornerRadius = 5;
+            CALayer *myLayer = view.layer;
+            
+            [chatButton.layer addSublayer:myLayer];
+        }
+    }
+}
 -(void) handlePushChatNewThreadStatusUpdate:(NSDictionary*) mainDict
 {
         NSMutableDictionary *responsedict = [[NSMutableDictionary alloc]init];
@@ -1225,6 +1550,14 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
             }
         } else {
             // do nothing
+            if ( ChatBoxPushNotifiactionFlag == YES)
+            {
+                [self updateUIViewControllersArray];
+            }
+            else
+            {
+            
+            
             UIViewController *root;
             root = [[[[UIApplication sharedApplication]windows]objectAtIndex:0]rootViewController];
             SWRevealViewController *reveal = (SWRevealViewController*)root;
@@ -1245,7 +1578,7 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
             
             [chatButton.layer addSublayer:myLayer];
         }
-    
+        }
 }
 
 @end

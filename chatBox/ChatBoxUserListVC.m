@@ -32,31 +32,37 @@
 @synthesize contactsList;
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+     self.navigationController.navigationBar.translucent = NO;
+    CGFloat navBarHeight = self.navigationController.navigationBar.frame.size.height;
+    NSLog(@"Navigation Bar height : %f",navBarHeight);
+    CGFloat statusBarSize = [[UIApplication sharedApplication] statusBarFrame].size.height;
+    NSLog(@"statusBarSize Bar height : %f",statusBarSize);
+    CGFloat yorigin = navBarHeight +statusBarSize;
+    CGFloat totalViewHeight = [[UIApplication sharedApplication].keyWindow bounds].size.height;
     if (isiPhoneXSMAX) {
-        self.view.frame = CGRectMake(0, 64, 414, 832);
+        self.view.frame = CGRectMake(0, yorigin, 414, totalViewHeight-yorigin);
     }
     else if(isiPhoneXR) {
-        self.view.frame = CGRectMake(0, 64, 414, 832);
+        self.view.frame = CGRectMake(0, yorigin, 414, totalViewHeight-yorigin);
     }
-    
+
     else if(isiPhoneXS) {
-        self.view.frame = CGRectMake(0, 64, 375, 748);
+        self.view.frame = CGRectMake(0, yorigin, 375, totalViewHeight-yorigin);
     }
     else if(isiPhone10) {
-        self.view.frame = CGRectMake(0, 64, 375, 748);
+        self.view.frame = CGRectMake(0, yorigin, 375, totalViewHeight-yorigin);
     }
-    
+
     else if(isiPhone6Plus) {
-        self.view.frame = CGRectMake(0, 64, 414, 672);
+        self.view.frame = CGRectMake(0, yorigin, 414, totalViewHeight-yorigin);
     }
     else if(isiPhone6) {
-        self.view.frame = CGRectMake(0, 64, 375, 603);
+        self.view.frame = CGRectMake(0, yorigin, 375, totalViewHeight-yorigin);
     } else if(isiPhone5) {
-        self.view.frame = CGRectMake(0, 64, 320, 504);
+        self.view.frame = CGRectMake(0, yorigin, 320, totalViewHeight-yorigin);
     } else {
         // 0, 64, 320, 416
-        self.view.frame = CGRectMake(0, 64, 320, 416);
+        self.view.frame = CGRectMake(0, yorigin, 320, totalViewHeight-yorigin);
     }
     
     contactsList = [[NSMutableArray alloc]init];
@@ -93,7 +99,7 @@
 }
 -(void)configureTableView
 {
-    mainTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, self.view.bounds.size.width, self.view.bounds.size.height) style:UITableViewStylePlain];
+    mainTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height) style:UITableViewStylePlain];
     mainTableView.bounces = NO;
     mainTableView.delegate = self;
     mainTableView.dataSource = self;
@@ -248,11 +254,12 @@
    vc.userIDUnique = [[contactsList objectAtIndex:indexPath.row] valueForKey:@"userId"];
     vc.nameLblText = [[contactsList objectAtIndex:indexPath.row] valueForKey:@"name"];
     
-    UIViewController *root;
-    root = [[[[UIApplication sharedApplication]windows]objectAtIndex:0]rootViewController];
-    
-    SWRevealViewController *reveal = (SWRevealViewController*)root;
-    [(UINavigationController*)reveal.frontViewController pushViewController:vc animated:YES];
+    [self.navigationController pushViewController:vc animated:YES];
+//    UIViewController *root;
+//    root = [[[[UIApplication sharedApplication]windows]objectAtIndex:0]rootViewController];
+//
+//    SWRevealViewController *reveal = (SWRevealViewController*)root;
+//    [(UINavigationController*)reveal.frontViewController pushViewController:vc animated:YES];
     
 //    [self.navigationController pushViewController:vc animated:YES];
 }

@@ -91,9 +91,9 @@ static CGFloat messageTextSize = 14.0;
         /*...and adds them to the view.*/
         [self.contentView addSubview: self.avatarImageView];
         [self.contentView addSubview: self.balloonView];
-        
+        [self.contentView addSubview:self.timeLabel];
         [self.balloonView addSubview: self.nameLabel];
-        [self.balloonView addSubview: self.timeLabel];
+//        [self.balloonView addSubview: self.timeLabel];
         [self.balloonView addSubview: self.messageView];
         
         [self.messageView addSubview: self.messageLabel];
@@ -130,31 +130,30 @@ static CGFloat messageTextSize = 14.0;
     if (self.sent == YES) {
 
         
-        balloonViewFrame = CGRectMake(10.0f, 0, self.frame.size.width-70.0f, textSize.height + 2*textMarginVertical);
+        balloonViewFrame = CGRectMake(10.0f, 0, textSize.width+20.0f, textSize.height + 2*textMarginVertical);
         
         avatarImageFrame = CGRectMake(self.frame.size.width-50.0f, timeLabelFrame.size.height, 40.0f, 40.0f);
        
         
-        messageLabelFrame = CGRectMake(15.0f,  balloonViewFrame.origin.y + textMarginVertical, textSize.width, textSize.height);
+        messageLabelFrame = CGRectMake(10.0f,  balloonViewFrame.origin.y + textMarginVertical, textSize.width, textSize.height);
         
         nameLabelFrame = CGRectMake(15.0f, 5.0f, 100, 20);
         
-        timeLabelFrame = CGRectMake(100.0f,balloonViewFrame.size.height, dateSize.width, dateSize.height);
-        
+        timeLabelFrame = CGRectMake(10.0f,balloonViewFrame.size.height, dateSize.width, dateSize.height);
+        self.timeLabel.textAlignment =NSTextAlignmentLeft;
         self.balloonView.backgroundColor=[self colorWithHexString:@"f5e4dc"];
 
     } else {
         
-        balloonViewFrame = CGRectMake(60.0f,0, self.frame.size.width-70.0f, textSize.height + 2*textMarginVertical);
+        balloonViewFrame = CGRectMake(self.frame.size.width-textSize.width-20.0f,0, textSize.width+10.0f, textSize.height + 2*textMarginVertical);
         
         avatarImageFrame = CGRectMake(10.0f, timeLabelFrame.size.height, 40.0f, 40.0f);
         
-        messageLabelFrame = CGRectMake(15.0f, balloonViewFrame.origin.y + textMarginVertical, textSize.width, textSize.height);
+        messageLabelFrame = CGRectMake(5.0f, balloonViewFrame.origin.y + textMarginVertical, textSize.width, textSize.height);
         
         nameLabelFrame = CGRectMake(15.0f, 5.0f, 100, 20);
-        
-        timeLabelFrame = CGRectMake(100.0f,balloonViewFrame.size.height, dateSize.width, dateSize.height);
-        
+        timeLabelFrame = CGRectMake(self.frame.size.width-(dateSize.width+10),balloonViewFrame.size.height, dateSize.width, dateSize.height);
+        self.textLabel.textAlignment = NSTextAlignmentRight;
         self.balloonView.backgroundColor=[self colorWithHexString:@"e0e0e0"];
 
     }

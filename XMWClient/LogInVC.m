@@ -496,16 +496,58 @@ NSMutableDictionary *masterDataForEmployee;
                        
                         
                         NSString *lastUserLogedIn = [[NSUserDefaults standardUserDefaults] valueForKey:@"LAST_LOGIN_USER"];
-                        if ([lastUserLogedIn isEqualToString:m_username]) {
+                        if ([lastUserLogedIn isEqualToString:m_username] || lastUserLogedIn ==nil) {
                             // no need to clear chat local db data
                         }
                         else
                         {
-                            [[NSFileManager defaultManager] removeItemAtPath:[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"ContactList_DB.sqlite.db"]] error:NULL];
+                            NSMutableArray *dbNameArray = [[NSMutableArray alloc]init];
+                            [dbNameArray addObject:@"ContactList_DB.sqlite.db"];
+                            [dbNameArray addObject:@"ChatHistory_DB.sqlite.db"];
+                            [dbNameArray addObject:@"ChatThreadList_DB.sqlite.db"];
+
+                            for (int i=0; i<3; i++) {
+                                NSString *appGroupId = @"group.com.polycab.xmw.employee.push.group";
+                                NSURL *appGroupDirectoryPath = [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:appGroupId];
+                                NSString *appGroupDirectoryPathString = appGroupDirectoryPath.absoluteString;
+
+                                NSString *documentsDirectory = appGroupDirectoryPathString;
+                                NSString *filePath =  [documentsDirectory stringByAppendingPathComponent:[dbNameArray objectAtIndex:i]];
+
+                                NSError *err;
+                                
+                                NSFileManager *fm = [NSFileManager defaultManager];
+                                
+                                err = nil;
+                                NSString *str = [filePath substringWithRange:NSMakeRange(6, filePath.length-6)];
+                                NSURL *url = [NSURL fileURLWithPath:str];
+                                
+                                [fm removeItemAtPath:[url path] error:&err];
+                                
+                                if(err)
+                                    
+                                {
+                                    
+                                    NSLog(@"File Manager: %@ %d %@", [err domain], [err code], [[err userInfo] description]);
+                                    
+                                }
+                                
+                                else
+                                    
+                                {
+                                    
+                                    NSLog(@"File :- %@ deleted",[dbNameArray objectAtIndex:i]);
+                                    
+                                }
+
+                            }
+                           
                             
-                            [[NSFileManager defaultManager] removeItemAtPath:[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"ChatHistory_DB.sqlite.db"]] error:NULL];
-                            
-                            [[NSFileManager defaultManager] removeItemAtPath:[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"ChatThreadList_DB.sqlite.db"]] error:NULL];
+//                            [[NSFileManager defaultManager] removeItemAtPath:[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"ContactList_DB.sqlite.db"]] error:NULL];
+//
+//                            [[NSFileManager defaultManager] removeItemAtPath:[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"ChatHistory_DB.sqlite.db"]] error:NULL];
+//
+//                            [[NSFileManager defaultManager] removeItemAtPath:[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"ChatThreadList_DB.sqlite.db"]] error:NULL];
                         }
                         
                       

@@ -1035,10 +1035,7 @@
 		F0B425B822671C240011D3E4 /* ChatBoxVC.h in Headers */ = {isa = PBXBuildFile; fileRef = F0B4259222671C240011D3E4 /* ChatBoxVC.h */; };
 		F0B425B922671C240011D3E4 /* ChatBoxUserListVC.h in Headers */ = {isa = PBXBuildFile; fileRef = F0B4259322671C240011D3E4 /* ChatBoxUserListVC.h */; };
 		F0B425BA22671C240011D3E4 /* ChatRoomsVC.h in Headers */ = {isa = PBXBuildFile; fileRef = F0B4259422671C240011D3E4 /* ChatRoomsVC.h */; };
-		F0B425C122671C620011D3E4 /* ChatRoomVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = F0B425BC22671C620011D3E4 /* ChatRoomVC.xib */; };
-		F0B425C222671C620011D3E4 /* ChatRoomVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F0B425BD22671C620011D3E4 /* ChatRoomVC.m */; };
 		F0B425C322671C620011D3E4 /* PTSMessagingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F0B425BE22671C620011D3E4 /* PTSMessagingCell.m */; };
-		F0B425C422671C620011D3E4 /* ChatRoomVC.h in Headers */ = {isa = PBXBuildFile; fileRef = F0B425BF22671C620011D3E4 /* ChatRoomVC.h */; };
 		F0B425C522671C620011D3E4 /* PTSMessagingCell.h in Headers */ = {isa = PBXBuildFile; fileRef = F0B425C022671C620011D3E4 /* PTSMessagingCell.h */; };
 		F0B425C722671D080011D3E4 /* ChatRoomsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F0B425C622671D070011D3E4 /* ChatRoomsVC.m */; };
 		F0B425CF2267343D0011D3E4 /* Artboard.png in Resources */ = {isa = PBXBuildFile; fileRef = F0B425CE2267343D0011D3E4 /* Artboard.png */; };
@@ -2209,10 +2206,7 @@
 		F0B4259222671C240011D3E4 /* ChatBoxVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatBoxVC.h; sourceTree = "<group>"; };
 		F0B4259322671C240011D3E4 /* ChatBoxUserListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatBoxUserListVC.h; sourceTree = "<group>"; };
 		F0B4259422671C240011D3E4 /* ChatRoomsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatRoomsVC.h; sourceTree = "<group>"; };
-		F0B425BC22671C620011D3E4 /* ChatRoomVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatRoomVC.xib; sourceTree = "<group>"; };
-		F0B425BD22671C620011D3E4 /* ChatRoomVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatRoomVC.m; sourceTree = "<group>"; };
 		F0B425BE22671C620011D3E4 /* PTSMessagingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PTSMessagingCell.m; sourceTree = "<group>"; };
-		F0B425BF22671C620011D3E4 /* ChatRoomVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatRoomVC.h; sourceTree = "<group>"; };
 		F0B425C022671C620011D3E4 /* PTSMessagingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTSMessagingCell.h; sourceTree = "<group>"; };
 		F0B425C622671D070011D3E4 /* ChatRoomsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatRoomsVC.m; sourceTree = "<group>"; };
 		F0B425CE2267343D0011D3E4 /* Artboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Artboard.png; sourceTree = "<group>"; };
@@ -4480,11 +4474,8 @@
 		F0B425BB22671C620011D3E4 /* ChatRoom Classes */ = {
 			isa = PBXGroup;
 			children = (
-				F0B425BC22671C620011D3E4 /* ChatRoomVC.xib */,
-				F0B425BD22671C620011D3E4 /* ChatRoomVC.m */,
-				F0B425BE22671C620011D3E4 /* PTSMessagingCell.m */,
-				F0B425BF22671C620011D3E4 /* ChatRoomVC.h */,
 				F0B425C022671C620011D3E4 /* PTSMessagingCell.h */,
+				F0B425BE22671C620011D3E4 /* PTSMessagingCell.m */,
 			);
 			path = "ChatRoom Classes";
 			sourceTree = "<group>";
@@ -4567,7 +4558,6 @@
 				8501CAB219837CF2002E9E1C /* DownloadItem.h in Headers */,
 				85E1D8851B8DC1100034D949 /* OrderFeedbackPopup.h in Headers */,
 				F0B2FB27218850F5006A7C6B /* CustomCompareFormQV.h in Headers */,
-				F0B425C422671C620011D3E4 /* ChatRoomVC.h in Headers */,
 				857A3EF71A6CFC3500279931 /* SixDashView.h in Headers */,
 				F02D142021197235001B1967 /* PolycabHeader.h in Headers */,
 				F0B4259C22671C240011D3E4 /* ChatHistory_DB.h in Headers */,
@@ -5041,7 +5031,6 @@
 				F059CCDF214F70F600E303F6 /* downarrow@2x.png in Resources */,
 				F05801FB221D2DB600682D07 /* CreateOrderDisplayCell.xib in Resources */,
 				F0B2FB2E218850F5006A7C6B /* RMAVC.xib in Resources */,
-				F0B425C122671C620011D3E4 /* ChatRoomVC.xib in Resources */,
 				F059CD37214F710600E303F6 /* polycab_logo2@3x.png in Resources */,
 				F059CD35214F710600E303F6 /* carticon@3x.png in Resources */,
 				85D9926E1D2B9894003AEBBE /* gold_card_L.png in Resources */,
@@ -5559,7 +5548,6 @@
 				857A3EC31A6CFC3500279931 /* DVAsynchImageView.m in Sources */,
 				F023B77A211C1A3600D54B38 /* HamperSchemeCollectionView.m in Sources */,
 				8595B4EE190FCB790010C685 /* DVDayNameCell.m in Sources */,
-				F0B425C222671C620011D3E4 /* ChatRoomVC.m in Sources */,
 				9000C6A9175340E100A1DAF4 /* XmwUtils.m in Sources */,
 				9000C6AC1753413B00A1DAF4 /* OperationManagerUtil.m in Sources */,
 				905FFDBD1999EEBB00E95BFB /* iToast.m in Sources */,

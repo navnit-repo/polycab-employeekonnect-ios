@@ -56,6 +56,7 @@
 @synthesize remarkView;
 - (void)viewDidLoad {
     [super viewDidLoad];
+     self.navigationController.navigationBar.translucent = NO;
     CGFloat navBarHeight = self.navigationController.navigationBar.frame.size.height;
     NSLog(@"Navigation Bar height : %f",navBarHeight);
     CGFloat statusBarSize = [[UIApplication sharedApplication] statusBarFrame].size.height;
@@ -101,10 +102,10 @@
 }
 -(void)autoLayoutIphoneMax
 {
-    self.headerView.frame =CGRectMake(self.headerView.frame.origin.x, viewFrame.origin.y, self.headerView.frame.size.width, self.headerView.frame.size.height);
-    bottomView.frame = CGRectMake(bottomView.frame.origin.x, viewFrame.size.height-bottomView.frame.size.height, bottomView.frame.size.width, bottomView.frame.size.height);
-    self.chatRoomTableView.frame = CGRectMake(self.chatRoomTableView.frame.origin.x, self.chatRoomTableView.frame.origin.y, self.chatRoomTableView.frame.size.width, viewFrame.size.height-(self.headerView.frame.size.height+self.bottomView.frame.size.height+yorigin));
-    _acceptButtonPopUpView.frame = viewFrame;
+    self.headerView.frame =CGRectMake(self.headerView.frame.origin.x, 0, self.headerView.frame.size.width, self.headerView.frame.size.height);
+    bottomView.frame = CGRectMake(bottomView.frame.origin.x, self.view.frame.size.height-bottomView.frame.size.height, bottomView.frame.size.width, bottomView.frame.size.height);
+    self.chatRoomTableView.frame = CGRectMake(self.chatRoomTableView.frame.origin.x, self.chatRoomTableView.frame.origin.y, self.chatRoomTableView.frame.size.width, self.view.frame.size.height-(self.headerView.frame.size.height+self.bottomView.frame.size.height));
+    _acceptButtonPopUpView.frame = self.view.frame;
 }
 - (void)viewDidAppear:(BOOL)animated
 {
@@ -305,19 +306,19 @@
         borderLine.backgroundColor = [UIColor colorWithRed:230.0/255 green:230.0/255 blue:230.0/255 alpha:1.0];
         [bottomView addSubview:borderLine];
         
-        textView = [[UITextView alloc]initWithFrame:CGRectMake(0, 6, bottomView.frame.size.width-50, 50)];
+        textView = [[UITextView alloc]initWithFrame:CGRectMake(15, 6, bottomView.frame.size.width-50, 50)];
         textView.returnKeyType = UIReturnKeyDefault;
         textView.keyboardType = UIKeyboardTypeDefault;
         textView.autocapitalizationType = UITextAutocapitalizationTypeWords;
         textView.autocorrectionType = UITextAutocorrectionTypeNo;
-        textView.font = [UIFont systemFontOfSize:16.0];
+        textView.font = [UIFont systemFontOfSize:14.0];
         textView.textColor =[UIColor colorWithRed:119.0/255 green:119.0/255 blue:119.0/255 alpha:1.0];
         textView.text = @"Type your message here.";
         defaultTextViewText =@"Type your message here.";
         textView.delegate = self;
         [bottomView addSubview:textView];
         
-        UIButton *sendButton = [[UIButton alloc]initWithFrame:CGRectMake(bottomView.frame.size.width-50,12, 40, 40)];
+        UIButton *sendButton = [[UIButton alloc]initWithFrame:CGRectMake(bottomView.frame.size.width-35,12, 30, 35)];
         [sendButton setBackgroundImage:[UIImage imageNamed:@"send"] forState:UIControlStateNormal];
         sendButton.contentMode = UIViewContentModeScaleAspectFit;
         [sendButton addTarget:self action:@selector(sendButtonHandler:) forControlEvents:UIControlEventTouchUpInside];
@@ -325,7 +326,9 @@
         [self.view addSubview:bottomView];
     
     if ([chatStatus isEqualToString:@"Accept"] || [chatStatus isEqualToString:@"Close"]) {
-          [acceptButtonOutlet removeFromSuperview];
+//          [acceptButtonOutlet removeFromSuperview];
+        acceptButtonOutlet.hidden = YES;
+        acceptButtonOutlet.userInteractionEnabled = NO;
     }
 //    }
     
@@ -501,13 +504,6 @@
                 }
                 
             }
-//            NSArray *array = [[obj valueForKey:@"from"] componentsSeparatedByString:@"@"];
-//            if ([[array objectAtIndex:0] isEqualToString:ownUserId]) {
-//                self.popupTextView.text  = [obj valueForKey:@"message"] ;
-//            }
-            
-        
-            
             [ChatHistory_DB createInstance : @"ChatHistory_DB_STORAGE" : true :[chatThreadId integerValue]];
             ChatHistory_DB *chatHistory_DBStorage = [ChatHistory_DB getInstance];
             [chatHistory_DBStorage dropRows:@"ChatHistory_DB_STORAGE"];
@@ -518,14 +514,6 @@
                 NSString *messageString = [[chatHistoryArray objectAtIndex:i] valueForKey:@"message"];
                 NSData *messageData = [messageString dataUsingEncoding:NSUTF8StringEncoding];
                 NSString *base64MessageString = [messageData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
-                
-                //Base64 string to original string
-//                NSData *base64Data = [[NSData alloc] initWithBase64EncodedString:base64String options:NSDataBase64DecodingIgnoreUnknownCharacters];
-//                NSString *originalString =[[NSString alloc] initWithData:base64Data encoding:NSUTF8StringEncoding];
-//
-//                NSLog(@"Result: %@",originalString);
-                
-                
                 
                 ChatHistory_Object* chatHistory_Object = [[ChatHistory_Object alloc] init];
                 chatHistory_Object.chatThreadId =  [[[chatHistoryArray objectAtIndex:i] valueForKey:@"chatThreadId"] integerValue] ;
@@ -548,7 +536,8 @@
             chatHistoryArray = [[NSMutableArray alloc]init];
             [chatHistoryArray addObjectsFromArray:chatHistoryStorageData];
             [chatRoomTableView reloadData];
-            [self performSelector:@selector(scrollToBottom) withObject:nil afterDelay:4.0];
+            [self scrollToBottom];
+//            [self performSelector:@selector(scrollToBottom) withObject:nil afterDelay:4.0];
             
 
        
@@ -606,6 +595,21 @@
             chatThreadList_Object.lastMessageOn = [ NSString stringWithFormat:@"%@",timeStampValue];
             [chatThreadListStorage updateDocLastMessageTime:chatThreadList_Object];
             
+            
+            //Accept Talk Code
+            
+            if ([chatStatus isEqualToString:@"Accept"] || [chatStatus isEqualToString:@"Close"]) {
+                acceptButtonOutlet.hidden = NO;
+                acceptButtonOutlet.userInteractionEnabled = YES;
+                ChatThreadList_Object* chatThreadList_ObjectForAccept = [[ChatThreadList_Object alloc] init];
+                chatThreadList_ObjectForAccept.chatThreadId =[chatThreadId integerValue] ;
+                chatThreadList_ObjectForAccept.status =@"Accept-Talk";
+                [chatThreadListStorage updateDoc:chatThreadList_ObjectForAccept];
+            }
+            
+          
+            
+            
             UIViewController *root;
             root = [[[[UIApplication sharedApplication]windows]objectAtIndex:0]rootViewController];
             SWRevealViewController *reveal = (SWRevealViewController*)root;
@@ -615,7 +619,8 @@
             NSMutableArray *chatThreadListStorageData = [chatThreadListStorage getRecentDocumentsData : @"False"];
             ChatBoxVC *vc =  (ChatBoxVC*) checkView;
             vc.chatThreadDict = chatThreadListStorageData;
-              [self performSelector:@selector(scrollToBottom) withObject:nil afterDelay:0.0];
+            [self scrollToBottom];
+//              [self performSelector:@selector(scrollToBottom) withObject:nil afterDelay:0.0];
             
         }
        
@@ -642,12 +647,21 @@
             chatThreadList_Object.status =@"Accept";
             [chatThreadListStorage updateDoc:chatThreadList_Object];
             ChatBoxVC *chatVC = [[ChatBoxVC alloc]init];
-            UIViewController *root;
-            root = [[[[UIApplication sharedApplication]windows]objectAtIndex:0]rootViewController];
-
-            SWRevealViewController *reveal = (SWRevealViewController*)root;
-            [(UINavigationController*)reveal.frontViewController pushViewController:chatVC animated:YES];
-               [self performSelector:@selector(scrollToBottom) withObject:nil afterDelay:0.0];
+            
+            NSMutableArray *viewControllersArray = [NSMutableArray arrayWithArray:self.navigationController.viewControllers];
+            NSMutableArray *dummyArray = [[NSMutableArray alloc]init];
+            [dummyArray addObjectsFromArray:viewControllersArray];
+            [dummyArray removeObjectAtIndex:dummyArray.count -1];// this remove for topup chatroomvc
+            [dummyArray removeObjectAtIndex:dummyArray.count -1];// this remove for topup previous chatboxvc
+            [dummyArray addObject:chatVC];
+            [[self navigationController] setViewControllers:dummyArray animated:YES];
+//            UIViewController *root;
+//            root = [[[[UIApplication sharedApplication]windows]objectAtIndex:0]rootViewController];
+//
+//            SWRevealViewController *reveal = (SWRevealViewController*)root;
+//            [(UINavigationController*)reveal.frontViewController pushViewController:chatVC animated:YES];
+            [self scrollToBottom];
+//               [self performSelector:@selector(scrollToBottom) withObject:nil afterDelay:0.0];
         }
         else
         {
@@ -796,7 +810,7 @@
         
         [UIView animateWithDuration:0.3 animations:^{
             CGRect f = self.view.frame;
-            f.origin.y = -keyboardSize.height;
+            f.origin.y = -keyboardSize.height+yorigin;
             self.view.frame = f;
         }];
     }
@@ -807,7 +821,7 @@
    
         [UIView animateWithDuration:0.3 animations:^{
             CGRect f = self.view.frame;
-            f.origin.y = 0.0f;
+            f.origin.y = yorigin;
             self.view.frame = f;
         }];
     

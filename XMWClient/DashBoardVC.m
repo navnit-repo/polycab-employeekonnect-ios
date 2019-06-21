@@ -107,6 +107,7 @@
     [self fetchPendingNotifications];
     
 }
+
 - (void)viewWillAppear:(BOOL)animated
 {
     if (ChatBoxPushNotifiactionFlag == YES) {
@@ -201,7 +202,7 @@
     self.navigationItem.titleView = polycabLogo;
    [self.navigationItem setLeftBarButtonItem:menuButton];
    // [self.navigationItem setRightBarButtonItem:notificationButton];
-    [self.navigationController.navigationBar setFrame:CGRectMake(0, 20, self.view.frame.size.width,48)];
+//    [self.navigationController.navigationBar setFrame:CGRectMake(0, 20, self.view.frame.size.width,48)];
     
     // this code for check user assigned chat feature or not
      ClientVariable *clientVariables = [ClientVariable getInstance:[DVAppDelegate currentModuleContext]];
@@ -221,12 +222,8 @@
     NSLog(@"chatHandler button clicked");
     //pending
     ChatBoxVC *chatVC = [[ChatBoxVC alloc]init];
+   [ [self navigationController]  pushViewController:chatVC animated:YES];
     
-    UIViewController *root;
-    root = [[[[UIApplication sharedApplication]windows]objectAtIndex:0]rootViewController];
-    
-    SWRevealViewController *reveal = (SWRevealViewController*)root;
-    [(UINavigationController*)reveal.frontViewController pushViewController:chatVC animated:YES];
     UIButton *button = (UIButton*) sender;
     long int totalButtonLayer = button.layer.sublayers.count;
     for (int i=0; i<totalButtonLayer; i++) {
@@ -745,14 +742,14 @@
     else if ([formId isEqualToString:@"DOT_FORM_CHAIRMAN_CHAT"])
     {
        ChatBoxVC *chatVC = [[ChatBoxVC alloc]init];
-//        NewChatBoxVC *chatVC = [[NewChatBoxVC alloc]init];
-        UIViewController *root;
-        root = [[[[UIApplication sharedApplication]windows]objectAtIndex:0]rootViewController];
+////        NewChatBoxVC *chatVC = [[NewChatBoxVC alloc]init];
+//        UIViewController *root;
+//        root = [[[[UIApplication sharedApplication]windows]objectAtIndex:0]rootViewController];
+//
+//        SWRevealViewController *reveal = (SWRevealViewController*)root;
+//        [(UINavigationController*)reveal.frontViewController pushViewController:chatVC animated:YES];
         
-        SWRevealViewController *reveal = (SWRevealViewController*)root;
-        [(UINavigationController*)reveal.frontViewController pushViewController:chatVC animated:YES];
-        
-      //  [[self navigationController ] pushViewController:chatVC animated:YES];
+    [ [self navigationController]  pushViewController:chatVC animated:YES];
     }
     
     
