@@ -157,12 +157,12 @@
     [headerView addSubview:headerborderLine];
      [self.view addSubview:headerView];
     
-   UIView * bottomView = [[UIView alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height-80, self.view.frame.size.width, 80)];
+   UIView * bottomView = [[UIView alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height-(53*deviceHeightRation), self.view.frame.size.width, 53*deviceHeightRation)];
     UIView *borderLine =  [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 5)];
     borderLine.backgroundColor = [UIColor colorWithRed:230.0/255 green:230.0/255 blue:230.0/255 alpha:1.0];
     [bottomView addSubview:borderLine];
     
-    textView = [[UITextView alloc]initWithFrame:CGRectMake(0, 6, bottomView.frame.size.width-50, 70)];
+    textView = [[UITextView alloc]initWithFrame:CGRectMake(15, 6, bottomView.frame.size.width-50, 50)];
     textView.returnKeyType = UIReturnKeyDefault;
     textView.autocapitalizationType = UITextAutocapitalizationTypeWords;
     textView.autocorrectionType = UITextAutocorrectionTypeNo;
@@ -173,7 +173,7 @@
     textView.delegate = self;
     [bottomView addSubview:textView];
 //    UIViewContentModeCenter
-    UIButton *sendButton = [[UIButton alloc]initWithFrame:CGRectMake(bottomView.frame.size.width-50,20, 40, 40)];
+    UIButton *sendButton = [[UIButton alloc]initWithFrame:CGRectMake(bottomView.frame.size.width-35,12, 30, 35)];
     [sendButton setBackgroundImage:[UIImage imageNamed:@"send"] forState:UIControlStateNormal];
     sendButton.contentMode = UIViewContentModeScaleAspectFit;
     [sendButton addTarget:self action:@selector(sendButtonHandler:) forControlEvents:UIControlEventTouchUpInside];

@@ -207,13 +207,11 @@
     threadListTableView.delegate = self;
     threadListTableView.bounces = NO;
   
-    searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(30, 8, _headerView.frame.size.width-60, 44*deviceHeightRation)];
+    searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(10, 8, _headerView.frame.size.width-20, 44*deviceHeightRation)];
     searchBar.delegate = self;
     searchBar.barTintColor = [UIColor whiteColor];
     searchBar.layer.borderWidth = 0.5;
     searchBar.layer.borderColor = [UIColor lightGrayColor].CGColor;
-   
-//    searchBar.backgroundColor = [UIColor lightGrayColor];
     [searchBar setPlaceholder:@"Search"];
     [searchBar setReturnKeyType:UIReturnKeyDone];
     searchBar.enablesReturnKeyAutomatically = NO;

@@ -41,6 +41,10 @@
     CGRect viewFrame;
     CGFloat yorigin;
     CGFloat totalViewHeight;
+    UISearchBar *searchBar;
+    bool searchBarKeyboardShowFlag;
+    NSMutableArray *originalChatHistoryArray;
+    NSMutableArray *searchTextArray;
 }
 @synthesize headerView;
 @synthesize popupTextView;
@@ -153,6 +157,7 @@
         self.acceptButtonOutlet.userInteractionEnabled = NO;
         self.acceptButtonOutlet.hidden  =YES;
     }
+    [LayoutClass setLayoutForIPhone6:self.headerView];
     [LayoutClass textviewLayout:self.popupTextView forFontWeight:UIFontWeightRegular];
      [LayoutClass textviewLayout:self.remarkView forFontWeight:UIFontWeightRegular];
      [LayoutClass labelLayout:self.popupSubjectLbl forFontWeight:UIFontWeightMedium];
@@ -184,6 +189,19 @@
     UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
     [chatRoomTableView addGestureRecognizer:gestureRecognizer];
     [self setHeaderDetailsData];
+    
+    /// add search controller
+    searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(12, 8, (self.acceptButtonOutlet.frame.size.width+self.acceptButtonOutlet.frame.origin.x)-12, 44*deviceHeightRation)];
+    searchBar.delegate = self;
+    searchBar.barTintColor = [UIColor whiteColor];
+    searchBar.layer.borderWidth = 0.5;
+    searchBar.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    [searchBar setPlaceholder:@"Search"];
+    [searchBar setReturnKeyType:UIReturnKeyDone];
+    searchBar.enablesReturnKeyAutomatically = NO;
+    searchBar.tag= 13;
+    [self.headerView addSubview:searchBar];
+    
 }
 -(void)setHeaderDetailsData
 {
@@ -242,6 +260,9 @@
     NSString *first_time_networkcall_check = [[NSUserDefaults standardUserDefaults] valueForKey:[NSString stringWithFormat:@"CHAT_HISTORY_FIRST_TIME_FETCH_%@",chatThreadId]];
     if (chatHistoryArray.count!=0 && [first_time_networkcall_check isEqualToString:@"YES"] ) {
         // show loacl save data
+         originalChatHistoryArray = [[NSMutableArray alloc]init];
+        [originalChatHistoryArray addObjectsFromArray:chatHistoryArray];
+        
         ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
         ChatHistory_Object *obj = (ChatHistory_Object *)[chatHistoryArray objectAtIndex:chatHistoryArray.count-1];
         
@@ -294,14 +315,7 @@
 
 -(void)createView
 {
-//    if ([chatStatus isEqualToString:@"Accept"] || [chatStatus isEqualToString:@"Close"]) {
-//
-//        chatRoomTableView.frame = CGRectMake(chatRoomTableView.frame.origin.x, chatRoomTableView.frame.origin.y, chatRoomTableView.frame.size.width, chatRoomTableView.frame.size.height + bottomView.frame.size.height);
-//         [acceptButtonOutlet removeFromSuperview];
-//         [bottomView removeFromSuperview];
-//    }
-//    else
-//    {
+
         UIView *borderLine =  [[UIView alloc]initWithFrame:CGRectMake(0, 0, bottomView.frame.size.width, 5)];
         borderLine.backgroundColor = [UIColor colorWithRed:230.0/255 green:230.0/255 blue:230.0/255 alpha:1.0];
         [bottomView addSubview:borderLine];
@@ -491,7 +505,6 @@
             //[chatRoomTableView reloadData];
             
             ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
-            NSMutableArray *obj = [chatHistoryArray objectAtIndex:chatHistoryArray.count-1];
             
             self.popupSubjectLbl.text  =subject;
             NSString *ownUserId = [clientVariables.CLIENT_USER_LOGIN userName];
@@ -535,6 +548,8 @@
             NSMutableArray *chatHistoryStorageData = [chatHistory_DBStorage getRecentDocumentsData : @"True"];
             chatHistoryArray = [[NSMutableArray alloc]init];
             [chatHistoryArray addObjectsFromArray:chatHistoryStorageData];
+            originalChatHistoryArray = [[NSMutableArray alloc]init];
+            [originalChatHistoryArray addObjectsFromArray:chatHistoryArray];
             [chatRoomTableView reloadData];
             [self scrollToBottom];
 //            [self performSelector:@selector(scrollToBottom) withObject:nil afterDelay:4.0];
@@ -583,6 +598,8 @@
             NSMutableArray *chatHistoryStorageData = [chatHistory_DBStorage getRecentDocumentsData : @"False"];
             chatHistoryArray = [[NSMutableArray alloc]init];
             [chatHistoryArray addObjectsFromArray:chatHistoryStorageData];
+            originalChatHistoryArray = [[NSMutableArray alloc]init];
+            [originalChatHistoryArray addObjectsFromArray:chatHistoryArray];
             [chatRoomTableView reloadData];
             self.popupTextView.text =textView.text;
             [textView resignFirstResponder];
@@ -655,11 +672,7 @@
             [dummyArray removeObjectAtIndex:dummyArray.count -1];// this remove for topup previous chatboxvc
             [dummyArray addObject:chatVC];
             [[self navigationController] setViewControllers:dummyArray animated:YES];
-//            UIViewController *root;
-//            root = [[[[UIApplication sharedApplication]windows]objectAtIndex:0]rootViewController];
-//
-//            SWRevealViewController *reveal = (SWRevealViewController*)root;
-//            [(UINavigationController*)reveal.frontViewController pushViewController:chatVC animated:YES];
+
             [self scrollToBottom];
 //               [self performSelector:@selector(scrollToBottom) withObject:nil afterDelay:0.0];
         }
@@ -732,16 +745,6 @@
 
 
 #pragma -mark textview Delagate
-//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-//{
-//    return headerView.frame.size.height *deviceHeightRation;
-//}
-//-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-//{
-//    UIView *v = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
-//    v.backgroundColor = [UIColor redColor];
-//    return  v;
-//}
 
 - (BOOL) textViewShouldBeginEditing:(UITextView *)textView {
     if (textView.tag==10||textView.tag==11) {
@@ -755,16 +758,6 @@
     }
     textView.textColor = [UIColor blackColor];
     [textView resignFirstResponder];
-    
-    
-    //    CGSize maximumLabelSize = CGSizeMake(textView.frame.size.width, 130);
-    //
-    //    CGSize expectedLabelSize = [textView.text sizeWithFont:textView.font constrainedToSize:maximumLabelSize];
-    //
-    //    //adjust the label the the new height.
-    //    CGRect newFrame = textView.frame;
-    //    newFrame.size.height = expectedLabelSize.height;
-    //    textView.frame = newFrame;
     
     return YES;
 }
@@ -793,6 +786,7 @@
     bottomView.hidden = NO;
     [popupTextView resignFirstResponder];
     [remarkView resignFirstResponder];
+    [searchBar resignFirstResponder];
 }
 #pragma mark - keyboard movements
 - (void)keyboardWillShow:(NSNotification *)notification
@@ -805,6 +799,10 @@
         }];
     }
   
+    else if (searchBarKeyboardShowFlag == YES)
+    {
+        // do nothing 
+    }
     else{
         CGSize keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
         
@@ -828,7 +826,15 @@
 }
 
 #pragma mark-Tableview Delegate Methods
-
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 5;
+}
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    UIView *view = [UIView new];
+    return view;
+}
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
     return [chatHistoryArray count];
@@ -841,9 +847,9 @@
     
     
     
-    if (cell == nil) {
+//    if (cell == nil) {
         cell = [[PTSMessagingCell alloc] initMessagingCellWithReuseIdentifier:cellIdentifier];
-    }
+//    }
     
     [self configureCell:cell atIndexPath:indexPath];
     NSInteger lastSectionIndex = [tableView numberOfSections] - 1;
@@ -865,9 +871,15 @@
     { ChatHistory_Object *obj = (ChatHistory_Object *)[chatHistoryArray objectAtIndex:indexPath.row];
        
         NSString *message= obj.message;
-        if(message!=nil)
+        
+        //  Base64 string to original string
+        NSData *base64Data = [[NSData alloc] initWithBase64EncodedString:message options:NSDataBase64DecodingIgnoreUnknownCharacters];
+        NSString *originalMessage =[[NSString alloc] initWithData:base64Data encoding:NSUTF8StringEncoding];
+        
+        NSLog(@"Result: %@",originalMessage);
+        if(originalMessage!=nil)
         {
-            messageSize = [PTSMessagingCell messageSize:message];
+            messageSize = [PTSMessagingCell messageSize:originalMessage];
             return messageSize.height + 2*[PTSMessagingCell textMarginVertical] + 40.0f;
         }
     }
@@ -899,7 +911,6 @@
   //  Base64 string to original string
                     NSData *base64Data = [[NSData alloc] initWithBase64EncodedString:objString options:NSDataBase64DecodingIgnoreUnknownCharacters];
                     NSString *originalString =[[NSString alloc] initWithData:base64Data encoding:NSUTF8StringEncoding];
-    
                     NSLog(@"Result: %@",originalString);
     
     if([senderId isEqualToString:userId]) {
@@ -924,7 +935,8 @@
 }
 - (void) hideKeyboard {
     [textView resignFirstResponder];
- 
+    [searchBar resignFirstResponder];
+    searchBarKeyboardShowFlag =NO;
 }
 -(void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -932,5 +944,46 @@
 - (void)scrollToBottom
 {
       [chatRoomTableView scrollToRowAtIndexPath:pathToLastRow atScrollPosition:UITableViewScrollPositionTop animated:NO];
+}
+
+#pragma mark - searchBar handler
+-(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
+    searchBarKeyboardShowFlag = NO;
+    [searchBar resignFirstResponder];
+}
+- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
+{
+    searchBarKeyboardShowFlag =YES;
+    return  YES;
+}
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+     NSLog(@"%@",searchText);
+    searchTextArray = [[NSMutableArray alloc]init];
+    if (searchText.length>0) {
+        
+        for (int i=0; i<originalChatHistoryArray.count; i++) {
+              ChatHistory_Object *obj = (ChatHistory_Object *)[originalChatHistoryArray objectAtIndex:i];
+                NSString *objString = obj.message;
+                NSData *base64Data = [[NSData alloc] initWithBase64EncodedString:objString options:NSDataBase64DecodingIgnoreUnknownCharacters];
+                NSString *message =[[NSString alloc] initWithData:base64Data encoding:NSUTF8StringEncoding];
+                NSLog(@"Result: %@",message);
+            
+            NSRange nameRange = [message rangeOfString:searchText options:NSCaseInsensitiveSearch];
+            if (nameRange.location != NSNotFound) {
+                [searchTextArray addObject: obj];
+            }
+            
+        }
+        chatHistoryArray =[[NSMutableArray alloc]init];
+        [chatHistoryArray addObjectsFromArray:searchTextArray];
+        [chatRoomTableView reloadData];
+    }
+    else
+    {   chatHistoryArray  = [[NSMutableArray alloc]init];
+        [chatHistoryArray addObjectsFromArray:originalChatHistoryArray];
+        [chatRoomTableView reloadData];
+    }
+    
 }
 @end

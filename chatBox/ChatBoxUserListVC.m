@@ -28,6 +28,9 @@
     NetworkHelper *networkHelper;
     LoadingView *loadingView;
     UITableView *mainTableView;
+    UISearchBar *searchBar;
+    NSMutableArray *orignalContactListArray;
+    NSMutableArray *searchTextArray;
 }
 @synthesize contactsList;
 - (void)viewDidLoad {
@@ -66,12 +69,17 @@
     }
     
     contactsList = [[NSMutableArray alloc]init];
+    orignalContactListArray = [[NSMutableArray alloc]init];
     [self drawHeaderItem];
     [self configureTableView];
     [self fetchUserListFormServerNetworkCall];
     
 }
-
+- (void)viewWillAppear:(BOOL)animated
+{
+    searchBar.text = @"";
+    [mainTableView reloadData];
+}
 -(void) drawHeaderItem
 {
     UIBarButtonItem* backButton = [[UIBarButtonItem alloc] initWithImage:[UIImage
@@ -99,7 +107,18 @@
 }
 -(void)configureTableView
 {
-    mainTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height) style:UITableViewStylePlain];
+    
+    searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(20, 8, self.view.frame.size.width-40, 44*deviceHeightRation)];
+    searchBar.delegate = self;
+    searchBar.barTintColor = [UIColor whiteColor];
+    searchBar.layer.borderWidth = 0.5;
+    searchBar.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    [searchBar setPlaceholder:@"Search"];
+    [searchBar setReturnKeyType:UIReturnKeyDone];
+    searchBar.enablesReturnKeyAutomatically = NO;
+    [self.view addSubview:searchBar];
+    
+    mainTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, searchBar.frame.size.height+searchBar.frame.origin.y, self.view.bounds.size.width, self.view.bounds.size.height-(searchBar.frame.size.height+searchBar.frame.origin.y)) style:UITableViewStylePlain];
     mainTableView.bounces = NO;
     mainTableView.delegate = self;
     mainTableView.dataSource = self;
@@ -114,6 +133,7 @@
     [contactsList addObjectsFromArray:contactListStorageData];
     if (contactsList.count!=0) {
         // show loacl save data
+        [orignalContactListArray addObjectsFromArray: contactsList];
     }
     else
     {
@@ -188,7 +208,9 @@
             
             NSMutableArray *contactListStorageData = [contactListStorage getRecentDocumentsData : @"False"];
             contactsList = [[NSMutableArray alloc]init];
+            orignalContactListArray =  [[NSMutableArray alloc]init];
             [contactsList addObjectsFromArray:contactListStorageData];
+            [orignalContactListArray addObjectsFromArray: contactsList];
             [mainTableView reloadData];
             
         }
@@ -219,7 +241,7 @@
 {
     NSString *cellIdentifire= [NSString stringWithFormat:@"cell_%ld",(long)indexPath.row];
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifire];
-    if (cell == nil) {
+//    if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifire];
         
        //  UIView *cellView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
@@ -238,7 +260,7 @@
         
         [cell.contentView addSubview:name];
         [cell.contentView addSubview:email];
-    }
+//    }
     
     return cell;
     
@@ -255,13 +277,14 @@
     vc.nameLblText = [[contactsList objectAtIndex:indexPath.row] valueForKey:@"name"];
     
     [self.navigationController pushViewController:vc animated:YES];
-//    UIViewController *root;
-//    root = [[[[UIApplication sharedApplication]windows]objectAtIndex:0]rootViewController];
-//
-//    SWRevealViewController *reveal = (SWRevealViewController*)root;
-//    [(UINavigationController*)reveal.frontViewController pushViewController:vc animated:YES];
     
-//    [self.navigationController pushViewController:vc animated:YES];
+    //// this code for back handling(to assign original contact list )
+    [searchBar resignFirstResponder];
+    contactsList = [[NSMutableArray alloc]init];
+    [contactsList addObjectsFromArray:orignalContactListArray];
+    ////
+    
+    
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -281,6 +304,39 @@
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 {
     return [UIView new];
+    
+}
+
+
+#pragma mark - searchBar handler
+-(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
+    [searchBar resignFirstResponder];
+}
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    NSLog(@"%@",searchText);
+    searchTextArray = [[NSMutableArray alloc]init];
+    if (searchText.length>0) {
+        
+        for (int i=0; i<orignalContactListArray.count; i++) {
+            ContactList_Object *obj = (ContactList_Object*) [orignalContactListArray objectAtIndex:i];
+            NSString *name  = obj.name;
+            
+            NSRange nameRange = [name rangeOfString:searchText options:NSCaseInsensitiveSearch];
+            if (nameRange.location != NSNotFound) {
+                [searchTextArray addObject: obj];
+            }
+            
+        }
+        contactsList =[[NSMutableArray alloc]init];
+        [contactsList addObjectsFromArray:searchTextArray];
+        [mainTableView reloadData];
+    }
+    else
+    {   contactsList  = [[NSMutableArray alloc]init];
+        [contactsList addObjectsFromArray:orignalContactListArray];
+        [mainTableView reloadData];
+    }
     
 }
 @end

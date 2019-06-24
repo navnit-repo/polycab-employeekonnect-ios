@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ChatBoxUserListVC : UIViewController<UITableViewDelegate,UITableViewDataSource>
+@interface ChatBoxUserListVC : UIViewController<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate>
 {
     NSMutableArray *contactsList;
 }
