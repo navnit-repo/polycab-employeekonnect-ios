@@ -140,7 +140,7 @@
         
         NSString *text1 = @"Dear";
         NSString *text2;
-        text2= [[NSUserDefaults standardUserDefaults] valueForKey:@"customer_name"];
+        text2= [[NSUserDefaults standardUserDefaults] valueForKey:@"CUSTOMER_NAME"];
         
         if (text2 == NULL) {
             text2 = @"";

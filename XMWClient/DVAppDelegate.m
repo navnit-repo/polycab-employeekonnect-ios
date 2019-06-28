@@ -1021,6 +1021,10 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
             [vc.chatHistoryArray addObjectsFromArray:chatHistoryStorageData];
             //                    vc.popupTextView.text = @"";
             [vc.chatRoomTableView reloadData];
+            [vc.chatRoomTableView layoutIfNeeded];
+            NSIndexPath* indexPath = [NSIndexPath indexPathForRow: ([vc.chatRoomTableView numberOfRowsInSection:([vc.chatRoomTableView numberOfSections]-1)]-1) inSection: ([vc.chatRoomTableView numberOfSections]-1)];
+            [vc.chatRoomTableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+            [vc unreadMessageNetworkCall];
         } else {
             [ChatThreadList_DB createInstance : @"ChatThread_DB_STORAGE" : true];
             ChatThreadList_DB *chatThreadListStorage = [ChatThreadList_DB getInstance];

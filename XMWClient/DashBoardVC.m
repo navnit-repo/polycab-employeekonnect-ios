@@ -111,19 +111,23 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     if (ChatBoxPushNotifiactionFlag == YES) {
-        ChatBoxVC *vc = [[ChatBoxVC alloc]init];
-        UIViewController *root;
-        root = [[[[UIApplication sharedApplication]windows]objectAtIndex:0]rootViewController];
-        SWRevealViewController *reveal = (SWRevealViewController*)root;
-        [(UINavigationController*)reveal.frontViewController pushViewController:vc animated:YES];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            ChatBoxVC *vc = [[ChatBoxVC alloc]init];
+            UIViewController *root;
+            root = [[[[UIApplication sharedApplication]windows]objectAtIndex:0]rootViewController];
+            SWRevealViewController *reveal = (SWRevealViewController*)root;
+            [(UINavigationController*)reveal.frontViewController pushViewController:vc animated:YES];
+        });
     }
     else if (ChatRoomPushNotifiactionFlag== YES)
     {
-        ChatBoxVC *vc = [[ChatBoxVC alloc]init];
-        UIViewController *root;
-        root = [[[[UIApplication sharedApplication]windows]objectAtIndex:0]rootViewController];
-        SWRevealViewController *reveal = (SWRevealViewController*)root;
-        [(UINavigationController*)reveal.frontViewController pushViewController:vc animated:YES];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            ChatBoxVC *vc = [[ChatBoxVC alloc]init];
+            UIViewController *root;
+            root = [[[[UIApplication sharedApplication]windows]objectAtIndex:0]rootViewController];
+            SWRevealViewController *reveal = (SWRevealViewController*)root;
+            [(UINavigationController*)reveal.frontViewController pushViewController:vc animated:YES];
+        });
     }
 }
 -(void) fetchPendingNotifications
@@ -201,8 +205,6 @@
     self.navigationItem.titleView.contentMode = UIViewContentModeCenter;
     self.navigationItem.titleView = polycabLogo;
    [self.navigationItem setLeftBarButtonItem:menuButton];
-   // [self.navigationItem setRightBarButtonItem:notificationButton];
-//    [self.navigationController.navigationBar setFrame:CGRectMake(0, 20, self.view.frame.size.width,48)];
     
     // this code for check user assigned chat feature or not
      ClientVariable *clientVariables = [ClientVariable getInstance:[DVAppDelegate currentModuleContext]];
@@ -212,18 +214,18 @@
     for (int i=0; i<roleList.count; i++) {
         [rolesArray addObject:[[roleList objectAtIndex:i] valueForKey:@"rolename"]];
     }
-//    if (![rolesArray containsObject:@"CHAIRMAN_CHAT"]) {
-//        [chatButton setBackgroundImage:nil forState:UIControlStateNormal];
-//        chatButton.userInteractionEnabled = NO;
-//    }
+    if (![rolesArray containsObject:@"CHAIRMAN_CHAT"]) {
+        [chatButton setBackgroundImage:nil forState:UIControlStateNormal];
+        chatButton.userInteractionEnabled = NO;
+    }
 }
 - (void) chatHandler : (id) sender
 {
     NSLog(@"chatHandler button clicked");
-    //pending
     ChatBoxVC *chatVC = [[ChatBoxVC alloc]init];
    [ [self navigationController]  pushViewController:chatVC animated:YES];
     
+    //chat icon on dashboard
     UIButton *button = (UIButton*) sender;
     long int totalButtonLayer = button.layer.sublayers.count;
     for (int i=0; i<totalButtonLayer; i++) {
@@ -445,7 +447,7 @@
         
         NSString *text1 = @"Dear";
         NSString *text2;
-        text2= [[NSUserDefaults standardUserDefaults] valueForKey:@"customer_name"];
+        text2= [[NSUserDefaults standardUserDefaults] valueForKey:@"CUSTOMER_NAME"];
         
         if (text2 == NULL) {
             text2 = @"";
@@ -742,13 +744,6 @@
     else if ([formId isEqualToString:@"DOT_FORM_CHAIRMAN_CHAT"])
     {
        ChatBoxVC *chatVC = [[ChatBoxVC alloc]init];
-////        NewChatBoxVC *chatVC = [[NewChatBoxVC alloc]init];
-//        UIViewController *root;
-//        root = [[[[UIApplication sharedApplication]windows]objectAtIndex:0]rootViewController];
-//
-//        SWRevealViewController *reveal = (SWRevealViewController*)root;
-//        [(UINavigationController*)reveal.frontViewController pushViewController:chatVC animated:YES];
-        
     [ [self navigationController]  pushViewController:chatVC animated:YES];
     }
     
@@ -766,15 +761,6 @@
     {
         DocPostResponse *reportPostResponse = (DocPostResponse*) respondedObject;
         if ([[reportPostResponse submitStatus] isEqualToString:@"S"]) {
-//            //for clear all default save data
-//            NSUserDefaults * defs = [NSUserDefaults standardUserDefaults];
-//            NSDictionary * dict = [defs dictionaryRepresentation];
-//            for (id key in dict) {
-//                [defs removeObjectForKey:key];
-//            }
-//            [defs synchronize];
-            ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
-            [[NSUserDefaults standardUserDefaults ] setObject:clientVariables.CLIENT_USER_LOGIN.userName forKey:@"LAST_LOGIN_USER"];
             
             LogInVC *loginVC = [[LogInVC alloc] initWithNibName:@"LogInVC" bundle:nil];
             UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:loginVC];
@@ -783,13 +769,6 @@
             
             
             [[UIApplication sharedApplication] keyWindow].rootViewController = nc;//added by ashish tiwari on aug 2014
-            
-            
-//            [[NSFileManager defaultManager] removeItemAtPath:[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"ContactList_DB.sqlite.db"]] error:NULL];
-//            
-//              [[NSFileManager defaultManager] removeItemAtPath:[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"ChatHistory_DB.sqlite.db"]] error:NULL];
-//            
-//              [[NSFileManager defaultManager] removeItemAtPath:[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"ChatThreadList_DB.sqlite.db"]] error:NULL];
         }
         else
         {
@@ -850,22 +829,18 @@
 }
 -(void) userLogout
 {
-   //  [ThirdDashView removeObsr];
     
     //for clear all default save data
     NSUserDefaults * defs = [NSUserDefaults standardUserDefaults];
     NSDictionary * dict2 = [defs dictionaryRepresentation];
     for (id key in dict2) {
-        [defs removeObjectForKey:key];
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:key];
+        [[NSUserDefaults standardUserDefaults] synchronize];
     }
-    [defs synchronize];
     
-    //    [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"PASSWORD"];
-    //    [[NSUserDefaults standardUserDefaults] setObject:@"NO" forKey:@"ISCHECKED"];
-    //    [[NSUserDefaults standardUserDefaults] synchronize];
-    
-    
-    
+    ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
+    [[NSUserDefaults standardUserDefaults ] setObject:clientVariables.CLIENT_USER_LOGIN.userName forKey:@"LAST_LOGIN_USER"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
     loadingView = [LoadingView loadingViewInView:self.view];
     
     NSString *bundleIdentifier = [[NSBundle mainBundle] bundleIdentifier];
@@ -886,45 +861,8 @@
     
     
 }
-
-//-(void) userLogout
-//{
-//    // [ThirdDashView removeObsr];
-//
-//    //for clear all default save data
-//    NSUserDefaults * defs = [NSUserDefaults standardUserDefaults];
-//    NSDictionary * dict = [defs dictionaryRepresentation];
-//    for (id key in dict) {
-//        [defs removeObjectForKey:key];
-//    }
-//    [defs synchronize];
-//
-//    //    [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"PASSWORD"];
-//    //    [[NSUserDefaults standardUserDefaults] setObject:@"NO" forKey:@"ISCHECKED"];
-//    //    [[NSUserDefaults standardUserDefaults] synchronize];
-//
-//
-//    dispatch_async(dispatch_get_main_queue(), ^{
-//
-//        // [self.navigationController popViewControllerAnimated:YES];
-//        //code to be executed in the background
-//        LogInVC *loginVC = [[LogInVC alloc] initWithNibName:@"LogInVC" bundle:nil];//added by ashish tiwari on aug 2014
-//        UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:loginVC];//addded by ashish tiwari on aug 2014
-//
-//        DVAppDelegate* appDelegate =(DVAppDelegate*)[UIApplication sharedApplication].delegate;
-//        appDelegate.navController = nc;
-//
-//
-//        [[UIApplication sharedApplication] keyWindow].rootViewController = nc;//added by ashish tiwari on aug 2014
-//
-//    });
-//
-//}
 - (void)alertViewCancel:(UIAlertView *)alertView
 {
-    //    if(alertView.tag == TAG_LOGOUT_DIALOG) {
-    //        [self userLogout];
-    //    }
 }
 
 

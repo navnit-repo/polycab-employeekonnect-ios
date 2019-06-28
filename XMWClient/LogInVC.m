@@ -144,7 +144,7 @@ NSMutableDictionary *masterDataForEmployee;
     
     
     //for auto login if user already loggedIn
-    if ([[[NSUserDefaults standardUserDefaults] valueForKey:@"ISCHECKED"] isEqualToString:@"YES"]) {
+      if ([[[NSUserDefaults standardUserDefaults] valueForKey:@"ISCHECKED"] isEqualToString:@"YES"]) {
         NSLog(@"%@",[[NSUserDefaults standardUserDefaults] valueForKey:@"USERNAME"]);
         NSLog(@"%@",[[NSUserDefaults standardUserDefaults] valueForKey:@"PASSWORD"]);
         
@@ -194,8 +194,29 @@ NSMutableDictionary *masterDataForEmployee;
       frontViewController = [[NationalDashboardVC alloc] initWithNibName:@"DashBoardVC" bundle:nil];
     }
     
- 
+ else if ([roleName isEqualToString:@"MULTIPLE_REGIONAL_HEAD"])
+ {
+     NSLog(@"role name -: MULTIPLE_REGIONAL_HEAD");
+     
+     AppConst_EMPLOYEE_SALES_AGGREGATE_CARD_DOC_ID = @"DR_NATIONAL_SALES_BU" ;
+     AppConst_EMPLOYEE_SALES_AGGREGATE_PIE_CARD_DOC_ID = @"DR_NATIONAL_SALES_BU";
+     AppConst_EMPLOYEE_PAYMENT_OUTSTANDING_PIE_CARD_DOC_ID = @"DR_NATIONAL_PAYMENT_OUTSTANDING_BU_WISE" ;
+     AppConst_EMPLOYEE_OVERDUE_PIE_CARD_DOC_ID = @"DR_NATIONAL_OVERDUE_BU_WISE";
+     
+     frontViewController = [[NationalDashboardVC alloc] initWithNibName:@"DashBoardVC" bundle:nil];
+ }
     
+ else if ([roleName isEqualToString:@"MULTIPLE_STATE_HEAD"])
+ {
+     NSLog(@"role name -: MULTIPLE_STATE_HEAD");
+     
+     AppConst_EMPLOYEE_SALES_AGGREGATE_CARD_DOC_ID = @"DR_NATIONAL_SALES_BU" ;
+     AppConst_EMPLOYEE_SALES_AGGREGATE_PIE_CARD_DOC_ID = @"DR_NATIONAL_SALES_BU";
+     AppConst_EMPLOYEE_PAYMENT_OUTSTANDING_PIE_CARD_DOC_ID = @"DR_NATIONAL_PAYMENT_OUTSTANDING_BU_WISE" ;
+     AppConst_EMPLOYEE_OVERDUE_PIE_CARD_DOC_ID = @"DR_NATIONAL_OVERDUE_BU_WISE";
+     
+     frontViewController = [[NationalDashboardVC alloc] initWithNibName:@"DashBoardVC" bundle:nil];
+ }
     
    else if ([roleName isEqualToString:@"BU_HEAD"]) {
         AppConst_EMPLOYEE_SALES_AGGREGATE_CARD_DOC_ID = @"DR_BU_SALES_REGION_WISE" ;
@@ -318,51 +339,258 @@ NSMutableDictionary *masterDataForEmployee;
         UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Polycab Authentication!" message:@"Blank Field" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil , nil];
         [myAlertView show];
     }
+}
+-(void)clearSQLiteChatFeatureDB
+{
+    [[NSUserDefaults standardUserDefaults] setObject:m_username forKey:@"LAST_LOGIN_USER"];
+    
+    NSMutableArray *dbNameArray = [[NSMutableArray alloc]init];
+    [dbNameArray addObject:@"ContactList_DB.sqlite.db"];
+    [dbNameArray addObject:@"ChatHistory_DB.sqlite.db"];
+    [dbNameArray addObject:@"ChatThreadList_DB.sqlite.db"];
+    
+    for (int i=0; i<3; i++) {
+        NSString *appGroupId = @"group.com.polycab.xmw.employee.push.group";
+        NSURL *appGroupDirectoryPath = [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:appGroupId];
+        NSString *appGroupDirectoryPathString = appGroupDirectoryPath.absoluteString;
+        
+        NSString *documentsDirectory = appGroupDirectoryPathString;
+        NSString *filePath =  [documentsDirectory stringByAppendingPathComponent:[dbNameArray objectAtIndex:i]];
+        
+        NSError *err;
+        
+        NSFileManager *fm = [NSFileManager defaultManager];
+        
+        err = nil;
+        NSString *str = [filePath substringWithRange:NSMakeRange(6, filePath.length-6)];
+        NSURL *url = [NSURL fileURLWithPath:str];
+        
+        [fm removeItemAtPath:[url path] error:&err];
+        
+        if(err)
+            
+        {
+            
+            NSLog(@"File Manager: %@ %d %@", [err domain], [err code], [[err userInfo] description]);
+            
+        }
+        
+        else
+            
+        {
+            
+            NSLog(@"File :- %@ deleted",[dbNameArray objectAtIndex:i]);
+            
+        }
+        
+    }
+
+}
+-(void)syncContactListDB :(id)respondedObject
+{
+    NSMutableArray * contactsList = [[NSMutableArray alloc]init];
+    
+    if ([[respondedObject objectForKey:@"status"] boolValue] == YES) {
+        if ([[[respondedObject valueForKey:@"responseData"] valueForKey:@"contacts"] isKindOfClass:[NSNull class]]) {
+            // do nothing
+        }
+        else
+        {
+            [contactsList addObjectsFromArray:[[respondedObject valueForKey:@"responseData"] valueForKey:@"contacts"]];
+        }
+        
+        
+        [ContactList_DB createInstance : @"ContactList_DB_STORAGE" : true];
+        ContactList_DB *contactListStorage = [ContactList_DB getInstance];
+        [contactListStorage dropTable:@"ContactList_DB_STORAGE"];
+        
+        for(int i =0; i<[contactsList count];i++) //for unhidden contact  insert into db
+        {
+            ContactList_Object* contactList_Object = [[ContactList_Object alloc] init];
+            contactList_Object.emailId = [[contactsList objectAtIndex:i] valueForKey:@"emailId"];
+            contactList_Object.name =    [[contactsList objectAtIndex:i] valueForKey:@"name"];
+            contactList_Object.userId =  [[contactsList objectAtIndex:i] valueForKey:@"userId"];
+            contactList_Object.isHidden = 0;
+            [contactListStorage insertDoc:contactList_Object];
+        }
+        
+        contactsList = [[NSMutableArray alloc]init];
+        if ([[[respondedObject valueForKey:@"responseData"] valueForKey:@"hiddenContacts"] isKindOfClass:[NSNull class]]) {
+            // do nothing
+        }
+        else{
+            [contactsList addObjectsFromArray:[[respondedObject valueForKey:@"responseData"] valueForKey:@"hiddenContacts"]];
+        }
+        
+        for(int i =0; i<[contactsList count];i++) //for hidden contact  insert into db
+        {
+            ContactList_Object* contactList_Object = [[ContactList_Object alloc] init];
+            contactList_Object.emailId = [[contactsList objectAtIndex:i] valueForKey:@"emailId"];
+            contactList_Object.name =    [[contactsList objectAtIndex:i] valueForKey:@"name"];
+            contactList_Object.userId =  [[contactsList objectAtIndex:i] valueForKey:@"userId"];
+            contactList_Object.isHidden = 1;
+            [contactListStorage insertDoc:contactList_Object];
+        }
+        
+        NSMutableArray *contactListStorageData = [contactListStorage getRecentDocumentsData : @"False"];
+        contactsList = [[NSMutableArray alloc]init];
+        [contactsList addObjectsFromArray:contactListStorageData];
+    }
+}
+-(void)syncChatThreadListDB:(id)respondedObject
+{
+    NSMutableArray *  chatThreadDict = [[NSMutableArray alloc]init];
+    if ([[respondedObject objectForKey:@"status"] boolValue] == YES) {
+        
+        [ContactList_DB createInstance : @"ContactList_DB_STORAGE" : true];
+        ContactList_DB *contactListStorage = [ContactList_DB getInstance];
+        
+        
+        
+        chatThreadDict = [[NSMutableArray alloc]init];
+        [chatThreadDict addObjectsFromArray:[[respondedObject valueForKey:@"responseData"] valueForKey:@"list"]];
+        // [threadListTableView reloadData];
+        [ChatThreadList_DB createInstance : @"ChatThread_DB_STORAGE" : true];
+        ChatThreadList_DB *chatThreadListStorage = [ChatThreadList_DB getInstance];
+        [chatThreadListStorage dropTable:@"ChatThread_DB_STORAGE"];
+        ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
+        for(int i =0; i<[chatThreadDict count];i++)
+        {
+            NSString *ownUserId = [[clientVariables.CLIENT_USER_LOGIN userName] stringByAppendingString:@"@employee"];
+            NSString *parseId= @"";// for get username from contact db
+            if ([[[chatThreadDict objectAtIndex:i] valueForKey:@"fromUserId"] isEqualToString:ownUserId]) {
+                parseId =[[chatThreadDict objectAtIndex:i] valueForKey:@"toUserId"];
+            }
+            else{
+                parseId =[[chatThreadDict objectAtIndex:i] valueForKey:@"fromUserId"];
+            }
+            ContactList_Object *obj;
+            NSArray *contactListStorageData = [contactListStorage getContactDisplayName:@"False" :parseId];
+            if (contactListStorageData.count==0) {
+                obj = [[ContactList_Object alloc]init];
+            }
+            else{
+                obj = (ContactList_Object*) [contactListStorageData objectAtIndex:0];
+                
+            }
+            NSString *subjectString = [[chatThreadDict objectAtIndex:i] valueForKey:@"subject"];
+            NSData *subjectData = [subjectString dataUsingEncoding:NSUTF8StringEncoding];
+            NSString *base64SubjectString = [subjectData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+            
+            ChatThreadList_Object* chatThreadList_Object = [[ChatThreadList_Object alloc] init];
+            chatThreadList_Object.chatThreadId =[[[chatThreadDict objectAtIndex:i] valueForKey:@"id"] integerValue] ;
+            chatThreadList_Object.from =   [ NSString stringWithFormat:@"%@", [[chatThreadDict objectAtIndex:i] valueForKey:@"fromUserId"]];
+            chatThreadList_Object.to =  [ NSString stringWithFormat:@"%@",[[chatThreadDict objectAtIndex:i] valueForKey:@"toUserId"]];
+            chatThreadList_Object.subject =base64SubjectString;
+            chatThreadList_Object.lastMessageOn =[ NSString stringWithFormat:@"%@",[[chatThreadDict objectAtIndex:i] valueForKey:@"lastMessageOn"]];
+            chatThreadList_Object.status =[ NSString stringWithFormat:@"%@",[[chatThreadDict objectAtIndex:i] valueForKey:@"status"]];
+            BOOL flag = [[[chatThreadDict objectAtIndex:i] valueForKey:@"deleted"] boolValue];
+            
+            chatThreadList_Object.deletedFlag =[ NSString stringWithFormat:@"%@",flag ? @"YES" : @"NO"];
+            chatThreadList_Object.displayName = obj.userName;
+            chatThreadList_Object.unreadMessageCount =[[[chatThreadDict objectAtIndex:i] valueForKey:@"unreadMessageCount"] intValue] ;
+            chatThreadList_Object.spaNo =[ NSString stringWithFormat:@"%@",[[chatThreadDict objectAtIndex:i] valueForKey:@"spaNo"]];
+            [chatThreadListStorage insertDoc:chatThreadList_Object];
+            
+        }
+        NSMutableArray *chatThreadListStorageData = [chatThreadListStorage getRecentDocumentsData : @"False"];
+        chatThreadDict = [[NSMutableArray alloc]init];
+        [chatThreadDict addObjectsFromArray:chatThreadListStorageData];
+        
+        //             [self revealViewControllConfig];
+    }
+
+}
+-(void)configureUserRole :(ClientLoginResponse*)clientLoginResponse
+{
+    NSMutableArray *roleList = [[NSMutableArray alloc]init];
+    [roleList addObjectsFromArray:[clientLoginResponse.clientMasterDetail.masterDataRefresh valueForKey:@"LEVEL_WISE_ROLES"]];
+    NSString *userRole= @"";
+    for (int i=0; i<roleList.count; i++) {
+        
+        NSString *checkRole = [[roleList objectAtIndex:i] valueForKey:@"rolename"];
+        if ([checkRole isEqualToString:@"NATIONAL_ALL"]) {
+            userRole= @"NATIONAL_ALL";
+            [[NSUserDefaults standardUserDefaults ]setObject:userRole forKey:@"ROLE_NAME"];
+            break;
+        }
+        else if ([checkRole isEqualToString:@"BU_HEAD"]) {
+            userRole= @"BU_HEAD";
+            [[NSUserDefaults standardUserDefaults ]setObject:userRole forKey:@"ROLE_NAME"];
+            break;
+        }
+        else if ([checkRole isEqualToString:@"REGIONAL_HEAD"]) {
+            userRole= @"REGIONAL_HEAD";
+            [[NSUserDefaults standardUserDefaults ]setObject:userRole forKey:@"ROLE_NAME"];
+            break;
+        }
+        else if ([checkRole isEqualToString:@"STATE_HEAD"]) {
+            userRole= @"STATE_HEAD";
+            [[NSUserDefaults standardUserDefaults ]setObject:userRole forKey:@"ROLE_NAME"];
+            break;
+        }
+        else if ([checkRole isEqualToString:@"MULTIPLE_REGIONAL_HEAD"])
+        {
+            userRole= @"MULTIPLE_REGIONAL_HEAD";
+            [[NSUserDefaults standardUserDefaults ]setObject:userRole forKey:@"ROLE_NAME"];
+            break;
+        }
+        else if ([checkRole isEqualToString:@"MULTIPLE_STATE_HEAD"])
+        {
+            userRole= @"MULTIPLE_STATE_HEAD";
+            [[NSUserDefaults standardUserDefaults ]setObject:userRole forKey:@"ROLE_NAME"];
+            break;
+        }
+        else if([checkRole isEqualToString:@"Accept On Chat"])
+        {
+            [[NSUserDefaults standardUserDefaults ]setObject:@"YES" forKey:@"Accept_Chat_Button"];
+            // break;
+        }
+    }
+}
+
+-(void)set_RMA_Reason_UOMDESC_CORE_COLOR_SQAUREMM_into_NSuserDefaultStorage :(ClientLoginResponse*)clientLoginResponse
+{
+    [[NSUserDefaults standardUserDefaults] setObject:[clientLoginResponse.clientMasterDetail.masterData valueForKey:@"RMA_REASON"]  forKey:@"RMA_REASON"];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:  [clientLoginResponse.clientMasterDetail.masterData valueForKey:@"UOMDESC"]  forKey:@"UOMDESC"];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:    [clientLoginResponse.clientMasterDetail.masterData valueForKey:@"CORE"]  forKey:@"CORE"];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:  [clientLoginResponse.clientMasterDetail.masterData valueForKey:@"COLOR"]  forKey:@"COLOR"];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:  [clientLoginResponse.clientMasterDetail.masterData valueForKey:@"SQAUREMM"]  forKey:@"SQAUREMM"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+-(void)setUserCredentials_into_NSuserDefaultStorage :(ClientLoginResponse*)clientLoginResponse
+{
+    authToken = clientLoginResponse.authToken;
+    NSLog(@"%@",authToken);
+    [[NSUserDefaults standardUserDefaults] setObject:clientLoginResponse.authToken forKey:@"AUTH_TOKEN"];
+    
+    customer_name = [[clientLoginResponse.clientMasterDetail.masterDataRefresh valueForKey:@"USER_PROFILE"] valueForKey:@"customer_name"];
+    [[NSUserDefaults standardUserDefaults ]setObject:customer_name forKey:@"CUSTOMER_NAME"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    menuDetailsDict =clientLoginResponse.menuDetail;
+    
+    KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:@"com.polycab.xmw.employee" accessGroup:nil];
+    [keychainItem setObject:m_username forKey:kSecAttrAccount];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:m_username forKey:@"CURRENT_USER_LOGEDIN_ID"];
+    [masterDataForEmployee setDictionary:clientLoginResponse.clientMasterDetail.masterDataRefresh];
     
     
-//    if([userName.text isEqualToString:@"Polycab#123"]) {
-//        SelectServerVC* selectServerVC =[[SelectServerVC alloc] initWithNibName:@"SelectServerVC" bundle:nil];
-//        [[self navigationController] pushViewController:selectServerVC  animated:YES];
-//        return;
-//    }
-//
-//   else if ([userName.text isEqualToString:@""]||[password.text isEqualToString:@""]) {
-//        UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Polycab Authentication!" message:@"Blank Field" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil , nil];
-//        [myAlertView show];
-//    }
-//
-//    else{
-//        ClientUserLogin* userLogin = [[ClientUserLogin alloc] init];
-//        NSString* trimmedString = [userName.text  stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-//        m_username = trimmedString;
-//        userLogin.userName = trimmedString;
-//        userLogin.password = password.text;
-//        userLogin.deviceInfoMap = [[NSMutableDictionary alloc]init];
-//        //start for default auth
-//        NSString* uniqueID = @"000000000000000";
-//        [userLogin.deviceInfoMap setObject:uniqueID forKey:XmwcsConst_IMEI];
-//        //close
-//        NSUUID* vendorId = [UIDevice currentDevice].identifierForVendor;
-//
-//        // [userLogin.deviceInfoMap setObject:XmwcsConst_IMEI forKey:vendorId.UUIDString];
-//        [userLogin.deviceInfoMap setObject:vendorId.UUIDString forKey:XmwcsConst_IMEI];
-//        [userLogin.deviceInfoMap setObject:@"1" forKey:@"IS_NOT_IMEI"];
-//
-//        [userLogin.deviceInfoMap setObject:@"IPhone" forKey:XmwcsConst_DEVICE_MODEL];
-//        [userLogin.deviceInfoMap setObject:@"DEVICE_DETAIL" forKey:XmwcsConst_DEVICE_DETAIL];
-//
-//        userLogin.language = AppConst_LANGUAGE_DEFAULT;
-//        userLogin.moduleId = AppConst_MOBILET_ID_DEFAULT;
-//
-//        loadingView = [LoadingView loadingViewInView:self.view];
-//        ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
-//        clientVariables.CLIENT_USER_LOGIN = userLogin;
-//
-//
-//        networkHelper = [[NetworkHelper alloc] init];
-//        [networkHelper makeXmwNetworkCall:userLogin :self : vendorId.UUIDString :XmwcsConst_CALL_NAME_FOR_LOGIN];
-//
-//    }
+    
+    //this code for remove firstly save username and password in userdefault than save in it.
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"USERNAME"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"PASSWORD"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:m_username forKey:@"USERNAME"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    [[NSUserDefaults standardUserDefaults] setObject:self.password.text forKey:@"PASSWORD"];
+    [[NSUserDefaults standardUserDefaults] setObject:@"YES" forKey:@"ISCHECKED"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 - (void) httpResponseObjectHandler : (NSString*) callName : (id) respondedObject : (id) requestedObject
 {
@@ -374,68 +602,6 @@ NSMutableDictionary *masterDataForEmployee;
         
                     ClientLoginResponse* clientLoginResponse = (ClientLoginResponse*)respondedObject;
                 [LoginUtils setClientVariables :  clientLoginResponse : m_username];
-        customer_name = [[clientLoginResponse.clientMasterDetail.masterDataRefresh valueForKey:@"USER_PROFILE"] valueForKey:@"customer_name"];
-        NSMutableArray *roleList = [[NSMutableArray alloc]init];
-        [roleList addObjectsFromArray:[clientLoginResponse.clientMasterDetail.masterDataRefresh valueForKey:@"LEVEL_WISE_ROLES"]];
-        NSString *userRole= @"";
-        for (int i=0; i<roleList.count; i++) {
-            
-            NSString *checkRole = [[roleList objectAtIndex:i] valueForKey:@"rolename"];
-            if ([checkRole isEqualToString:@"NATIONAL_ALL"]) {
-                userRole= @"NATIONAL_ALL";
-                [[NSUserDefaults standardUserDefaults ]setObject:userRole forKey:@"ROLE_NAME"];
-                break;
-            }
-           else if ([checkRole isEqualToString:@"BU_HEAD"]) {
-               userRole= @"BU_HEAD";
-               [[NSUserDefaults standardUserDefaults ]setObject:userRole forKey:@"ROLE_NAME"];
-                break;
-            }
-           else if ([checkRole isEqualToString:@"REGIONAL_HEAD"]) {
-               userRole= @"REGIONAL_HEAD";
-               [[NSUserDefaults standardUserDefaults ]setObject:userRole forKey:@"ROLE_NAME"];
-                break;
-            }
-           else if ([checkRole isEqualToString:@"STATE_HEAD"]) {
-               userRole= @"STATE_HEAD";
-               [[NSUserDefaults standardUserDefaults ]setObject:userRole forKey:@"ROLE_NAME"];
-                break;
-            }
-            else if([checkRole isEqualToString:@"Accept On Chat"])
-            {
-                [[NSUserDefaults standardUserDefaults ]setObject:@"YES" forKey:@"Accept_Chat_Button"];
-               // break;
-            }
-        }
-        
-//        //this code for chat feature check for chat button hide on dashboard
-//        NSMutableArray *rolesArray= [[NSMutableArray alloc]init];
-//        for (int i=0; i<roleList.count; i++) {
-//            [rolesArray addObject:[[roleList objectAtIndex:i] valueForKey:@"rolename"]];
-//        }
-//         if (![rolesArray containsObject:@"CHAIRMAN_CHAT"]) {
-//            [[NSUserDefaults standardUserDefaults] setObject:@"NO" forKey:@"CHAIRMAN_CHAT"];
-//        }
-//    
-        
-         [[NSUserDefaults standardUserDefaults ]setObject:customer_name forKey:@"CUSTOMER_NAME"];
-        
-        
-                    [[NSUserDefaults standardUserDefaults] setObject:m_username forKey:@"USERNAME"];
-                    authToken = clientLoginResponse.authToken;
-                    NSLog(@"%@",authToken);
-                 [[NSUserDefaults standardUserDefaults] setObject:clientLoginResponse.authToken forKey:@"AUTH_TOKEN"];
-        
-        [[NSUserDefaults standardUserDefaults] setObject:[clientLoginResponse.clientMasterDetail.masterData valueForKey:@"RMA_REASON"]  forKey:@"RMA_REASON"];
-        
-        [[NSUserDefaults standardUserDefaults] setObject:  [clientLoginResponse.clientMasterDetail.masterData valueForKey:@"UOMDESC"]  forKey:@"UOMDESC"];
-        
-      [[NSUserDefaults standardUserDefaults] setObject:    [clientLoginResponse.clientMasterDetail.masterData valueForKey:@"CORE"]  forKey:@"CORE"];
-        
-        [[NSUserDefaults standardUserDefaults] setObject:  [clientLoginResponse.clientMasterDetail.masterData valueForKey:@"COLOR"]  forKey:@"COLOR"];
-        
-        [[NSUserDefaults standardUserDefaults] setObject:  [clientLoginResponse.clientMasterDetail.masterData valueForKey:@"SQAUREMM"]  forKey:@"SQAUREMM"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
                     if([clientLoginResponse.userLoginStatus isEqualToString:@"0"])
                     {
                         UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Authentication!" message:clientLoginResponse.userLoginMessage delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil , nil];
@@ -446,7 +612,6 @@ NSMutableDictionary *masterDataForEmployee;
                         
                         if([clientLoginResponse.passwrdState isEqualToString:@"1"])
                         {
-                            [LoginUtils setClientVariables:clientLoginResponse : m_username];
                             // we need to show password change screen
                             DotMenuObject *obj = [[DotMenuObject alloc]init];
                             obj.FORM_ID =@"DOT_FORM_1" ;
@@ -466,92 +631,32 @@ NSMutableDictionary *masterDataForEmployee;
                             [[self navigationController] pushViewController:formController  animated:YES];
                             formController.headerStr    = @"Change Password";
                         }
-                        
-                        
-                        
-//                        else if([clientLoginResponse.userLoginStatus isEqualToString:@"1"]) //successfully login
+                    
                     else
                     {
-                        KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:@"com.polycab.xmw.employee" accessGroup:nil];
-                        [keychainItem setObject:m_username forKey:kSecAttrAccount];
-        
-                        [[NSUserDefaults standardUserDefaults] setObject:m_username forKey:@"CURRENT_USER_LOGEDIN_ID"];
-                         [masterDataForEmployee setDictionary:clientLoginResponse.clientMasterDetail.masterDataRefresh];
-                        
-                        [[NSUserDefaults standardUserDefaults] setObject:[[clientLoginResponse.clientMasterDetail.masterDataRefresh valueForKey:@"USER_PROFILE"]valueForKey:@"customer_name"]  forKey:@"customer_name"];
-                        [[NSUserDefaults standardUserDefaults] setObject:m_username forKey:@"USERNAME"];
-                        [[NSUserDefaults standardUserDefaults] setObject:self.password.text forKey:@"PASSWORD"];
-                        [[NSUserDefaults standardUserDefaults] setObject:@"YES" forKey:@"ISCHECKED"];
-                        [[NSUserDefaults standardUserDefaults] synchronize];
                         // default context (MAIN)
-                        ClientLoginResponse* clientLoginResponse =  (ClientLoginResponse*) respondedObject;
-                        [LoginUtils setClientVariables :  clientLoginResponse : m_username];
-                        
-                        [self registerCustomReportVC];
-                        [self registerCustomFormVC];
-                        menuDetailsDict =clientLoginResponse.menuDetail;
-                        
-//                         [self contactListNetworkCall];
-                        
-                       
-                        
+                        // user now sucessfully logged in
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [self registerCustomReportVC];
+                            [self registerCustomFormVC];
+                            [self configureUserRole:clientLoginResponse];
+                            [self set_RMA_Reason_UOMDESC_CORE_COLOR_SQAUREMM_into_NSuserDefaultStorage:clientLoginResponse];
+                            [self setUserCredentials_into_NSuserDefaultStorage:clientLoginResponse];
+                        });
+
+                        //this code for clear all chat DB file's
                         NSString *lastUserLogedIn = [[NSUserDefaults standardUserDefaults] valueForKey:@"LAST_LOGIN_USER"];
                         if ([lastUserLogedIn isEqualToString:m_username] || lastUserLogedIn ==nil) {
                             // no need to clear chat local db data
                         }
                         else
                         {
-                            NSMutableArray *dbNameArray = [[NSMutableArray alloc]init];
-                            [dbNameArray addObject:@"ContactList_DB.sqlite.db"];
-                            [dbNameArray addObject:@"ChatHistory_DB.sqlite.db"];
-                            [dbNameArray addObject:@"ChatThreadList_DB.sqlite.db"];
-
-                            for (int i=0; i<3; i++) {
-                                NSString *appGroupId = @"group.com.polycab.xmw.employee.push.group";
-                                NSURL *appGroupDirectoryPath = [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:appGroupId];
-                                NSString *appGroupDirectoryPathString = appGroupDirectoryPath.absoluteString;
-
-                                NSString *documentsDirectory = appGroupDirectoryPathString;
-                                NSString *filePath =  [documentsDirectory stringByAppendingPathComponent:[dbNameArray objectAtIndex:i]];
-
-                                NSError *err;
-                                
-                                NSFileManager *fm = [NSFileManager defaultManager];
-                                
-                                err = nil;
-                                NSString *str = [filePath substringWithRange:NSMakeRange(6, filePath.length-6)];
-                                NSURL *url = [NSURL fileURLWithPath:str];
-                                
-                                [fm removeItemAtPath:[url path] error:&err];
-                                
-                                if(err)
-                                    
-                                {
-                                    
-                                    NSLog(@"File Manager: %@ %d %@", [err domain], [err code], [[err userInfo] description]);
-                                    
-                                }
-                                
-                                else
-                                    
-                                {
-                                    
-                                    NSLog(@"File :- %@ deleted",[dbNameArray objectAtIndex:i]);
-                                    
-                                }
-
-                            }
-                           
-                            
-//                            [[NSFileManager defaultManager] removeItemAtPath:[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"ContactList_DB.sqlite.db"]] error:NULL];
-//
-//                            [[NSFileManager defaultManager] removeItemAtPath:[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"ChatHistory_DB.sqlite.db"]] error:NULL];
-//
-//                            [[NSFileManager defaultManager] removeItemAtPath:[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"ChatThreadList_DB.sqlite.db"]] error:NULL];
+                                dispatch_async(dispatch_get_main_queue(),
+                                               ^{
+                                                   [self clearSQLiteChatFeatureDB];
+                                               });
                         }
                         
-                      
-                   
                         
                         dispatch_async(dispatch_get_main_queue(), ^{
                             //code to be executed in the background
@@ -574,119 +679,19 @@ NSMutableDictionary *masterDataForEmployee;
     else if ([callName isEqualToString:@"requestUserList"])
     {
         [loadingView removeView];
-        NSMutableArray * contactsList = [[NSMutableArray alloc]init];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self syncContactListDB :respondedObject];
+        });
         
-        if ([[respondedObject objectForKey:@"status"] boolValue] == YES) {
-            if ([[[respondedObject valueForKey:@"responseData"] valueForKey:@"contacts"] isKindOfClass:[NSNull class]]) {
-                // do nothing
-            }
-            else
-            {
-                [contactsList addObjectsFromArray:[[respondedObject valueForKey:@"responseData"] valueForKey:@"contacts"]];
-            }
-            
-            
-            [ContactList_DB createInstance : @"ContactList_DB_STORAGE" : true];
-            ContactList_DB *contactListStorage = [ContactList_DB getInstance];
-            [contactListStorage dropTable:@"ContactList_DB_STORAGE"];
-            
-            for(int i =0; i<[contactsList count];i++) //for unhidden contact  insert into db
-            {
-                ContactList_Object* contactList_Object = [[ContactList_Object alloc] init];
-                contactList_Object.emailId = [[contactsList objectAtIndex:i] valueForKey:@"emailId"];
-                contactList_Object.name =    [[contactsList objectAtIndex:i] valueForKey:@"name"];
-                contactList_Object.userId =  [[contactsList objectAtIndex:i] valueForKey:@"userId"];
-                contactList_Object.isHidden = 0;
-                [contactListStorage insertDoc:contactList_Object];
-            }
-            
-            contactsList = [[NSMutableArray alloc]init];
-            if ([[[respondedObject valueForKey:@"responseData"] valueForKey:@"hiddenContacts"] isKindOfClass:[NSNull class]]) {
-                // do nothing
-            }
-            else{
-                [contactsList addObjectsFromArray:[[respondedObject valueForKey:@"responseData"] valueForKey:@"hiddenContacts"]];
-            }
-            
-            for(int i =0; i<[contactsList count];i++) //for hidden contact  insert into db
-            {
-                ContactList_Object* contactList_Object = [[ContactList_Object alloc] init];
-                contactList_Object.emailId = [[contactsList objectAtIndex:i] valueForKey:@"emailId"];
-                contactList_Object.name =    [[contactsList objectAtIndex:i] valueForKey:@"name"];
-                contactList_Object.userId =  [[contactsList objectAtIndex:i] valueForKey:@"userId"];
-                contactList_Object.isHidden = 1;
-                [contactListStorage insertDoc:contactList_Object];
-            }
-            
-            NSMutableArray *contactListStorageData = [contactListStorage getRecentDocumentsData : @"False"];
-            contactsList = [[NSMutableArray alloc]init];
-            [contactsList addObjectsFromArray:contactListStorageData];
-//             [self chatThreadListNetworkCall];
-        }
     }
     else if ([callName isEqualToString:@"chatThreadRequestData"])
     {   [loadingView removeView];
-        NSMutableArray *  chatThreadDict = [[NSMutableArray alloc]init];
-        if ([[respondedObject objectForKey:@"status"] boolValue] == YES) {
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self syncChatThreadListDB:respondedObject];
             
-            [ContactList_DB createInstance : @"ContactList_DB_STORAGE" : true];
-            ContactList_DB *contactListStorage = [ContactList_DB getInstance];
-            
-            
-            
-            chatThreadDict = [[NSMutableArray alloc]init];
-            [chatThreadDict addObjectsFromArray:[[respondedObject valueForKey:@"responseData"] valueForKey:@"list"]];
-            // [threadListTableView reloadData];
-            [ChatThreadList_DB createInstance : @"ChatThread_DB_STORAGE" : true];
-            ChatThreadList_DB *chatThreadListStorage = [ChatThreadList_DB getInstance];
-            [chatThreadListStorage dropTable:@"ChatThread_DB_STORAGE"];
-            ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
-            for(int i =0; i<[chatThreadDict count];i++)
-            {
-                NSString *ownUserId = [[clientVariables.CLIENT_USER_LOGIN userName] stringByAppendingString:@"@employee"];
-                NSString *parseId= @"";// for get username from contact db
-                if ([[[chatThreadDict objectAtIndex:i] valueForKey:@"fromUserId"] isEqualToString:ownUserId]) {
-                    parseId =[[chatThreadDict objectAtIndex:i] valueForKey:@"toUserId"];
-                }
-                else{
-                    parseId =[[chatThreadDict objectAtIndex:i] valueForKey:@"fromUserId"];
-                }
-                ContactList_Object *obj;
-                NSArray *contactListStorageData = [contactListStorage getContactDisplayName:@"False" :parseId];
-                if (contactListStorageData.count==0) {
-                    obj = [[ContactList_Object alloc]init];
-                }
-                else{
-                    obj = (ContactList_Object*) [contactListStorageData objectAtIndex:0];
-                    
-                }
-                NSString *subjectString = [[chatThreadDict objectAtIndex:i] valueForKey:@"subject"];
-                NSData *subjectData = [subjectString dataUsingEncoding:NSUTF8StringEncoding];
-                NSString *base64SubjectString = [subjectData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
-                
-                ChatThreadList_Object* chatThreadList_Object = [[ChatThreadList_Object alloc] init];
-                chatThreadList_Object.chatThreadId =[[[chatThreadDict objectAtIndex:i] valueForKey:@"id"] integerValue] ;
-                chatThreadList_Object.from =   [ NSString stringWithFormat:@"%@", [[chatThreadDict objectAtIndex:i] valueForKey:@"fromUserId"]];
-                chatThreadList_Object.to =  [ NSString stringWithFormat:@"%@",[[chatThreadDict objectAtIndex:i] valueForKey:@"toUserId"]];
-                chatThreadList_Object.subject =base64SubjectString;
-                chatThreadList_Object.lastMessageOn =[ NSString stringWithFormat:@"%@",[[chatThreadDict objectAtIndex:i] valueForKey:@"lastMessageOn"]];
-                chatThreadList_Object.status =[ NSString stringWithFormat:@"%@",[[chatThreadDict objectAtIndex:i] valueForKey:@"status"]];
-                BOOL flag = [[[chatThreadDict objectAtIndex:i] valueForKey:@"deleted"] boolValue];
-                
-                chatThreadList_Object.deletedFlag =[ NSString stringWithFormat:@"%@",flag ? @"YES" : @"NO"];
-                chatThreadList_Object.displayName = obj.userName;
-                chatThreadList_Object.unreadMessageCount =[[[chatThreadDict objectAtIndex:i] valueForKey:@"unreadMessageCount"] intValue] ;
-                chatThreadList_Object.spaNo =[ NSString stringWithFormat:@"%@",[[chatThreadDict objectAtIndex:i] valueForKey:@"spaNo"]];
-                [chatThreadListStorage insertDoc:chatThreadList_Object];
-                
+        });
             }
-            NSMutableArray *chatThreadListStorageData = [chatThreadListStorage getRecentDocumentsData : @"False"];
-            chatThreadDict = [[NSMutableArray alloc]init];
-            [chatThreadDict addObjectsFromArray:chatThreadListStorageData];
-            
-//             [self revealViewControllConfig];
-        }
-    }
     }
 }
 #pragma  mark - fetch local db data from server

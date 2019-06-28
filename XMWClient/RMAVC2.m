@@ -364,7 +364,7 @@ return pickerData[row];
     //Network Call
     NSMutableDictionary *data = [[NSMutableDictionary alloc ]init];
     [data setObject:@"Gurgaon" forKey:@"sales_location"];
-    [data setObject:[[NSUserDefaults standardUserDefaults]valueForKey:@"customer_name"] forKey:@"dealer_name"];
+    [data setObject:[[NSUserDefaults standardUserDefaults]valueForKey:@"CUSTOMER_NAME"] forKey:@"dealer_name"];
     [data setObject:[self.forwardedDataDisplay valueForKey:@"BUSINESS_VERTICAL"]  forKey:@"department"];
     NSMutableArray *returnProduct = [[NSMutableArray alloc]init];
     

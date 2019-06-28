@@ -224,6 +224,11 @@
         for (int i=0; i<unreadMessageIdArray.count; i++) {
             ChatHistory_Object *obj = (ChatHistory_Object*) [unreadMessageIdArray objectAtIndex:i];
             [sendMessageIdsArray addObject:[NSString stringWithFormat:@"%d",obj.messageId]];
+            //for update status instantly
+//            ChatHistory_Object* chatHistory_Object = [[ChatHistory_Object alloc] init];
+//            chatHistory_Object.chatThreadId = obj.chatThreadId;
+//            chatHistory_Object.messageId    = obj.messageId;
+//            [chatHistory_DBStorage updateUnreadMessageStatus:chatHistory_Object];
         }
         ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
         NSString * version = [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleShortVersionString"];
@@ -551,8 +556,9 @@
             originalChatHistoryArray = [[NSMutableArray alloc]init];
             [originalChatHistoryArray addObjectsFromArray:chatHistoryArray];
             [chatRoomTableView reloadData];
-            [self scrollToBottom];
-//            [self performSelector:@selector(scrollToBottom) withObject:nil afterDelay:4.0];
+            [chatRoomTableView layoutIfNeeded];
+            NSIndexPath* indexPath = [NSIndexPath indexPathForRow: ([chatRoomTableView numberOfRowsInSection:([chatRoomTableView numberOfSections]-1)]-1) inSection: ([chatRoomTableView numberOfSections]-1)];
+            [chatRoomTableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:NO];
             
 
        
@@ -601,6 +607,11 @@
             originalChatHistoryArray = [[NSMutableArray alloc]init];
             [originalChatHistoryArray addObjectsFromArray:chatHistoryArray];
             [chatRoomTableView reloadData];
+            [chatRoomTableView layoutIfNeeded];
+            NSIndexPath* indexPath = [NSIndexPath indexPathForRow: ([chatRoomTableView numberOfRowsInSection:([chatRoomTableView numberOfSections]-1)]-1) inSection: ([chatRoomTableView numberOfSections]-1)];
+            [chatRoomTableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+            
+            
             self.popupTextView.text =textView.text;
             [textView resignFirstResponder];
             textView.text = defaultTextViewText;

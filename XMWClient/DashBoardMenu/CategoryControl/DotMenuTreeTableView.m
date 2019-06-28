@@ -3,6 +3,7 @@
 #import "DotMenuTreeCell.h"
 #import "DVAppDelegate.h"
 #import "MarqueeLabel.h"
+#import "ClientVariable.h"
 static NSString *const kCellCatIdentifier = @"kCellCatIdentifier";
 static NSString *const kCellSubCatIdentifier = @"kCellSubCatIdentifier";
 static NSString *const kCellsuperSubCatIdentifier = @"kCellCatIdentifier";
@@ -227,7 +228,7 @@ static NSString *const kCellsuperSubCatIdentifier = @"kCellCatIdentifier";
 }
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-   
+    ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
     
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 110*deviceHeightRation)];
     view.backgroundColor = [UIColor colorWithRed:204.0/255 green:41.0/255 blue:43.0/255 alpha:1.0];
@@ -253,7 +254,8 @@ static NSString *const kCellsuperSubCatIdentifier = @"kCellCatIdentifier";
     [pickerButton addTarget:self action:@selector(pickerButtonHandler:) forControlEvents:UIControlEventTouchUpInside];
     
     UILabel *customerName = [[UILabel alloc]initWithFrame:CGRectMake(profileImageView.frame.origin.x+profileImageView.frame.size.width+5, 30, 220*deviceWidthRation, 25*deviceHeightRation)];
-    customerName.text =[[NSUserDefaults standardUserDefaults] valueForKey:@"customer_name"];
+//    customerName.text =[[NSUserDefaults standardUserDefaults] valueForKey:@"CUSTOMER_NAME"];
+    customerName.text = [[clientVariables.CLIENT_MASTERDETAIL.masterDataRefresh valueForKey:@"USER_PROFILE"] valueForKey:@"customer_name"];
     customerName.textColor = [UIColor whiteColor];
     customerName.font = [UIFont fontWithName:@"Helvetica-Bold" size:14];
     
@@ -270,7 +272,7 @@ static NSString *const kCellsuperSubCatIdentifier = @"kCellCatIdentifier";
  //   regID.textColor =  [UIColor colorWithRed:119.0/255 green:119.0/255 blue:119.0/255 alpha:1.0];
      regID.textColor =  [UIColor whiteColor];
     regID.font = [UIFont fontWithName:@"Helvetica-Bold" size:12];
-    regID.text = [[NSUserDefaults standardUserDefaults] valueForKey:@"USERNAME"];
+    regID.text = clientVariables.CLIENT_USER_LOGIN.userName;
  
     UIView*underLine = [[UIView alloc]initWithFrame:CGRectMake(10, regID.frame.origin.y+regID.frame.size.height+5, tableView.frame.size.width, 0.5)];
     //underLine.backgroundColor = [UIColor colorWithRed:119.0/255 green:119.0/255 blue:119.0/255 alpha:1.0];

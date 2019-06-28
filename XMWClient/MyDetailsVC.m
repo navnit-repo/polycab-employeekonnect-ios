@@ -122,7 +122,7 @@
     
     
     UILabel *customerName = [[UILabel alloc]initWithFrame:CGRectMake(105*deviceWidthRation, 50, 250*deviceWidthRation, 25*deviceHeightRation)];
-    customerName.text =[[NSUserDefaults standardUserDefaults] valueForKey:@"customer_name"];
+    customerName.text =[[NSUserDefaults standardUserDefaults] valueForKey:@"CUSTOMER_NAME"];
     customerName.textColor = [UIColor blackColor];
     customerName.font = [UIFont fontWithName:@"Helvetica-Bold" size:14];
     customerName.numberOfLines = 1;

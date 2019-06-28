@@ -40,7 +40,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UIView *mainPopView;
 @property (weak, nonatomic) IBOutlet UIView *borderLineVIew;
 @property (weak, nonatomic) IBOutlet UITextView *remarkView;
-
+-(void)unreadMessageNetworkCall;
 @end
 
 NS_ASSUME_NONNULL_END

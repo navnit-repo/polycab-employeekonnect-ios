@@ -1062,7 +1062,7 @@ int uiViewStartIdx = 1001;
    // formCell.valueLabel.text = valueSetToLabel;//dotFormElement.defaultVal;
     else
     {
-        formCell.valueLabel.text = [[NSUserDefaults standardUserDefaults] valueForKey:@"customer_name"];
+        formCell.valueLabel.text = [[NSUserDefaults standardUserDefaults] valueForKey:@"CUSTOMER_NAME"];
     }
     
     formCell.valueLabel.elementId = currentCompName;

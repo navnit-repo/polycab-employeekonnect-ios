@@ -111,7 +111,11 @@
 
     if (ChatBoxPushNotifiactionFlag == YES) {
         if (chatThreadDict.count>0) {
-            [self pushHandling];
+            dispatch_async(dispatch_get_main_queue(),
+                           ^{
+                                   [self pushHandling];
+                           });
+        
 //           [self performSelector:@selector(pushHandling) withObject:nil afterDelay:0.5];
         }
        
@@ -121,7 +125,10 @@
     {
        
         if (chatThreadDict.count>0) {
-             [self pushHandling];
+            dispatch_async(dispatch_get_main_queue(),
+                           ^{
+                               [self pushHandling];
+                           });
 //            [self performSelector:@selector(pushHandling) withObject:nil afterDelay:0.5];
         }
 
@@ -174,7 +181,7 @@
         [[NSUserDefaults standardUserDefaults] setObject:@"YES" forKey:@"Accept_Chat_Button"];
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
-    
+    NSArray *navigationControllesArray = [[self navigationController] viewControllers];
     ChatRoomsVC *vc = [[ChatRoomsVC alloc]init];
     NSString*objString = obj.subject;
     //  Base64 string to original string
@@ -660,7 +667,7 @@
         ExpendObjectClass* obj =( ExpendObjectClass *) [chatThreadDict objectAtIndex:indexPath.row];
         UIView *view = [[UIView alloc]initWithFrame:CGRectMake(10, 0, cell.frame.size.width, cell.frame.size.height)];
         dotView = [[UIView alloc]initWithFrame:CGRectMake(0, 15, 10*deviceWidthRation, 10*deviceHeightRation)];
-        
+        dotView.tag = uniqueCell;
         for (int i=0; i<obj.childCategories.count; i++) {
             ChatThreadList_Object *threadObj = (ChatThreadList_Object*) [obj.childCategories objectAtIndex:i];
             if (threadObj.unreadMessageCount >0) {
@@ -749,7 +756,25 @@
 }
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+//    if ([[chatThreadDict objectAtIndex:indexPath.row] isKindOfClass:[ExpendObjectClass class]]  ) {
+//        ExpendObjectClass* obj =( ExpendObjectClass *) [chatThreadDict objectAtIndex:indexPath.row];
+//        NSString  *str = cell.reuseIdentifier;
+//        NSArray *array = [str componentsSeparatedByString:@"_"];
+//        
+//        dotView = (UIView*) [self.view viewWithTag:[[array objectAtIndex:1] intValue] ];
+//        
+//        for (int i=0; i<obj.childCategories.count; i++) {
+//            ChatThreadList_Object *threadObj = (ChatThreadList_Object*) [obj.childCategories objectAtIndex:i];
+//            if (threadObj.unreadMessageCount >0) {
+//                dotView.backgroundColor = [UIColor colorWithRed:204.0f/255 green:41.0f/255 blue:43.0f/255 alpha:1.0];
+//                break;
+//            }
+//            else
+//            {
+//                dotView.backgroundColor = [UIColor clearColor];
+//            }
+//        }
+//}
 }
 #pragma mark - searchBar handler
 -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{

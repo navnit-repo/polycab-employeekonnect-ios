@@ -23,7 +23,7 @@
 
 -(void)customizeView{
     MXTextField* textField = (MXTextField*)[self getDataFromId:@"Distributor_Name"];
-    textField.text = [[NSUserDefaults standardUserDefaults] valueForKey:@"customer_name"];
+    textField.text = [[NSUserDefaults standardUserDefaults] valueForKey:@"CUSTOMER_NAME"];
     textField.userInteractionEnabled = NO;
     MXButton* dateField = (MXButton*)[self getDataFromId:@"TO_DATE_Button"];
     dateField.userInteractionEnabled = NO;

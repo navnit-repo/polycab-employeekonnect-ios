@@ -377,14 +377,14 @@
         tupleObject.firstRawData = rowData;
     }
     
-    for (int i=0; i<rowWiseTableData.count; i++) {
-        NSString *object =[[rowWiseTableData objectAtIndex:i] objectAtIndex:0];
-        
-        if (![sortDataArrayAddName containsObject:object]){
-            [sortDataArrayAddName addObject:object];
-        }
-       
-    }
+//    for (int i=0; i<rowWiseTableData.count; i++) {
+//        NSString *object =[[rowWiseTableData objectAtIndex:i] objectAtIndex:0];
+//
+//        if (![sortDataArrayAddName containsObject:object]){
+//            [sortDataArrayAddName addObject:object];
+//        }
+//
+//    }
     
 }
 
@@ -439,14 +439,14 @@
         tupleObject.secondRawData = rowData;
     }
     
-    for (int i=0; i<rowWiseTableData.count; i++) {
-        NSString *object =[[rowWiseTableData objectAtIndex:i] objectAtIndex:0];
-        
-        if (![sortDataArrayAddName containsObject:object]){
-            [sortDataArrayAddName addObject:object];
-        }
-        
-    }
+//    for (int i=0; i<rowWiseTableData.count; i++) {
+//        NSString *object =[[rowWiseTableData objectAtIndex:i] objectAtIndex:0];
+//
+//        if (![sortDataArrayAddName containsObject:object]){
+//            [sortDataArrayAddName addObject:object];
+//        }
+//
+//    }
     
 }
 
@@ -500,14 +500,14 @@
         tupleObject.thirdRawData = rowData;
     }
     
-    for (int i=0; i<rowWiseTableData.count; i++) {
-        NSString *object =[[rowWiseTableData objectAtIndex:i] objectAtIndex:0];
-        
-        if (![sortDataArrayAddName containsObject:object]){
-            [sortDataArrayAddName addObject:object];
-        }
-        
-    }
+//    for (int i=0; i<rowWiseTableData.count; i++) {
+//        NSString *object =[[rowWiseTableData objectAtIndex:i] objectAtIndex:0];
+//
+//        if (![sortDataArrayAddName containsObject:object]){
+//            [sortDataArrayAddName addObject:object];
+//        }
+//
+//    }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -601,7 +601,6 @@
     
 }
 
-
 -(NSArray*) sortKeys
 {
     NSString* sortOnFieldData = [self dotReport].sortedOnField;
@@ -648,8 +647,63 @@
         }
         
     }
-    
-    return sortDataArrayAddName;
+    else
+    {
+        // return sorted alphabetically array according to android 
+        NSArray* allKeys = [dataSet allKeys];
+        NSArray* sortedList = [allKeys sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+        return sortedList;
+    }
+//    return [dataSet allKeys];
 }
+//-(NSArray*) sortKeys
+//{
+//    NSString* sortOnFieldData = [self dotReport].sortedOnField;
+//
+//    NSMutableArray *sortedElementIds = [DotReportDraw sortRptComponents:self.dotReport.reportElements :XmwcsConst_REPORT_PLACE_TABLE];
+//
+//    if(sortOnFieldData !=nil && [sortOnFieldData length]>0) {
+//        NSDictionary* sortFieldMap = [XmwUtils getExtendedPropertyMap:sortOnFieldData];
+//
+//        // FIRST_FIELD_NAME:[VKBUR]$FIRST_FIELD_TYPE:[CHAR]$FIRST_FIELD_ORDER:[DESC]
+//        NSString* sortingField = [sortFieldMap objectForKey:@"FIRST_FIELD_NAME"];
+//        NSString* sortingFieldType = [sortFieldMap objectForKey:@"FIRST_FIELD_TYPE"];
+//        NSString* sortingOrder = [sortFieldMap objectForKey:@"FIRST_FIELD_ORDER"];
+//
+//        int sortFieldIndex = -1;
+//        for(int i=0; i<[sortedElementIds count]; i++) {
+//            if([[sortedElementIds objectAtIndex:i] isEqualToString:sortingField]) {
+//                sortFieldIndex = i;
+//            }
+//        }
+//
+//        if(sortFieldIndex>-1) {
+//            NSArray* allKeys = [dataSet allKeys];
+//            NSArray* sortedList = [allKeys sortedArrayUsingComparator:^NSComparisonResult(NSString* item1, NSString* item2) {
+//
+//                XmwCompareTuple* objectA = [dataSet objectForKey:item1];
+//                XmwCompareTuple* objectB = [dataSet objectForKey:item2];
+//
+//                NSArray* rowDataA = [self pickGoodRawData:objectA.firstRawData option:objectA.secondRawData option:objectA.thirdRawData];
+//
+//                NSArray* rowDataB = [self pickGoodRawData:objectB.firstRawData option:objectB.secondRawData option:objectB.thirdRawData];
+//
+//                NSString* keyA = [rowDataA objectAtIndex:sortFieldIndex];
+//                NSString* keyB = [rowDataB objectAtIndex:sortFieldIndex];
+//
+//                if([sortingOrder isEqualToString:@"DESC"]) {
+//                    return [keyA compare:keyB options:NSNumericSearch];
+//                } else {
+//                    return [keyB compare:keyA options:NSNumericSearch];
+//                }
+//            }];
+//
+//            return sortedList;
+//        }
+//
+//    }
+//
+//    return sortDataArrayAddName;
+//}
 
 @end
