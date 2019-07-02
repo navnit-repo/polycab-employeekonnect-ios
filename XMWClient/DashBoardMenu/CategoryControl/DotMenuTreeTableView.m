@@ -4,6 +4,7 @@
 #import "DVAppDelegate.h"
 #import "MarqueeLabel.h"
 #import "ClientVariable.h"
+#import "LogInVC.h"
 static NSString *const kCellCatIdentifier = @"kCellCatIdentifier";
 static NSString *const kCellSubCatIdentifier = @"kCellSubCatIdentifier";
 static NSString *const kCellsuperSubCatIdentifier = @"kCellCatIdentifier";
@@ -272,7 +273,10 @@ static NSString *const kCellsuperSubCatIdentifier = @"kCellCatIdentifier";
  //   regID.textColor =  [UIColor colorWithRed:119.0/255 green:119.0/255 blue:119.0/255 alpha:1.0];
      regID.textColor =  [UIColor whiteColor];
     regID.font = [UIFont fontWithName:@"Helvetica-Bold" size:12];
-    regID.text = clientVariables.CLIENT_USER_LOGIN.userName;
+    
+    NSString* username = [[NSUserDefaults standardUserDefaults] objectForKey:@"USERNAME"];
+    
+    regID.text = username;
  
     UIView*underLine = [[UIView alloc]initWithFrame:CGRectMake(10, regID.frame.origin.y+regID.frame.size.height+5, tableView.frame.size.width, 0.5)];
     //underLine.backgroundColor = [UIColor colorWithRed:119.0/255 green:119.0/255 blue:119.0/255 alpha:1.0];

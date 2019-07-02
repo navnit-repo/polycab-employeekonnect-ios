@@ -60,6 +60,7 @@
 
 @end
 NSMutableDictionary *masterDataForEmployee;
+NSString *chatPersonUserID;
 @implementation LogInVC
 {
     NetworkHelper *networkHelper;
@@ -144,12 +145,17 @@ NSMutableDictionary *masterDataForEmployee;
     
     
     //for auto login if user already loggedIn
-      if ([[[NSUserDefaults standardUserDefaults] valueForKey:@"ISCHECKED"] isEqualToString:@"YES"]) {
-        NSLog(@"%@",[[NSUserDefaults standardUserDefaults] valueForKey:@"USERNAME"]);
-        NSLog(@"%@",[[NSUserDefaults standardUserDefaults] valueForKey:@"PASSWORD"]);
+    NSString* isChecked = [[NSUserDefaults standardUserDefaults] objectForKey:@"ISCHECKED"];
+      if (isChecked !=nil &&[isChecked isEqualToString:@"YES"]) {
+          KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:@"com.polycab.xmw.employee" accessGroup:nil];
+
+          NSString* username = [keychainItem objectForKey:kSecAttrAccount];
+          NSString* password = [[NSString alloc] initWithData:[keychainItem objectForKey:kSecValueData] encoding:NSUTF8StringEncoding];
+          NSLog(@"UserId :- %@",username);
+          NSLog(@"Password :- %@",password);
         
-        self.userName.text =[[NSUserDefaults standardUserDefaults] valueForKey:@"USERNAME"];
-        self.password.text =[[NSUserDefaults standardUserDefaults] valueForKey:@"PASSWORD"];
+        self.userName.text =username;
+        self.password.text =password;
         [self signInButton:self];
     }
     
@@ -456,7 +462,10 @@ NSMutableDictionary *masterDataForEmployee;
         ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
         for(int i =0; i<[chatThreadDict count];i++)
         {
-            NSString *ownUserId = [[clientVariables.CLIENT_USER_LOGIN userName] stringByAppendingString:@"@employee"];
+            NSString* username = [[NSUserDefaults standardUserDefaults] objectForKey:@"USERNAME"];
+
+            
+            NSString *ownUserId = [chatPersonUserID stringByAppendingString:@"@employee"];
             NSString *parseId= @"";// for get username from contact db
             if ([[[chatThreadDict objectAtIndex:i] valueForKey:@"fromUserId"] isEqualToString:ownUserId]) {
                 parseId =[[chatThreadDict objectAtIndex:i] valueForKey:@"toUserId"];
@@ -575,10 +584,10 @@ NSMutableDictionary *masterDataForEmployee;
     
     KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:@"com.polycab.xmw.employee" accessGroup:nil];
     [keychainItem setObject:m_username forKey:kSecAttrAccount];
-    
+    [keychainItem setObject:self.password.text forKey:kSecValueData];
     [[NSUserDefaults standardUserDefaults] setObject:m_username forKey:@"CURRENT_USER_LOGEDIN_ID"];
     [masterDataForEmployee setDictionary:clientLoginResponse.clientMasterDetail.masterDataRefresh];
-    
+    chatPersonUserID = m_username;
     
     
     //this code for remove firstly save username and password in userdefault than save in it.
@@ -696,14 +705,17 @@ NSMutableDictionary *masterDataForEmployee;
 }
 #pragma  mark - fetch local db data from server
 -(void)contactListNetworkCall
-{   loadingView = [LoadingView loadingViewInView:self.view];
+{
+      NSString* username = [[NSUserDefaults standardUserDefaults] objectForKey:@"USERNAME"];
+    
+    loadingView = [LoadingView loadingViewInView:self.view];
     ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
     NSString * version = [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleShortVersionString"];
     NSMutableDictionary *requstData = [[NSMutableDictionary alloc]init];
     
     [requstData setValue:@"45" forKey:@"requestId"];
     NSMutableDictionary *data = [[NSMutableDictionary alloc]init];
-    [data setValue:[[clientVariables.CLIENT_USER_LOGIN userName] stringByAppendingString:@"@employee"] forKey:@"userId"];
+    [data setValue:[chatPersonUserID stringByAppendingString:@"@employee"] forKey:@"userId"];
     [data setValue:@"1" forKey:@"apiVersion"];
     [data setValue:[[clientVariables.CLIENT_USER_LOGIN deviceInfoMap] valueForKey:@"IMEI"]  forKey:@"deviceId"];
     [data setValue:XmwcsConst_DEVICE_TYPE_IPHONE forKey:@"osType"];
@@ -718,13 +730,15 @@ NSMutableDictionary *masterDataForEmployee;
 }
 -(void)chatThreadListNetworkCall
 {
+    NSString* username = [[NSUserDefaults standardUserDefaults] objectForKey:@"USERNAME"];
+    
     loadingView = [LoadingView loadingViewInView:self.view];
     ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
     NSString * version = [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleShortVersionString"];
     NSMutableDictionary *chatThreadRequestData = [[NSMutableDictionary alloc]init];
     NSMutableDictionary *reqstData = [[NSMutableDictionary alloc]init];
     [chatThreadRequestData setValue:@"1" forKey:@"requestId"];
-    [reqstData setValue:[[clientVariables.CLIENT_USER_LOGIN userName] stringByAppendingString:@"@employee"] forKey:@"userId"];
+    [reqstData setValue:[chatPersonUserID stringByAppendingString:@"@employee"] forKey:@"userId"];
     [reqstData setValue:[[clientVariables.CLIENT_USER_LOGIN deviceInfoMap] valueForKey:@"IMEI"] forKey:@"deviceId"];
     [reqstData setValue:XmwcsConst_DEVICE_TYPE_IPHONE forKey:@"osType"];
     [reqstData setValue:version forKey:@"appVersion"];

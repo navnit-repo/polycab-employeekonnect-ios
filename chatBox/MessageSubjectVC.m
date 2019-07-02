@@ -23,6 +23,7 @@
 #import "ExpendObjectClass.h"
 #import "ChatBoxUserListVC.h"
 #import "ChatRoomsVC.h"
+#import "LogInVC.h"
 @interface MessageSubjectVC ()
 
 @end
@@ -206,13 +207,16 @@
     
     [sendSubjectData setValue:@"1" forKey:@"requestId"];
     NSMutableDictionary *data = [[NSMutableDictionary alloc]init];
-    [data setValue:[[clientVariables.CLIENT_USER_LOGIN userName] stringByAppendingString:@"@employee"] forKey:@"from"];
-    [data setValue:[clientVariables.CLIENT_USER_LOGIN userName] forKey:@"fromUserAccount"];
+        
+        NSString* username = [[NSUserDefaults standardUserDefaults] objectForKey:@"USERNAME"];
+        
+    [data setValue:[chatPersonUserID stringByAppendingString:@"@employee"] forKey:@"from"];
+    [data setValue:chatPersonUserID forKey:@"fromUserAccount"];
     [data setValue:userIDUnique forKey:@"to"];
     [data setValue:subjectTextField.text forKey:@"subject"];
     
     [messageData setValue:@"0" forKey:@"chatThread"];
-    [messageData setValue:[[clientVariables.CLIENT_USER_LOGIN userName] stringByAppendingString:@"@employee"] forKey:@"from"];
+    [messageData setValue:[chatPersonUserID stringByAppendingString:@"@employee"] forKey:@"from"];
     [messageData setValue:userIDUnique forKey:@"to"];
     [messageData setValue:textView.text forKey:@"message"];
     [messageData setValue:@"Text" forKey:@"messageType"];
@@ -378,8 +382,11 @@
                 }
             }
             
-            ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
-            NSString *ownUserId = [clientVariables.CLIENT_USER_LOGIN userName];
+          
+            
+            NSString* username = [[NSUserDefaults standardUserDefaults] objectForKey:@"USERNAME"];
+            
+            NSString *ownUserId = chatPersonUserID;
             NSString *parseId= @"";// for get username from contact db
             NSArray *array = [chatThreadList_Object.from componentsSeparatedByString:@"@"];
             if ([[array objectAtIndex:0] isEqualToString:ownUserId]) {
@@ -388,7 +395,17 @@
             else{
                 parseId =chatThreadList_Object.from;
             }
-            
+          
+            NSArray *array2 = [parseId componentsSeparatedByString:@"@"];//// for accept button check.
+            if ([[array2 objectAtIndex:1] isEqualToString:@"employee"]) {
+                [[NSUserDefaults standardUserDefaults] setObject:@"NO" forKey:@"Accept_Chat_Button"];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+            }
+            else
+            {
+                [[NSUserDefaults standardUserDefaults] setObject:@"YES" forKey:@"Accept_Chat_Button"];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+            }
             ChatRoomsVC *vc = [[ChatRoomsVC alloc]init];
             NSString*objString = chatThreadList_Object.subject;;
             //  Base64 string to original string

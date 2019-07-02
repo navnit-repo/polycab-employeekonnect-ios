@@ -16,6 +16,7 @@
 #import "ChatThreadList_DB.h"
 #import "ChatBoxVC.h"
 #import "ExpendObjectClass.h"
+#import "LogInVC.h"
 @implementation ChatThreadCell
 {
     NetworkHelper *networkHelper;
@@ -61,7 +62,11 @@
     NSMutableArray *threadsArray = [[NSMutableArray alloc]init];
     [threadsArray addObject:chatThreadId];
     [chatThreadRequestData setValue:@"1" forKey:@"requestId"];
-    [reqstData setValue:[[clientVariables.CLIENT_USER_LOGIN userName] stringByAppendingString:@"@employee"] forKey:@"userId"];
+    
+    NSString* username = [[NSUserDefaults standardUserDefaults] objectForKey:@"USERNAME"];
+
+    
+    [reqstData setValue:[chatPersonUserID stringByAppendingString:@"@employee"] forKey:@"userId"];
     [reqstData setValue:[[clientVariables.CLIENT_USER_LOGIN deviceInfoMap] valueForKey:@"IMEI"] forKey:@"deviceId"];
     [reqstData setValue:XmwcsConst_DEVICE_TYPE_IPHONE forKey:@"osType"];
     [reqstData setValue:version forKey:@"appVersion"];

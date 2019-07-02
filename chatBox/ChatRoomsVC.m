@@ -23,6 +23,7 @@
 #import "ExpendObjectClass.h"
 #import "SBJsonWriter.h"
 #import "ReadUnreadService.h"
+#import "LogInVC.h"
 @interface ChatRoomsVC ()
 
 @end
@@ -205,8 +206,8 @@
 }
 -(void)setHeaderDetailsData
 {
-    ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
-    userId =[[clientVariables.CLIENT_USER_LOGIN userName] stringByAppendingString:@"@employee"];
+    NSString* username = [[NSUserDefaults standardUserDefaults] objectForKey:@"USERNAME"];
+    userId =[chatPersonUserID stringByAppendingString:@"@employee"];
     self.nameLbl.text = nameLbltext;
     self.subjectLbl.text = subject;
     
@@ -224,18 +225,28 @@
         for (int i=0; i<unreadMessageIdArray.count; i++) {
             ChatHistory_Object *obj = (ChatHistory_Object*) [unreadMessageIdArray objectAtIndex:i];
             [sendMessageIdsArray addObject:[NSString stringWithFormat:@"%d",obj.messageId]];
-            //for update status instantly
-//            ChatHistory_Object* chatHistory_Object = [[ChatHistory_Object alloc] init];
-//            chatHistory_Object.chatThreadId = obj.chatThreadId;
-//            chatHistory_Object.messageId    = obj.messageId;
-//            [chatHistory_DBStorage updateUnreadMessageStatus:chatHistory_Object];
+            //for update status of unread messages
+            ChatHistory_Object* chatHistory_Object = [[ChatHistory_Object alloc] init];
+            chatHistory_Object.chatThreadId = obj.chatThreadId;
+            chatHistory_Object.messageId    = obj.messageId;
+            [chatHistory_DBStorage updateUnreadMessageStatus:chatHistory_Object];
         }
+        [ChatThreadList_DB createInstance : @"ChatThread_DB_STORAGE" : true];
+        ChatThreadList_DB *chatThreadListStorage = [ChatThreadList_DB getInstance];
+        ChatThreadList_Object* chatThreadList_Object = [[ChatThreadList_Object alloc] init];
+        chatThreadList_Object.chatThreadId =[chatThreadId integerValue] ;
+        [chatThreadListStorage updateUnreadThread:chatThreadList_Object :0];
+        
         ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
         NSString * version = [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleShortVersionString"];
         NSMutableDictionary *chatMessageRqst = [[NSMutableDictionary alloc]init];
         NSMutableDictionary *reqstData = [[NSMutableDictionary alloc]init];
         [chatMessageRqst setValue:@"1" forKey:@"requestId"];
-        [reqstData setValue:[[clientVariables.CLIENT_USER_LOGIN userName] stringByAppendingString:@"@employee"] forKey:@"userId"];
+        
+        NSString* username = [[NSUserDefaults standardUserDefaults] objectForKey:@"USERNAME"];
+
+        
+        [reqstData setValue:[chatPersonUserID stringByAppendingString:@"@employee"] forKey:@"userId"];
         [reqstData setValue:[[clientVariables.CLIENT_USER_LOGIN deviceInfoMap] valueForKey:@"IMEI"] forKey:@"deviceId"];
         [reqstData setValue:XmwcsConst_DEVICE_TYPE_IPHONE forKey:@"osType"];
         [reqstData setValue:version forKey:@"appVersion"];
@@ -268,11 +279,12 @@
          originalChatHistoryArray = [[NSMutableArray alloc]init];
         [originalChatHistoryArray addObjectsFromArray:chatHistoryArray];
         
-        ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
-        ChatHistory_Object *obj = (ChatHistory_Object *)[chatHistoryArray objectAtIndex:chatHistoryArray.count-1];
         
         self.popupSubjectLbl.text  =subject;
-        NSString *ownUserId = [clientVariables.CLIENT_USER_LOGIN userName];
+        
+        NSString* username = [[NSUserDefaults standardUserDefaults] objectForKey:@"USERNAME"];
+        
+        NSString *ownUserId = chatPersonUserID;
 
         
         for (  NSInteger i = chatHistoryArray.count - 1; i>=0; i--) {
@@ -296,13 +308,16 @@
        
     }
     else{
+        
+     NSString* username = [[NSUserDefaults standardUserDefaults] objectForKey:@"USERNAME"];
+        
     loadingView = [LoadingView loadingViewInView:self.view];
     ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
     NSString * version = [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleShortVersionString"];
     NSMutableDictionary *chatMessageRqst = [[NSMutableDictionary alloc]init];
     NSMutableDictionary *reqstData = [[NSMutableDictionary alloc]init];
     [chatMessageRqst setValue:@"1" forKey:@"requestId"];
-    [reqstData setValue:[[clientVariables.CLIENT_USER_LOGIN userName] stringByAppendingString:@"@employee"] forKey:@"userId"];
+    [reqstData setValue:[chatPersonUserID stringByAppendingString:@"@employee"] forKey:@"userId"];
     [reqstData setValue:[[clientVariables.CLIENT_USER_LOGIN deviceInfoMap] valueForKey:@"IMEI"] forKey:@"deviceId"];
     [reqstData setValue:XmwcsConst_DEVICE_TYPE_IPHONE forKey:@"osType"];
     [reqstData setValue:version forKey:@"appVersion"];
@@ -423,7 +438,10 @@
     [sendMessageData setValue:@"" forKey:@"requestId"];
     NSMutableDictionary *requestData = [[NSMutableDictionary alloc]init];
     [requestData setObject:chatThreadId forKey:@"chatThread"];
-    [requestData setObject:[[clientVariables.CLIENT_USER_LOGIN userName] stringByAppendingString:@"@employee"] forKey:@"from"];
+        
+         NSString* username = [[NSUserDefaults standardUserDefaults] objectForKey:@"USERNAME"];
+        
+    [requestData setObject:[chatPersonUserID stringByAppendingString:@"@employee"] forKey:@"from"];
     [requestData setObject:withChatPersonName forKey:@"to"];
     [requestData setObject:textView.text forKey:@"message"];
     [requestData setObject:@"Text" forKey:@"messageType"];
@@ -509,10 +527,12 @@
             [chatHistoryArray addObjectsFromArray:[[respondedObject valueForKey:@"responseData"] valueForKey:@"list"]];
             //[chatRoomTableView reloadData];
             
-            ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
             
             self.popupSubjectLbl.text  =subject;
-            NSString *ownUserId = [clientVariables.CLIENT_USER_LOGIN userName];
+            
+            NSString* username = [[NSUserDefaults standardUserDefaults] objectForKey:@"USERNAME"];
+
+            NSString *ownUserId = chatPersonUserID;
             for (  NSInteger i = chatHistoryArray.count - 1; i>=0; i--) {
                 NSMutableArray *obj = [chatHistoryArray objectAtIndex:i];
                 NSArray *array = [[obj valueForKey:@"from"] componentsSeparatedByString:@"@"];
@@ -566,7 +586,7 @@
             [[NSUserDefaults standardUserDefaults] setObject:@"YES" forKey:[NSString stringWithFormat:@"CHAT_HISTORY_FIRST_TIME_FETCH_%@",[[chatHistoryArray objectAtIndex:0] valueForKey:@"chatThreadId"]]];
         
           [[NSUserDefaults standardUserDefaults] synchronize];
-            
+            [self unreadMessageNetworkCall];
         }
         else
         {

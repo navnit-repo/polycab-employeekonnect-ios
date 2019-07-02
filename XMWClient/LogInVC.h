@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "SWRevealViewController.h"
 extern NSMutableDictionary *masterDataForEmployee;
+extern NSString *chatPersonUserID;
 @interface LogInVC : UIViewController<UITextFieldDelegate>
 {
     NSMutableDictionary* menuDetailsDict;

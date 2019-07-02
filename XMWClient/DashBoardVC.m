@@ -38,6 +38,7 @@
 #import "ChatRoomsVC.h"
 #import "ChatHistory_Object.h"
 #import "NewChatBoxVC.h"
+#import "KeychainItemWrapper.h"
 #define TAG_LOGOUT_DIALOG 1000
 @interface DashBoardVC ()
 @end
@@ -145,7 +146,9 @@
         if(clientVariables.CLIENT_USER_LOGIN != nil)
         {
             
-            [requestData setObject:clientVariables.CLIENT_USER_LOGIN.userName forKey:@"USER_ID"];
+            NSString* username = [[NSUserDefaults standardUserDefaults] objectForKey:@"USERNAME"];
+            
+            [requestData setObject:username forKey:@"USER_ID"];
             [requestData setObject:XmwcsConst_DEVICE_TYPE_IPHONE forKey:@"OS"];
             
             networkHelper = [[NetworkHelper alloc] init];
@@ -829,7 +832,8 @@
 }
 -(void) userLogout
 {
-    
+    KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:@"com.polycab.xmw.employee" accessGroup:nil ];
+    NSString *userId = [keychainItem objectForKey:kSecAttrAccount];
     //for clear all default save data
     NSUserDefaults * defs = [NSUserDefaults standardUserDefaults];
     NSDictionary * dict2 = [defs dictionaryRepresentation];
@@ -838,8 +842,7 @@
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
     
-    ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
-    [[NSUserDefaults standardUserDefaults ] setObject:clientVariables.CLIENT_USER_LOGIN.userName forKey:@"LAST_LOGIN_USER"];
+    [[NSUserDefaults standardUserDefaults ] setObject:userId forKey:@"LAST_LOGIN_USER"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     loadingView = [LoadingView loadingViewInView:self.view];
     

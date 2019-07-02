@@ -19,6 +19,7 @@
 #import "ContactList_Object.h"
 #import "LayoutClass.h"
 #import "DVAppDelegate.h"
+#import "LogInVC.h"
 @interface ChatBoxUserListVC ()
 
 @end
@@ -137,6 +138,8 @@
     }
     else
     {
+        NSString* username = [[NSUserDefaults standardUserDefaults] objectForKey:@"USERNAME"];
+        
         loadingView = [LoadingView loadingViewInView:self.view];
         ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
         NSString * version = [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleShortVersionString"];
@@ -144,7 +147,7 @@
         
         [requstData setValue:@"45" forKey:@"requestId"];
         NSMutableDictionary *data = [[NSMutableDictionary alloc]init];
-        [data setValue:[[clientVariables.CLIENT_USER_LOGIN userName] stringByAppendingString:@"@employee"] forKey:@"userId"];
+        [data setValue:[chatPersonUserID stringByAppendingString:@"@employee"] forKey:@"userId"];
         [data setValue:@"1" forKey:@"apiVersion"];
         [data setValue:[[clientVariables.CLIENT_USER_LOGIN deviceInfoMap] valueForKey:@"IMEI"]  forKey:@"deviceId"];
         [data setValue:XmwcsConst_DEVICE_TYPE_IPHONE forKey:@"osType"];

@@ -328,6 +328,7 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
             [vc.threadListTableView reloadData];
         }
         else if ([checkView isKindOfClass:[ChatRoomsVC class]]) {
+            
             ChatRoomsVC *vc  = (ChatRoomsVC *) checkView;
             
             [ChatHistory_DB createInstance : @"ChatHistory_DB_STORAGE" : true :[vc.chatThreadId integerValue]];
@@ -336,6 +337,10 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
             vc.chatHistoryArray = [[NSMutableArray alloc]init];
             vc.chatHistoryArray =chatHistoryStorageData;
             [vc.chatRoomTableView reloadData];
+            [vc.chatRoomTableView layoutIfNeeded];
+            NSIndexPath* indexPath = [NSIndexPath indexPathForRow: ([vc.chatRoomTableView numberOfRowsInSection:([vc.chatRoomTableView numberOfSections]-1)]-1) inSection: ([vc.chatRoomTableView numberOfSections]-1)];
+            [vc.chatRoomTableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+            [vc unreadMessageNetworkCall];
         }
         else
         {
@@ -688,10 +693,11 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
             [ChatThreadList_DB createInstance : @"ChatThread_DB_STORAGE" : true];
             ChatThreadList_DB *chatThreadListStorage = [ChatThreadList_DB getInstance];
             [chatThreadListStorage dropTable:@"ChatThread_DB_STORAGE"];
-            ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
             for(int i =0; i<[chatThreadDict count];i++)
             {
-                NSString *ownUserId = [[clientVariables.CLIENT_USER_LOGIN userName] stringByAppendingString:@"@employee"];
+                  NSString* username = [[NSUserDefaults standardUserDefaults] objectForKey:@"USERNAME"];
+                
+                NSString *ownUserId = [chatPersonUserID stringByAppendingString:@"@employee"];
                 NSString *parseId= @"";// for get username from contact db
                 if ([[[chatThreadDict objectAtIndex:i] valueForKey:@"fromUserId"] isEqualToString:ownUserId]) {
                     parseId =[[chatThreadDict objectAtIndex:i] valueForKey:@"toUserId"];
@@ -1045,8 +1051,10 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
         [vc.threadListTableView reloadData];
         ExpendObjectClass *obj = (ExpendObjectClass *) [vc.chatThreadDict objectAtIndex:0];
         ChatThreadList_Object *obj2 = (ChatThreadList_Object *)[obj.childCategories objectAtIndex:0];
-        ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
-        NSString *ownUserId = [clientVariables.CLIENT_USER_LOGIN userName];
+        
+        NSString* username = [[NSUserDefaults standardUserDefaults] objectForKey:@"USERNAME"];
+
+        NSString *ownUserId = chatPersonUserID;
         NSString *parseId= @"";// for get username from contact db
         NSArray *array = [obj2.from componentsSeparatedByString:@"@"];
         if ([[array objectAtIndex:0] isEqualToString:ownUserId]) {
@@ -1155,6 +1163,10 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
             [vc.chatHistoryArray addObjectsFromArray:chatHistoryStorageData];
             //                    vc.popupTextView.text = @"";
             [vc.chatRoomTableView reloadData];
+            [vc.chatRoomTableView layoutIfNeeded];
+            NSIndexPath* indexPath = [NSIndexPath indexPathForRow: ([vc.chatRoomTableView numberOfRowsInSection:([vc.chatRoomTableView numberOfSections]-1)]-1) inSection: ([vc.chatRoomTableView numberOfSections]-1)];
+            [vc.chatRoomTableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+            [vc unreadMessageNetworkCall];
         } else {
             [ChatThreadList_DB createInstance : @"ChatThread_DB_STORAGE" : true];
             ChatThreadList_DB *chatThreadListStorage = [ChatThreadList_DB getInstance];
@@ -1180,8 +1192,10 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
         [vc.threadListTableView reloadData];
         ExpendObjectClass *obj = (ExpendObjectClass *) [vc.chatThreadDict objectAtIndex:0];
         ChatThreadList_Object *obj2 = (ChatThreadList_Object *)[obj.childCategories objectAtIndex:0];
-        ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
-        NSString *ownUserId = [clientVariables.CLIENT_USER_LOGIN userName];
+        
+        NSString* username = [[NSUserDefaults standardUserDefaults] objectForKey:@"USERNAME"];
+        
+        NSString *ownUserId = chatPersonUserID;
         NSString *parseId= @"";// for get username from contact db
         NSArray *array = [obj2.from componentsSeparatedByString:@"@"];
         if ([[array objectAtIndex:0] isEqualToString:ownUserId]) {
@@ -1265,39 +1279,6 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
         vc.chatThreadDict = [[NSMutableArray alloc]init];
         [vc.chatThreadDict addObjectsFromArray:[self groupData:chatThreadListStorageData]];
         [vc.threadListTableView reloadData];
-//        ExpendObjectClass *obj = (ExpendObjectClass *) [vc.chatThreadDict objectAtIndex:0];
-//        ChatThreadList_Object *obj2 = (ChatThreadList_Object *)[obj.childCategories objectAtIndex:0];
-//        ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
-//        NSString *ownUserId = [clientVariables.CLIENT_USER_LOGIN userName];
-//        NSString *parseId= @"";// for get username from contact db
-//        NSArray *array = [obj2.from componentsSeparatedByString:@"@"];
-//        if ([[array objectAtIndex:0] isEqualToString:ownUserId]) {
-//            parseId =obj2.to;
-//        }
-//        else{
-//            parseId =obj2.from;
-//        }
-//        NSArray *array2 = [parseId componentsSeparatedByString:@"@"];//// for accept button check.
-//        if ([[array2 objectAtIndex:1] isEqualToString:@"employee"]) {
-//            [[NSUserDefaults standardUserDefaults] setObject:@"NO" forKey:@"Accept_Chat_Button"];
-//        }
-//        else
-//        {
-//            [[NSUserDefaults standardUserDefaults] setObject:@"YES" forKey:@"Accept_Chat_Button"];
-//        }
-//        [[NSUserDefaults standardUserDefaults] synchronize];
-//        // ChatThreadList_Object *obj = (ChatThreadList_Object *)[chatThreadDict objectAtIndex:indexPath.row];
-//        ChatRoomsVC *vc2 = [[ChatRoomsVC alloc]init];
-//        NSString*objString = obj2.subject;
-//        //  Base64 string to original string
-//        NSData *base64Data = [[NSData alloc] initWithBase64EncodedString:objString options:NSDataBase64DecodingIgnoreUnknownCharacters];
-//        NSString *originalString =[[NSString alloc] initWithData:base64Data encoding:NSUTF8StringEncoding];
-//        vc2.subject =originalString;
-//        vc2.withChatPersonName = parseId;
-//        vc2.chatThreadId =[NSString stringWithFormat:@"%d",obj2.chatThreadId];
-//        vc2.chatStatus = obj2.status;
-//        vc2.nameLbltext = obj2.displayName;
-//        [[checkView navigationController ] pushViewController:vc2 animated:YES];
         
     } else {
         // do nothing
@@ -1388,8 +1369,12 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
         [vc.threadListTableView reloadData];
         ExpendObjectClass *obj = (ExpendObjectClass *) [vc.chatThreadDict objectAtIndex:0];
         ChatThreadList_Object *obj2 = (ChatThreadList_Object *)[obj.childCategories objectAtIndex:0];
-        ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
-        NSString *ownUserId = [clientVariables.CLIENT_USER_LOGIN userName];
+    
+       
+       NSString* username = [[NSUserDefaults standardUserDefaults] objectForKey:@"USERNAME"];
+
+       
+        NSString *ownUserId = chatPersonUserID;
         NSString *parseId= @"";// for get username from contact db
         NSArray *array = [obj2.from componentsSeparatedByString:@"@"];
         if ([[array objectAtIndex:0] isEqualToString:ownUserId]) {

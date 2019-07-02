@@ -23,6 +23,9 @@
 #import "ContactList_Object.h"
 #import "ChatHistory_Object.h"
 #import "ExpendObjectClass.h"
+#import "LogInVC.h"
+static NSString *const kCellCatIdentifier = @"kCellCatIdentifier";
+static NSString *const kCellSubCatIdentifier = @"kCellSubCatIdentifier";
 @interface ChatBoxVC ()
 
 @end
@@ -160,9 +163,8 @@
         ExpendObjectClass *expendObj = (ExpendObjectClass *)[chatThreadDict objectAtIndex:0];
         obj = (ChatThreadList_Object *)[expendObj.childCategories objectAtIndex:0];
     }
- 
-    ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
-    NSString *ownUserId = [clientVariables.CLIENT_USER_LOGIN userName];
+    NSString* username = [[NSUserDefaults standardUserDefaults] objectForKey:@"USERNAME"];
+    NSString *ownUserId = chatPersonUserID;
     NSString *parseId= @"";// for get username from contact db
     NSArray *array = [obj.from componentsSeparatedByString:@"@"];
     if ([[array objectAtIndex:0] isEqualToString:ownUserId]) {
@@ -238,6 +240,8 @@
     }
     else{
     
+        NSString* username = [[NSUserDefaults standardUserDefaults] objectForKey:@"USERNAME"];
+        
     loadingView = [LoadingView loadingViewInView:self.view];
     ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
     NSString * version = [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleShortVersionString"];
@@ -245,7 +249,7 @@
     
     [requstData setValue:@"45" forKey:@"requestId"];
     NSMutableDictionary *data = [[NSMutableDictionary alloc]init];
-    [data setValue:[[clientVariables.CLIENT_USER_LOGIN userName] stringByAppendingString:@"@employee"] forKey:@"userId"];
+    [data setValue:[chatPersonUserID stringByAppendingString:@"@employee"] forKey:@"userId"];
     [data setValue:@"1" forKey:@"apiVersion"];
     [data setValue:[[clientVariables.CLIENT_USER_LOGIN deviceInfoMap] valueForKey:@"IMEI"]  forKey:@"deviceId"];
     [data setValue:XmwcsConst_DEVICE_TYPE_IPHONE forKey:@"osType"];
@@ -301,13 +305,17 @@
         [orignalChatThreadListArray addObjectsFromArray:chatThreadDict];
     }
     else{
+        
+        NSString* username = [[NSUserDefaults standardUserDefaults] objectForKey:@"USERNAME"];
+
+        
     loadingView = [LoadingView loadingViewInView:self.view];
     ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
     NSString * version = [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleShortVersionString"];
     NSMutableDictionary *chatThreadRequestData = [[NSMutableDictionary alloc]init];
     NSMutableDictionary *reqstData = [[NSMutableDictionary alloc]init];
     [chatThreadRequestData setValue:@"1" forKey:@"requestId"];
-    [reqstData setValue:[[clientVariables.CLIENT_USER_LOGIN userName] stringByAppendingString:@"@employee"] forKey:@"userId"];
+    [reqstData setValue:[chatPersonUserID stringByAppendingString:@"@employee"] forKey:@"userId"];
     [reqstData setValue:[[clientVariables.CLIENT_USER_LOGIN deviceInfoMap] valueForKey:@"IMEI"] forKey:@"deviceId"];
     [reqstData setValue:XmwcsConst_DEVICE_TYPE_IPHONE forKey:@"osType"];
     [reqstData setValue:version forKey:@"appVersion"];
@@ -429,10 +437,10 @@
             [ChatThreadList_DB createInstance : @"ChatThread_DB_STORAGE" : true];
             ChatThreadList_DB *chatThreadListStorage = [ChatThreadList_DB getInstance];
             [chatThreadListStorage dropTable:@"ChatThread_DB_STORAGE"];
-            ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
             for(int i =0; i<[chatThreadDict count];i++)
             {
-                NSString *ownUserId = [[clientVariables.CLIENT_USER_LOGIN userName] stringByAppendingString:@"@employee"];
+                 NSString* username = [[NSUserDefaults standardUserDefaults] objectForKey:@"USERNAME"];
+                NSString *ownUserId = [chatPersonUserID stringByAppendingString:@"@employee"];
                 NSString *parseId= @"";// for get username from contact db
                 if ([[[chatThreadDict objectAtIndex:i] valueForKey:@"fromUserId"] isEqualToString:ownUserId]) {
                     parseId =[[chatThreadDict objectAtIndex:i] valueForKey:@"toUserId"];
@@ -533,10 +541,10 @@
     }
     
     else{
-    
+        expendObjectOpenClosedStatusDict = [[NSMutableDictionary alloc]init];
     ChatThreadList_Object *obj = (ChatThreadList_Object *)[chatThreadDict objectAtIndex:indexPath.row];
-    ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
-    NSString *ownUserId = [clientVariables.CLIENT_USER_LOGIN userName];
+    NSString* username = [[NSUserDefaults standardUserDefaults] objectForKey:@"USERNAME"];
+    NSString *ownUserId = chatPersonUserID;
     NSString *parseId= @"";// for get username from contact db
     NSArray *array = [obj.from componentsSeparatedByString:@"@"];
     if ([[array objectAtIndex:0] isEqualToString:ownUserId]) {
@@ -760,9 +768,9 @@
 //        ExpendObjectClass* obj =( ExpendObjectClass *) [chatThreadDict objectAtIndex:indexPath.row];
 //        NSString  *str = cell.reuseIdentifier;
 //        NSArray *array = [str componentsSeparatedByString:@"_"];
-//        
+//
 //        dotView = (UIView*) [self.view viewWithTag:[[array objectAtIndex:1] intValue] ];
-//        
+//
 //        for (int i=0; i<obj.childCategories.count; i++) {
 //            ChatThreadList_Object *threadObj = (ChatThreadList_Object*) [obj.childCategories objectAtIndex:i];
 //            if (threadObj.unreadMessageCount >0) {
