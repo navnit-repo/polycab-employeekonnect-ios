@@ -212,7 +212,7 @@ static NSString *const kCellSubCatIdentifier = @"kCellSubCatIdentifier";
     [LayoutClass labelLayout:self.constantLbl1 forFontWeight:UIFontWeightRegular];
     [LayoutClass setLayoutForIPhone6:self.threadListTableView];
     self.threadListTableView.frame = CGRectMake(self.threadListTableView.frame.origin.x, self.threadListTableView.frame.origin.y, self.threadListTableView.frame.size.width,self.view.frame.size.height-(self.headerView.frame.size.height));
-    
+    self.threadListTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     threadListTableView.delegate = self;
     threadListTableView.bounces = NO;
   
@@ -506,83 +506,8 @@ static NSString *const kCellSubCatIdentifier = @"kCellSubCatIdentifier";
     [myAlertView show];
     
 }
+#pragma - mark add and remove child
 
-#pragma - mark TableView  methods
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-
-{
-     [searchBar resignFirstResponder];
-    if ([[chatThreadDict objectAtIndex: indexPath.row] isKindOfClass:[ExpendObjectClass class]]) {
-        ExpendObjectClass *currObject = chatThreadDict[indexPath.row];
-        if (currObject.childCategories>0) {
-            dotView.backgroundColor  = [UIColor clearColor];
-            BOOL isAlreadyInserted=[self checkIfChildrenInserted:currObject];
-            if(isAlreadyInserted) {
-                [expendObjectOpenClosedStatusDict setObject:@"close" forKey:currObject.MENU_NAME];
-                [self miniMizeThisRows:currObject.childCategories];
-            }
-            else{
-                [expendObjectOpenClosedStatusDict setObject:@"open" forKey:currObject.MENU_NAME];
-                NSUInteger count=indexPath.row+1;
-                NSMutableArray *arCells=[NSMutableArray array];
-                NSMutableArray *childData =currObject.childCategories;
-                for (int i=0; i<[childData count]; i++) {
-                    ChatThreadList_Object *dInner = (ChatThreadList_Object*) [childData objectAtIndex:i];
-                    [arCells addObject:[NSIndexPath indexPathForRow:count inSection:0]];
-                    [chatThreadDict insertObject:dInner atIndex:count++];
-                }
-                [tableView insertRowsAtIndexPaths:arCells withRowAnimation:UITableViewRowAnimationLeft];
-                
-            }
-            [tableView deselectRowAtIndexPath:indexPath animated:YES];
-            
-            [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone]; // reload for arrow status
-        }
-    }
-    
-    else{
-        expendObjectOpenClosedStatusDict = [[NSMutableDictionary alloc]init];
-    ChatThreadList_Object *obj = (ChatThreadList_Object *)[chatThreadDict objectAtIndex:indexPath.row];
-    NSString* username = [[NSUserDefaults standardUserDefaults] objectForKey:@"USERNAME"];
-    NSString *ownUserId = chatPersonUserID;
-    NSString *parseId= @"";// for get username from contact db
-    NSArray *array = [obj.from componentsSeparatedByString:@"@"];
-    if ([[array objectAtIndex:0] isEqualToString:ownUserId]) {
-        parseId =obj.to;
-    }
-    else{
-        parseId =obj.from;
-    }
-     NSArray *array2 = [parseId componentsSeparatedByString:@"@"];//// for accept button check.
-    if ([[array2 objectAtIndex:1] isEqualToString:@"employee"]) {
-        [[NSUserDefaults standardUserDefaults] setObject:@"NO" forKey:@"Accept_Chat_Button"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-    }
-    else
-    {
-         [[NSUserDefaults standardUserDefaults] setObject:@"YES" forKey:@"Accept_Chat_Button"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-    }
-    
-        NSString*objString = obj.subject;
-        //  Base64 string to original string
-        NSData *base64Data = [[NSData alloc] initWithBase64EncodedString:objString options:NSDataBase64DecodingIgnoreUnknownCharacters];
-        NSString *originalString =[[NSString alloc] initWithData:base64Data encoding:NSUTF8StringEncoding];
-        
-        NSLog(@"Result: %@",originalString);
-        
-    ChatRoomsVC *vc = [[ChatRoomsVC alloc]init];
-    vc.subject =originalString;
-    vc.withChatPersonName = parseId;
-    vc.chatThreadId =[NSString stringWithFormat:@"%d",obj.chatThreadId];
-    vc.chatStatus = obj.status;
-    vc.nameLbltext = obj.displayName;
-    [[self navigationController ] pushViewController:vc animated:YES];
-    
-    ChatThreadCell *cellView =[( ChatThreadCell * ) self.view viewWithTag:obj.chatThreadId];
-    cellView.pushView.backgroundColor = [UIColor clearColor];
-    }
-}
 - (BOOL)checkIfChildrenInserted: (ExpendObjectClass *)parentObject {
     BOOL childrenInserted=NO;
     
@@ -600,190 +525,13 @@ static NSString *const kCellSubCatIdentifier = @"kCellSubCatIdentifier";
         if([chatThreadDict indexOfObject:dInner]!=NSNotFound) {
             [chatThreadDict removeObject:dInner];
             [threadListTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:
-                                          [NSIndexPath indexPathForRow:indexToRemove inSection:0]
-                                          ]
-                        withRowAnimation:UITableViewRowAnimationRight];
+                                                         [NSIndexPath indexPathForRow:indexToRemove inSection:0]
+                                                         ]
+                                       withRowAnimation:UITableViewRowAnimationRight];
         }
     }
 }
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    NSInteger numOfSections = 0;
-    if (chatThreadDict.count >0)
-    {
-        numOfSections = 1;
-        UIView *view = [UIView new];
-        view.backgroundColor = [UIColor whiteColor];
-        threadListTableView.backgroundView  = view;
-    }
-    else
-    {
-        UILabel *noDataLabel         = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, threadListTableView.bounds.size.width, threadListTableView.bounds.size.height)];
-        noDataLabel.text             = @"No chat threads available.";
-        noDataLabel.textColor        = [UIColor blackColor];
-        noDataLabel.textAlignment    = NSTextAlignmentCenter;
-        threadListTableView.backgroundView  = noDataLabel;
-        threadListTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    }
-    return numOfSections;
-}
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return [chatThreadDict count];
- 
-}
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    CGFloat height =0.0f;
-    
-    if ([[chatThreadDict objectAtIndex:indexPath.row] isKindOfClass:[ExpendObjectClass class]] ) {
-        height =40.0f;
-    }
- else if([[chatThreadDict objectAtIndex:indexPath.row] isKindOfClass:[ChatThreadList_Object class]])
-    {
-        height =70.0f;
-    }
-    return height;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    return 5;
-}
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
-    UIView *headerView = [[UIView alloc] init];
-    headerView.backgroundColor = [UIColor clearColor];
-    return headerView;
-}
-- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
-{
-    return [UIView new];
-    
-}
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
- 
-    NSString *str = [NSString stringWithFormat:@"cell_%lld",uniqueCell];
-    uniqueCell ++;
-    if ([[chatThreadDict objectAtIndex:indexPath.row] isKindOfClass:[ExpendObjectClass class]]  ) {
-        UITableViewCell *cell ;
-     
-//        cell = [tableView dequeueReusableCellWithIdentifier:str];
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:str];
-        ExpendObjectClass* obj =( ExpendObjectClass *) [chatThreadDict objectAtIndex:indexPath.row];
-        UIView *view = [[UIView alloc]initWithFrame:CGRectMake(10, 0, cell.frame.size.width, cell.frame.size.height)];
-        dotView = [[UIView alloc]initWithFrame:CGRectMake(0, 15, 10*deviceWidthRation, 10*deviceHeightRation)];
-        dotView.tag = uniqueCell;
-        for (int i=0; i<obj.childCategories.count; i++) {
-            ChatThreadList_Object *threadObj = (ChatThreadList_Object*) [obj.childCategories objectAtIndex:i];
-            if (threadObj.unreadMessageCount >0) {
-                    dotView.backgroundColor = [UIColor colorWithRed:204.0f/255 green:41.0f/255 blue:43.0f/255 alpha:1.0];
-                    break;
-                }
-                else
-                {
-                    dotView.backgroundColor = [UIColor clearColor];
-                }
-        }
-        
-        
-        dotView.layer.cornerRadius = 5;
-        UILabel *textLbl = [[UILabel alloc]initWithFrame:CGRectMake(15*deviceWidthRation, 0,cell.frame.size.width, cell.frame.size.height)];
-        textLbl.text  = obj.MENU_NAME;
-        textLbl.font = [UIFont systemFontOfSize:14.0f weight:UIFontWeightBold];
-        [view addSubview:dotView];
-        [view addSubview:textLbl];
-        [cell.contentView addSubview:view];
-        UIImageView *arrowView = [[UIImageView alloc]init];
-        [arrowView setFrame:CGRectMake(0, 0, 15, 5)];
-        if ([expendObjectOpenClosedStatusDict valueForKey:obj.MENU_NAME]==nil || [[expendObjectOpenClosedStatusDict valueForKey:obj.MENU_NAME] isEqualToString:@"close"]) {
-            
-            [arrowView setImage:[UIImage imageNamed:@"polycab_arrow_closed"]];
-            cell.accessoryView = arrowView;
-            
-        }
-        else if ([[expendObjectOpenClosedStatusDict valueForKey:obj.MENU_NAME ] isEqualToString:@"open"])
-        {
-            [arrowView setImage:[UIImage imageNamed:@"polycab_arrow_open"]];
-            cell.accessoryView = arrowView;
-        }
-       
-        
-            return cell;
-
-
-
-    }
-    else if([[chatThreadDict objectAtIndex:indexPath.row] isKindOfClass:[ChatThreadList_Object class]] )
-    {
-         ChatThreadCell * cell =(ChatThreadCell*) [tableView dequeueReusableCellWithIdentifier:str];
-            [tableView registerNib:[UINib nibWithNibName:@"ChatThreadCell" bundle:nil] forCellReuseIdentifier:str];
-            cell  = [tableView dequeueReusableCellWithIdentifier:str];
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            ChatThreadList_Object *obj = (ChatThreadList_Object *)[chatThreadDict objectAtIndex:indexPath.row];
-        NSString*objString = obj.subject;
-        //  Base64 string to original string
-        NSData *base64Data = [[NSData alloc] initWithBase64EncodedString:objString options:NSDataBase64DecodingIgnoreUnknownCharacters];
-        NSString *originalString =[[NSString alloc] initWithData:base64Data encoding:NSUTF8StringEncoding];
-        
-        NSLog(@"Result: %@",originalString);
-        
-            cell.subjectLbl.text = originalString;
-            cell.chatPersonLbl.text = obj.displayName;
-            double timeStamp = [obj.lastMessageOn doubleValue];
-            
-            NSTimeInterval timeInterval=timeStamp/1000;
-            NSDate *date = [NSDate dateWithTimeIntervalSince1970:timeInterval];
-            NSDateFormatter *dateformatter=[[NSDateFormatter alloc]init];
-            [dateformatter setDateFormat:@"dd LLL,yy HH:mm"];
-            NSString *dateString=[dateformatter stringFromDate:date];
-            cell.timeStampLbl.text =dateString;
-            cell.tag = obj.chatThreadId;
-            cell.closeButtonOutlate.elementId = [NSString stringWithFormat:@"%d",obj.chatThreadId];
-            
-            if ([obj.status isEqualToString:@"Accept"] || [obj.status isEqualToString:@"Close"] || [obj.status isEqualToString:@"Accept-Talk"] ) {
-               
-                [cell.acceptImageView setImage:[UIImage imageNamed:@"Tick_Mark"]];
-                cell.chatIdLbl.text = [NSString stringWithFormat:@"SPA No : %@",obj.spaNo];
-            }
-
-            if (obj.unreadMessageCount >0) {
-                cell.pushView.backgroundColor = [UIColor colorWithRed:204.0f/255 green:41.0f/255 blue:43.0f/255 alpha:1.0];
-            }
-            else
-            {
-                cell.pushView.backgroundColor = [UIColor clearColor];
-            }
-            return cell;
-
-    }
-    return nil;
-
-}
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-//    if ([[chatThreadDict objectAtIndex:indexPath.row] isKindOfClass:[ExpendObjectClass class]]  ) {
-//        ExpendObjectClass* obj =( ExpendObjectClass *) [chatThreadDict objectAtIndex:indexPath.row];
-//        NSString  *str = cell.reuseIdentifier;
-//        NSArray *array = [str componentsSeparatedByString:@"_"];
-//
-//        dotView = (UIView*) [self.view viewWithTag:[[array objectAtIndex:1] intValue] ];
-//
-//        for (int i=0; i<obj.childCategories.count; i++) {
-//            ChatThreadList_Object *threadObj = (ChatThreadList_Object*) [obj.childCategories objectAtIndex:i];
-//            if (threadObj.unreadMessageCount >0) {
-//                dotView.backgroundColor = [UIColor colorWithRed:204.0f/255 green:41.0f/255 blue:43.0f/255 alpha:1.0];
-//                break;
-//            }
-//            else
-//            {
-//                dotView.backgroundColor = [UIColor clearColor];
-//            }
-//        }
-//}
-}
 #pragma mark - searchBar handler
 -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
     [searchBar resignFirstResponder];
@@ -845,5 +593,224 @@ static NSString *const kCellSubCatIdentifier = @"kCellSubCatIdentifier";
         [threadListTableView reloadData];
     }
    
+}
+
+
+#pragma mark - methods for header and rows view
+
+-(UIView*)drawSectionHeaderView :(UITableView *)tableView headerSection:(NSInteger)section
+{
+    
+    ExpendObjectClass* obj =( ExpendObjectClass *) [chatThreadDict objectAtIndex:section];
+    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 40.0)];
+    view.backgroundColor = [UIColor whiteColor];
+    MXButton *button = [[MXButton alloc]initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 40.0)];
+    [button addTarget:self action:@selector(sectionHeaderViewButtonHandler:) forControlEvents:UIControlEventTouchUpInside];
+    button.elementId = obj.MENU_NAME;
+    [view addSubview:button];
+    dotView = [[UIView alloc]initWithFrame:CGRectMake(10, 15, 10*deviceWidthRation, 10*deviceHeightRation)];
+    for (int i=0; i<obj.childCategories.count; i++) {
+        ChatThreadList_Object *threadObj = (ChatThreadList_Object*) [obj.childCategories objectAtIndex:i];
+        if (threadObj.unreadMessageCount >0) {
+            dotView.backgroundColor = [UIColor colorWithRed:204.0f/255 green:41.0f/255 blue:43.0f/255 alpha:1.0];
+            break;
+        }
+        else
+        {
+            dotView.backgroundColor = [UIColor clearColor];
+        }
+    }
+    
+    
+    dotView.layer.cornerRadius = 5;
+    
+    [view addSubview:dotView];
+    
+    UIImageView *imageView = [[UIImageView alloc]init];
+    imageView.frame = CGRectMake(tableView.frame.size.width-40, 5, 20, 20);
+    imageView.contentMode = UIViewContentModeCenter;
+    if ([expendObjectOpenClosedStatusDict valueForKey:obj.MENU_NAME]==nil || [[expendObjectOpenClosedStatusDict valueForKey:obj.MENU_NAME] isEqualToString:@"close"]) {
+        
+        [imageView setImage:[UIImage imageNamed:@"polycab_arrow_closed"]];
+    }
+    else
+    {
+        [imageView setImage:[UIImage imageNamed:@"polycab_arrow_open"]];
+    }
+    [view addSubview:imageView];
+    
+    
+    UILabel *textLbl = [[UILabel alloc]initWithFrame:CGRectMake(25*deviceWidthRation, 0,imageView.frame.origin.x-20, 38.0)];
+    textLbl.text  = obj.MENU_NAME;
+    textLbl.font = [UIFont systemFontOfSize:14.0f weight:UIFontWeightBold];
+    [view addSubview:textLbl];
+    
+    UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(15, view.frame.size.height-3, view.frame.size.width, 0.8)];
+    [separator setBackgroundColor:[UIColor colorWithRed:220.0/255.0 green:220.0/255.0 blue:220.0/255 alpha:1.0]];
+    
+    [view addSubview:separator];
+    
+    return view;
+}
+
+-(IBAction)sectionHeaderViewButtonHandler:(id)sender
+{
+    MXButton *button = (MXButton*) sender;
+    NSString *previousStatus = [expendObjectOpenClosedStatusDict valueForKey:button.elementId];
+    if ([previousStatus isEqualToString:@"close"] || previousStatus == nil) {
+        [expendObjectOpenClosedStatusDict setObject:@"open" forKey:button.elementId];
+    }
+    else
+    {
+         [expendObjectOpenClosedStatusDict setObject:@"close" forKey:button.elementId];
+    }
+    
+    [threadListTableView reloadData];
+}
+#pragma mark - new tableview methods
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    NSInteger numOfSections = 0;
+        if (chatThreadDict.count >0)
+        {
+            numOfSections = [chatThreadDict count];
+    UIView *view = [UIView new];
+            view.backgroundColor = [UIColor whiteColor];
+            threadListTableView.backgroundView  = view;
+        }
+        else
+        {
+            UILabel *noDataLabel         = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, threadListTableView.bounds.size.width, threadListTableView.bounds.size.height)];
+            noDataLabel.text             = @"No chat threads available.";
+            noDataLabel.textColor        = [UIColor blackColor];
+            noDataLabel.textAlignment    = NSTextAlignmentCenter;
+            threadListTableView.backgroundView  = noDataLabel;
+            threadListTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        }
+        return numOfSections;
+    
+    
+//    return  [chatThreadDict count];
+}
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{   ExpendObjectClass* obj =( ExpendObjectClass *) [chatThreadDict objectAtIndex:section];
+    
+    if ([expendObjectOpenClosedStatusDict valueForKey:obj.MENU_NAME]==nil || [[expendObjectOpenClosedStatusDict valueForKey:obj.MENU_NAME] isEqualToString:@"close"]) {
+    
+        return 0;
+    }
+    
+    else
+    {
+         return [obj.childCategories count];
+    }
+    
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 40.0;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 70.0;
+}
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    return [self drawSectionHeaderView:tableView headerSection:section];
+}
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{   NSString *str = [NSString stringWithFormat:@"Section_%ld_row_%ld",(long)indexPath.section,indexPath.row];
+    ExpendObjectClass* obj =( ExpendObjectClass *) [chatThreadDict objectAtIndex:indexPath.section];
+    
+    if ([[expendObjectOpenClosedStatusDict valueForKey:obj.MENU_NAME] isEqualToString:@"open"]) {
+        
+                   ChatThreadCell * cell =(ChatThreadCell*) [tableView dequeueReusableCellWithIdentifier:str];
+                    [tableView registerNib:[UINib nibWithNibName:@"ChatThreadCell" bundle:nil] forCellReuseIdentifier:str];
+                    cell  = [tableView dequeueReusableCellWithIdentifier:str];
+                   cell.selectionStyle = UITableViewCellSelectionStyleGray;
+                    ChatThreadList_Object *obj = (ChatThreadList_Object *)[[[chatThreadDict objectAtIndex:indexPath.section] childCategories] objectAtIndex:indexPath.row];
+                NSString*objString = obj.subject;
+                //  Base64 string to original string
+                NSData *base64Data = [[NSData alloc] initWithBase64EncodedString:objString options:NSDataBase64DecodingIgnoreUnknownCharacters];
+                NSString *originalString =[[NSString alloc] initWithData:base64Data encoding:NSUTF8StringEncoding];
+        
+                NSLog(@"Result: %@",originalString);
+        
+                    cell.subjectLbl.text = originalString;
+                    cell.chatPersonLbl.text = obj.displayName;
+                    double timeStamp = [obj.lastMessageOn doubleValue];
+        
+                    NSTimeInterval timeInterval=timeStamp/1000;
+                    NSDate *date = [NSDate dateWithTimeIntervalSince1970:timeInterval];
+                    NSDateFormatter *dateformatter=[[NSDateFormatter alloc]init];
+                    [dateformatter setDateFormat:@"dd LLL,yy HH:mm"];
+                    NSString *dateString=[dateformatter stringFromDate:date];
+                    cell.timeStampLbl.text =dateString;
+                    cell.tag = obj.chatThreadId;
+                    cell.closeButtonOutlate.elementId = [NSString stringWithFormat:@"%d",obj.chatThreadId];
+        
+                    if ([obj.status isEqualToString:@"Accept"] || [obj.status isEqualToString:@"Close"] || [obj.status isEqualToString:@"Accept-Talk"] ) {
+        
+                        [cell.acceptImageView setImage:[UIImage imageNamed:@"Tick_Mark"]];
+                        cell.chatIdLbl.text = [NSString stringWithFormat:@"SPA No : %@",obj.spaNo];
+                    }
+        
+                    if (obj.unreadMessageCount >0) {
+                        cell.pushView.backgroundColor = [UIColor colorWithRed:204.0f/255 green:41.0f/255 blue:43.0f/255 alpha:1.0];
+                    }
+                    else
+                    {
+                        cell.pushView.backgroundColor = [UIColor clearColor];
+                    }
+                    return cell;
+    }
+    
+}
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    expendObjectOpenClosedStatusDict = [[NSMutableDictionary alloc]init];
+        ChatThreadList_Object *obj = (ChatThreadList_Object *)[[[chatThreadDict objectAtIndex:indexPath.section] childCategories] objectAtIndex:indexPath.row];
+        NSString* username = [[NSUserDefaults standardUserDefaults] objectForKey:@"USERNAME"];
+        NSString *ownUserId = chatPersonUserID;
+        NSString *parseId= @"";// for get username from contact db
+        NSArray *array = [obj.from componentsSeparatedByString:@"@"];
+        if ([[array objectAtIndex:0] isEqualToString:ownUserId]) {
+            parseId =obj.to;
+        }
+        else{
+            parseId =obj.from;
+        }
+         NSArray *array2 = [parseId componentsSeparatedByString:@"@"];//// for accept button check.
+        if ([[array2 objectAtIndex:1] isEqualToString:@"employee"]) {
+            [[NSUserDefaults standardUserDefaults] setObject:@"NO" forKey:@"Accept_Chat_Button"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+        }
+        else
+        {
+             [[NSUserDefaults standardUserDefaults] setObject:@"YES" forKey:@"Accept_Chat_Button"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+        }
+    
+            NSString*objString = obj.subject;
+            //  Base64 string to original string
+            NSData *base64Data = [[NSData alloc] initWithBase64EncodedString:objString options:NSDataBase64DecodingIgnoreUnknownCharacters];
+            NSString *originalString =[[NSString alloc] initWithData:base64Data encoding:NSUTF8StringEncoding];
+    
+            NSLog(@"Result: %@",originalString);
+    
+        ChatRoomsVC *vc = [[ChatRoomsVC alloc]init];
+        vc.subject =originalString;
+        vc.withChatPersonName = parseId;
+        vc.chatThreadId =[NSString stringWithFormat:@"%d",obj.chatThreadId];
+        vc.chatStatus = obj.status;
+        vc.nameLbltext = obj.displayName;
+        [[self navigationController ] pushViewController:vc animated:YES];
+    
+        ChatThreadCell *cellView =[( ChatThreadCell * ) self.view viewWithTag:obj.chatThreadId];
+        cellView.pushView.backgroundColor = [UIColor clearColor];
 }
 @end

@@ -1394,13 +1394,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "chatBox/ChatBoxUserListVC.m"
-            timestampString = "583680666.64607"
+            timestampString = "583760022.02245"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "166"
             endingLineNumber = "166"
-            landmarkName = "@implementation ChatBoxUserListVC"
-            landmarkType = "3">
+            landmarkName = "-httpResponseObjectHandler:::"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1666,7 +1666,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XMWClient/Network/NetworkHelper.m"
-            timestampString = "580812636.228286"
+            timestampString = "583758673.247214"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "537"
@@ -1998,22 +1998,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "chatBox/ChatBoxVC.m"
-            timestampString = "583740895.042123"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "119"
-            endingLineNumber = "119"
-            landmarkName = "-viewWillAppear:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -2034,7 +2018,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "chatBox/ChatRoomsVC.m"
-            timestampString = "583680666.6490231"
+            timestampString = "583760022.0231529"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "519"
@@ -2066,7 +2050,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "chatBox/ChatRoomsVC.m"
-            timestampString = "583680666.649134"
+            timestampString = "583760022.023232"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "314"
@@ -2098,7 +2082,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "chatBox/ChatRoomsVC.m"
-            timestampString = "583680666.64928"
+            timestampString = "583760022.023306"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "580"
@@ -2110,16 +2094,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "chatBox/ChatBoxVC.m"
-            timestampString = "583740895.042279"
+            timestampString = "583760022.023375"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "682"
-            endingLineNumber = "682"
-            landmarkName = "-tableView:cellForRowAtIndexPath:"
+            startingLineNumber = "773"
+            endingLineNumber = "773"
+            landmarkName = "-tableView:didSelectRowAtIndexPath:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
