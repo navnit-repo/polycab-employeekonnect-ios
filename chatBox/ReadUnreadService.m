@@ -57,12 +57,12 @@
                 chatHistory_Object.messageId    =  [[updated objectAtIndex:i] integerValue];
                 [chatHistory_DBStorage updateUnreadMessageStatus:chatHistory_Object];
             }
-            if (failedToUpdate.count>0) {
-                //                [self unreadMessageNetworkCall];
-            }
-            else
-            {
-                
+//            if (failedToUpdate.count>0) {
+//                //                [self unreadMessageNetworkCall];
+//            }
+//            else
+//            {
+            
                 [ChatThreadList_DB createInstance : @"ChatThread_DB_STORAGE" : true];
                 ChatThreadList_DB *chatThreadListStorage = [ChatThreadList_DB getInstance];
                 ChatThreadList_Object* chatThreadList_Object = [[ChatThreadList_Object alloc] init];
@@ -86,7 +86,7 @@
                 
                 
                 
-            }
+//            }
         }
     }
 }

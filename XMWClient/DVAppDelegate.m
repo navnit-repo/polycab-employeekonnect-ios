@@ -55,6 +55,7 @@ BOOL ChatRoomPushNotifiactionFlag;
 BOOL SELF_EXTEND;
 BOOL regIDCheck;
 ChatHistory_Object *puchNotifiactionChatHistory_Object;
+ChatThreadList_Object *puchNotifiactionChatThreadList_Object;
 static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
 
 #define LOCAL_PLAY_ALERT_TAG 9001
@@ -244,6 +245,7 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
                     [responsedict setDictionary:[mainDict objectForKey:@"NOTIFY_MESSAGE_KEY"]];
                     ChatThreadList_Object* chatThreadList_Object = [[ChatThreadList_Object alloc] init];
                     chatThreadList_Object.chatThreadId = [[[responsedict valueForKey:@"message"] valueForKey:@"chatThread"] integerValue];
+                    puchNotifiactionChatThreadList_Object= chatThreadList_Object;
                     ChatBoxPushNotifiactionFlag = YES;
 //                    [[NSUserDefaults standardUserDefaults] setObject:@"YES" forKey:[NSString stringWithFormat:@"NEW_PUSH_%d",chatThreadList_Object.chatThreadId]];
 
@@ -1121,6 +1123,11 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
 {
     NSMutableDictionary *responsedict = [[NSMutableDictionary alloc] init];
     [responsedict setDictionary:[mainDict objectForKey:@"NOTIFY_MESSAGE_KEY"]];
+    ChatHistory_Object* chatHistory_Object = [[ChatHistory_Object alloc] init];
+    chatHistory_Object.chatThreadId =  [[responsedict valueForKey:@"chatThread"] integerValue] ;
+    puchNotifiactionChatHistory_Object = chatHistory_Object;
+    
+    
     [ChatHistory_DB createInstance : @"ChatHistory_DB_STORAGE" : true :[[responsedict valueForKey:@"chatThread"] integerValue]];
     ChatHistory_DB *chatHistory_DBStorage = [ChatHistory_DB getInstance];
     NSMutableArray *chatHistoryStorageData = [chatHistory_DBStorage getRecentDocumentsData : @"False"];
@@ -1325,6 +1332,11 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
     
     NSMutableDictionary *responsedict = [[NSMutableDictionary alloc]init];
     [responsedict setDictionary:[mainDict objectForKey:@"NOTIFY_MESSAGE_KEY"]];
+    
+    ChatThreadList_Object* chatThreadList_Object = [[ChatThreadList_Object alloc] init];
+    chatThreadList_Object.chatThreadId = [[[responsedict valueForKey:@"message"] valueForKey:@"chatThread"] integerValue];
+    puchNotifiactionChatThreadList_Object= chatThreadList_Object;
+    
     [ChatThreadList_DB createInstance : @"ChatThread_DB_STORAGE" : true];
     ChatThreadList_DB *chatThreadListStorage = [ChatThreadList_DB getInstance];
     NSMutableArray *chatThreadListStorageData = [chatThreadListStorage getRecentDocumentsData : @"False"];

@@ -273,7 +273,7 @@ static ChatHistory_DB* DEFAULT_INSTANCE = 0;
     NSString* query = @"UPDATE ";
     query =  [query stringByAppendingString : [self getTableName]];
     query = [[query stringByAppendingString : @" SET "] stringByAppendingString:@" messageRead = 'YES'"];
-    NSString *whereClause = [[[[@"where messageId="stringByAppendingString:[NSString stringWithFormat:@"%d",chatHistory_Object.messageId]]stringByAppendingString:@" and chatThreadId="]stringByAppendingString:[NSString stringWithFormat:@"%d",chatThreatIdToRetrieveHistory]]stringByAppendingString:@";"];
+    NSString *whereClause = [[[[@" where messageId = "stringByAppendingString:[NSString stringWithFormat:@"%d",chatHistory_Object.messageId]]stringByAppendingString:@" and chatThreadId = "]stringByAppendingString:[NSString stringWithFormat:@"%d",chatThreatIdToRetrieveHistory]]stringByAppendingString:@";"];
    
     query = [query stringByAppendingString:whereClause];
     NSLog(@"Unread message update query;-\n%@",query);

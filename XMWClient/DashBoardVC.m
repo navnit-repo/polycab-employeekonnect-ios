@@ -39,6 +39,8 @@
 #import "ChatHistory_Object.h"
 #import "NewChatBoxVC.h"
 #import "KeychainItemWrapper.h"
+#import "ChatThreadList_Object.h"
+#import "ChatThreadList_DB.h"
 #define TAG_LOGOUT_DIALOG 1000
 @interface DashBoardVC ()
 @end
@@ -57,7 +59,7 @@
     MarqueeLabel *lble;
 //    UIRefreshControl*   refreshControl;
     BOOL refreshFlag;
-    
+    UIButton *chatButton;
 }
 @synthesize auth_Token;
 @synthesize tabBar;
@@ -111,6 +113,30 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    // for chat icon alert
+    dispatch_async(dispatch_get_main_queue(), ^{
+      
+        [ChatThreadList_DB createInstance : @"ChatThread_DB_STORAGE" : true];
+        ChatThreadList_DB *chatThreadListStorage = [ChatThreadList_DB getInstance];
+        NSMutableArray *chatThreadListStorageData = [chatThreadListStorage getRecentDocumentsData : @"False"];
+        
+        for (int i=0; i<chatThreadListStorageData.count; i++) {
+            ChatThreadList_Object *obj = (ChatThreadList_Object*) [chatThreadListStorageData objectAtIndex:i];
+            if (obj.unreadMessageCount >0) {
+                UIView *view = [[UIView alloc]initWithFrame:CGRectMake( 15.0f, -5.0f, 10.0f, 10.0f)];
+                view.tag = 10000000;
+                view.backgroundColor = [UIColor whiteColor];
+                view.layer.cornerRadius = 5;
+                CALayer *myLayer = view.layer;
+                
+                [chatButton.layer addSublayer:myLayer];
+                break;
+            }
+        }
+        
+    });
+    
+    
     if (ChatBoxPushNotifiactionFlag == YES) {
         dispatch_async(dispatch_get_main_queue(), ^{
             ChatBoxVC *vc = [[ChatBoxVC alloc]init];
@@ -190,7 +216,7 @@
     notificationButtonItem.target           = self;
     
      UIImage *chatButtonIconImage = [[UIImage imageNamed:@"Artboard"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    UIButton *chatButton  = [UIButton buttonWithType:UIButtonTypeCustom];
+    chatButton  = [UIButton buttonWithType:UIButtonTypeCustom];
     [chatButton setFrame:CGRectMake( 0.0f, 0.0f, 25.0f, 25.0f)];
     [chatButton setBackgroundImage:chatButtonIconImage forState:UIControlStateNormal];
     [chatButton addTarget:self action:@selector(chatHandler:) forControlEvents:UIControlEventTouchUpInside];

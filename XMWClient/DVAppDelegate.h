@@ -12,6 +12,8 @@
 #import "SWRevealViewController.h"
 #import <UserNotifications/UserNotifications.h>
 #import "ChatHistory_Object.h"
+#import "ChatThreadList_Object.h"
+extern ChatThreadList_Object *puchNotifiactionChatThreadList_Object;
 extern ChatHistory_Object *puchNotifiactionChatHistory_Object;
 extern CGFloat deviceWidthRation;
 extern CGFloat deviceHeightRation;

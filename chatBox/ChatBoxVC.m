@@ -148,20 +148,45 @@ static NSString *const kCellSubCatIdentifier = @"kCellSubCatIdentifier";
     ChatThreadList_Object *obj;
     if (ChatBoxPushNotifiactionFlag == YES) {
         ChatBoxPushNotifiactionFlag = NO;
-        ExpendObjectClass *expendObj = (ExpendObjectClass *)[chatThreadDict objectAtIndex:0];
-      obj = (ChatThreadList_Object *)[expendObj.childCategories objectAtIndex:0];
+        
+        ChatThreadList_Object *chatThread_Obj = (ChatThreadList_Object*) puchNotifiactionChatThreadList_Object;
+        int onClickedNotificationThreadId= chatThread_Obj.chatThreadId;
+        
+        bool dobreak = false;
+        for(int i=0;!dobreak && i<chatThreadDict.count; i++)
+        {
+            ExpendObjectClass *expendObj = (ExpendObjectClass *)[chatThreadDict objectAtIndex:i];
+            for (int j=0; j<expendObj.childCategories.count; j++) {
+                ChatThreadList_Object *threadListObject= (ChatThreadList_Object*) [expendObj.childCategories objectAtIndex:j];
+                if (threadListObject.chatThreadId == onClickedNotificationThreadId) {
+                    obj = threadListObject;
+                    dobreak = true;
+                    break;
+                }
+            }
+            
+        }
     }
     else if (ChatRoomPushNotifiactionFlag== YES)
     {
         ChatRoomPushNotifiactionFlag= NO;
         
         ChatHistory_Object* chatHistory_Object = (ChatHistory_Object*) puchNotifiactionChatHistory_Object;
-        
-        UITableViewCell *cell = [(UITableViewCell *) self.view viewWithTag:chatHistory_Object.chatThreadId];
-        NSIndexPath *index = [self.threadListTableView indexPathForCell:cell];
-        NSLog(@"%i", index.row);
-        ExpendObjectClass *expendObj = (ExpendObjectClass *)[chatThreadDict objectAtIndex:0];
-        obj = (ChatThreadList_Object *)[expendObj.childCategories objectAtIndex:0];
+        int onClickedNotificationThreadId= chatHistory_Object.chatThreadId;
+        bool dobreak = false;
+        for(int i=0;!dobreak && i<chatThreadDict.count; i++)
+        {
+             ExpendObjectClass *expendObj = (ExpendObjectClass *)[chatThreadDict objectAtIndex:i];
+            for (int j=0; j<expendObj.childCategories.count; j++) {
+                ChatThreadList_Object *threadListObject= (ChatThreadList_Object*) [expendObj.childCategories objectAtIndex:j];
+                if (threadListObject.chatThreadId == onClickedNotificationThreadId) {
+                    obj = threadListObject;
+                    dobreak = true;
+                    break;
+                }
+            }
+            
+        }
     }
     NSString* username = [[NSUserDefaults standardUserDefaults] objectForKey:@"USERNAME"];
     NSString *ownUserId = chatPersonUserID;
@@ -607,6 +632,7 @@ static NSString *const kCellSubCatIdentifier = @"kCellSubCatIdentifier";
     MXButton *button = [[MXButton alloc]initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 40.0)];
     [button addTarget:self action:@selector(sectionHeaderViewButtonHandler:) forControlEvents:UIControlEventTouchUpInside];
     button.elementId = obj.MENU_NAME;
+    button.tag = section;
     [view addSubview:button];
     dotView = [[UIView alloc]initWithFrame:CGRectMake(10, 15, 10*deviceWidthRation, 10*deviceHeightRation)];
     for (int i=0; i<obj.childCategories.count; i++) {
@@ -664,8 +690,7 @@ static NSString *const kCellSubCatIdentifier = @"kCellSubCatIdentifier";
     {
          [expendObjectOpenClosedStatusDict setObject:@"close" forKey:button.elementId];
     }
-    
-    [threadListTableView reloadData];
+    [threadListTableView reloadSections:[NSIndexSet indexSetWithIndex:button.tag] withRowAnimation:UITableViewRowAnimationFade];
 }
 #pragma mark - new tableview methods
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView

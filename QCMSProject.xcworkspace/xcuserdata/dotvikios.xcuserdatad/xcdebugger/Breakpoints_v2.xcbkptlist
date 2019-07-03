@@ -330,11 +330,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XMWClient/DVAppDelegate.m"
-            timestampString = "583680666.644426"
+            timestampString = "583853818.330407"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "659"
-            endingLineNumber = "659"
+            startingLineNumber = "661"
+            endingLineNumber = "661"
             landmarkName = "-httpResponseObjectHandler:::"
             landmarkType = "7">
          </BreakpointContent>
@@ -1522,11 +1522,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XMWClient/DVAppDelegate.m"
-            timestampString = "583680666.647202"
+            timestampString = "583853818.331766"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "703"
-            endingLineNumber = "703"
+            startingLineNumber = "705"
+            endingLineNumber = "705"
             landmarkName = "-httpResponseObjectHandler:::"
             landmarkType = "7">
          </BreakpointContent>
@@ -1634,11 +1634,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XMWClient/DVAppDelegate.m"
-            timestampString = "583680666.647577"
+            timestampString = "583853818.331941"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "416"
-            endingLineNumber = "416"
+            startingLineNumber = "418"
+            endingLineNumber = "418"
             landmarkName = "-application:didReceiveRemoteNotification:"
             landmarkType = "7">
          </BreakpointContent>
@@ -1682,7 +1682,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "chatBox/ReadUnreadService.m"
-            timestampString = "583680666.64772"
+            timestampString = "583853818.33205"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "93"
@@ -1730,11 +1730,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XMWClient/DVAppDelegate.m"
-            timestampString = "583680666.647833"
+            timestampString = "583853818.3321429"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "421"
-            endingLineNumber = "421"
+            startingLineNumber = "423"
+            endingLineNumber = "423"
             landmarkName = "-application:didReceiveRemoteNotification:"
             landmarkType = "7">
          </BreakpointContent>
@@ -1746,11 +1746,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XMWClient/DVAppDelegate.m"
-            timestampString = "583680666.647913"
+            timestampString = "583853818.332209"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "420"
-            endingLineNumber = "420"
+            startingLineNumber = "422"
+            endingLineNumber = "422"
             landmarkName = "-application:didReceiveRemoteNotification:"
             landmarkType = "7">
          </BreakpointContent>
@@ -1794,11 +1794,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XMWClient/DVAppDelegate.m"
-            timestampString = "583680666.648126"
+            timestampString = "583853818.332312"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "945"
-            endingLineNumber = "945"
+            startingLineNumber = "947"
+            endingLineNumber = "947"
             landmarkName = "-handlePushChatMessageFromRecieve:"
             landmarkType = "7">
          </BreakpointContent>
@@ -1810,11 +1810,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XMWClient/DVAppDelegate.m"
-            timestampString = "583680666.648209"
+            timestampString = "583853818.332379"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1323"
-            endingLineNumber = "1323"
+            startingLineNumber = "1330"
+            endingLineNumber = "1330"
             landmarkName = "-handlePushChatNewThread:"
             landmarkType = "7">
          </BreakpointContent>
@@ -1826,11 +1826,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XMWClient/DVAppDelegate.m"
-            timestampString = "583680666.6482871"
+            timestampString = "583853818.332443"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1364"
-            endingLineNumber = "1364"
+            startingLineNumber = "1376"
+            endingLineNumber = "1376"
             landmarkName = "-handlePushChatNewThread:"
             landmarkType = "7">
          </BreakpointContent>
@@ -1842,11 +1842,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XMWClient/DVAppDelegate.m"
-            timestampString = "583680666.6483639"
+            timestampString = "583853818.332507"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "930"
-            endingLineNumber = "930"
+            startingLineNumber = "932"
+            endingLineNumber = "932"
             landmarkName = "-updateUIViewControllersArray"
             landmarkType = "7">
          </BreakpointContent>
@@ -1858,11 +1858,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XMWClient/DVAppDelegate.m"
-            timestampString = "583680666.64844"
+            timestampString = "583853818.332572"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1134"
-            endingLineNumber = "1134"
+            startingLineNumber = "1141"
+            endingLineNumber = "1141"
             landmarkName = "-handlePushChatNewMessage:"
             landmarkType = "7">
          </BreakpointContent>
@@ -1890,11 +1890,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XMWClient/DVAppDelegate.m"
-            timestampString = "583680666.648542"
+            timestampString = "583853818.332657"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1025"
-            endingLineNumber = "1025"
+            startingLineNumber = "1027"
+            endingLineNumber = "1027"
             landmarkName = "-handlePushChatNewMessageWillPresent:"
             landmarkType = "7">
          </BreakpointContent>
@@ -1906,11 +1906,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XMWClient/DVAppDelegate.m"
-            timestampString = "583680666.64862"
+            timestampString = "583853818.3327219"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "984"
-            endingLineNumber = "984"
+            startingLineNumber = "986"
+            endingLineNumber = "986"
             landmarkName = "-handlePushChatNewMessageWillPresent:"
             landmarkType = "7">
          </BreakpointContent>
@@ -1954,11 +1954,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XMWClient/DVAppDelegate.m"
-            timestampString = "583680666.6487401"
+            timestampString = "583853818.332824"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "613"
-            endingLineNumber = "613"
+            startingLineNumber = "615"
+            endingLineNumber = "615"
             landmarkName = "-httpResponseObjectHandler:::"
             landmarkType = "7">
          </BreakpointContent>
@@ -2002,11 +2002,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XMWClient/DVAppDelegate.m"
-            timestampString = "583680666.648945"
+            timestampString = "583853818.332927"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "847"
-            endingLineNumber = "847"
+            startingLineNumber = "849"
+            endingLineNumber = "849"
             landmarkName = "-userNotificationCenter:willPresentNotification:withCompletionHandler:"
             landmarkType = "7">
          </BreakpointContent>
@@ -2018,7 +2018,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "chatBox/ChatRoomsVC.m"
-            timestampString = "583760022.0231529"
+            timestampString = "583849529.897426"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "519"
@@ -2050,7 +2050,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "chatBox/ChatRoomsVC.m"
-            timestampString = "583760022.023232"
+            timestampString = "583849529.897897"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "314"
@@ -2066,11 +2066,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XMWClient/DashBoardVC.m"
-            timestampString = "583680666.649214"
+            timestampString = "583853818.33305"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "833"
-            endingLineNumber = "833"
+            startingLineNumber = "859"
+            endingLineNumber = "859"
             landmarkName = "-userLogout"
             landmarkType = "7">
          </BreakpointContent>
@@ -2082,7 +2082,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "chatBox/ChatRoomsVC.m"
-            timestampString = "583760022.023306"
+            timestampString = "583849529.8982871"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "580"
@@ -2098,12 +2098,108 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "chatBox/ChatBoxVC.m"
-            timestampString = "583760022.023375"
+            timestampString = "583853818.333136"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "773"
-            endingLineNumber = "773"
+            startingLineNumber = "798"
+            endingLineNumber = "798"
             landmarkName = "-tableView:didSelectRowAtIndexPath:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "chatBox/ChatBoxVC.m"
+            timestampString = "583853818.3332109"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "146"
+            endingLineNumber = "146"
+            landmarkName = "-pushHandling"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "XMWClient/DVAppDelegate.m"
+            timestampString = "583853818.333282"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1122"
+            endingLineNumber = "1122"
+            landmarkName = "-handlePushChatNewMessage:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "chatBox/ChatRoomsVC.m"
+            timestampString = "583849537.687815"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "219"
+            endingLineNumber = "219"
+            landmarkName = "-unreadMessageNetworkCall"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "chatBox/ReadUnreadService.m"
+            timestampString = "583853818.333365"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "41"
+            endingLineNumber = "41"
+            landmarkName = "-httpResponseObjectHandler:::"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "chatBox/DB Files/ChatHistory_DB.m"
+            timestampString = "583853818.333426"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "271"
+            endingLineNumber = "271"
+            landmarkName = "-updateUnreadMessageStatus:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "chatBox/ChatBoxVC.m"
+            timestampString = "583853818.3334841"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "682"
+            endingLineNumber = "682"
+            landmarkName = "-sectionHeaderViewButtonHandler:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
