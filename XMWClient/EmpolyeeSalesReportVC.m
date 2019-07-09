@@ -34,7 +34,7 @@
         
         lView = [view viewWithTag:0];
         //  lView.backgroundColor = [UIColor colorWithRed:128.0/255 green:128.0/255 blue:128.0/255 alpha:1.0];
-        [LayoutClass setLayoutForIPhone6:lView];
+//        [LayoutClass setLayoutForIPhone6:lView];
         
         label = [lView viewWithTag:101];
         [LayoutClass labelLayout:label forFontWeight:UIFontWeightSemibold];
@@ -69,7 +69,7 @@
         // for total labels
         
         UIView* totalRow = [view viewWithTag:20];
-        [LayoutClass setLayoutForIPhone6:totalRow];
+//        [LayoutClass setLayoutForIPhone6:totalRow];
         
         MXButton *totalRowButton = [[MXButton alloc]initWithFrame:CGRectMake(0, 0, totalRow.frame.size.width, totalRow.frame.size.height)];
         totalRowButton.backgroundColor = [UIColor clearColor];
@@ -242,16 +242,6 @@
 {
     return 44.0f*deviceHeightRation;
 }
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    if(section==0 ) {
-        return 0.0f;
-    } else if(section==1) {
-        return 100.0f*deviceHeightRation;
-    }
-    return 0.0f;
-}
-
 -(void) drawTitle:(NSString *)headerStr
 {
     NSDictionary *textAttributes = [NSDictionary dictionaryWithObjectsAndKeys:

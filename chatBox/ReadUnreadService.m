@@ -15,6 +15,7 @@
 #import "ChatBoxVC.h"
 #import "SWRevealViewController.h"
 #import "XmwcsConstant.h"
+#import "ExpendObjectClass.h"
 @implementation ReadUnreadService
 {
     NetworkHelper *networkHelper;
@@ -62,7 +63,7 @@
 //            }
 //            else
 //            {
-            
+            dispatch_async(dispatch_get_main_queue(), ^{
                 [ChatThreadList_DB createInstance : @"ChatThread_DB_STORAGE" : true];
                 ChatThreadList_DB *chatThreadListStorage = [ChatThreadList_DB getInstance];
                 ChatThreadList_Object* chatThreadList_Object = [[ChatThreadList_Object alloc] init];
@@ -80,15 +81,46 @@
                     NSMutableArray *chatThreadListStorageData = [chatThreadListStorage getRecentDocumentsData : @"False"];
                     if ([checkView isKindOfClass:[ChatBoxVC class]]) {
                         ChatBoxVC *vc =  (ChatBoxVC*) checkView;
-                        vc.chatThreadDict = chatThreadListStorageData;
+                        [vc.chatThreadDict addObjectsFromArray:[self groupData:chatThreadListStorageData]];
+                        [vc.threadListTableView reloadData];
                     }
                 }
+            });
+            
                 
                 
                 
 //            }
         }
     }
+}
+-(NSMutableArray*)groupData :(NSArray*)dataArray
+{
+    NSMutableArray*distinctName = [[NSMutableArray alloc]init];
+    for (int i=0; i<dataArray.count; i++) {
+        ChatThreadList_Object *obj = (ChatThreadList_Object*) [dataArray objectAtIndex:i];
+        
+        if (![distinctName  containsObject:obj.displayName]) {
+            [distinctName addObject:obj.displayName];
+        }
+    }
+    
+    NSMutableArray *groupObject = [[NSMutableArray alloc]init];
+    for (int i=0; i<distinctName.count; i++) {
+        NSMutableArray *array = [[NSMutableArray alloc]init];
+        ExpendObjectClass * expendObj = [[ExpendObjectClass alloc]init];
+        for (int j=0; j<dataArray.count; j++) {
+            ChatThreadList_Object *obj = (ChatThreadList_Object*) [dataArray objectAtIndex:j];
+            if ([obj.displayName isEqualToString:[distinctName objectAtIndex:i]] ) {
+                [array addObject:obj];
+            }
+            
+        }
+        expendObj.MENU_NAME =[distinctName objectAtIndex:i];
+        expendObj.childCategories = array;
+        [groupObject addObject:expendObj];
+    }
+    return groupObject;
 }
 - (void) httpFailureHandler : (NSString*) callName : (NSString*) message {
     

@@ -34,17 +34,17 @@ static NSString *const kCellSubCatIdentifier = @"kCellSubCatIdentifier";
 {
     NetworkHelper *networkHelper;
     LoadingView *loadingView;
-    NSMutableDictionary *expendStatus;
     UIView *dotView;
     UIButton *addContactButton;
     NSMutableArray *searchTextArray;
-    NSMutableArray *orignalChatThreadListArray;
+//    NSMutableArray *orignalChatThreadListArray;
     bool isfilterFlag;
     long long int uniqueCell;
     UISearchBar *searchBar;
 //    NSMutableDictionary *expendObjectOpenClosedStatusDict;
     
 }
+@synthesize orignalChatThreadListArray;
 @synthesize expendObjectOpenClosedStatusDict;
 @synthesize chatThreadDict;
 @synthesize threadListTableView;
@@ -86,8 +86,6 @@ static NSString *const kCellSubCatIdentifier = @"kCellSubCatIdentifier";
         // 0, 64, 320, 416
         self.view.frame = CGRectMake(0, yorigin, 320, totalViewHeight-yorigin);
     }
-    expendStatus = [[NSMutableDictionary alloc]init];
-    orignalChatThreadListArray = [[NSMutableArray alloc]init];
     [self drawHeaderItem];
     [self contactListNetworkCall];
     [self initializeView];
@@ -188,41 +186,44 @@ static NSString *const kCellSubCatIdentifier = @"kCellSubCatIdentifier";
             
         }
     }
-    NSString* username = [[NSUserDefaults standardUserDefaults] objectForKey:@"USERNAME"];
-    NSString *ownUserId = chatPersonUserID;
-    NSString *parseId= @"";// for get username from contact db
-    NSArray *array = [obj.from componentsSeparatedByString:@"@"];
-    if ([[array objectAtIndex:0] isEqualToString:ownUserId]) {
-        parseId =obj.to;
+    if (obj!=nil) {
+        NSString* username = [[NSUserDefaults standardUserDefaults] objectForKey:@"USERNAME"];
+        NSString *ownUserId = chatPersonUserID;
+        NSString *parseId= @"";// for get username from contact db
+        NSArray *array = [obj.from componentsSeparatedByString:@"@"];
+        if ([[array objectAtIndex:0] isEqualToString:ownUserId]) {
+            parseId =obj.to;
+        }
+        else{
+            parseId =obj.from;
+        }
+        NSArray *array2 = [parseId componentsSeparatedByString:@"@"];//// for accept button check.
+        if ([[array2 objectAtIndex:1] isEqualToString:@"employee"]) {
+            [[NSUserDefaults standardUserDefaults] setObject:@"NO" forKey:@"Accept_Chat_Button"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+        }
+        else
+        {
+            [[NSUserDefaults standardUserDefaults] setObject:@"YES" forKey:@"Accept_Chat_Button"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+        }
+        NSArray *navigationControllesArray = [[self navigationController] viewControllers];
+        ChatRoomsVC *vc = [[ChatRoomsVC alloc]init];
+        NSString*objString = obj.subject;
+        //  Base64 string to original string
+        NSData *base64Data = [[NSData alloc] initWithBase64EncodedString:objString options:NSDataBase64DecodingIgnoreUnknownCharacters];
+        NSString *originalString =[[NSString alloc] initWithData:base64Data encoding:NSUTF8StringEncoding];
+        
+        NSLog(@"Result: %@",originalString);
+        vc.subject =originalString;
+        vc.withChatPersonName = parseId;
+        vc.chatThreadId =[NSString stringWithFormat:@"%d",obj.chatThreadId];
+        vc.chatStatus = obj.status;
+        vc.nameLbltext = obj.displayName;
+        
+        [[self navigationController ] pushViewController:vc animated:YES];
     }
-    else{
-        parseId =obj.from;
-    }
-    NSArray *array2 = [parseId componentsSeparatedByString:@"@"];//// for accept button check.
-    if ([[array2 objectAtIndex:1] isEqualToString:@"employee"]) {
-        [[NSUserDefaults standardUserDefaults] setObject:@"NO" forKey:@"Accept_Chat_Button"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-    }
-    else
-    {
-        [[NSUserDefaults standardUserDefaults] setObject:@"YES" forKey:@"Accept_Chat_Button"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-    }
-    NSArray *navigationControllesArray = [[self navigationController] viewControllers];
-    ChatRoomsVC *vc = [[ChatRoomsVC alloc]init];
-    NSString*objString = obj.subject;
-    //  Base64 string to original string
-    NSData *base64Data = [[NSData alloc] initWithBase64EncodedString:objString options:NSDataBase64DecodingIgnoreUnknownCharacters];
-    NSString *originalString =[[NSString alloc] initWithData:base64Data encoding:NSUTF8StringEncoding];
-    
-    NSLog(@"Result: %@",originalString);
-    vc.subject =originalString;
-    vc.withChatPersonName = parseId;
-    vc.chatThreadId =[NSString stringWithFormat:@"%d",obj.chatThreadId];
-    vc.chatStatus = obj.status;
-    vc.nameLbltext = obj.displayName;
-
-    [[self navigationController ] pushViewController:vc animated:YES];
+   
     
 }
 -(void)initializeView
@@ -243,13 +244,29 @@ static NSString *const kCellSubCatIdentifier = @"kCellSubCatIdentifier";
   
     searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(10, 8, _headerView.frame.size.width-20, 44*deviceHeightRation)];
     searchBar.delegate = self;
-    searchBar.barTintColor = [UIColor whiteColor];
-    searchBar.layer.borderWidth = 0.5;
-    searchBar.layer.borderColor = [UIColor lightGrayColor].CGColor;
     [searchBar setPlaceholder:@"Search"];
     [searchBar setReturnKeyType:UIReturnKeyDone];
     searchBar.enablesReturnKeyAutomatically = NO;
     [_headerView addSubview:searchBar];
+    for (id subview in [[searchBar.subviews lastObject] subviews]) {
+        if ([subview isKindOfClass:NSClassFromString(@"UISearchBarBackground")]) {
+            [subview removeFromSuperview];
+        }
+        
+        if ([subview isKindOfClass:[UITextField class]])
+        {
+            UITextField *textFieldObject = (UITextField *)subview;
+            textFieldObject.borderStyle = UITextBorderStyleRoundedRect;
+            textFieldObject.layer.masksToBounds=YES;
+            textFieldObject.layer.borderColor=[[UIColor lightGrayColor]CGColor];
+            textFieldObject.layer.cornerRadius=5.0f;
+            textFieldObject.layer.borderWidth= 1.0f;
+            break;
+        }
+        
+    }
+
+    
 }
 
 -(void)contactListNetworkCall
@@ -374,6 +391,9 @@ static NSString *const kCellSubCatIdentifier = @"kCellSubCatIdentifier";
 }
 - (void) backHandler : (id) sender
 {
+    
+    ChatRoomPushNotifiactionFlag = NO;
+    ChatBoxPushNotifiactionFlag = NO;
     [ [self navigationController]  popViewControllerAnimated:YES];
     
 }
@@ -797,6 +817,7 @@ static NSString *const kCellSubCatIdentifier = @"kCellSubCatIdentifier";
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [searchBar resignFirstResponder];
     expendObjectOpenClosedStatusDict = [[NSMutableDictionary alloc]init];
         ChatThreadList_Object *obj = (ChatThreadList_Object *)[[[chatThreadDict objectAtIndex:indexPath.section] childCategories] objectAtIndex:indexPath.row];
         NSString* username = [[NSUserDefaults standardUserDefaults] objectForKey:@"USERNAME"];

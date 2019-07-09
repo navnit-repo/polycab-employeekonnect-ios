@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
     NSMutableArray *chatThreadDict;
     NSMutableDictionary *expendObjectOpenClosedStatusDict;
+    NSMutableArray *orignalChatThreadListArray;
 }
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet UIView *headerView;
@@ -24,6 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UITableView *threadListTableView;
 @property NSMutableArray *chatThreadDict;
 @property NSMutableDictionary *expendObjectOpenClosedStatusDict;
+@property NSMutableArray *orignalChatThreadListArray;
 @end
 
 NS_ASSUME_NONNULL_END

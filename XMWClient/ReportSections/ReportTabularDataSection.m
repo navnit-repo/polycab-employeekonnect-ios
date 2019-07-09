@@ -71,7 +71,6 @@
     
 }
 
-
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     
     NSMutableArray *check = [cellComponent objectAtIndex:4];//for Polycab project in policy menu according to change UI
@@ -89,24 +88,27 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     reportSection = indexPath.section;
-    
-    return [ReportTabularDataSection tableRowHeight];  //this is default height
+    CGFloat height=0.0f;
+//    return [ReportTabularDataSection tableRowHeight];  //this is default height
+    height = [self calculateCellHeight:indexPath];
+//    NSLog(@"Cell %ld height %f",(long)indexPath.row,height);
+    return height;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"TableDataSectionCell"];
-    if(cell==nil) {
+//    if(cell==nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"TableDataSectionCell"];
-    }
+//    }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     UIView* customView = [cell.contentView viewWithTag:3001];
-    if(customView==nil) {
-        customView = [self initializeDataRowCell];
+//    if(customView==nil) {
+        customView = [self initializeDataRowCell :indexPath];
         customView.tag = 3001;
         [cell.contentView addSubview:customView];
-    }
+//    }
     
     return cell;
 }
@@ -266,7 +268,7 @@
 }
 
 
--(UIView*) initializeDataRowCell
+-(UIView*) initializeDataRowCell:(NSIndexPath*)indexPath
 {
     CGFloat screenWidth = self.tableView.frame.size.width;
     
@@ -309,7 +311,7 @@
 		totalPerc = totalPerc + [tempLen intValue];// tempLen.toInt();
     }
     //end
-    
+    bool heightComputeFlag = false;
     
     for(int i=0; i<[elementId count]; i++)
     {
@@ -343,6 +345,13 @@
         {
             //on going work
             
+            if (!heightComputeFlag) {
+                height = [self cellHeight:[recordTableData objectAtIndex:indexPath.row] :columnWidth];
+                heightComputeFlag = true;
+                [self tableView:self heightForRowAtIndexPath:indexPath];
+            }
+            
+            
             firstCol = [[UIView alloc] initWithFrame:CGRectMake(x, 0, columnWidth, height)];
             firstCol.tag = firstColTag;
             firstCol.backgroundColor = [UIColor clearColor];
@@ -350,6 +359,9 @@
             mItemLabel.tag = 11;
             mItemLabel.backgroundColor = [UIColor colorWithRed:236.0/255 green:236.0/255 blue:236.0/255 alpha:1.0];
             mItemLabel.textAlignment = NSTextAlignmentCenter;
+            mItemLabel.lineBreakMode = UILineBreakModeWordWrap;
+            mItemLabel.minimumFontSize = 8.0;
+            mItemLabel.adjustsFontSizeToFitWidth = YES;
             
             // it will be done in the  configureDataRowCell
             //  mItemLabel.text = [row objectAtIndex:i];
@@ -435,6 +447,9 @@
             [rowView  addSubview: firstCol];
         }
     }
+//    NSLog(@"Row %ld height %f",(long)indexPath.row,rowView.frame.size.height);
+    rowView.frame = CGRectMake(rowView.frame.origin.x, rowView.frame.origin.y, rowView.frame.size.width, height);
+//    NSLog(@"Updated Row Frame %ld height %f",(long)indexPath.row,rowView.frame.size.height);
     return rowView;
 }
 
@@ -515,7 +530,9 @@
             }
             [mItemLabel setFont:[UIFont systemFontOfSize:FONT_SIZE_ROW]];
             mItemLabel.numberOfLines = 0;
-            
+            mItemLabel.lineBreakMode = UILineBreakModeWordWrap;
+            mItemLabel.minimumFontSize = 8.0;
+            mItemLabel.adjustsFontSizeToFitWidth = YES;
             if(rowColor.length>0)
             {
                 mItemLabel.backgroundColor = [XmwUtils colorWithHexString:rowColor];
@@ -826,5 +843,105 @@
      [loadingView removeView];
 }
 
+#pragma -mark calculate cell height
+-(NSInteger)calculateCellHeight :(NSIndexPath*)indexpath
+{
+    CGFloat screenWidth = self.tableView.frame.size.width;
+    float columnWidth;
+    //new added start for color & hide some column in table
+    NSMutableDictionary *columnLengthMap = (NSMutableDictionary *)[cellComponent objectAtIndex:1];
+    NSMutableArray *elementId = (NSMutableArray *)[cellComponent objectAtIndex:2];
+    NSMutableArray *headerElementId = (NSMutableArray *)[cellComponent objectAtIndex:3];
+    
+    int totalPerc = 0;
+    // QStringList lengthKeys = columnLengthMap->keys();
+    NSArray* lengthKeys = [columnLengthMap allKeys];
+    //for (int cntTableColumn = 0; cntTableColumn < lengthKeys.count(); cntTableColumn++)
+    for(int cntTableColumn = 0; cntTableColumn < [lengthKeys count]; cntTableColumn++)
+    {
+        NSString* tempLen = [columnLengthMap objectForKey:[lengthKeys objectAtIndex:cntTableColumn]];
+        //columnLengthMap->value(lengthKeys.at(cntTableColumn));
+        totalPerc = totalPerc + [tempLen intValue];// tempLen.toInt();
+    }
+    //end
+    
+    for(int i=0; i<[elementId count]; i++)
+    {
+        //start calculate tableheader column width
+        NSString* tempLen = [columnLengthMap objectForKey:[elementId objectAtIndex:i]];//columnLengthMap->value(headerElementId->at(cntTableColumn));
+        // qDebug() << "Column Width = " << tempLen;
+        // NSLog(@"column Width = tempLen");
+        int normalized = 100/[headerElementId count];//(headerElementId->count());
+        if(totalPerc!=0) {
+            normalized = [tempLen intValue]*100/totalPerc;//tempLen.toInt()*100/totalPerc;
+            // NSLog(@"normalized value = @%d",normalized);
+        }
+        
+        
+        
+        NSMutableArray *check = [cellComponent objectAtIndex:4];//for Polycab project in policy menu according to change UI
+        if ([[check objectAtIndex:0] isEqualToString:@"Policy"]) {
+            columnWidth = screenWidth;        }
+        else
+        {
+            columnWidth = screenWidth * normalized / 100;
+        }
+    }
+    
+    return [self cellHeight:[recordTableData objectAtIndex:indexpath.row] :columnWidth];
+}
+-(NSInteger)cellHeight :(NSArray*)array :(CGFloat)columnWidth
+{
+    
+    
+    NSMutableArray *elementType = (NSMutableArray *)[cellComponent objectAtIndex:0];
+    NSMutableArray *allComponentHeightArray = [[NSMutableArray alloc] init];
+    NSInteger height=0;
 
+    for (int i=0; i<elementType.count; i++) {
+        if ([[elementType objectAtIndex:i] isEqualToString:XmwcsConst_DE_COMPONENT_LABEL]) {
+            CGSize maximumLabelSize = CGSizeMake(columnWidth, FLT_MAX);
+            
+            NSString *str = @"";
+            id object = [array objectAtIndex:i];
+            
+            if(![object isEqual:[NSNull null]])
+            {
+                str = [array objectAtIndex:i];
+                if (str == nil || [str isKindOfClass:[NSNull class]] || str.length<=0 || str == NULL || [str isEqualToString:@""]) {
+                    str = @"";
+                }
+    
+            }
+            else
+            {
+                str = @"";
+            }
+            
+            CGSize expectedLabelSize = [str sizeWithFont:[UIFont systemFontOfSize:FONT_SIZE_ROW] constrainedToSize:maximumLabelSize lineBreakMode:UILineBreakModeWordWrap];
+            
+            [allComponentHeightArray addObject:[NSString stringWithFormat:@"%f", expectedLabelSize.height]];
+        }
+      
+    }
+    NSArray *sortedArray = [allComponentHeightArray  sortedArrayUsingComparator:
+                            ^NSComparisonResult(id obj1, id obj2){
+                                if ([obj1 floatValue] > [obj2 floatValue])
+                                    return NSOrderedDescending;
+                                else if ([obj1 floatValue] < [obj2 floatValue])
+                                    return NSOrderedAscending;
+                                return NSOrderedSame;
+                                
+                            }];
+    
+    height = [[sortedArray objectAtIndex: [sortedArray count]-1] floatValue];
+    if (height<=[ReportTabularDataSection tableRowHeight]) {
+        height =[ReportTabularDataSection tableRowHeight];
+    }
+    else
+    {
+        height = height+2;
+    }
+    return height;
+}
 @end

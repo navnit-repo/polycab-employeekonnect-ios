@@ -67,6 +67,8 @@
 @synthesize thirdColumnText;
 - (void)viewDidLoad {
     [LayoutClass setLayoutForIPhone6:self.mainTable];
+
+//    self.mainTable.frame = CGRectMake(self.mainTable.frame.origin.x, self.mainTable.frame.origin.y, self.view.frame.size.width, self.view.frame.size.height  - self.mainTable.frame.origin.y);
     
     [super viewDidLoad];
     

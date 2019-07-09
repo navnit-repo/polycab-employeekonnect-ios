@@ -46,7 +46,7 @@
 -(UIView *) drawTableHeader;
 
 -(NSArray *) createCellComponent;
--(UIView*) initializeDataRowCell;
+-(UIView*) initializeDataRowCell :(NSIndexPath*)indexPath;
 -(void) configureDataRowCell:(UIView*) dataCell :(NSIndexPath *)indexPath;
 
 -(void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath;

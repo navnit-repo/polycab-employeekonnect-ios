@@ -132,6 +132,17 @@
                 [chatButton.layer addSublayer:myLayer];
                 break;
             }
+            else
+            {
+
+                long int totalButtonLayer = chatButton.layer.sublayers.count;
+                for (int i=0; i<totalButtonLayer; i++) {
+                    if (chatButton.layer.sublayers.count >=2 ) {
+                        [[chatButton.layer.sublayers objectAtIndex:1] removeFromSuperlayer];
+                    }
+                }
+
+            }
         }
         
     });

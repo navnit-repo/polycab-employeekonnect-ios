@@ -194,15 +194,29 @@
     /// add search controller
     searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(12, 8, (self.acceptButtonOutlet.frame.size.width+self.acceptButtonOutlet.frame.origin.x)-12, 44*deviceHeightRation)];
     searchBar.delegate = self;
-    searchBar.barTintColor = [UIColor whiteColor];
-    searchBar.layer.borderWidth = 0.5;
-    searchBar.layer.borderColor = [UIColor lightGrayColor].CGColor;
     [searchBar setPlaceholder:@"Search"];
     [searchBar setReturnKeyType:UIReturnKeyDone];
     searchBar.enablesReturnKeyAutomatically = NO;
     searchBar.tag= 13;
     [self.headerView addSubview:searchBar];
     
+    for (id subview in [[searchBar.subviews lastObject] subviews]) {
+        if ([subview isKindOfClass:NSClassFromString(@"UISearchBarBackground")]) {
+            [subview removeFromSuperview];
+        }
+        
+        if ([subview isKindOfClass:[UITextField class]])
+        {
+            UITextField *textFieldObject = (UITextField *)subview;
+            textFieldObject.borderStyle = UITextBorderStyleRoundedRect;
+            textFieldObject.layer.masksToBounds=YES;
+            textFieldObject.layer.borderColor=[[UIColor lightGrayColor]CGColor];
+            textFieldObject.layer.cornerRadius=5.0f;
+            textFieldObject.layer.borderWidth= 1.0f;
+            break;
+        }
+        
+    }
 }
 -(void)setHeaderDetailsData
 {
@@ -217,51 +231,66 @@
     [self unreadMessageNetworkCall];
 }
 -(void)unreadMessageNetworkCall
-{   [ChatHistory_DB createInstance : @"ChatHistory_DB_STORAGE" : true :[chatThreadId integerValue]];
-    ChatHistory_DB *chatHistory_DBStorage = [ChatHistory_DB getInstance];
-    NSMutableArray *unreadMessageIdArray = [chatHistory_DBStorage getRecentUnreadMessage:@"False"];
-    if (unreadMessageIdArray.count>0) {
-        NSMutableArray *sendMessageIdsArray = [[NSMutableArray alloc]init];
-        for (int i=0; i<unreadMessageIdArray.count; i++) {
-            ChatHistory_Object *obj = (ChatHistory_Object*) [unreadMessageIdArray objectAtIndex:i];
-            [sendMessageIdsArray addObject:[NSString stringWithFormat:@"%d",obj.messageId]];
-            //for update status of unread messages
-            ChatHistory_Object* chatHistory_Object = [[ChatHistory_Object alloc] init];
-            chatHistory_Object.chatThreadId = obj.chatThreadId;
-            chatHistory_Object.messageId    = obj.messageId;
-            [chatHistory_DBStorage updateUnreadMessageStatus:chatHistory_Object];
+{
+     NSMutableArray *sendMessageIdsArray = [[NSMutableArray alloc]init];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [ChatHistory_DB createInstance : @"ChatHistory_DB_STORAGE" : true :[chatThreadId integerValue]];
+        ChatHistory_DB *chatHistory_DBStorage = [ChatHistory_DB getInstance];
+        NSMutableArray *unreadMessageIdArray = [chatHistory_DBStorage getRecentUnreadMessage:@"False"];
+        if (unreadMessageIdArray.count>0) {
+            
+            for (int i=0; i<unreadMessageIdArray.count; i++) {
+                ChatHistory_Object *obj = (ChatHistory_Object*) [unreadMessageIdArray objectAtIndex:i];
+                [sendMessageIdsArray addObject:[NSString stringWithFormat:@"%d",obj.messageId]];
+                //for update status of unread messages
+                ChatHistory_Object* chatHistory_Object = [[ChatHistory_Object alloc] init];
+                chatHistory_Object.chatThreadId = obj.chatThreadId;
+                chatHistory_Object.messageId    = obj.messageId;
+                [chatHistory_DBStorage updateUnreadMessageStatus:chatHistory_Object];
+            }
         }
-        [ChatThreadList_DB createInstance : @"ChatThread_DB_STORAGE" : true];
-        ChatThreadList_DB *chatThreadListStorage = [ChatThreadList_DB getInstance];
-        ChatThreadList_Object* chatThreadList_Object = [[ChatThreadList_Object alloc] init];
-        chatThreadList_Object.chatThreadId =[chatThreadId integerValue] ;
-        [chatThreadListStorage updateUnreadThread:chatThreadList_Object :0];
-        
-        ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
-        NSString * version = [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleShortVersionString"];
-        NSMutableDictionary *chatMessageRqst = [[NSMutableDictionary alloc]init];
-        NSMutableDictionary *reqstData = [[NSMutableDictionary alloc]init];
-        [chatMessageRqst setValue:@"1" forKey:@"requestId"];
-        
-        NSString* username = [[NSUserDefaults standardUserDefaults] objectForKey:@"USERNAME"];
+    });
 
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [ChatThreadList_DB createInstance : @"ChatThread_DB_STORAGE" : true];
+            ChatThreadList_DB *chatThreadListStorage = [ChatThreadList_DB getInstance];
+            ChatThreadList_Object* chatThreadList_Object = [[ChatThreadList_Object alloc] init];
+            chatThreadList_Object.chatThreadId =[chatThreadId integerValue] ;
+            [chatThreadListStorage updateUnreadThread:chatThreadList_Object :0];
+        });
         
-        [reqstData setValue:[chatPersonUserID stringByAppendingString:@"@employee"] forKey:@"userId"];
-        [reqstData setValue:[[clientVariables.CLIENT_USER_LOGIN deviceInfoMap] valueForKey:@"IMEI"] forKey:@"deviceId"];
-        [reqstData setValue:XmwcsConst_DEVICE_TYPE_IPHONE forKey:@"osType"];
-        [reqstData setValue:version forKey:@"appVersion"];
-        [reqstData setValue:@"1" forKey:@"apiVersion"];
-        [reqstData setValue:chatThreadId forKey:@"chatThreadId"];
-        [reqstData setObject:sendMessageIdsArray forKey:@"messageIds"];
-        [chatMessageRqst setObject:reqstData forKey:@"requestData"];
+       
+        dispatch_async(dispatch_get_main_queue(),
+                       ^{
+                           ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
+                           NSString * version = [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleShortVersionString"];
+                           NSMutableDictionary *chatMessageRqst = [[NSMutableDictionary alloc]init];
+                           NSMutableDictionary *reqstData = [[NSMutableDictionary alloc]init];
+                           [chatMessageRqst setValue:@"1" forKey:@"requestId"];
+                           
+                           
+                           
+                           [reqstData setValue:[chatPersonUserID stringByAppendingString:@"@employee"] forKey:@"userId"];
+                           [reqstData setValue:[[clientVariables.CLIENT_USER_LOGIN deviceInfoMap] valueForKey:@"IMEI"] forKey:@"deviceId"];
+                           [reqstData setValue:XmwcsConst_DEVICE_TYPE_IPHONE forKey:@"osType"];
+                           [reqstData setValue:version forKey:@"appVersion"];
+                           [reqstData setValue:@"1" forKey:@"apiVersion"];
+                           [reqstData setValue:chatThreadId forKey:@"chatThreadId"];
+                           [reqstData setObject:sendMessageIdsArray forKey:@"messageIds"];
+                           [chatMessageRqst setObject:reqstData forKey:@"requestData"];
+                           
+                           ReadUnreadService *service = [[ReadUnreadService alloc] initWithPostData:chatMessageRqst withContext:@"messagesUnreadCall"];
+                           
+                       });
         
-        ReadUnreadService *service = [[ReadUnreadService alloc] initWithPostData:chatMessageRqst withContext:@"messagesUnreadCall"];
         
+       
 //        networkHelper = [[NetworkHelper alloc]init];
 //        NSString * url=XmwcsConst_OPCODE_URL;
 //        networkHelper.serviceURLString = @"http://polycab.dotvik.com:8080/PushMessage/api/messagesRead";
 //        [networkHelper genericJSONPayloadRequestWith:chatMessageRqst :self :@"messagesUnreadCall"];
-    }
+//    }
     
    
 }

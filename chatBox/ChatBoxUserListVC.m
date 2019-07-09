@@ -111,13 +111,29 @@
     
     searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(20, 8, self.view.frame.size.width-40, 44*deviceHeightRation)];
     searchBar.delegate = self;
-    searchBar.barTintColor = [UIColor whiteColor];
-    searchBar.layer.borderWidth = 0.5;
-    searchBar.layer.borderColor = [UIColor lightGrayColor].CGColor;
     [searchBar setPlaceholder:@"Search"];
     [searchBar setReturnKeyType:UIReturnKeyDone];
     searchBar.enablesReturnKeyAutomatically = NO;
     [self.view addSubview:searchBar];
+    
+    for (id subview in [[searchBar.subviews lastObject] subviews]) {
+        if ([subview isKindOfClass:NSClassFromString(@"UISearchBarBackground")]) {
+            [subview removeFromSuperview];
+        }
+        
+        if ([subview isKindOfClass:[UITextField class]])
+        {
+            UITextField *textFieldObject = (UITextField *)subview;
+            textFieldObject.borderStyle = UITextBorderStyleRoundedRect;
+            textFieldObject.layer.masksToBounds=YES;
+            textFieldObject.layer.borderColor=[[UIColor lightGrayColor]CGColor];
+            textFieldObject.layer.cornerRadius=5.0f;
+            textFieldObject.layer.borderWidth= 1.0f;
+            break;
+        }
+        
+    }
+    
     
     mainTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, searchBar.frame.size.height+searchBar.frame.origin.y, self.view.bounds.size.width, self.view.bounds.size.height-(searchBar.frame.size.height+searchBar.frame.origin.y)) style:UITableViewStylePlain];
     mainTableView.bounces = NO;
