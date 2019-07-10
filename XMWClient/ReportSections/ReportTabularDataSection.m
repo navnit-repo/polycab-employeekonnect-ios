@@ -90,7 +90,7 @@
     reportSection = indexPath.section;
     CGFloat height=0.0f;
 //    return [ReportTabularDataSection tableRowHeight];  //this is default height
-    height = [self calculateCellHeight:indexPath];
+    height = [self newCellHeight:[recordTableData objectAtIndex:indexPath.row]];
 //    NSLog(@"Cell %ld height %f",(long)indexPath.row,height);
     return height;
 }
@@ -108,6 +108,7 @@
         customView = [self initializeDataRowCell :indexPath];
         customView.tag = 3001;
         [cell.contentView addSubview:customView];
+    cell.clipsToBounds = YES;
 //    }
     
     return cell;
@@ -346,7 +347,7 @@
             //on going work
             
             if (!heightComputeFlag) {
-                height = [self cellHeight:[recordTableData objectAtIndex:indexPath.row] :columnWidth];
+                height = [self newCellHeight:[recordTableData objectAtIndex:indexPath.row]];
                 heightComputeFlag = true;
                 [self tableView:self heightForRowAtIndexPath:indexPath];
             }
@@ -844,10 +845,11 @@
 }
 
 #pragma -mark calculate cell height
--(NSInteger)calculateCellHeight :(NSIndexPath*)indexpath
+-(NSUInteger)newCellHeight :(NSArray *)array
 {
+    NSMutableArray *columnWidthArray = [[NSMutableArray alloc]init];
     CGFloat screenWidth = self.tableView.frame.size.width;
-    float columnWidth;
+    float columnWidth = 0.0f;
     //new added start for color & hide some column in table
     NSMutableDictionary *columnLengthMap = (NSMutableDictionary *)[cellComponent objectAtIndex:1];
     NSMutableArray *elementId = (NSMutableArray *)[cellComponent objectAtIndex:2];
@@ -886,21 +888,19 @@
         {
             columnWidth = screenWidth * normalized / 100;
         }
+        
+        [columnWidthArray addObject:[NSString stringWithFormat:@"%f",columnWidth]];
+        
     }
-    
-    return [self cellHeight:[recordTableData objectAtIndex:indexpath.row] :columnWidth];
-}
--(NSInteger)cellHeight :(NSArray*)array :(CGFloat)columnWidth
-{
-    
     
     NSMutableArray *elementType = (NSMutableArray *)[cellComponent objectAtIndex:0];
     NSMutableArray *allComponentHeightArray = [[NSMutableArray alloc] init];
     NSInteger height=0;
-
+    
     for (int i=0; i<elementType.count; i++) {
         if ([[elementType objectAtIndex:i] isEqualToString:XmwcsConst_DE_COMPONENT_LABEL]) {
-            CGSize maximumLabelSize = CGSizeMake(columnWidth, FLT_MAX);
+            float width = [[columnWidthArray objectAtIndex:i] floatValue];
+            CGSize maximumLabelSize = CGSizeMake(width, FLT_MAX);
             
             NSString *str = @"";
             id object = [array objectAtIndex:i];
@@ -911,7 +911,7 @@
                 if (str == nil || [str isKindOfClass:[NSNull class]] || str.length<=0 || str == NULL || [str isEqualToString:@""]) {
                     str = @"";
                 }
-    
+                
             }
             else
             {
@@ -922,7 +922,7 @@
             
             [allComponentHeightArray addObject:[NSString stringWithFormat:@"%f", expectedLabelSize.height]];
         }
-      
+        
     }
     NSArray *sortedArray = [allComponentHeightArray  sortedArrayUsingComparator:
                             ^NSComparisonResult(id obj1, id obj2){
@@ -943,5 +943,7 @@
         height = height+2;
     }
     return height;
+    
+    
 }
 @end
