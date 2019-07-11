@@ -1232,7 +1232,7 @@ int uiViewStartIdx = 1001;
     [keyList addObject:@"S"];
     [arrayToValuePicker addObject:keyList];
     
-    [optionList addObject:@"None"];
+    [optionList addObject:@"All"];
     [optionList addObject:@"Search"];
     [arrayToValuePicker addObject:optionList];
     

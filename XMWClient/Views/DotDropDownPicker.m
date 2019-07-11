@@ -72,6 +72,17 @@
 	return [dropDownList count];
 }
 
-
+//- (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view
+//{
+//    UILabel *pickerLabel = (UILabel *)view;
+//    CGRect frame = CGRectMake(0,0,265,40);
+//    pickerLabel = [[UILabel alloc] initWithFrame:frame];
+//    [pickerLabel setTextAlignment:UITextAlignmentLeft];
+//    [pickerLabel setBackgroundColor:[UIColor clearColor]];
+//    [pickerLabel setFont:[UIFont boldSystemFontOfSize:12.0]];
+//    [pickerLabel setNumberOfLines:0];
+//    [pickerLabel setText:[dropDownList objectAtIndex:row]];
+//    return pickerLabel;
+//}
 
 @end

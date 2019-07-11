@@ -21,7 +21,7 @@
 
 
 
-- (void)configure:(NSArray *)ftdData :(NSArray *)mtdData :(NSArray *)ytdData :(NSArray *)lftdData
+- (void)configure:(NSArray *)ftdData :(NSArray *)mtdData :(NSArray *)ytdData :(NSArray *)lftdData :(NSArray*)lmtddData
 {
     [self autoLayout];
     CurrencyConversationClass *currencyFormate = [[CurrencyConversationClass alloc]init];
@@ -31,7 +31,7 @@
     NSString *mtd = [currencyFormate formateCurrency:[mtdData objectAtIndex:2]];
     NSString *ytd = [currencyFormate formateCurrency:[ytdData objectAtIndex:2]];
     NSString *lftd =[currencyFormate formateCurrency:[lftdData objectAtIndex:2]];
-    
+    NSString *lmtd = [currencyFormate formateCurrency:[lmtddData objectAtIndex:2]];
     if ([[ytdData objectAtIndex:1] isEqualToString:@""] || [[ytdData objectAtIndex:1] length] ==0 || [ytdData objectAtIndex:1] == nil || [[ytdData objectAtIndex:1] isKindOfClass:[NSNull class]] ) {
         self.displayName.text   = [ytdData objectAtIndex:0];
     }
@@ -46,6 +46,7 @@
     self.mtdDataSetLbl.text = [[NSString stringWithFormat:@"%@",rupee]stringByAppendingString:mtd];
     self.ytdDataSetLbl.text = [[NSString stringWithFormat:@"%@",rupee]stringByAppendingString:ytd];
     self.lftdDisplacyLbl.text = [[NSString stringWithFormat:@"%@",rupee]stringByAppendingString:lftd];
+    self.lmtdDisplayLbl.text =[[NSString stringWithFormat:@"%@",rupee]stringByAppendingString:lmtd];
 }
 //- (void)configure:(NSArray *)ftdData :(NSArray *)mtdData :(NSArray *)ytdData{
 //    [self autoLayout];

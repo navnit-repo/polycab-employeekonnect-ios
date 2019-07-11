@@ -1088,7 +1088,7 @@
     [keyList addObject:@"S"];
     [arrayToValuePicker addObject:keyList];
     
-    [optionList addObject:@"None"];
+    [optionList addObject:@"All"];
     [optionList addObject:@"Search"];
     [arrayToValuePicker addObject:optionList];
     
@@ -1249,11 +1249,12 @@
     masterValueMapping        = searchFormComponent.masterValueMapping;
     elementId                  =searchFormComponent.elementId;
     
-    if([dotDropDownPicker.selectedPickerValue isEqualToString: @"None"])
+    if([dotDropDownPicker.selectedPickerValue isEqualToString: @"All"])
     {
         NSMutableArray* fields = [componentsMap objectForKey:[NSString stringWithFormat:@"%d:%d", button.tvfRowIndex.intValue, button.tvfColIndex.intValue ]];
         MXTextField *dropDownField = [fields objectAtIndex:0];
-        dropDownField.keyvalue = dotDropDownPicker.selectedPickerKey;
+//        dropDownField.keyvalue = dotDropDownPicker.selectedPickerKey;
+        dropDownField.keyvalue = @"";// need for polycab project
         dropDownField.text = dotDropDownPicker.selectedPickerValue;
         
         

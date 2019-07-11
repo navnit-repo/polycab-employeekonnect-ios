@@ -238,6 +238,18 @@
     chatButtonItem.target           = self;
     
     
+//    UIButton *refreshButton  = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [refreshButton setTitle:@"Re" forState:UIControlStateNormal];
+//    [refreshButton setFrame:CGRectMake( 0.0f, 0.0f, 25.0f, 25.0f)];
+//    [refreshButton addTarget:self action:@selector(refreshTable) forControlEvents:UIControlEventTouchUpInside];
+//    refreshButton.tintColor = [UIColor whiteColor];
+//    refreshButton.tag = 20;
+//
+//    UIBarButtonItem *refreshButtonItem = [[UIBarButtonItem alloc] initWithCustomView:refreshButton];
+//    chatButtonItem.target           = self;
+    
+    
+    
     [self.navigationItem setRightBarButtonItems:[NSArray arrayWithObjects:notificationButtonItem, chatButtonItem, nil] animated:YES];
     
     
@@ -303,16 +315,16 @@
     tableView.clipsToBounds = YES;
     
     
-    //pending work. this work test in next Version 2.1
-//  refreshControl = [[UIRefreshControl alloc]init];
-//    [refreshControl addTarget:self action:@selector(refreshTable) forControlEvents:UIControlEventValueChanged];
-//
-//    if (@available(iOS 10.0, *)) {
-//        tableView.refreshControl = refreshControl;
-//    } else {
-//        [tableView addSubview:refreshControl];
-//    }
-//
+//    pending work. this work test in next Version 2.1
+  refreshControl = [[UIRefreshControl alloc]init];
+    [refreshControl addTarget:self action:@selector(refreshTable) forControlEvents:UIControlEventValueChanged];
+
+    if (@available(iOS 10.0, *)) {
+        tableView.refreshControl = refreshControl;
+    } else {
+        [tableView addSubview:refreshControl];
+    }
+
 
 }
 - (void)refreshTable {

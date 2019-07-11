@@ -140,6 +140,29 @@
     NSLog(@"To date : %@",toDate);
     
     
+    NSDateFormatter *LMTD_dateFormatter = [[NSDateFormatter alloc] init];
+    [LMTD_dateFormatter setDateFormat:@"dd/MM/yyyy"];
+    NSDate *dateFromString = [LMTD_dateFormatter dateFromString:fromDate];
+    
+    NSDateComponents *previousMonthForFrom = [[NSDateComponents alloc] init];
+    [previousMonthForFrom setMonth:-1];
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDate *newDateFrom = [calendar dateByAddingComponents:previousMonthForFrom toDate:dateFromString options:0];
+    NSLog(@"newDate -> %@",newDateFrom);
+    
+    LMTD_From_Date = [LMTD_dateFormatter stringFromDate:newDateFrom];
+    
+    NSDate *dateToString = [LMTD_dateFormatter dateFromString:toDate];
+    
+    NSDateComponents *previousMonthForTo = [[NSDateComponents alloc] init];
+    [previousMonthForTo setMonth:-1];
+    NSCalendar *calendar2 = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDate *newDateTo = [calendar2 dateByAddingComponents:previousMonthForTo toDate:dateToString options:0];
+    NSLog(@"newDate -> %@",newDateTo);
+    
+    LMTD_TO_Date = [LMTD_dateFormatter stringFromDate:newDateTo];
+    
+    
     // sesond request mtd
     mtdPost = [[DotFormPost alloc]init];
     [mtdPost setAdapterId:AppConst_EMPLOYEE_SALES_AGGREGATE_CARD_DOC_ID];
@@ -284,7 +307,44 @@
     
     
 }
-
+-(void)LMTD_NetworkCall
+{
+    NSLog(@"From date :- %@",LMTD_From_Date);
+    NSLog(@"To date :- %@",LMTD_TO_Date);
+    lmtdPost = [[DotFormPost alloc]init];
+    [lmtdPost setAdapterId:AppConst_EMPLOYEE_SALES_AGGREGATE_CARD_DOC_ID];
+    [lmtdPost setAdapterType:@"CLASSLOADER"];
+    [lmtdPost setModuleId:AppConst_MOBILET_ID_DEFAULT];
+    [lmtdPost setDocDesc:@"LMTD"];
+    NSMutableDictionary *sendData = [[NSMutableDictionary alloc]init];
+    [sendData setObject:@"" forKey:@"CUSTOMER_ACCOUNT"];
+    [sendData setObject:LMTD_From_Date forKey:@"FROM_DATE"];
+    [sendData setObject:LMTD_TO_Date forKey:@"TO_DATE"];
+    [lmtdPost setPostData:sendData];
+    
+    XmwReportService* reportService = [[XmwReportService alloc] initWithPostData:lmtdPost withContext:@"lmtdCall"];
+    
+    [reportService fetchReportUsingSuccess:^(DotFormPost* formPosted, ReportPostResponse* reportResponse) {
+        
+        
+        // we should receive report response data here
+        
+        lmtdResponseData = reportResponse;
+        for (int i=0; i<lmtdResponseData.tableData.count; i++) {
+            NSArray *array = [NSArray arrayWithArray:[lmtdResponseData.tableData objectAtIndex:i]];
+            [lmtdDataArray addObject:array];
+        }
+        
+        NSLog(@"LMTD: %@",lmtdDataArray);
+        
+        
+        [self maintainArrayFTD_MTD_YTD];
+        
+    }   fail:^(DotFormPost* formPosted, NSString* message) {
+        // we should receive error response here
+        
+    }];
+}
 -(void)LFTD_NetworkCall
 {
     NSLog(@"From date :- %@",LFTD_From_Date);
@@ -316,7 +376,7 @@
         NSLog(@"LFTD: %@",lftdDataArray);
         
         
-        [self maintainArrayFTD_MTD_YTD];
+        [self LMTD_NetworkCall];
         
     }   fail:^(DotFormPost* formPosted, NSString* message) {
         // we should receive error response here
@@ -343,7 +403,7 @@
         if (indexPath.row ==i) {
             
             salesCell = [NationalSalesAggregateCellView createInstance];
-            [salesCell configure:[ftdDataArray objectAtIndex:i] :[mtdDataArray objectAtIndex:i] :[ytdDataArray objectAtIndex:i] :[lftdDataArray objectAtIndex:i]];
+            [salesCell configure:[ftdDataArray objectAtIndex:i] :[mtdDataArray objectAtIndex:i] :[ytdDataArray objectAtIndex:i] :[lftdDataArray objectAtIndex:i] : [lmtdDataArray objectAtIndex:i] ];
 //            [salesCell configure:[ftdDataArray objectAtIndex:i]  :[mtdDataArray objectAtIndex:i] :[ytdDataArray objectAtIndex:i]];
             [cell addSubview:salesCell];
             cell.clipsToBounds = YES;

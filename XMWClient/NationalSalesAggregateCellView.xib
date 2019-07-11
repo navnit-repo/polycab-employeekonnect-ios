@@ -76,15 +76,34 @@
                             <rect key="frame" x="98.5" y="40" width="91" height="80"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
+                                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1gB-s5-yfH">
+                                    <rect key="frame" x="46" y="15" width="1" height="50"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </view>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="JIY-4o-wUa">
+                                    <rect key="frame" x="0.0" y="19.5" width="46" height="18"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="12"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="LMTD" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1zD-9V-ruM">
+                                    <rect key="frame" x="-0.5" y="43" width="44" height="18"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="13"/>
+                                    <color key="textColor" red="0.46274509800000002" green="0.47058823529999999" blue="0.45882352939999999" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="tka-3y-LJy">
-                                    <rect key="frame" x="0.0" y="19.5" width="91" height="18"/>
+                                    <rect key="frame" x="46.5" y="19.5" width="44" height="18"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="12"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="MTD" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K9C-6e-YwE">
-                                    <rect key="frame" x="0.0" y="43" width="91" height="18"/>
+                                    <rect key="frame" x="46.5" y="43" width="44" height="18"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="13"/>
                                     <color key="textColor" red="0.46274509803921571" green="0.47058823529411764" blue="0.45882352941176469" alpha="1" colorSpace="calibratedRGB"/>
@@ -128,15 +147,18 @@
                 <outlet property="dividerLine" destination="8g5-LX-V3r" id="0om-gH-Unh"/>
                 <outlet property="ftdDataSetLbl" destination="Zqz-gn-Lvo" id="UAP-Y2-eJx"/>
                 <outlet property="ftdView" destination="8iJ-7t-chd" id="FDW-F8-Ykj"/>
-                <outlet property="lftdConstantLbl" destination="JE0-2X-aPR" id="NOz-Kv-Shn"/>
+                <outlet property="lftdConstantLbl" destination="JE0-2X-aPR" id="qhc-MQ-xDK"/>
                 <outlet property="lftdDisplacyLbl" destination="61l-CJ-ijA" id="fmw-9w-J5t"/>
+                <outlet property="lmtdConstantLbl" destination="1zD-9V-ruM" id="7cH-2L-eNS"/>
+                <outlet property="lmtdDisplayLbl" destination="JIY-4o-wUa" id="V0A-8k-sml"/>
                 <outlet property="mainView" destination="NwL-4u-CB2" id="zuw-76-7oM"/>
                 <outlet property="mtdDataSetLbl" destination="tka-3y-LJy" id="jk1-Uo-jS2"/>
+                <outlet property="mtdDividerLine" destination="1gB-s5-yfH" id="4lx-7K-quI"/>
                 <outlet property="mtdView" destination="WQs-QL-v0Z" id="UaM-bT-g8Y"/>
                 <outlet property="ytdDataSetLbl" destination="FlD-l8-jnZ" id="0qO-2Z-Qfg"/>
                 <outlet property="ytdView" destination="5PV-uT-792" id="jtb-Jw-3cv"/>
             </connections>
-            <point key="canvasLocation" x="26" y="61"/>
+            <point key="canvasLocation" x="25.600000000000001" y="60.26986506746627"/>
         </view>
     </objects>
 </document>

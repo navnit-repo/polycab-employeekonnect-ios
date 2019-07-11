@@ -180,6 +180,25 @@
         rowCell.secondLabel.text = tuple.secondValue;
         rowCell.thirdLabel.text = tuple.thirdValue;
         
+      
+        CGSize maximumLabelSize = CGSizeMake(rowCell.fieldLabel.frame.size.width, FLT_MAX);
+        
+        CGSize expectedLabelSize = [rowCell.fieldLabel.text sizeWithFont:rowCell.fieldLabel.font constrainedToSize:maximumLabelSize lineBreakMode:rowCell.fieldLabel.lineBreakMode];
+        
+        if (rowCell.fieldLabel.frame.size.height < expectedLabelSize.height) {
+            //adjust the label the the new height.
+            CGRect newLableFrame = rowCell.fieldLabel.frame;
+            newLableFrame.size.height = expectedLabelSize.height;
+            rowCell.fieldLabel.frame = newLableFrame;
+            
+            //        CGRect viewNewFrame = rowCell.view1.frame;
+            //        viewNewFrame.size.height = expectedLabelSize.height;
+            //        rowCell.view1.frame = viewNewFrame;
+            
+            //        [self tableView:self heightForRowAtIndexPath:indexPath];
+        }
+    
+        
     }
     
 }
@@ -378,6 +397,7 @@
         cell = [tableView dequeueReusableCellWithIdentifier:@"CompareReportTableCell"];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
+    cell.clipsToBounds = YES;
     return cell;
 }
 

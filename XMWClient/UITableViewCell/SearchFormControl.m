@@ -57,22 +57,31 @@
         UIImage *headerImage          = [UIImage imageNamed:@"blueButton.png"];
         UIImage *headerButtonImage    = [headerImage stretchableImageWithLeftCapWidth:18 topCapHeight:0];
          UIButton *Header       = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        [Header setFrame:CGRectMake(0, 0 , 320 , 36)];
+        [Header setFrame:CGRectMake(0, 0 , self.frame.size.width , 36)];
         [Header setBackgroundImage:headerButtonImage forState:UIControlStateNormal];
-        [Header setTitleColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:1.0] forState: UIControlStateNormal];
+        [Header setTitleColor:[UIColor whiteColor] forState: UIControlStateNormal];
         [Header setTitle:[NSString stringWithFormat:@"Search %@", displayText] forState:UIControlStateNormal];
-        
+        Header.userInteractionEnabled = NO;
         UILabel *searchLabel  =  [[UILabel alloc]init];
         searchLabel.frame     =  CGRectMake(10, 40, 120, 25);
         searchLabel.text      =  @"Search ";
-        searchLabel.backgroundColor = [UIColor lightGrayColor];
+//        searchLabel.backgroundColor = [UIColor lightGrayColor];
         
         
         searchInputField = [[UITextField alloc]initWithFrame:CGRectMake(120, 40, 180, 25)];
         [searchInputField setBackgroundColor:[UIColor whiteColor]];
-        [searchInputField setDelegate:self];
-        
+        searchInputField.delegate = self;
+        [searchInputField setReturnKeyType:UIReturnKeyDone];
       
+        searchInputField.autocapitalizationType = UITextAutocapitalizationTypeWords;
+        searchInputField.adjustsFontSizeToFitWidth = TRUE;
+        searchInputField.autocorrectionType = UITextAutocorrectionTypeNo;
+        searchInputField.minimumFontSize = 10;
+        searchInputField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+     
+        
+        
+        
         
         UIButton *doneButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [doneButton setFrame:CGRectMake(self.bounds.size.width-50, 0, 50, 42.0)];
@@ -80,7 +89,7 @@
         [doneButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [doneButton addTarget:self action:@selector(doneTapped) forControlEvents:UIControlEventTouchUpInside];
         
-        searchInputField.inputAccessoryView = doneButton;
+//        searchInputField.inputAccessoryView = doneButton;
         
 
         
@@ -121,7 +130,7 @@
         [self addSubview : cancleButton];
         
         
-        [self setBackgroundColor:[UIColor lightGrayColor]];
+        [self setBackgroundColor:[UIColor colorWithRed:220.0/255.0 green: 220.0/255.0 blue:220.0/255.0 alpha:1.0]];
         //[[self layer] setCornerRadius:14];
         [[self layer] setBorderWidth:1.0];
         [[self layer] setBorderColor:[[UIColor blackColor] CGColor]];
@@ -135,12 +144,23 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    [textField resignFirstResponder];
+    
+     [self endEditing:YES];
+    
+    return YES;
+}
+
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField
+{
     return YES;
 }
 
 -(void)doneTapped{
-    [self endEditing:YES];
+    
+    // [searchInputField resignFirstResponder];
+    [searchInputField endEditing:YES];
+    
+     [self endEditing:YES];
 }
 
 

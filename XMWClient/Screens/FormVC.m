@@ -724,6 +724,7 @@ UITextField* activeTextField = nil;
 
 -(IBAction) dropDownSearchPressed:(id) sender
 {
+    [pickerContainer removeFromSuperview];
    
         MXButton* button = (MXButton*) sender;
         DotFormElement *searchFormComponent = [dotForm.formElements objectForKey:button.elementId];
@@ -838,11 +839,12 @@ UITextField* activeTextField = nil;
     masterValueMapping        = searchFormComponent.masterValueMapping;
     elementId                  =searchFormComponent.elementId;
     
-    if([dotDropDownPicker.selectedPickerValue isEqualToString: @"None"])
+    if([dotDropDownPicker.selectedPickerValue isEqualToString: @"All"])
     {
         DropDownTableViewCell *dropDownCell = [self getDataFromId:selectedTextFieldKey];
         MXTextField *dropDownField = dropDownCell.dropDownField;
-        dropDownField.keyvalue = dotDropDownPicker.selectedPickerKey;
+//        dropDownField.keyvalue = dotDropDownPicker.selectedPickerKey;
+        dropDownField.keyvalue = @"";//need for polycab project
         dropDownField.text = dotDropDownPicker.selectedPickerValue;
 
         
@@ -854,7 +856,7 @@ UITextField* activeTextField = nil;
     NSMutableArray *searchValues = [searchObject getRadioGroupData: groupName];
     
 	
-    CGRect textFrame = CGRectMake(0,0,320,320);//(20, 90, 280, 300) ;
+    CGRect textFrame = CGRectMake(0,0,self.view.frame.size.width,self.view.frame.size.height);//(20, 90, 280, 300) ;
        searchPopUp = [[SearchFormControl alloc]initWithFrame:textFrame : searchValues : 0 : self : masterValueMapping : elementId : searchFormComponent.displayText];
     [self.view  addSubview : searchPopUp];
     

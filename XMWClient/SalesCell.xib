@@ -63,7 +63,7 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="FTD" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="08H-w9-Y7I">
-                                    <rect key="frame" x="45.5" y="43" width="44" height="18"/>
+                                    <rect key="frame" x="46.5" y="43" width="44" height="18"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="13"/>
                                     <color key="textColor" red="0.46274509803921571" green="0.47058823529411764" blue="0.45882352941176469" alpha="1" colorSpace="calibratedRGB"/>
@@ -76,15 +76,34 @@
                             <rect key="frame" x="98.5" y="40" width="91" height="80"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
+                                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kur-rI-125">
+                                    <rect key="frame" x="46" y="15" width="1" height="50"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </view>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="ln8-Qz-Scb">
+                                    <rect key="frame" x="0.0" y="19.5" width="46" height="18"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="12"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="LMTD" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZlR-v6-8Sb">
+                                    <rect key="frame" x="0.0" y="43" width="44" height="18"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="13"/>
+                                    <color key="textColor" red="0.46274509800000002" green="0.47058823529999999" blue="0.45882352939999999" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="tka-3y-LJy">
-                                    <rect key="frame" x="0.0" y="19.5" width="91" height="18"/>
+                                    <rect key="frame" x="46.5" y="19.5" width="44" height="18"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="12"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="MTD" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K9C-6e-YwE">
-                                    <rect key="frame" x="0.0" y="43" width="91" height="18"/>
+                                    <rect key="frame" x="46.5" y="43" width="44" height="18"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="13"/>
                                     <color key="textColor" red="0.46274509803921571" green="0.47058823529411764" blue="0.45882352941176469" alpha="1" colorSpace="calibratedRGB"/>
@@ -130,8 +149,11 @@
                 <outlet property="ftdView" destination="8iJ-7t-chd" id="FDW-F8-Ykj"/>
                 <outlet property="lftdConstantLbl" destination="DUI-p0-GtX" id="T7b-jw-UgS"/>
                 <outlet property="lftdDisplacyLbl" destination="P2y-tw-hHd" id="4mb-AO-vHV"/>
+                <outlet property="lmtdConstantLbl" destination="ZlR-v6-8Sb" id="0p8-4y-quP"/>
+                <outlet property="lmtdDisplayLbl" destination="ln8-Qz-Scb" id="eJv-qu-mcE"/>
                 <outlet property="mainView" destination="NwL-4u-CB2" id="zuw-76-7oM"/>
                 <outlet property="mtdDataSetLbl" destination="tka-3y-LJy" id="jk1-Uo-jS2"/>
+                <outlet property="mtdDividerLine" destination="kur-rI-125" id="cM7-Qf-EFq"/>
                 <outlet property="mtdView" destination="WQs-QL-v0Z" id="UaM-bT-g8Y"/>
                 <outlet property="ytdDataSetLbl" destination="FlD-l8-jnZ" id="0qO-2Z-Qfg"/>
                 <outlet property="ytdView" destination="5PV-uT-792" id="jtb-Jw-3cv"/>
