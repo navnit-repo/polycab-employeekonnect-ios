@@ -514,7 +514,7 @@
     NSLog(@"After MTD blank element object removed array: %@",mtdDataArray);
     NSLog(@"After YTD blank element object removed array: %@",ytdDataArray);
     NSLog(@"After LFTD blank element object removed array: %@",lftdDataArray);
-    NSLog(@"After LFTD blank element object removed array: %@",lmtdDataArray);
+    NSLog(@"After LMTD blank element object removed array: %@",lmtdDataArray);
     
     NSUInteger ftdCount= [ftdDataArray count];
     NSUInteger mtdCount= [mtdDataArray count];
@@ -709,7 +709,7 @@
     lftdDataArray = [[NSMutableArray alloc]init];
     [lftdDataArray addObjectsFromArray:tempLftdArray];
     lmtdDataArray = [[NSMutableArray alloc]init];
-    [lmtdDataArray addObjectsFromArray:tempLftdArray];
+    [lmtdDataArray addObjectsFromArray:tempLmtdArray];
 //    ytdDataArray = [[NSMutableArray alloc]init];
 //    [ytdDataArray addObjectsFromArray:sortedArray3];
     

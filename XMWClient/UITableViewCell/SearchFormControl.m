@@ -38,7 +38,6 @@
 @synthesize dependentValueMap;
 
 
-
 - (id)initWithFrame:(CGRect)frame : (NSMutableArray *) keyValueDoubleArray : (NSInteger) defaultIndex : (FormVC*) parent : (NSString *)masterValueMapping :(NSString *) formElementId :(NSString*) displayText
 {
    self = [super initWithFrame:frame];
@@ -144,14 +143,12 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
+    [textField resignFirstResponder];
     
-     [self endEditing:YES];
+    if (textField.text.length !=0) {
+        [self buttonEvent:nil];
+    }
     
-    return YES;
-}
-
-- (BOOL)textFieldShouldEndEditing:(UITextField *)textField
-{
     return YES;
 }
 
@@ -159,13 +156,13 @@
     
     // [searchInputField resignFirstResponder];
     [searchInputField endEditing:YES];
-    
-     [self endEditing:YES];
+    [self endEditing:YES];
 }
 
 
 - (void) buttonEvent : (id) sender
 {
+    [searchInputField resignFirstResponder];
 
    if(self.buttonsDelegate!=nil && [self.buttonsDelegate respondsToSelector:@selector(searchAction: selectionKey:)]) {
         [self.buttonsDelegate searchAction:searchInputField.text selectionKey:radioGroup.selectedKey];

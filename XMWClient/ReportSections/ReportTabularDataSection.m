@@ -499,6 +499,7 @@
     }
     //end
     
+    bool allFlagCheck = false;
     
     for(int i=0; i<[elementId count]; i++)
     {
@@ -529,7 +530,17 @@
             else{
             mItemLabel.text = [row objectAtIndex:i];
             }
-            [mItemLabel setFont:[UIFont systemFontOfSize:FONT_SIZE_ROW]];
+            
+            if ([[row objectAtIndex:i] isEqualToString:@"All"] || allFlagCheck) {
+                [mItemLabel setBackgroundColor:[UIColor redColor]];
+                [mItemLabel setTextColor:[UIColor whiteColor]];
+               [mItemLabel setFont:[UIFont boldSystemFontOfSize:14.0f]];
+                allFlagCheck = true;
+            }
+            else
+            {
+                  [mItemLabel setFont:[UIFont systemFontOfSize:FONT_SIZE_ROW]];
+            }
             mItemLabel.numberOfLines = 0;
             mItemLabel.lineBreakMode = UILineBreakModeWordWrap;
             mItemLabel.minimumFontSize = 8.0;

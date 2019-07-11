@@ -862,9 +862,11 @@ UITextField* activeTextField = nil;
     
    }else
    {
-       if(dotDropDownPicker.selectedPickerKey ==0)
+       if(dotDropDownPicker.selectedPickerKey == 0 )
        {
-           dotDropDownPicker.selectedPickerKey = [dotDropDownPicker.dropDownListKey objectAtIndex:0];
+           dotDropDownPicker.selectedPickerKey = @""; // need for polycab project
+           
+//           dotDropDownPicker.selectedPickerKey = [dotDropDownPicker.dropDownListKey objectAtIndex:0];
            dotDropDownPicker.selectedPickerValue = [dotDropDownPicker.dropDownList objectAtIndex:0];
        }
        DropDownTableViewCell *dropDownCell = [self getDataFromId:selectedTextFieldKey];
@@ -1767,7 +1769,7 @@ UITextField* activeTextField = nil;
 {
     //keyboard will hide
     NSLog(@"Got the keyboard hide event");
-    [searchPopUp.searchInputField becomeFirstResponder];
+  //  [searchPopUp.searchInputField becomeFirstResponder];
    
 }
 

@@ -277,9 +277,9 @@ int CHECKBOX_TAG_OFFSET = 9000;
         [self.view addSubview:searchList];
     } else {
         
-        UILabel* userMessage = [[UILabel alloc] initWithFrame:CGRectMake(5, 5, 320, 30)];
+        UILabel* userMessage = [[UILabel alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height/2, self.view.frame.size.width, 30)];
         userMessage.text = @"No records found";
-        
+        userMessage.textAlignment = NSTextAlignmentCenter;
         [self.view addSubview:userMessage];
     }
     
