@@ -8,8 +8,8 @@
 #import <Foundation/Foundation.h>
 #import "XmwcsConstant.h"
 
-#define CONFIG_PROD
-//#define CONFIG_QA
+//#define CONFIG_PROD
+#define CONFIG_QA
 //#define CONFIG_DEV
 
 

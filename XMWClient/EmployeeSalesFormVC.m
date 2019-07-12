@@ -31,18 +31,20 @@
     
     NSLog(@"formPost = %@", [formPost.postData description]);
     
+    if (formPost != nil) {
+        EmpolyeeSalesReportVC* customReport = [[EmpolyeeSalesReportVC alloc] initWithNibName:@"CustomCompareReportVC" bundle:nil];
+        
+        customReport.dotForm = self.dotForm;
+        customReport.firstFormPost = [self defaultColumnFirst:formPost];
+        customReport.secondFormPost = [self defaultColumnSecond:formPost];
+        customReport.thirdFormPost = [self defaultColumnThird:formPost];
+        customReport.forwardedDataDisplay = self.forwardedDataDisplay;
+        customReport.forwardedDataPost = self.forwardedDataPost;
+        
+        
+        [self.navigationController pushViewController:customReport animated:YES];
+    }
     
-    EmpolyeeSalesReportVC* customReport = [[EmpolyeeSalesReportVC alloc] initWithNibName:@"CustomCompareReportVC" bundle:nil];
-    
-    customReport.dotForm = self.dotForm;
-    customReport.firstFormPost = [self defaultColumnFirst:formPost];
-    customReport.secondFormPost = [self defaultColumnSecond:formPost];
-    customReport.thirdFormPost = [self defaultColumnThird:formPost];
-    customReport.forwardedDataDisplay = self.forwardedDataDisplay;
-    customReport.forwardedDataPost = self.forwardedDataPost;
-    
-    
-    [self.navigationController pushViewController:customReport animated:YES];
     
 }
 

@@ -237,6 +237,29 @@
     NSMutableDictionary *dotFormElements =  formDef.formElements;
     NSMutableArray *sortedElements 	=  [XmwUtils  sortedDotFormElementIds : dotFormElements];
     
+    // FROM_DATE, TO_DATE
+    NSMutableArray *dotFormElementIdArray = [[NSMutableArray alloc] init];
+    for (int i=0; i<sortedElements.count; i++) {
+        DotFormElement *dotFormElement  = (DotFormElement*)[sortedElements objectAtIndex:i];
+        [dotFormElementIdArray addObject: dotFormElement.elementId];
+        
+    }
+    
+    if ([dotFormElementIdArray containsObject:@"FROM_DATE"] && [dotFormElementIdArray containsObject:@"TO_DATE"]) {
+        
+        MXTextField* begdaDateTF = (MXTextField*)[baseForm getDataFromId : @"FROM_DATE"];
+        MXTextField* enddaDateTF = (MXTextField*)[baseForm getDataFromId : @"TO_DATE"];
+        
+        NSString* fromDateTime = [NSString stringWithFormat:@"%@", begdaDateTF.text];
+        NSString* toDateTime = [NSString stringWithFormat:@"%@", enddaDateTF.text];
+        
+        if(![self validateRange:baseForm fromDate:fromDateTime toDate:toDateTime])
+        {
+            return false;
+        }
+    }
+    
+    
     for (int cntElement = 0; cntElement < [sortedElements count]; cntElement++) {
         DotFormElement *dotFormElement  = (DotFormElement*)[sortedElements objectAtIndex:cntElement];
         
@@ -247,7 +270,9 @@
                     return false;
                 }
             }
-        } else {
+        }
+        
+        else {
             if (![dotFormElement isOptionalBool] && [self mandatoryCheckOfDotFormElement : dotFormElement : baseForm])
             {
                 return false;
@@ -285,6 +310,21 @@
 			return false;
 		}
 	}
+    
+
+//        MXTextField* begdaDateTF = (MXTextField*)[baseForm getDataFromId : @"FORM_DATE"];
+//        MXTextField* enddaDateTF = (MXTextField*)[baseForm getDataFromId : @"TO_DATE"];
+//
+//        // format is 01/05/2018 8:30:AM
+//        NSString* fromDateTime = [NSString stringWithFormat:@"%@", begdaDateTF.text];
+//        NSString* toDateTime = [NSString stringWithFormat:@"%@", enddaDateTF.text];
+//
+//        if(![self validateRange:baseForm fromDate:fromDateTime toDate:toDateTime])
+//        {
+//            return false;
+//        }
+//
+    
     return true;
       
 }
@@ -885,5 +925,40 @@
     }
     
 }
-
+-(BOOL)  validateRange:(FormVC *) baseForm fromDate:fromDateTimeStr toDate:toDateTimeStr
+{
+    // format is 01/05/2018 8:30:AM or format is  01/05/2018 8:30 AM
+    NSDateFormatter* dateFormatterT1 = [[NSDateFormatter alloc] init];
+    [dateFormatterT1 setDateFormat:@"dd/MM/yyyy"];
+    [dateFormatterT1 setTimeZone:[NSTimeZone localTimeZone]];
+    [dateFormatterT1 setLocale:[NSLocale systemLocale]];
+    
+    NSDateFormatter* dateFormatterT2 = [[NSDateFormatter alloc] init];
+    [dateFormatterT2 setDateFormat:@"dd/MM/yyyy"];
+    [dateFormatterT2 setTimeZone:[NSTimeZone localTimeZone]];
+    [dateFormatterT2 setLocale:[NSLocale systemLocale]];
+    
+    NSDate* fromDate = [dateFormatterT1 dateFromString:fromDateTimeStr];
+    if(fromDate==nil) {
+        fromDate = [dateFormatterT2 dateFromString:fromDateTimeStr];
+    }
+    
+    
+    NSDate* toDate = [dateFormatterT1 dateFromString:toDateTimeStr];
+    if(toDate==nil) {
+        toDate = [dateFormatterT2 dateFromString:toDateTimeStr];
+    }
+    
+    
+    if([toDate timeIntervalSince1970]<=[fromDate timeIntervalSince1970]) {
+        
+        NSString* displayMessage = [NSString stringWithFormat:@"To Date %@ should be greater than or equal to From Date %@", toDateTimeStr, fromDateTimeStr];
+        UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Mandatory Validations" message:displayMessage delegate:baseForm cancelButtonTitle:@"OK" otherButtonTitles:nil , nil];
+        myAlertView.tag = 3;
+        [myAlertView show];
+        return false;
+    }
+    
+    return true;
+}
 @end

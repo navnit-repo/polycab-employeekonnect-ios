@@ -139,7 +139,7 @@
 -(IBAction)allButtonHandler:(id)sender
 {
     NSLog(@"All button click");
-    if ( [self clickable:0]==YES) {
+    if ( [self clickable:0]==YES && [sortedDataSetKeys count] >0) {
         [self allHandleDrilldown:0];
     }
     else

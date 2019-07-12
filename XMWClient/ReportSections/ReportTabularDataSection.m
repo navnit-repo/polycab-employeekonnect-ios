@@ -531,7 +531,22 @@
             mItemLabel.text = [row objectAtIndex:i];
             }
             
-            if ([[row objectAtIndex:i] isEqualToString:@"All"] || allFlagCheck) {
+            
+            id object = [row objectAtIndex:i];
+            NSString *allCheckStr = @"";
+            if(![object isEqual:[NSNull null]])
+            {
+                allCheckStr = [row objectAtIndex:i];
+                if (allCheckStr == nil || [allCheckStr isKindOfClass:[NSNull class]] || allCheckStr.length<=0 || allCheckStr == NULL || [allCheckStr isEqualToString:@""]) {
+                    allCheckStr = @"";
+                }
+                
+            }
+            else
+            {
+                allCheckStr = @"";
+            }
+            if ([allCheckStr isEqualToString:@"All"] || allFlagCheck) {
                 [mItemLabel setBackgroundColor:[UIColor redColor]];
                 [mItemLabel setTextColor:[UIColor whiteColor]];
                [mItemLabel setFont:[UIFont boldSystemFontOfSize:14.0f]];
