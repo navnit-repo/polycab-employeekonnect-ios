@@ -237,28 +237,28 @@
     NSMutableDictionary *dotFormElements =  formDef.formElements;
     NSMutableArray *sortedElements 	=  [XmwUtils  sortedDotFormElementIds : dotFormElements];
     
-    // FROM_DATE, TO_DATE
-    NSMutableArray *dotFormElementIdArray = [[NSMutableArray alloc] init];
-    for (int i=0; i<sortedElements.count; i++) {
-        DotFormElement *dotFormElement  = (DotFormElement*)[sortedElements objectAtIndex:i];
-        [dotFormElementIdArray addObject: dotFormElement.elementId];
-        
-    }
-    
-    if ([dotFormElementIdArray containsObject:@"FROM_DATE"] && [dotFormElementIdArray containsObject:@"TO_DATE"]) {
-        
-        MXTextField* begdaDateTF = (MXTextField*)[baseForm getDataFromId : @"FROM_DATE"];
-        MXTextField* enddaDateTF = (MXTextField*)[baseForm getDataFromId : @"TO_DATE"];
-        
-        NSString* fromDateTime = [NSString stringWithFormat:@"%@", begdaDateTF.text];
-        NSString* toDateTime = [NSString stringWithFormat:@"%@", enddaDateTF.text];
-        
-        if(![self validateRange:baseForm fromDate:fromDateTime toDate:toDateTime])
-        {
-            return false;
-        }
-    }
-    
+//    // FROM_DATE, TO_DATE
+//    NSMutableArray *dotFormElementIdArray = [[NSMutableArray alloc] init];
+//    for (int i=0; i<sortedElements.count; i++) {
+//        DotFormElement *dotFormElement  = (DotFormElement*)[sortedElements objectAtIndex:i];
+//        [dotFormElementIdArray addObject: dotFormElement.elementId];
+//        
+//    }
+//    
+//    if ([dotFormElementIdArray containsObject:@"FROM_DATE"] && [dotFormElementIdArray containsObject:@"TO_DATE"]) {
+//        
+//        MXTextField* begdaDateTF = (MXTextField*)[baseForm getDataFromId : @"FROM_DATE"];
+//        MXTextField* enddaDateTF = (MXTextField*)[baseForm getDataFromId : @"TO_DATE"];
+//        
+//        NSString* fromDateTime = [NSString stringWithFormat:@"%@", begdaDateTF.text];
+//        NSString* toDateTime = [NSString stringWithFormat:@"%@", enddaDateTF.text];
+//        
+//        if(![self validateRange:baseForm fromDate:fromDateTime toDate:toDateTime])
+//        {
+//            return false;
+//        }
+//    }
+//    
     
     for (int cntElement = 0; cntElement < [sortedElements count]; cntElement++) {
         DotFormElement *dotFormElement  = (DotFormElement*)[sortedElements objectAtIndex:cntElement];
