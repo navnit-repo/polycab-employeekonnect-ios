@@ -8,6 +8,7 @@
 
 #import "ChatHistory_DB.h"
 #import "KeychainItemWrapper.h"
+#import "XmwcsConstant.h"
 static NSMutableDictionary* INSTANCE_MAP = 0;
 static ChatHistory_DB* DEFAULT_INSTANCE = 0;
 @implementation ChatHistory_DB
@@ -21,7 +22,7 @@ static ChatHistory_DB* DEFAULT_INSTANCE = 0;
     
     if(self!=nil) {
         
-        NSString *appGroupId = @"group.com.polycab.xmw.employee.push.group";
+        NSString *appGroupId = XmwcsConst_APPGROUP_IDENTIFIER;
         NSURL *appGroupDirectoryPath = [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:appGroupId];
         NSString *appGroupDirectoryPathString = appGroupDirectoryPath.absoluteString;
         
@@ -180,7 +181,7 @@ static ChatHistory_DB* DEFAULT_INSTANCE = 0;
     */
     
     //updated query
-    KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:@"com.polycab.xmw.employee" accessGroup:nil ];
+    KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:XmwcsConst_KEYCHAIN_IDENTIFIER accessGroup:nil ];
     NSString *userId = [[keychainItem objectForKey:kSecAttrAccount]stringByAppendingString:@"@employee"];
     
     NSString *whereClause = [[[[[@" where chatThreadId="stringByAppendingString:[NSString stringWithFormat:@"%d",chatThreatIdToRetrieveHistory]]stringByAppendingString:@" and messageRead='NO'"]stringByAppendingString:@" and toId = '"]stringByAppendingString:userId]stringByAppendingString:@"'"];

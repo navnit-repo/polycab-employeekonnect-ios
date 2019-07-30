@@ -8,6 +8,7 @@
 
 #import "NotificationService.h"
 #import "PushNotificationHandler.h"
+#import "XmwcsConstant.h"
 @interface NotificationService ()
 
 @property (nonatomic, strong) void (^contentHandler)(UNNotificationContent *contentToDeliver);
@@ -23,9 +24,9 @@
 - (void)didReceiveNotificationRequest:(UNNotificationRequest *)request withContentHandler:(void (^)(UNNotificationContent * _Nonnull))contentHandler {
     self.contentHandler = contentHandler;
     self.bestAttemptContent = [request.content mutableCopy];
-    count =[[[[NSUserDefaults standardUserDefaults] initWithSuiteName:@"group.com.polycab.xmw.employee.push.group"] valueForKey:@"Notification_Count"] intValue];
+    count =[[[[NSUserDefaults standardUserDefaults] initWithSuiteName:XmwcsConst_APPGROUP_IDENTIFIER] valueForKey:@"Notification_Count"] intValue];
     count = count +1;
-    [[[NSUserDefaults standardUserDefaults] initWithSuiteName:@"group.com.polycab.xmw.employee.push.group"] setObject:[NSString stringWithFormat:@"%d",count] forKey:@"Notification_Count"];
+    [[[NSUserDefaults standardUserDefaults] initWithSuiteName:XmwcsConst_APPGROUP_IDENTIFIER] setObject:[NSString stringWithFormat:@"%d",count] forKey:@"Notification_Count"];
     
     NSNumber *n=[NSNumber numberWithInteger:count];
     self.bestAttemptContent.badge =n;

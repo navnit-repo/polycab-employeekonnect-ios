@@ -11,6 +11,7 @@
 #import "ClientVariable.h"
 #import "XmwReportService.h"
 #import "LayoutClass.h"
+#import "CompareReportTableCell.h"
 @implementation EmpolyeeSalesReportVC
 {
     
@@ -238,10 +239,7 @@
     
     [self.navigationController pushViewController:ddCustomCompareReport animated:YES];
 }
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return 44.0f*deviceHeightRation;
-}
+
 -(void) drawTitle:(NSString *)headerStr
 {
     NSDictionary *textAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -696,4 +694,125 @@
 //    return sortDataArrayAddName;
 //}
 
+
+
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell* cell = nil;
+    if(indexPath.section==0) {
+        cell = [tableView dequeueReusableCellWithIdentifier:@"DefaultCell"];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    }
+    
+    else if(indexPath.section==1) {
+        NSString *str = [NSString stringWithFormat:@"CompareReportTableCell_Section_%ld_row_%ld",(long)indexPath.section,indexPath.row];
+        CompareReportTableCell *rowCell = (CompareReportTableCell*) [tableView dequeueReusableCellWithIdentifier:str];
+        [tableView registerNib:[UINib nibWithNibName:@"CompareReportTableCell" bundle:nil] forCellReuseIdentifier:str];
+        rowCell  = [tableView dequeueReusableCellWithIdentifier:str];
+        rowCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        
+        
+        NSString* key = [sortedDataSetKeys objectAtIndex:indexPath.row];
+        XmwCompareTuple* tuple = [dataSet objectForKey:key];
+        rowCell.fieldLabel.text = tuple.fieldName;
+        rowCell.firstLabel.text = tuple.firstValue;
+        rowCell.secondLabel.text = tuple.secondValue;
+        rowCell.thirdLabel.text = tuple.thirdValue;
+        
+        
+        CGSize maximumLabelSize = CGSizeMake(rowCell.fieldLabel.frame.size.width, FLT_MAX);
+        
+        CGSize expectedLabelSize = [rowCell.fieldLabel.text sizeWithFont:rowCell.fieldLabel.font constrainedToSize:maximumLabelSize lineBreakMode:rowCell.fieldLabel.lineBreakMode];
+        
+        if (rowCell.fieldLabel.frame.size.height < expectedLabelSize.height) {
+            //adjust the label the the new height.
+            CGRect newLableFrame = rowCell.fieldLabel.frame;
+            newLableFrame.size.height = expectedLabelSize.height;
+            rowCell.fieldLabel.frame = CGRectMake(rowCell.fieldLabel.frame.origin.x, rowCell.fieldLabel.frame.origin.y, rowCell.fieldLabel.frame.size.width, expectedLabelSize.height);
+            
+            CGRect viewNewFrame = rowCell.view1.frame;
+            viewNewFrame.size.height = expectedLabelSize.height;
+            rowCell.view1.frame = CGRectMake(rowCell.view1.frame.origin.x, rowCell.view1.frame.origin.y, rowCell.view1.frame.size.width, expectedLabelSize.height);
+            
+            rowCell.view2.frame = CGRectMake(rowCell.view2.frame.origin.x, rowCell.view2.frame.origin.y, rowCell.view2.frame.size.width, expectedLabelSize.height);
+            
+            rowCell.view3.frame = CGRectMake(rowCell.view3.frame.origin.x, rowCell.view3.frame.origin.y, rowCell.view3.frame.size.width, expectedLabelSize.height);
+            
+            rowCell.view4.frame = CGRectMake(rowCell.view4.frame.origin.x, rowCell.view4.frame.origin.y, rowCell.view4.frame.size.width, expectedLabelSize.height);
+            
+            rowCell.firstLabel.frame  =  CGRectMake(rowCell.firstLabel.frame.origin.x, rowCell.firstLabel.frame.origin.y, rowCell.firstLabel.frame.size.width, expectedLabelSize.height);
+            
+            rowCell.secondLabel.frame =  CGRectMake(rowCell.secondLabel.frame.origin.x, rowCell.secondLabel.frame.origin.y, rowCell.secondLabel.frame.size.width, expectedLabelSize.height);
+            
+            
+            rowCell.thirdLabel.frame  =  CGRectMake(rowCell.thirdLabel.frame.origin.x, rowCell.thirdLabel.frame.origin.y, rowCell.thirdLabel.frame.size.width, expectedLabelSize.height);
+            
+            [self tableView:self heightForRowAtIndexPath:indexPath];
+        }
+        
+        rowCell.clipsToBounds = YES;
+        return rowCell;
+    }
+    cell.clipsToBounds = YES;
+    return cell;
+}
+
+
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    CGFloat height = 0.0f;
+    
+    if(indexPath.section==1) {
+        // NSString* key = [dataSet.allKeys objectAtIndex:indexPath.row];
+        
+        NSString* key = [sortedDataSetKeys objectAtIndex:indexPath.row];
+        XmwCompareTuple* tuple = [dataSet objectForKey:key];
+        
+        
+        UILabel *temLbl = [[UILabel alloc]init];
+        temLbl.frame = CGRectMake(0, 0, 77, 42);
+        temLbl.numberOfLines = 0;
+        temLbl.textAlignment = NSTextAlignmentCenter;
+        temLbl.lineBreakMode = NSLineBreakByWordWrapping;
+        [temLbl setFont:[UIFont systemFontOfSize:12.0f weight:UIFontWeightRegular]];
+        temLbl.text = tuple.fieldName;
+        [LayoutClass labelLayout:temLbl forFontWeight:UIFontWeightRegular];
+        
+        CGSize maximumLabelSize = CGSizeMake(temLbl.frame.size.width, FLT_MAX);
+        
+        CGSize expectedLabelSize = [temLbl.text sizeWithFont: temLbl.font constrainedToSize:maximumLabelSize lineBreakMode:temLbl.lineBreakMode];
+        
+        if (temLbl.frame.size.height < expectedLabelSize.height) {
+            //adjust the label the the new height.
+            height = expectedLabelSize.height+4;
+            NSLog(@"Cell height :- %f",height);
+            return height;
+        }
+        else
+        {
+            height = 44.0f*deviceHeightRation;
+            NSLog(@"Cell height :- %f",height);
+            return height;
+        }
+        
+    }
+    
+    else
+    {
+        height = 44.0f*deviceHeightRation;
+        NSLog(@"Cell height :- %f",height);
+        return height;
+    }
+    //    return 44.0f*deviceHeightRation;
+    
+    
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+}
 @end

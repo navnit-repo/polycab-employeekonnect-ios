@@ -547,7 +547,7 @@
                 allCheckStr = @"";
             }
             if ([allCheckStr isEqualToString:@"All"] || allFlagCheck) {
-                [mItemLabel setBackgroundColor:[UIColor redColor]];
+                [mItemLabel setBackgroundColor:[UIColor colorWithRed:204.0/255 green:41.0/255 blue:43.0/255 alpha:1.0f]];
                 [mItemLabel setTextColor:[UIColor whiteColor]];
                [mItemLabel setFont:[UIFont boldSystemFontOfSize:14.0f]];
                 allFlagCheck = true;

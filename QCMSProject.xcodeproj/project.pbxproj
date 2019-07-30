@@ -1047,6 +1047,9 @@
 		F0C76ED820DD0BF700390528 /* CustomerClaimInvoiceFetchDetailsVC.h in Headers */ = {isa = PBXBuildFile; fileRef = F0C76ED520DD0BF700390528 /* CustomerClaimInvoiceFetchDetailsVC.h */; };
 		F0C76ED920DD0BF700390528 /* CustomerClaimInvoiceFetchDetailsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C76ED620DD0BF700390528 /* CustomerClaimInvoiceFetchDetailsVC.m */; };
 		F0C76EDA20DD0BF700390528 /* CustomerClaimInvoiceFetchDetailsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = F0C76ED720DD0BF700390528 /* CustomerClaimInvoiceFetchDetailsVC.xib */; };
+		F0DF53F122F012EA00EE0A8D /* SuggestiveSearchFieldControl.h in Headers */ = {isa = PBXBuildFile; fileRef = F0DF53EF22F012EA00EE0A8D /* SuggestiveSearchFieldControl.h */; };
+		F0DF53F222F012EA00EE0A8D /* SuggestiveSearchFieldControl.m in Sources */ = {isa = PBXBuildFile; fileRef = F0DF53F022F012EA00EE0A8D /* SuggestiveSearchFieldControl.m */; };
+		F0DF53F322F028A700EE0A8D /* XmwcsConstant.m in Sources */ = {isa = PBXBuildFile; fileRef = 8579E759174CDC3600D7945F /* XmwcsConstant.m */; };
 		F0E1A0CF213E48C2005F4435 /* SalesCell.h in Headers */ = {isa = PBXBuildFile; fileRef = F0E1A0CD213E48C2005F4435 /* SalesCell.h */; };
 		F0E1A0D0213E48C2005F4435 /* SalesCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F0E1A0CE213E48C2005F4435 /* SalesCell.m */; };
 		F0E1A0D2213E48DD005F4435 /* SalesCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F0E1A0D1213E48DD005F4435 /* SalesCell.xib */; };
@@ -2218,6 +2221,8 @@
 		F0C76ED520DD0BF700390528 /* CustomerClaimInvoiceFetchDetailsVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomerClaimInvoiceFetchDetailsVC.h; sourceTree = "<group>"; };
 		F0C76ED620DD0BF700390528 /* CustomerClaimInvoiceFetchDetailsVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomerClaimInvoiceFetchDetailsVC.m; sourceTree = "<group>"; };
 		F0C76ED720DD0BF700390528 /* CustomerClaimInvoiceFetchDetailsVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomerClaimInvoiceFetchDetailsVC.xib; sourceTree = "<group>"; };
+		F0DF53EF22F012EA00EE0A8D /* SuggestiveSearchFieldControl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SuggestiveSearchFieldControl.h; sourceTree = "<group>"; };
+		F0DF53F022F012EA00EE0A8D /* SuggestiveSearchFieldControl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SuggestiveSearchFieldControl.m; sourceTree = "<group>"; };
 		F0E1A0CD213E48C2005F4435 /* SalesCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SalesCell.h; sourceTree = "<group>"; };
 		F0E1A0CE213E48C2005F4435 /* SalesCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SalesCell.m; sourceTree = "<group>"; };
 		F0E1A0D1213E48DD005F4435 /* SalesCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SalesCell.xib; sourceTree = "<group>"; };
@@ -3150,6 +3155,8 @@
 				90EC5A6C1779A426004A2E3C /* RadioGroup.m */,
 				F0E4743D2147EA6F00AEB3FA /* AttachmentViewCell.h */,
 				F0E4743E2147EA6F00AEB3FA /* AttachmentViewCell.m */,
+				F0DF53EF22F012EA00EE0A8D /* SuggestiveSearchFieldControl.h */,
+				F0DF53F022F012EA00EE0A8D /* SuggestiveSearchFieldControl.m */,
 			);
 			name = UITableViewCell;
 			sourceTree = "<group>";
@@ -4747,6 +4754,7 @@
 				858082A71A5D892800207EAB /* DotVBarChart.h in Headers */,
 				F09B7B35213024B7006D9372 /* CreateDetailsCell.h in Headers */,
 				F039CAE520F49AF2005CEC02 /* Records.h in Headers */,
+				F0DF53F122F012EA00EE0A8D /* SuggestiveSearchFieldControl.h in Headers */,
 				F036CDE42281869C000F2448 /* NewChatBoxVC.h in Headers */,
 				901F6E3B180282E500293AB9 /* XMWFaqWebViewController.h in Headers */,
 				85AC965B198FFDDF00AC0338 /* ReportBaseSection.h in Headers */,
@@ -5451,6 +5459,7 @@
 				F0B425A322671C240011D3E4 /* ChatHistory_DB.m in Sources */,
 				F0B2FB5621885145006A7C6B /* LayoutClass.m in Sources */,
 				8579E749174CDBDC00D7945F /* SBJsonStreamTokeniser.m in Sources */,
+				F0DF53F222F012EA00EE0A8D /* SuggestiveSearchFieldControl.m in Sources */,
 				F039CAE620F49AF2005CEC02 /* Records.m in Sources */,
 				8579E74B174CDBDC00D7945F /* SBJsonStreamWriter.m in Sources */,
 				8579E74D174CDBDC00D7945F /* SBJsonStreamWriterAccumulator.m in Sources */,
@@ -5752,6 +5761,7 @@
 				F034777D2278663B0040A660 /* ChatHistory_DB.m in Sources */,
 				F034777C2278663B0040A660 /* ChatThreadList_Object.m in Sources */,
 				F034777A2278663B0040A660 /* ContactList_Object.m in Sources */,
+				F0DF53F322F028A700EE0A8D /* XmwcsConstant.m in Sources */,
 				F0347778227866200040A660 /* PushNotificationHandler.m in Sources */,
 				F03477792278663B0040A660 /* ContactList_DB.m in Sources */,
 				F034777F227866E70040A660 /* BaseDAO.m in Sources */,

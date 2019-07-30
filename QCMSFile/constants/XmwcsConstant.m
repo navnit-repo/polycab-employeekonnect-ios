@@ -8,8 +8,8 @@
 #import <Foundation/Foundation.h>
 #import "XmwcsConstant.h"
 
-#define CONFIG_PROD
-//#define CONFIG_QA
+//#define CONFIG_PROD
+#define CONFIG_QA
 //#define CONFIG_DEV
 
 
@@ -136,6 +136,7 @@ NSString *const XmwcsConst_CALL_NAME_FOR_VIEW_EDIT = @"VIEW_EDIT";
 
 
 //Component Type
+NSString *const XmwcsConst_DE_COMPONENT_SUGGESTIVE_SEARCH_FIELD = @"SUGGESTIVE_SEARCH_FIELD" ;
 NSString *const XmwcsConst_DE_COMPONENT_TEXTFIELD = @"TEXTFIELD";
 NSString *const XmwcsConst_DE_COMPONENT_TEXTAREA = @"TEXTAREA";
 NSString *const XmwcsConst_DE_COMPONENT_DISABLED_TEXTFIELD = @"DISABLED_TEXTFIELD";
@@ -506,6 +507,8 @@ int const XmwcsConst_NOTIFY_TYPE_MENU_MSG = 5;//Total Sales
 int const XmwcsConst_NOTIFY_TYPE_MENU_DATA = 6;
 int const XmwcsConst_NOTIFY_TYPE_URL_LAUNCH = 7;
 
-
+//Keychain and AppGroup Identifier
+NSString *const XmwcsConst_KEYCHAIN_IDENTIFIER = @"com.polycab.xmw.employee";
+NSString *const XmwcsConst_APPGROUP_IDENTIFIER = @"group.com.polycab.xmw.employee.push.group";
 
 

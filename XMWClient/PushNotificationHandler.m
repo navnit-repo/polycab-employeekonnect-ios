@@ -16,6 +16,7 @@
 #import "ContactList_DB.h"
 #import "ContactList_Object.h"
 #import "KeychainItemWrapper.h"
+#import "XmwcsConstant.h"
 //#import "ClientVariable.h"
 @implementation PushNotificationHandler
 + (void)notificationDict:(NSDictionary *)dict
@@ -23,7 +24,7 @@
     @synchronized (self) {
         
  
-  KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:@"com.polycab.xmw.employee" accessGroup:nil ];
+  KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:XmwcsConst_KEYCHAIN_IDENTIFIER accessGroup:nil ];
     NSString *userId = [keychainItem objectForKey:kSecAttrAccount];
     
     

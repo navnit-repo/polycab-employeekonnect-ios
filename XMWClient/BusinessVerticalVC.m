@@ -26,6 +26,10 @@
     
     [[self.view viewWithTag:1002] removeFromSuperview]; //remove from date
     [[self.view viewWithTag:1003] removeFromSuperview]; //remove to date
+    
+    [self removeElementFrom:@"FROM_DATE"];
+    [self removeElementFrom:@"TO_DATE"];
+    
     [self.view viewWithTag:1004].frame = CGRectMake([self.view viewWithTag:1004].frame.origin.x, [self.view viewWithTag:1004].frame.origin.y-140, [self.view viewWithTag:1004].frame.size.width, [self.view viewWithTag:1004].frame.size.height); //change button y position
     
 }

@@ -437,7 +437,10 @@ UITextField* activeTextField = nil;
 
 	[self.navigationController popViewControllerAnimated:YES];
 }
-
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [[[[UIApplication sharedApplication] keyWindow] viewWithTag:10000000] removeFromSuperview];
+}
 
 -(void) dismissLoadingView
 {
@@ -1879,7 +1882,12 @@ UITextField* activeTextField = nil;
     }
     
 }
+-(void)removeElementFrom :(NSString*) elementId
+{
 
+    [componentMap removeObjectForKey:elementId];
+
+}
 
 -(id) getDataFromId : (NSString *) objectId
 {

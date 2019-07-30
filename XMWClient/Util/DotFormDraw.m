@@ -25,7 +25,7 @@
 #import "JSONDataExchange.h"
 #import "FormVC.h"
 
-
+#import "SuggestiveSearchFieldControl.h"
 
 @implementation UIView (DVTFVDelegate)
 
@@ -354,6 +354,12 @@ int uiViewStartIdx = 1001;
         return [self drawAttachmentView:formController :formElement];
     }
     
+    else if([componentType isEqualToString:XmwcsConst_DE_COMPONENT_SUGGESTIVE_SEARCH_FIELD]) {
+        tagFormIdx = tagFormIdx + 1;
+        return [self drawSuggestiveSearchField:formController :formElement];
+    }
+    
+    
     return nil;
 }
 
@@ -597,7 +603,32 @@ int uiViewStartIdx = 1001;
     
 }
 
-
+-(UIView*)drawSuggestiveSearchField : (FormVC *) formController :(DotFormElement*) dotFormElement
+{
+     UIView *subContainer = [[UIView alloc]initWithFrame:CGRectMake(0, yArguForDrawComp, screenWidth, formLineHeight)];
+     NSString *currentCompName = dotFormElement.elementId;
+    SuggestiveSearchFieldControl *suggestiveSearchFieldView;
+    
+    if (suggestiveSearchFieldView == nil)
+        suggestiveSearchFieldView = [[SuggestiveSearchFieldControl alloc ] initWithFrame:CGRectMake(0, 0, screenWidth, formLineHeight) :yArguForDrawComp +formController.view.frame.origin.y];
+    
+    
+    
+    if([dotFormElement isOptionalBool])
+        suggestiveSearchFieldView.mandatoryLabel.hidden    = YES;
+    else
+        suggestiveSearchFieldView.mandatoryLabel.hidden    = NO;
+    
+    suggestiveSearchFieldView.titleLabel.text = dotFormElement.displayText;
+    suggestiveSearchFieldView.searchField.elementId = currentCompName;
+    [formController putToDataIdMap :  suggestiveSearchFieldView.searchField : currentCompName];
+  
+    
+    
+    [subContainer addSubview: suggestiveSearchFieldView];
+    yArguForDrawComp =yArguForDrawComp+formLineHeight;
+     return subContainer;
+}
 
 -(UIView*)drawDropDown : (FormVC *) formController :(DotFormElement*) dotFormElement 
 {
@@ -1033,7 +1064,7 @@ int uiViewStartIdx = 1001;
     
     
     if (formCell == nil)
-        formCell = [[LabelTableViewCell alloc] initWithFrame:CGRectMake(0, yArguForDrawComp, screenWidth, formLineHeight)] ;
+        formCell = [[LabelTableViewCell alloc] initWithFrame:CGRectMake(0, 0, screenWidth, formLineHeight)] ;
     
     if([dotFormElement isOptionalBool])
         formCell.mandatoryLabel.hidden	= YES;

@@ -284,7 +284,7 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 //    for notification count
-        [[[NSUserDefaults standardUserDefaults] initWithSuiteName:@"group.com.polycab.xmw.employee.push.group"] setObject:[NSString stringWithFormat:@"%d",0] forKey:@"Notification_Count"];
+        [[[NSUserDefaults standardUserDefaults] initWithSuiteName:XmwcsConst_APPGROUP_IDENTIFIER] setObject:[NSString stringWithFormat:@"%d",0] forKey:@"Notification_Count"];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
@@ -360,7 +360,7 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
         }
         
         //    for notification count
-        [[[NSUserDefaults standardUserDefaults] initWithSuiteName:@"group.com.polycab.xmw.employee.push.group"] setObject:[NSString stringWithFormat:@"%d",0] forKey:@"Notification_Count"];
+        [[[NSUserDefaults standardUserDefaults] initWithSuiteName:XmwcsConst_APPGROUP_IDENTIFIER] setObject:[NSString stringWithFormat:@"%d",0] forKey:@"Notification_Count"];
     }
    
 }
@@ -390,7 +390,7 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
      [userDef synchronize];
     
     //    for notification count
-    [[[NSUserDefaults standardUserDefaults] initWithSuiteName:@"group.com.polycab.xmw.employee.push.group"] setObject:[NSString stringWithFormat:@"%d",0] forKey:@"Notification_Count"];
+    [[[NSUserDefaults standardUserDefaults] initWithSuiteName:XmwcsConst_APPGROUP_IDENTIFIER] setObject:[NSString stringWithFormat:@"%d",0] forKey:@"Notification_Count"];
 }
 
 

@@ -64,6 +64,8 @@
 -(UIView*) drawSearchField : (FormVC *) formController :(DotFormElement*) dotFormElement ;
 -(UIView*) drawSubHeader : (FormVC *) formController :(DotFormElement*) dotFormElement ;
 
+-(UIView*)drawSuggestiveSearchField : (FormVC *) formController :(DotFormElement*) dotFormElement; //new
+
 - (void) hideFormRowContainer :(UIView*) parentCont : (NSString*) nameId : (BOOL) hideState;
 - (int) removeFormRowContainer : (UIView*) parentCont : (NSString*) nameId;
 - (UIView*) formRowContainer:(UIView*) parentCont :(NSString*) nameId;

@@ -881,7 +881,7 @@
 }
 -(void) userLogout
 {
-    KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:@"com.polycab.xmw.employee" accessGroup:nil ];
+    KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:XmwcsConst_KEYCHAIN_IDENTIFIER accessGroup:nil ];
     NSString *userId = [keychainItem objectForKey:kSecAttrAccount];
     //for clear all default save data
     NSUserDefaults * defs = [NSUserDefaults standardUserDefaults];

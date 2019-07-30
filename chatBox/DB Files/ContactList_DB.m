@@ -7,7 +7,7 @@
 //
 
 #import "ContactList_DB.h"
-
+#import "XmwcsConstant.h"
 static NSMutableDictionary* INSTANCE_MAP = 0;
 static ContactList_DB* DEFAULT_INSTANCE = 0;
 
@@ -24,7 +24,7 @@ static ContactList_DB* DEFAULT_INSTANCE = 0;
 
     if(self!=nil) {
         
-        NSString *appGroupId = @"group.com.polycab.xmw.employee.push.group";
+        NSString *appGroupId = XmwcsConst_APPGROUP_IDENTIFIER;
         NSURL *appGroupDirectoryPath = [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:appGroupId];
         NSString *appGroupDirectoryPathString = appGroupDirectoryPath.absoluteString;
         

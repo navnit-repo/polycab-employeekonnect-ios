@@ -281,6 +281,7 @@
 -(void) dropDownPickerDoneHandle:(DotFormElement*) ddFormElement;
 
 -(void)barCodeScanButtonAction:(id) sender;
+-(void)removeElementFrom :(NSString*) elementId;
 @end
 
 

@@ -147,7 +147,7 @@ NSString *chatPersonUserID;
     //for auto login if user already loggedIn
     NSString* isChecked = [[NSUserDefaults standardUserDefaults] objectForKey:@"ISCHECKED"];
       if (isChecked !=nil &&[isChecked isEqualToString:@"YES"]) {
-          KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:@"com.polycab.xmw.employee" accessGroup:nil];
+          KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:XmwcsConst_KEYCHAIN_IDENTIFIER accessGroup:nil];
 
           NSString* username = [keychainItem objectForKey:kSecAttrAccount];
           NSString* password = [[NSString alloc] initWithData:[keychainItem objectForKey:kSecValueData] encoding:NSUTF8StringEncoding];
@@ -356,7 +356,7 @@ NSString *chatPersonUserID;
     [dbNameArray addObject:@"ChatThreadList_DB.sqlite.db"];
     
     for (int i=0; i<3; i++) {
-        NSString *appGroupId = @"group.com.polycab.xmw.employee.push.group";
+        NSString *appGroupId = XmwcsConst_APPGROUP_IDENTIFIER;
         NSURL *appGroupDirectoryPath = [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:appGroupId];
         NSString *appGroupDirectoryPathString = appGroupDirectoryPath.absoluteString;
         
@@ -582,7 +582,7 @@ NSString *chatPersonUserID;
     [[NSUserDefaults standardUserDefaults] synchronize];
     menuDetailsDict =clientLoginResponse.menuDetail;
     
-    KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:@"com.polycab.xmw.employee" accessGroup:nil];
+    KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:XmwcsConst_KEYCHAIN_IDENTIFIER accessGroup:nil];
     [keychainItem setObject:m_username forKey:kSecAttrAccount];
     [keychainItem setObject:self.password.text forKey:kSecValueData];
     [[NSUserDefaults standardUserDefaults] setObject:m_username forKey:@"CURRENT_USER_LOGEDIN_ID"];

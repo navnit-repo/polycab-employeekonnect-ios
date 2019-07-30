@@ -237,28 +237,33 @@
     NSMutableDictionary *dotFormElements =  formDef.formElements;
     NSMutableArray *sortedElements 	=  [XmwUtils  sortedDotFormElementIds : dotFormElements];
     
-//    // FROM_DATE, TO_DATE
-//    NSMutableArray *dotFormElementIdArray = [[NSMutableArray alloc] init];
-//    for (int i=0; i<sortedElements.count; i++) {
-//        DotFormElement *dotFormElement  = (DotFormElement*)[sortedElements objectAtIndex:i];
-//        [dotFormElementIdArray addObject: dotFormElement.elementId];
-//        
-//    }
-//    
-//    if ([dotFormElementIdArray containsObject:@"FROM_DATE"] && [dotFormElementIdArray containsObject:@"TO_DATE"]) {
-//        
-//        MXTextField* begdaDateTF = (MXTextField*)[baseForm getDataFromId : @"FROM_DATE"];
-//        MXTextField* enddaDateTF = (MXTextField*)[baseForm getDataFromId : @"TO_DATE"];
-//        
-//        NSString* fromDateTime = [NSString stringWithFormat:@"%@", begdaDateTF.text];
-//        NSString* toDateTime = [NSString stringWithFormat:@"%@", enddaDateTF.text];
-//        
-//        if(![self validateRange:baseForm fromDate:fromDateTime toDate:toDateTime])
-//        {
-//            return false;
-//        }
-//    }
-//    
+    // FROM_DATE, TO_DATE
+    NSMutableArray *dotFormElementIdArray = [[NSMutableArray alloc] init];
+    for (int i=0; i<sortedElements.count; i++) {
+        DotFormElement *dotFormElement  = (DotFormElement*)[sortedElements objectAtIndex:i];
+        [dotFormElementIdArray addObject: dotFormElement.elementId];
+        
+    }
+    
+    if ([dotFormElementIdArray containsObject:@"FROM_DATE"] && [dotFormElementIdArray containsObject:@"TO_DATE"]) {
+        
+        MXTextField* begdaDateTF = (MXTextField*)[baseForm getDataFromId : @"FROM_DATE"];
+        MXTextField* enddaDateTF = (MXTextField*)[baseForm getDataFromId : @"TO_DATE"];
+        
+        if (begdaDateTF != nil && enddaDateTF != nil) {
+            
+            NSString* fromDateTime = [NSString stringWithFormat:@"%@", begdaDateTF.text];
+            NSString* toDateTime = [NSString stringWithFormat:@"%@", enddaDateTF.text];
+            
+            if(![self validateRange:baseForm fromDate:fromDateTime toDate:toDateTime])
+            {
+                return false;
+            }
+        }
+        
+        
+    }
+    
     
     for (int cntElement = 0; cntElement < [sortedElements count]; cntElement++) {
         DotFormElement *dotFormElement  = (DotFormElement*)[sortedElements objectAtIndex:cntElement];
@@ -310,20 +315,6 @@
 			return false;
 		}
 	}
-    
-
-//        MXTextField* begdaDateTF = (MXTextField*)[baseForm getDataFromId : @"FORM_DATE"];
-//        MXTextField* enddaDateTF = (MXTextField*)[baseForm getDataFromId : @"TO_DATE"];
-//
-//        // format is 01/05/2018 8:30:AM
-//        NSString* fromDateTime = [NSString stringWithFormat:@"%@", begdaDateTF.text];
-//        NSString* toDateTime = [NSString stringWithFormat:@"%@", enddaDateTF.text];
-//
-//        if(![self validateRange:baseForm fromDate:fromDateTime toDate:toDateTime])
-//        {
-//            return false;
-//        }
-//
     
     return true;
       
@@ -770,6 +761,15 @@
         valueToSubmit =  barCodeScanField.editText.text;
         
     }
+    
+    else if([componentType isEqualToString : XmwcsConst_DE_COMPONENT_SUGGESTIVE_SEARCH_FIELD]) {
+        
+        MXTextField *textField = (MXTextField *)[baseForm getDataFromId:elementid];
+        valueToSubmit = textField.keyvalue;
+        valueToDisplay = textField.text;
+        
+    }
+    
     
     if(XmwcsConst_IS_DEBUG) {
                 
