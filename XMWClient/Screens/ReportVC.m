@@ -37,16 +37,15 @@
     
     
     UIBarButtonItem*  downloadButton;
-    float titleLblHeight;
+//    float titleLblHeight;
   
 }
 @end
 
 @implementation ReportVC
-
+@synthesize searchBar;
 @synthesize downloadHistoryMenuList;
 @synthesize imageView;
-
 static bool showMenu = true;
 static DownloadHistoryMenuView* rightSlideMenu = nil;
 
@@ -268,13 +267,42 @@ static DownloadHistoryMenuView* rightSlideMenu = nil;
     titleLblHeight = label.frame.size.height+10;
     
     [self.view addSubview:label];
+    [self configureSearchBar];
+}
+
+-(void)configureSearchBar
+{
+    searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(10, titleLblHeight, self.view.frame.size.width-20, 44*deviceHeightRation)];
+    //    searchBar.delegate = self;
+    [searchBar setPlaceholder:@"Search"];
+    [searchBar setReturnKeyType:UIReturnKeyDone];
+    searchBar.enablesReturnKeyAutomatically = NO;
+    [self.view addSubview:searchBar];
+    
+    for (id subview in [[searchBar.subviews lastObject] subviews]) {
+        if ([subview isKindOfClass:NSClassFromString(@"UISearchBarBackground")]) {
+            [subview removeFromSuperview];
+        }
+        
+        if ([subview isKindOfClass:[UITextField class]])
+        {
+            UITextField *textFieldObject = (UITextField *)subview;
+            textFieldObject.borderStyle = UITextBorderStyleRoundedRect;
+            textFieldObject.layer.masksToBounds=YES;
+            textFieldObject.layer.borderColor=[[UIColor lightGrayColor]CGColor];
+            textFieldObject.layer.cornerRadius=5.0f;
+            textFieldObject.layer.borderWidth= 1.0f;
+            break;
+        }
+        
+    }
+    
 }
 -(void) makeReportScreenV2
 {
+   
     
-    
-    
-    self.reportTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, titleLblHeight, self.view.frame.size.width, self.view.frame.size.height-35)];
+    self.reportTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, titleLblHeight + searchBar.frame.size.height, self.view.frame.size.width, self.view.frame.size.height-(35+searchBar.frame.size.height))];
     self.reportTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 
     sectionArray = [[NSMutableArray alloc] init];
@@ -309,6 +337,7 @@ static DownloadHistoryMenuView* rightSlideMenu = nil;
             }
             
             ReportTabularDataSection* dataSection = [self addTabularDataSection];
+            searchBar.delegate = dataSection;
             [sectionArray addObject:dataSection];
         }
         else if([componentPlace isEqualToString : XmwcsConst_REPORT_PLACE_FOOTER ])

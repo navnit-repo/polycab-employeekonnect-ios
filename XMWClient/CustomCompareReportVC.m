@@ -63,6 +63,8 @@
 @end
 
 @implementation CustomCompareReportVC
+@synthesize orignalThirdResponseData,orignalSortedDataSetKeys,orignalDataSet;
+
 @synthesize secondColumnText;
 @synthesize thirdColumnText;
 - (void)viewDidLoad {
@@ -71,7 +73,31 @@
 //    self.mainTable.frame = CGRectMake(self.mainTable.frame.origin.x, self.mainTable.frame.origin.y, self.view.frame.size.width, self.view.frame.size.height  - self.mainTable.frame.origin.y);
     
     [super viewDidLoad];
+    if (isiPhoneXSMAX) {
+        self.view.frame = CGRectMake(0, 64, 414, 832);
+    }
+    else if(isiPhoneXR) {
+        self.view.frame = CGRectMake(0, 64, 414, 832);
+    }
     
+    else if(isiPhoneXS) {
+        self.view.frame = CGRectMake(0, 64, 375, 748);
+    }
+    else if(isiPhone10) {
+        self.view.frame = CGRectMake(0, 64, 375, 748);
+    }
+    
+    else if(isiPhone6Plus) {
+        self.view.frame = CGRectMake(0, 64, 414, 672);
+    }
+    else if(isiPhone6) {
+        self.view.frame = CGRectMake(0, 64, 375, 600);
+    } else if(isiPhone5) {
+        self.view.frame = CGRectMake(0, 64, 320, 504);
+    } else {
+        // 0, 64, 320, 416
+        self.view.frame = CGRectMake(0, 64, 320, 416);
+    }
    
     
     loaderCount = 0;
@@ -528,6 +554,14 @@
         [self addThirdSetData:thirdResponse into:dataSet];
         
         sortedDataSetKeys = [self sortKeys];
+        
+        // this code for search feature
+        orignalThirdResponseData = [[NSMutableArray alloc ] init];
+        [orignalThirdResponseData addObjectsFromArray:[self sortSearchDataArray:thirdResponse.tableData]];
+        orignalSortedDataSetKeys = [[NSArray alloc ] init];
+        orignalSortedDataSetKeys = [self sortKeys];
+        
+        
         [self.mainTable reloadData];
         
     }   fail:^(DotFormPost* formPosted, NSString* message) {
@@ -543,7 +577,18 @@
     }];
     
 }
-
+-(NSArray*)sortSearchDataArray :(NSMutableArray*)array
+{
+   
+    NSArray* sortedObjects = [array sortedArrayUsingComparator:^(id obj1, id obj2) {
+        NSString* string1 = [obj1 objectAtIndex:0];
+        NSString* string2 = [obj2 objectAtIndex:0];
+        
+        return [string1 compare:string2];
+    }];
+    
+    return sortedObjects;
+}
 
 #pragma  mark -  populate and reload
 

@@ -12,7 +12,7 @@
 #import "DotFormPost.h"
 
 
-@interface ReportTabularDataSection : ReportBaseSection
+@interface ReportTabularDataSection : ReportBaseSection <UISearchBarDelegate>
 {
     NSArray* sortedElementIds;
     NSDictionary* reportElements;

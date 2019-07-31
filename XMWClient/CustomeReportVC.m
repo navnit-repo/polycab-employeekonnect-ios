@@ -14,21 +14,13 @@
 #import "ReportSectionsController.h"
 #import "ReportFooterSection.h"
 #import "ReportSubheaderSection.h"
+#import "DVAppDelegate.h"
 @implementation CustomeReportVC
 
 -(void) makeReportScreenV2
 {
-    
-    
-    
-    self.reportTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 35, self.view.frame.size.width, self.view.frame.size.height-35)];
+    self.reportTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, titleLblHeight + searchBar.frame.size.height, self.view.frame.size.width, self.view.frame.size.height-(35+searchBar.frame.size.height))];
     self.reportTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    
-    
-    
-    
-    
-    
     
     sectionArray = [[NSMutableArray alloc] init];
     sectionController = [[ReportSectionsController alloc] init];
@@ -62,6 +54,7 @@
             }
             
             ReportTabularDataSection* dataSection = [self addTabularDataSection];
+            searchBar.delegate = dataSection;
             [sectionArray addObject:dataSection];
         }
         else if([componentPlace isEqualToString : XmwcsConst_REPORT_PLACE_FOOTER ])

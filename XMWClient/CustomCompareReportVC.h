@@ -37,7 +37,17 @@
     NSString* thirdColumnText;
     ReportPostResponse* secondResponse;
     ReportPostResponse* thirdResponse;
+    
+    NSMutableArray *orignalThirdResponseData;
+    NSMutableDictionary* orignalDataSet;
+    NSArray* orignalSortedDataSetKeys;
 }
+
+@property (strong, nonatomic) NSArray* orignalSortedDataSetKeys;
+@property (strong, nonatomic) NSMutableArray *orignalThirdResponseData;
+@property (strong, nonatomic) NSMutableDictionary* orignalDataSet;
+
+
 @property  NSString* thirdColumnText;
 @property   ReportPostResponse* secondResponse;
 @property   ReportPostResponse* thirdResponse;

@@ -10,7 +10,7 @@
 #import "CustomCompareReportVC.h"
 NS_ASSUME_NONNULL_BEGIN
 
-@interface EmpolyeeSalesReportVC : CustomCompareReportVC
+@interface EmpolyeeSalesReportVC : CustomCompareReportVC <UISearchBarDelegate>
 
 @end
 

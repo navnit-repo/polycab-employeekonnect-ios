@@ -46,9 +46,11 @@
     
     BOOL needRefresh;
     UITableView *reportTableView;
-    
+    UISearchBar *searchBar;
+    float titleLblHeight;
 }
-
+@property  float titleLblHeight;
+@property (strong, nonatomic) UISearchBar *searchBar;
 @property (strong, nonatomic) UITableView *reportTableView;
 
 @property (strong, nonatomic) NSMutableDictionary *menuDetailMap;

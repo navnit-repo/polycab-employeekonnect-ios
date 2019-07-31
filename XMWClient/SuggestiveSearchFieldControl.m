@@ -283,13 +283,11 @@
     NSString *sampleText = [displayCustomerNameArray objectAtIndex:indexPath.row];
     mutableString = [[NSMutableAttributedString alloc] initWithString:sampleText];
     
-    NSString *pattern = [searchField.text uppercaseString];
-    NSRegularExpression *expression = [NSRegularExpression regularExpressionWithPattern:pattern options:0 error:nil];
+    NSString *pattern = searchField.text;
+    NSRegularExpression *expression = [NSRegularExpression regularExpressionWithPattern:pattern options:1 error:nil];
     
-//    [trimmedString compare:XmwcsConst_DEMO_USER options:NSCaseInsensitiveSearch]==NSOrderedSame
-    //  enumerate matches
     NSRange range = NSMakeRange(0,[sampleText length]);
-    [expression enumerateMatchesInString:sampleText options:0 range:range usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
+    [expression enumerateMatchesInString:sampleText options:1 range:range usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
         NSRange californiaRange = [result rangeAtIndex:0] ;
         [mutableString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:204.0/255 green:41.0/255 blue:43.0/255 alpha:1.0] range:californiaRange];
     }];

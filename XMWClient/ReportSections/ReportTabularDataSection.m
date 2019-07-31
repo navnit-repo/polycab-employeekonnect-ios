@@ -32,6 +32,9 @@
 @end
 
 @implementation ReportTabularDataSection
+{
+    NSMutableArray *orignalReportTableData;
+}
 
 +(NSInteger) tableRowHeight
 {
@@ -68,7 +71,8 @@
     sortedElementIds =[DotReportDraw sortRptComponents : reportElements : self.componentPlace];
     cellComponent = [self createCellComponent];
     recordTableData = self.reportPostResponse.tableData;
-    
+    orignalReportTableData = [[NSMutableArray alloc]init];
+    orignalReportTableData = self.reportPostResponse.tableData;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
@@ -500,7 +504,7 @@
     //end
     
     bool allFlagCheck = false;
-    
+    UIColor *searchTextColor;
     for(int i=0; i<[elementId count]; i++)
     {
         //start calculate tableheader column width
@@ -551,10 +555,14 @@
                 [mItemLabel setTextColor:[UIColor whiteColor]];
                [mItemLabel setFont:[UIFont boldSystemFontOfSize:14.0f]];
                 allFlagCheck = true;
+                
+                 searchTextColor = [UIColor yellowColor];
+              
             }
             else
             {
                   [mItemLabel setFont:[UIFont systemFontOfSize:FONT_SIZE_ROW]];
+                  searchTextColor = [UIColor colorWithRed:204.0/255 green:41.0/255 blue:43.0/255 alpha:1.0];
             }
             mItemLabel.numberOfLines = 0;
             mItemLabel.lineBreakMode = UILineBreakModeWordWrap;
@@ -606,6 +614,33 @@
             // we need to set open close here hooks here
             
         }
+       
+    
+        NSMutableAttributedString *mutableString = nil;
+        NSString *sampleText = @"";
+        if (mItemLabel.text !=nil) {
+            sampleText = mItemLabel.text;
+        }
+        
+        mutableString = [[NSMutableAttributedString alloc] initWithString:sampleText];
+        NSString *pattern = @"";
+        if (self.reportVC.searchBar.text != nil) {
+            pattern = self.reportVC.searchBar.text;
+        }
+//        NSString *pattern = self.reportVC.searchBar.text;
+        NSRegularExpression *expression = [NSRegularExpression regularExpressionWithPattern:pattern options:1 error:nil];
+        
+        NSRange range = NSMakeRange(0,[sampleText length]);
+        [expression enumerateMatchesInString:sampleText options:1 range:range usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
+            NSRange californiaRange = [result rangeAtIndex:0] ;
+            [mutableString addAttribute:NSForegroundColorAttributeName value:searchTextColor range:californiaRange];
+        }];
+        
+        
+        
+        mItemLabel.attributedText = mutableString;
+        
+        
     }
 }
 
@@ -693,7 +728,11 @@
     self.forwardedDataPost = in_forwardedDataPost;
     
     NSMutableArray *sortedElementIds = [DotReportDraw sortRptComponents:self.dotReport.reportElements :XmwcsConst_REPORT_PLACE_TABLE];
-    NSMutableArray *selectedRowElement = (NSMutableArray *)[self.reportPostResponse.tableData objectAtIndex:position];
+    
+    
+//    NSMutableArray *selectedRowElement = (NSMutableArray *)[self.reportPostResponse.tableData objectAtIndex:position];
+    NSMutableArray *selectedRowElement = (NSMutableArray *) [recordTableData objectAtIndex:position]; // this code chanage because of search feature
+    
     if (self.forwardedDataDisplay == nil)
 		self.forwardedDataDisplay   = [[NSMutableDictionary alloc] init];
 	
@@ -971,5 +1010,43 @@
     return height;
     
     
+}
+#pragma mark - searchBar handler
+-(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
+    [searchBar resignFirstResponder];
+}
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    
+    if (searchText.length >0)
+    {
+        recordTableData = [[NSMutableArray alloc] init];
+        for (int i=0; i<orignalReportTableData.count; i++) {
+            NSMutableArray *array = [[NSMutableArray alloc] init];
+            [array addObjectsFromArray:[orignalReportTableData objectAtIndex:i]];
+            for (int j=0; j<array.count; j++) {
+                NSString *name  = [array objectAtIndex:j];
+                
+                NSRange nameRange = [name rangeOfString:searchText options:NSCaseInsensitiveSearch];
+                if (nameRange.location != NSNotFound) {
+                    [recordTableData addObject: [orignalReportTableData objectAtIndex:i]];
+                    break;
+                }
+            }
+            
+            
+            
+        }
+         [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:reportSection] withRowAnimation:UITableViewRowAnimationFade];
+        
+    }
+    
+    else
+    {
+        recordTableData = [[NSMutableArray alloc] init];
+        [recordTableData addObjectsFromArray:orignalReportTableData];
+        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:reportSection] withRowAnimation:UITableViewRowAnimationFade];
+    }
 }
 @end
