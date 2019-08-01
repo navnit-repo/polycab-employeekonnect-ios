@@ -295,6 +295,8 @@
 
 -(void)configureSearchBar
 {
+    [searchBar removeFromSuperview];
+    
     searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(10, titleLblHeight, self.view.frame.size.width-20, 44*deviceHeightRation)];
         searchBar.delegate = self;
     [searchBar setPlaceholder:@"Search"];
@@ -619,6 +621,8 @@ self.mainTable.frame = CGRectMake(0, titleLblHeight + searchBar.frame.size.heigh
         [label setNumberOfLines: 0];
         [label setCenter: CGPointMake(self.view.center.x, label.center.y)];
       //  label.text = dotReport.screenHeader;
+        titleLblHeight = label.frame.size.height+10;
+        [self configureSearchBar];
         
         [self addFirstSetData:firstResponse into:dataSet];
         
@@ -746,7 +750,21 @@ self.mainTable.frame = CGRectMake(0, titleLblHeight + searchBar.frame.size.heigh
 //}
 
 
-
+-(NSMutableAttributedString*)getmutableString :(NSString*) text :(NSString*) textPattern
+{
+    NSMutableAttributedString *mutableString = nil;
+    
+    mutableString = [[NSMutableAttributedString alloc] initWithString:text];
+    
+    NSRegularExpression *expression = [NSRegularExpression regularExpressionWithPattern:textPattern options:1 error:nil];
+    
+    NSRange range = NSMakeRange(0,[text length]);
+    [expression enumerateMatchesInString:text options:1 range:range usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
+        NSRange californiaRange = [result rangeAtIndex:0] ;
+        [mutableString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:204.0/255 green:41.0/255 blue:43.0/255 alpha:1.0] range:californiaRange];
+    }];
+    return mutableString;
+}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -772,37 +790,35 @@ self.mainTable.frame = CGRectMake(0, titleLblHeight + searchBar.frame.size.heigh
         rowCell.secondLabel.text = tuple.secondValue;
         rowCell.thirdLabel.text = tuple.thirdValue;
         
+        NSString *fieldLabelText = @"";
+        NSString *firstLabelText = @"";
+        NSString *secondLabelText = @"";
+        NSString *thirdLabelText = @"";
+        if (rowCell.fieldLabel.text !=nil) {
+            fieldLabelText = rowCell.fieldLabel.text;
+        }
         
+        if (rowCell.firstLabel.text !=nil) {
+            firstLabelText = rowCell.firstLabel.text;
+        }
         
+        if (rowCell.secondLabel.text !=nil) {
+            secondLabelText = rowCell.secondLabel.text;
+        }
         
-//        NSMutableAttributedString *mutableString = nil;
-//        NSString *sampleText = @"";
-//        if (mItemLabel.text !=nil) {
-//            sampleText = mItemLabel.text;
-//        }
-//
-//        mutableString = [[NSMutableAttributedString alloc] initWithString:sampleText];
-//        NSString *pattern = @"";
-//        if (self.reportVC.searchBar.text != nil) {
-//            pattern = self.reportVC.searchBar.text;
-//        }
-//        //        NSString *pattern = self.reportVC.searchBar.text;
-//        NSRegularExpression *expression = [NSRegularExpression regularExpressionWithPattern:pattern options:1 error:nil];
-//
-//        NSRange range = NSMakeRange(0,[sampleText length]);
-//        [expression enumerateMatchesInString:sampleText options:1 range:range usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
-//            NSRange californiaRange = [result rangeAtIndex:0] ;
-//            [mutableString addAttribute:NSForegroundColorAttributeName value:searchTextColor range:californiaRange];
-//        }];
-//
-//
-//
-//        mItemLabel.attributedText = mutableString;
+        if (rowCell.thirdLabel.text !=nil) {
+            thirdLabelText = rowCell.thirdLabel.text;
+        }
         
+        NSString *patternText = @"";
+        if (searchBar.text != nil) {
+            patternText = searchBar.text;
+        }
         
-        
-        
-        
+        rowCell.fieldLabel.attributedText = [self getmutableString:fieldLabelText :patternText];
+        rowCell.firstLabel.attributedText = [self getmutableString:firstLabelText :patternText];
+        rowCell.secondLabel.attributedText = [self getmutableString:secondLabelText :patternText];
+        rowCell.thirdLabel.attributedText = [self getmutableString:thirdLabelText :patternText];
         
         
         CGSize maximumLabelSize = CGSizeMake(rowCell.fieldLabel.frame.size.width, FLT_MAX);
@@ -904,103 +920,70 @@ self.mainTable.frame = CGRectMake(0, titleLblHeight + searchBar.frame.size.heigh
 }
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
-  
     if (searchText.length>0) {
-        NSMutableArray *tempArray = [[NSMutableArray alloc ] init];
-        for ( int i=0; i<orignalThirdResponseData.count; i++) {
-            NSMutableArray *array = [[NSMutableArray alloc] init];
-            [array addObjectsFromArray:[orignalThirdResponseData objectAtIndex:i]];
-            for (int j=0; j<array.count; j++) {
-                NSString *str  = [array objectAtIndex:j];
-                NSRange nameRange = [str rangeOfString:searchText options:NSCaseInsensitiveSearch];
-                
-                if (nameRange.location != NSNotFound) {
-                    [tempArray addObject: [orignalThirdResponseData objectAtIndex:i]];
-                    break;
-                    }
-                
-                }
-            }
-        
-       
         dataSet = [[NSMutableDictionary alloc ] init ];
-        dataSet = [self addSetData:tempArray];
         
-        sortedDataSetKeys = [self sortKeys];
         
-          [self.mainTable reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
+        NSMutableDictionary *dict = [[NSMutableDictionary alloc ] init];
+        dict = orignalDataSet;
+        for(id key in dict)
+        {
+            XmwCompareTuple* tuple = [dict objectForKey:key];
+            
+            NSString *fieldName;
+            NSString *firstValue;
+            NSString *secondValue;
+            NSString *thirdValue;
+            
+            fieldName = tuple.fieldName;
+            firstValue = tuple.firstValue;
+            secondValue = tuple.secondValue;
+            thirdValue = tuple.thirdValue;
+            
+            NSRange fieldNameRange =   [fieldName rangeOfString:searchText options:NSCaseInsensitiveSearch];
+            NSRange firstValueRange =  [firstValue rangeOfString:searchText options:NSCaseInsensitiveSearch];
+            NSRange secondValueRange = [secondValue rangeOfString:searchText options:NSCaseInsensitiveSearch];
+            NSRange thirdValueRange =  [thirdValue rangeOfString:searchText options:NSCaseInsensitiveSearch];
+            
+            
+            if (fieldNameRange.location != NSNotFound)
+            {
+                
+                [dataSet setObject:tuple forKey:tuple.fieldName];
+                
+            }
+           else if (firstValueRange.location != NSNotFound)
+            {
+                [dataSet setObject:tuple forKey:tuple.fieldName];
+                
+            }
+            
+           else if (secondValueRange.location != NSNotFound)
+           {
+                [dataSet setObject:tuple forKey:tuple.fieldName];
+               
+           }
+           else if (thirdValueRange.location != NSNotFound)
+           {
+               [dataSet setObject:tuple forKey:tuple.fieldName];
+               
+           }
+            
         }
-    
-    
-    else
-    {
-        dataSet = [[NSMutableDictionary alloc ] init];
-        dataSet = orignalDataSet;
+        
+        if (dataSet.count >0) {
         sortedDataSetKeys = [self sortKeys];
+        }
         [self.mainTable reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
     }
     
-//    if (searchText.length >0)
-//    {
-//        recordTableData = [[NSMutableArray alloc] init];
-//        for (int i=0; i<orignalReportTableData.count; i++) {
-//            NSMutableArray *array = [[NSMutableArray alloc] init];
-//            [array addObjectsFromArray:[orignalReportTableData objectAtIndex:i]];
-//            for (int j=0; j<array.count; j++) {
-//                NSString *name  = [array objectAtIndex:j];
-//
-//                NSRange nameRange = [name rangeOfString:searchText options:NSCaseInsensitiveSearch];
-//                if (nameRange.location != NSNotFound) {
-//                    [recordTableData addObject: [orignalReportTableData objectAtIndex:i]];
-//                    break;
-//                }
-//            }
-//
-//
-//
-//        }
-//        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:reportSection] withRowAnimation:UITableViewRowAnimationFade];
-//
-//    }
-//
-//    else
-//    {
-//        recordTableData = [[NSMutableArray alloc] init];
-//        [recordTableData addObjectsFromArray:orignalReportTableData];
-//        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:reportSection] withRowAnimation:UITableViewRowAnimationFade];
-//    }
-}
--(NSMutableDictionary *) addSetData:(NSMutableArray*)array
-{
-    NSMutableDictionary *dict = [[NSMutableDictionary alloc ]init];
-    // we need to reset data for first value of all tuple in the inDataSet
-    
-    NSArray* rowWiseTableData = array;
-    
-    for(NSArray* rowData in rowWiseTableData) {
-        NSString* fieldName = [rowData objectAtIndex:0];
-        XmwCompareTuple* tupleObject = (XmwCompareTuple*)[dict objectForKey:fieldName];
-        if(tupleObject==nil) {
-            tupleObject = [[XmwCompareTuple alloc] init];
-            tupleObject.firstValue = [rowData objectAtIndex:3];
-            tupleObject.secondValue = [rowData objectAtIndex:3];
-            tupleObject.thirdValue = [rowData objectAtIndex:3];
-            tupleObject.firstRawData = nil;
-            tupleObject.secondRawData = nil;
-            tupleObject.thirdRawData = nil;
-            [dict setObject:tupleObject forKey:fieldName];
-            
-        }
-//        tupleObject.firstValue = [rowData objectAtIndex:3];
-//        if([rowData count]>2) {
-//            tupleObject.uomValue = [rowData objectAtIndex:3];
-//        } else {
-//            tupleObject.uomValue = @"";
-//        }
-        tupleObject.fieldName = fieldName;
-//        tupleObject.thirdRawData = rowData;
+    else
+    {
+                dataSet = [[NSMutableDictionary alloc ] init];
+                dataSet = orignalDataSet;
+                sortedDataSetKeys = [self sortKeys];
+                [self.mainTable reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
     }
-    return dict;
-        
+
 }
 @end

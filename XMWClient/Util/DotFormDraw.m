@@ -610,7 +610,7 @@ int uiViewStartIdx = 1001;
     SuggestiveSearchFieldControl *suggestiveSearchFieldView;
     
     if (suggestiveSearchFieldView == nil)
-        suggestiveSearchFieldView = [[SuggestiveSearchFieldControl alloc ] initWithFrame:CGRectMake(0, 0, screenWidth, formLineHeight) :yArguForDrawComp +formController.view.frame.origin.y];
+        suggestiveSearchFieldView = [[SuggestiveSearchFieldControl alloc ] initWithFrame:CGRectMake(0, 0, screenWidth, formLineHeight) :yArguForDrawComp +formController.view.frame.origin.y :dotFormElement];
     
     
     

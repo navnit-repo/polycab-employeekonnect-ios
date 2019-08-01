@@ -13,6 +13,8 @@
 #import "XmwcsConstant.h"
 #import "LoadingView.h"
 #import "SearchResponse.h"
+#import "DotSearchComponent.h"
+
 @implementation SuggestiveSearchFieldControl
 {
     LoadingView*  loadingView;
@@ -23,10 +25,13 @@
 @synthesize mainTableView;
 @synthesize searchResponseArray;
 @synthesize mandatoryLabel , titleLabel, searchField;
-- (instancetype)initWithFrame:(CGRect)frame :(int)yArguForDrawComp
+- (instancetype)initWithFrame:(CGRect)frame :(int) yArguForDrawComp :(DotFormElement*) dotFormElement
 {
     self = [super initWithFrame:frame];
     if (self) {
+        
+        self.formElement = dotFormElement;
+        
         previousSearchText = @"";
         searchResponseArray = [[NSMutableArray alloc] init];
         displayCustomerNameArray = [[NSMutableArray alloc] init];
@@ -132,12 +137,16 @@
                 username = @"";
             }
             
+            
+            DotSearchComponent *searchObject = [[DotSearchComponent alloc]init];
+            NSMutableArray *searchValues = [searchObject getRadioGroupData: self.formElement.dependedCompName];
+            
             DotFormPost *formPost = [[DotFormPost alloc]init];
             [formPost.postData setObject:textField.text forKey:@"SEARCH_TEXT"];
-            [formPost.postData setObject:@"SBC" forKey:@"SEARCH_BY"];
-            [formPost.postData setObject:username forKey:@"USERNAME"];
+            [formPost.postData setObject:[[searchValues objectAtIndex:0] objectAtIndex:0] forKey:@"SEARCH_BY"];
             [formPost setModuleId:[DVAppDelegate currentModuleContext]];
-            [formPost setDocId:@"CUSTOMER_SEARCH"];
+            
+            [formPost setDocId:self.formElement.masterValueMapping];
             
             
             UIViewController *  parentController = [[[[UIApplication sharedApplication] windows] objectAtIndex:0] rootViewController];
