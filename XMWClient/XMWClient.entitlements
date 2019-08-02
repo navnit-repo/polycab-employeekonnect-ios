@@ -6,11 +6,11 @@
 	<string>development</string>
 	<key>com.apple.security.application-groups</key>
 	<array>
-		<string>group.com.polycab.xmw.employee.push.group</string>
+		<string>group.com.polycab.xmw.employee.ent</string>
 	</array>
 	<key>keychain-access-groups</key>
 	<array>
-		<string>$(AppIdentifierPrefix)com.polycab.xmw.employee</string>
+		<string>$(AppIdentifierPrefix)com.polycab.xmw.employee.ent</string>
 	</array>
 </dict>
 </plist>

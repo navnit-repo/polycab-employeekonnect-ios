@@ -508,7 +508,7 @@ int const XmwcsConst_NOTIFY_TYPE_MENU_DATA = 6;
 int const XmwcsConst_NOTIFY_TYPE_URL_LAUNCH = 7;
 
 //Keychain and AppGroup Identifier
-NSString *const XmwcsConst_KEYCHAIN_IDENTIFIER = @"com.polycab.xmw.employee";
-NSString *const XmwcsConst_APPGROUP_IDENTIFIER = @"group.com.polycab.xmw.employee.push.group";
+NSString *const XmwcsConst_KEYCHAIN_IDENTIFIER = @"com.polycab.xmw.employee.ent";
+NSString *const XmwcsConst_APPGROUP_IDENTIFIER = @"group.com.polycab.xmw.employee.ent";
 
 
