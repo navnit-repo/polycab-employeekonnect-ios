@@ -16,11 +16,26 @@
 
 {
     PaymentOutstandingPieView *view = (PaymentOutstandingPieView *)[[[NSBundle mainBundle] loadNibNamed:@"PaymentOutstandingPieView" owner:self options:nil] objectAtIndex:0];
+    [[NSNotificationCenter defaultCenter] addObserver:view selector:@selector(autoRefresh) name:XmwcsConst_PAYMENTOUTSTANDING_CARD_AUTOREFRESH_IDENTIFIER object:nil];
     
     return view;
 }
+
+-(void)autoRefresh
+{
+    [self addLoadingView];
+    [noDataView removeFromSuperview];
+    dataArray = [[NSMutableArray alloc] init];
+    pageIndicator.numberOfPages = [dataArray count];
+    [collectionView reloadData];
+    [self networkCAll];
+    
+    
+}
+
 -(void)addLoadingView
 {
+    [blankView removeFromSuperview];
     // add blank view
     blankView = [[UIView alloc]initWithFrame:CGRectMake(self.bounds.origin.x, self.bounds.origin.y, self.bounds.size.width-20, self.bounds.size.height)];
     blankView.backgroundColor = [UIColor clearColor];
@@ -59,7 +74,7 @@
     
     [reportService fetchReportUsingSuccess:^(DotFormPost* formPosted, ReportPostResponse* reportResponse) {
         
-        
+        dataArray = [[NSMutableArray alloc ] init];
         // we should receive report response data here
         chartResponseData = reportResponse;
         [dataArray addObjectsFromArray:chartResponseData.tableData];
@@ -85,7 +100,8 @@
 
 -(void)addNoDataAvailableView
 {
-    UIView *  noDataView = [[UIView alloc]initWithFrame:CGRectMake(self.bounds.origin.x, self.bounds.origin.y, self.bounds.size.width-20, self.bounds.size.height)];
+    [noDataView removeFromSuperview];
+    noDataView = [[UIView alloc]initWithFrame:CGRectMake(self.bounds.origin.x, self.bounds.origin.y, self.bounds.size.width-20, self.bounds.size.height)];
     noDataView.backgroundColor = [UIColor clearColor];
     
     UILabel *lbl = [[UILabel alloc]initWithFrame:CGRectMake(16, 12, 150*deviceWidthRation, 20*deviceHeightRation)];

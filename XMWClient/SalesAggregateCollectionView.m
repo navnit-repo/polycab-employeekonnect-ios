@@ -42,8 +42,10 @@
    // BOOL sortDone;
     
    // UIActivityIndicatorView *activityIndicatorView;
+//    UIView *  noDataView ;
     
 }
+@synthesize noDataView;
 @synthesize LMTD_TO_Date;
 @synthesize LMTD_From_Date;
 @synthesize LFTD_TO_Date;
@@ -55,9 +57,28 @@
 
 {
     SalesAggregateCollectionView *view = (SalesAggregateCollectionView *)[[[NSBundle mainBundle] loadNibNamed:@"SalesAggregateCollectionView" owner:self options:nil] objectAtIndex:0];
-    
+     [[NSNotificationCenter defaultCenter] addObserver:view selector:@selector(autoRefresh) name:XmwcsConst_SALESAGGREGATE_CARD_AUTOREFRESH_IDENTIFIER object:nil];
     return view;
 }
+
+-(void)autoRefresh
+{
+    [self loadingView];
+    [noDataView removeFromSuperview];
+    [underCellLbl removeFromSuperview];
+    ftdDataArray = [[NSMutableArray alloc]init];
+    mtdDataArray = [[NSMutableArray alloc]init];
+    ytdDataArray = [[NSMutableArray alloc]init];
+    lftdDataArray = [[NSMutableArray alloc]init];
+    lmtdDataArray = [[NSMutableArray alloc]init];
+    sortDone = false;
+    numberOfCell = 0;
+    pageIndicator.numberOfPages = numberOfCell;
+    [collectionView reloadData];
+    [self netwrokCall];
+    
+}
+
 -(void)autoLayout{
     [LayoutClass setLayoutForIPhone6:self.mainView];
     [LayoutClass setLayoutForIPhone6:self.collectionView];
@@ -106,6 +127,9 @@
 }
 -(void)loadingView{
     // add loading View
+    
+    [blankView removeFromSuperview];
+    
     blankView = [[UIView alloc]initWithFrame:CGRectMake(self.bounds.origin.x, self.bounds.origin.y, self.bounds.size.width-20, self.bounds.size.height)];
     blankView.backgroundColor = [UIColor clearColor];
     
@@ -180,7 +204,7 @@
         
         
         // we should receive report response data here
-        
+        ftdDataArray = [[NSMutableArray alloc ] init];
         ftdResponseData = reportResponse;
         for (int i=0; i<ftdResponseData.tableData.count; i++) {
             NSArray *array = [NSArray arrayWithArray:[ftdResponseData.tableData objectAtIndex:i]];
@@ -262,7 +286,7 @@
     [reportService fetchReportUsingSuccess:^(DotFormPost* formPosted, ReportPostResponse* reportResponse) {
         
         
-        
+        mtdDataArray = [[NSMutableArray alloc ] init];
         // we should receive report response data here
         mtdResponseData = reportResponse;
         for (int i=0; i<mtdResponseData.tableData.count; i++) {
@@ -365,7 +389,7 @@
     
     [reportService fetchReportUsingSuccess:^(DotFormPost* formPosted, ReportPostResponse* reportResponse) {
         
-        
+        ytdDataArray = [[NSMutableArray alloc ] init];
         // we should receive report response data here
         ytdResponseData = reportResponse;
         
@@ -409,7 +433,7 @@
         
         
         // we should receive report response data here
-        
+         lmtdDataArray = [[NSMutableArray alloc ] init];
         lmtdResponseData = reportResponse;
         for (int i=0; i<lmtdResponseData.tableData.count; i++) {
             NSArray *array = [NSArray arrayWithArray:[lmtdResponseData.tableData objectAtIndex:i]];
@@ -447,7 +471,7 @@
         
         
         // we should receive report response data here
-        
+          lftdDataArray = [[NSMutableArray alloc ] init];
         lftdResponseData = reportResponse;
         for (int i=0; i<lftdResponseData.tableData.count; i++) {
             NSArray *array = [NSArray arrayWithArray:[lftdResponseData.tableData objectAtIndex:i]];
@@ -729,7 +753,8 @@
 
 -(void)addNoDataAvailableView
 {
-    UIView *  noDataView = [[UIView alloc]initWithFrame:CGRectMake(self.bounds.origin.x, self.bounds.origin.y, self.bounds.size.width-20, self.bounds.size.height)];
+    [noDataView removeFromSuperview];
+    noDataView = [[UIView alloc]initWithFrame:CGRectMake(self.bounds.origin.x, self.bounds.origin.y, self.bounds.size.width-20, self.bounds.size.height)];
     noDataView.backgroundColor = [UIColor clearColor];
     
     UILabel *lbl = [[UILabel alloc]initWithFrame:CGRectMake(16, 12, 150*deviceWidthRation, 20*deviceHeightRation)];
@@ -863,7 +888,7 @@
     
     NSLog(@"Current Year : %@",currentYear);
     
-    
+    [underCellLbl removeFromSuperview];
     underCellLbl.text =[[[NSString stringWithFormat:@"%@",text]stringByAppendingString:@" "]stringByAppendingString:currentYear];
     
     

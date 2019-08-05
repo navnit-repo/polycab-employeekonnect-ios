@@ -41,6 +41,7 @@
 #import "KeychainItemWrapper.h"
 #import "ChatThreadList_Object.h"
 #import "ChatThreadList_DB.h"
+#import "LayoutClass.h"
 #define TAG_LOGOUT_DIALOG 1000
 @interface DashBoardVC ()
 @end
@@ -60,6 +61,7 @@
 //    UIRefreshControl*   refreshControl;
     BOOL refreshFlag;
     UIButton *chatButton;
+    
 }
 @synthesize auth_Token;
 @synthesize tabBar;
@@ -311,11 +313,14 @@
     tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     tableView.showsHorizontalScrollIndicator = NO;
     tableView.showsVerticalScrollIndicator = NO;
-    tableView.bounces = NO;
+//    tableView.bounces = NO;
     tableView.clipsToBounds = YES;
     
     
 //    pending work. this work test in next Version 2.1
+    
+     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dashboardForegroundRefresh) name:XmwcsConst_DASHBOARD_FOREGROUND_AUTOREFRESH_IDENTIFIER object:nil];
+    
   refreshControl = [[UIRefreshControl alloc]init];
     [refreshControl addTarget:self action:@selector(refreshTable) forControlEvents:UIControlEventValueChanged];
 
@@ -327,16 +332,81 @@
 
 
 }
-- (void)refreshTable {
-    //TODO: refresh your data
-    [refreshControl endRefreshing];
-    [self loadCellView];
-      [self.tableView reloadSections:[[NSIndexSet alloc] initWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
-      [self.tableView reloadSections:[[NSIndexSet alloc] initWithIndex:2] withRowAnimation:UITableViewRowAnimationFade];
-      [self.tableView reloadSections:[[NSIndexSet alloc] initWithIndex:3] withRowAnimation:UITableViewRowAnimationFade];
-   // [tableView reloadData];
+-(void)loadCellView{
+    
+    salesAggregateSliderView = [SalesAggregateCollectionView createInstance];
+    [salesAggregateSliderView configure];
+    
+    
+    creditDetailsSliderView =[CreditDetailsCollectionView createInstance];
+    [creditDetailsSliderView configure];
+    
+    
+    overdue = [OverDueCollectionView createInstance];
+    [overdue configure];
+    
+    NSDate * now = [NSDate date];
+    NSDateFormatter *outputFormatter = [[NSDateFormatter alloc] init];
+    [outputFormatter setDateFormat:@"HH:mm:ss"];
+    currentTime = [outputFormatter stringFromDate:now];
+    
+    syncTime = [NSString stringWithFormat: @"Last Sync Time: %@",currentTime];
+    
 }
-
+-(void)dashboardForegroundRefresh
+{
+    NSDate * now = [NSDate date];
+    NSDateFormatter *outputFormatter = [[NSDateFormatter alloc] init];
+    [outputFormatter setDateFormat:@"HH:mm:ss"];
+    NSString *time1 = [outputFormatter stringFromDate:now];
+    
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"HH:mm:ss"];
+    
+    NSDate *date1= [formatter dateFromString:currentTime];
+    NSDate *date2 = [formatter dateFromString:time1];
+    
+    NSComparisonResult result = [date1 compare:date2];
+  
+    if(result == NSOrderedAscending)
+    {
+        currentTime = time1;
+        syncLbl.text = [NSString stringWithFormat: @"Last Sync Time: %@",currentTime];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:XmwcsConst_SALESAGGREGATE_CARD_AUTOREFRESH_IDENTIFIER object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:XmwcsConst_CREDITDETAILS_CARD_AUTOREFRESH_IDENTIFIER object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:XmwcsConst_OVERDUE_CARD_AUTOREFRESH_IDENTIFIER object:nil];
+    }
+    
+    
+   
+}
+- (void)refreshTable {
+    
+    NSDate * now = [NSDate date];
+    NSDateFormatter *outputFormatter = [[NSDateFormatter alloc] init];
+    [outputFormatter setDateFormat:@"HH:01:00"];
+    NSString *time1 = [outputFormatter stringFromDate:now];
+    
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"HH:mm:ss"];
+    
+    NSDate *date1= [formatter dateFromString:currentTime];
+    NSDate *date2 = [formatter dateFromString:time1];
+    
+    NSComparisonResult result = [date1 compare:date2];
+    
+    if(result == NSOrderedAscending)
+    {
+        currentTime = time1;
+        syncLbl.text = [NSString stringWithFormat: @"Last Sync Time: %@",currentTime];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:XmwcsConst_SALESAGGREGATE_CARD_AUTOREFRESH_IDENTIFIER object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:XmwcsConst_CREDITDETAILS_CARD_AUTOREFRESH_IDENTIFIER object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:XmwcsConst_OVERDUE_CARD_AUTOREFRESH_IDENTIFIER object:nil];
+    }
+    
+}
 - (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item{
     
     if (item.tag == 0) {
@@ -377,22 +447,7 @@
     
 }
 
--(void)loadCellView{
-    
-    salesAggregateSliderView = [SalesAggregateCollectionView createInstance];
-    [salesAggregateSliderView configure];
-    
-    
-    creditDetailsSliderView =[CreditDetailsCollectionView createInstance];
-    [creditDetailsSliderView configure];
-    
-   
-    overdue = [OverDueCollectionView createInstance];
-    [overdue configure];
-    
-    
-    
-}
+
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -403,23 +458,31 @@
     if (section==0) {
         return 1;
     }
-    if (section ==1) {
+    else if (section==1) {
         return 1;
     }
-    if (section == 2) {
+    
+   else if (section ==2) {
         return 1;
     }
-    if (section == 3) {
+  else  if (section == 3) {
         return 1;
     }
-        if (section == 4) {
-            return 1;
-        }
+  else  if (section == 4) {
+        return 1;
+    }
+    
     return 0;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 16;
+    if (section == 1) {
+        return 0;
+    }
+    else
+    {
+        return 16;
+    }
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
@@ -437,8 +500,11 @@
     if (indexPath.section ==0) {
         height = deviceHeightRation*20;
     }
+    else if (indexPath.section ==1) {
+        height = 20;
+    }
     
-    if (indexPath.section==1) {
+   else if (indexPath.section==2) {
         
         UIView *currentView= [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 180)];
         CGRect viewFrame=currentView.frame;
@@ -449,7 +515,7 @@
         currentView.frame=viewFrame;
         height=currentView.frame.size.height;
     }
-    if (indexPath.section==2) {
+  else  if (indexPath.section==3) {
         UIView *currentView= [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 271)];
         CGRect viewFrame=currentView.frame;
         viewFrame.origin.x=deviceWidthRation*currentView.frame.origin.x;
@@ -460,7 +526,7 @@
         
         height=currentView.frame.size.height;
     }
-    if (indexPath.section==3) {
+  else  if (indexPath.section==4) {
         
         UIView *currentView= [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 271)];
         CGRect viewFrame=currentView.frame;
@@ -471,9 +537,6 @@
         currentView.frame=viewFrame;
         
         height=currentView.frame.size.height;
-    }
-    if (indexPath.section==4) {
-        height =0;
     }
     return height;
 }
@@ -525,8 +588,22 @@
         cell.clipsToBounds = YES;
 
     }
+    else if (indexPath.section == 1)
+    {
+        CGRect rect = [[UIScreen mainScreen] bounds];
+        
+        cell.backgroundColor = [UIColor clearColor];
+        syncLbl = [[UILabel alloc] init];
+        syncLbl.frame = CGRectMake(rect.size.width-220, 0, 200, 20);
+        syncLbl.textAlignment = NSTextAlignmentRight;
+        syncLbl.font = [ UIFont fontWithName: @"Helvetica-Light" size: 13.0 ];
+        syncLbl.text = syncTime;
+        syncLbl.textColor = [UIColor colorWithRed:204.0/255.0 green:43.0/255.0 blue:43.0/255.0 alpha:1];
+        
+        [cell.contentView addSubview:syncLbl];
+    }
     
-    if(indexPath.section==1) {
+   else if(indexPath.section == 2) {
         
         cell.backgroundColor = [UIColor clearColor];
         cell.frame=CGRectMake(10, 0,salesAggregateSliderView.bounds.size.width-5 ,salesAggregateSliderView.bounds.size.height-5);
@@ -538,7 +615,7 @@
         
         
     }
-    if (indexPath.section == 2) {
+   else if (indexPath.section == 3) {
         cell.backgroundColor = [UIColor clearColor];
         
         cell.frame=CGRectMake(10, 0,creditDetailsSliderView.bounds.size.width-5 ,creditDetailsSliderView.bounds.size.height-5);
@@ -548,12 +625,12 @@
         cell.clipsToBounds = YES;
         
     }
-    if (indexPath.section == 3) {
+  else  if (indexPath.section == 4) {
         
         
         cell.backgroundColor = [UIColor clearColor];
         
-       cell.frame=CGRectMake(10, 0,creditDetailsSliderView.bounds.size.width-5 ,creditDetailsSliderView.bounds.size.height-5);
+       cell.frame=CGRectMake(10, 0,overdue.bounds.size.width-5 ,overdue.bounds.size.height-5);
         cell.layer.cornerRadius = 5;
         cell.layer.masksToBounds = true;
         [cell addSubview:overdue];
@@ -570,17 +647,17 @@
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
 
-    if (indexPath.section ==1) {
+    if (indexPath.section == 2) {
         
         UIActivityIndicatorView *act = [(UIActivityIndicatorView*)self.view viewWithTag:50000];
         [act startAnimating];
         
     }
-    if (indexPath.section ==2) {
+   else if (indexPath.section == 3) {
         UIActivityIndicatorView *act = [(UIActivityIndicatorView*)self.view viewWithTag:50001];
         [act startAnimating];
     }
-    if (indexPath.section ==3) {
+   else if (indexPath.section == 4 ) {
         UIActivityIndicatorView *act = [(UIActivityIndicatorView*)self.view viewWithTag:50002];
         [act startAnimating];
     }

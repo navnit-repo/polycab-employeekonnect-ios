@@ -21,6 +21,7 @@
     UICollectionView *collectionView;
     UIPageControl *pageIndicator;
     UIView *blankView;
+    UIView *noDataView;
 }
 @property (strong, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (strong, nonatomic) IBOutlet UIPageControl *pageIndicator;

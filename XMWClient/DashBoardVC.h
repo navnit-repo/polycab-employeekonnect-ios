@@ -16,6 +16,9 @@
 {
     NSString *auth_Token;
     UIRefreshControl*   refreshControl;
+    UILabel *syncLbl;
+    NSString *syncTime;
+    NSString *currentTime;
 }
 @property UIRefreshControl*   refreshControl;
 @property (weak, nonatomic) IBOutlet MarqueeLabel* marqueeText;
@@ -23,9 +26,11 @@
 @property NSString *auth_Token;
 @property (weak, nonatomic) IBOutlet UITabBar *tabBar;
 @property (strong, nonatomic) SWRevealViewController *viewController;
+@property (weak, nonatomic) IBOutlet UILabel *syncTimeLbl;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *tabbarBottomConstraint;
 -(void)loadCellView;
 - (void)refreshTable;
+-(void)dashboardForegroundRefresh;
 @end
 

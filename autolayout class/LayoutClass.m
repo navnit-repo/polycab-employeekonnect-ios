@@ -47,7 +47,17 @@
     
     return nil;
 }
-
++(UILabel*)labelLayout:(UILabel*)label{
+    
+    CGRect labelFrame=label.frame;
+    labelFrame.origin.x=deviceWidthRation*label.frame.origin.x;
+    labelFrame.origin.y=deviceHeightRation*label.frame.origin.y;
+    labelFrame.size.width=deviceWidthRation*label.frame.size.width;
+    labelFrame.size.height=deviceHeightRation*label.frame.size.height;
+    label.frame=labelFrame;
+    
+    return label;
+}
 +(UILabel*)labelLayout:(UILabel*)label forFontWeight:(UIFontWeight)fontWeight{
 
     CGFloat fontSize=label.font.pointSize;

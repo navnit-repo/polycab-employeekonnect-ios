@@ -363,6 +363,7 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
         [[[NSUserDefaults standardUserDefaults] initWithSuiteName:XmwcsConst_APPGROUP_IDENTIFIER] setObject:[NSString stringWithFormat:@"%d",0] forKey:@"Notification_Count"];
     }
    
+    [[NSNotificationCenter defaultCenter] postNotificationName:XmwcsConst_DASHBOARD_FOREGROUND_AUTOREFRESH_IDENTIFIER object:nil];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application

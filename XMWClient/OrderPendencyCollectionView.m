@@ -23,6 +23,7 @@
     OrderPendencyCell * orderPendencyCell;
     UIView *blankView;
     ProgressBarView *barView;
+    UIView *  noDataView;
 }
 @synthesize collectionView;
 @synthesize pageIndicator;
@@ -30,8 +31,18 @@
 
 {
     OrderPendencyCollectionView *view = (OrderPendencyCollectionView *)[[[NSBundle mainBundle] loadNibNamed:@"OrderPendencyCollectionView" owner:self options:nil] objectAtIndex:0];
-    
+    [[NSNotificationCenter defaultCenter] addObserver:view selector:@selector(autoRefresh) name:XmwcsConst_ORDERPENDENCY_CARD_AUTOREFRESH_IDENTIFIER object:nil];
     return view;
+}
+-(void)autoRefresh
+{
+    [noDataView removeFromSuperview];
+    dataArray = [[NSMutableArray alloc] init];
+    pageIndicator.numberOfPages = [dataArray count];
+    [collectionView reloadData];
+    [self networkCall];
+    
+    
 }
 -(void)autoLayout{
     [LayoutClass setLayoutForIPhone6:self.mainView];
@@ -40,15 +51,18 @@
     
     
 }
+
 - (void)configure{
     [self autoLayout];
     [self shadowView];
+  
      dataArray = [[NSMutableArray alloc]init];
     self.collectionView.delegate= self;
     self.collectionView.dataSource= self;
     [collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cellIdentifier"];
     collectionView.backgroundColor = [UIColor clearColor];
     collectionView.bounces = NO;
+    [self blankView];
     [self networkCall];
 }
 
@@ -72,34 +86,33 @@
     
     
 }
-
--(void)networkCall{
+-(void)blankView
+{
+    [blankView removeFromSuperview];
     
-   
-    
-//    // add blank view
+    //    // add blank view
     blankView = [[UIView alloc]initWithFrame:CGRectMake(self.bounds.origin.x, self.bounds.origin.y, self.bounds.size.width-20, self.bounds.size.height)];
     blankView.backgroundColor = [UIColor clearColor];
-
+    
     UILabel *lbl = [[UILabel alloc]initWithFrame:CGRectMake(10, 8, 150*deviceWidthRation, 15*deviceHeightRation)];
     lbl.text = @"Order Pendency";
     lbl.font = [UIFont fontWithName:@"Helvetica-Bold" size:12];
     [blankView addSubview:lbl];
-
-
+    
+    
     UIActivityIndicatorView *activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-     activityIndicatorView.tag = 50002;
+    activityIndicatorView.tag = 50002;
     activityIndicatorView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin |    UIViewAutoresizingFlexibleRightMargin |
     UIViewAutoresizingFlexibleTopMargin |    UIViewAutoresizingFlexibleBottomMargin;
     [activityIndicatorView startAnimating];
     activityIndicatorView.hidesWhenStopped = NO;
-
-
-
-
-
+    
+    
+    
+    
+    
     [blankView addSubview:activityIndicatorView];
-
+    
     [self.mainView addSubview:blankView];
     
     
@@ -111,6 +124,10 @@
     activityIndicatorView.color = [UIColor redColor];
     
     
+}
+-(void)networkCall{
+    
+   
     
     
     NSLocale* currentDate = [NSLocale currentLocale];
@@ -200,6 +217,7 @@
         
         
         // we should receive report response data here
+        dataArray = [[NSMutableArray alloc ] init];
         barChartResponseData = reportResponse;
         [dataArray addObjectsFromArray:barChartResponseData.tableData];
         NSLog(@"Bar Chart Data: %@",dataArray);
@@ -225,7 +243,8 @@
 
 -(void)addNoDataAvailableView
 {
-    UIView *  noDataView = [[UIView alloc]initWithFrame:CGRectMake(self.bounds.origin.x, self.bounds.origin.y, self.bounds.size.width-20, self.bounds.size.height)];
+    [noDataView removeFromSuperview];
+     noDataView = [[UIView alloc]initWithFrame:CGRectMake(self.bounds.origin.x, self.bounds.origin.y, self.bounds.size.width-20, self.bounds.size.height)];
     noDataView.backgroundColor = [UIColor clearColor];
     
     UILabel *lbl = [[UILabel alloc]initWithFrame:CGRectMake(16, 12, 150*deviceWidthRation, 20*deviceHeightRation)];

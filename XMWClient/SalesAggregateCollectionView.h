@@ -40,7 +40,11 @@
     NSString *LFTD_TO_Date;
     NSString *LMTD_From_Date;
     NSString *LMTD_TO_Date;
+    
+    
+     UIView *  noDataView ;
 }
+@property  UIView *  noDataView ;
 @property NSString *LMTD_From_Date;
 @property NSString *LMTD_TO_Date;
 @property NSString *LFTD_From_Date;

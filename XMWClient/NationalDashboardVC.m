@@ -31,16 +31,6 @@
     NSLog(@"NationalDashboardVC call");
     // Do any additional setup after loading the view from its nib.
 }
-- (void)refreshTable {
-    //TODO: refresh your data
-    [refreshControl endRefreshing];
-    [self loadCellView];
-    [self.tableView reloadSections:[[NSIndexSet alloc] initWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
-    [self.tableView reloadSections:[[NSIndexSet alloc] initWithIndex:2] withRowAnimation:UITableViewRowAnimationFade];
-    [self.tableView reloadSections:[[NSIndexSet alloc] initWithIndex:3] withRowAnimation:UITableViewRowAnimationFade];
-    [self.tableView reloadSections:[[NSIndexSet alloc] initWithIndex:4] withRowAnimation:UITableViewRowAnimationFade];
-    // [tableView reloadData];
-}
 - (void)loadCellView
 {
     nationalSalesAggregateCollectionView = [NationalSalesAggregateCollectionView createInstance];
@@ -51,15 +41,62 @@
     [nationalSalesAggregatePieView configure];
     
     
-   paymentOutstandingPieView = [PaymentOutstandingPieView createInstance];
+    paymentOutstandingPieView = [PaymentOutstandingPieView createInstance];
     [paymentOutstandingPieView configure];
     
     overduePieView = [OverduePieView createInstance];
     [overduePieView configure];
+    
+    syncTime = @"20";
 }
+- (void)dashboardForegroundRefresh
+{
+     syncTime = @"30";
+     syncLbl.text = syncTime;
+    [[NSNotificationCenter defaultCenter] postNotificationName:XmwcsConst_NATIONALSALESAGGREGATE_CARD_AUTOREFRESH_IDENTIFIER object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:XmwcsConst_NATIONALSALESAGGREGATEPIE_CARD_AUTOREFRESH_IDENTIFIER object:nil];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:XmwcsConst_PAYMENTOUTSTANDING_CARD_AUTOREFRESH_IDENTIFIER object:nil];
+     [[NSNotificationCenter defaultCenter] postNotificationName:XmwcsConst_OVERDUEPIE_CARD_AUTOREFRESH_IDENTIFIER object:nil];
+}
+- (void)refreshTable {
+    //TODO: refresh your data
+    syncTime = @"40";
+    syncLbl.text = syncTime;
+    [refreshControl endRefreshing];
+    [[NSNotificationCenter defaultCenter] postNotificationName:XmwcsConst_NATIONALSALESAGGREGATE_CARD_AUTOREFRESH_IDENTIFIER object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:XmwcsConst_NATIONALSALESAGGREGATEPIE_CARD_AUTOREFRESH_IDENTIFIER object:nil];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:XmwcsConst_PAYMENTOUTSTANDING_CARD_AUTOREFRESH_IDENTIFIER object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:XmwcsConst_OVERDUEPIE_CARD_AUTOREFRESH_IDENTIFIER object:nil];
+}
+
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 5;
+    return 6;
+}
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    
+    if (section==0) {
+        return 1;
+    }
+    else if (section==1) {
+        return 1;
+    }
+    
+    else if (section ==2) {
+        return 1;
+    }
+    else  if (section == 3) {
+        return 1;
+    }
+    else  if (section == 4) {
+        return 1;
+    }
+    else  if (section == 5) {
+        return 1;
+    }
+    return 0;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
@@ -69,8 +106,11 @@
     if (indexPath.section ==0) {
         height = deviceHeightRation*20;
     }
+   else if (indexPath.section ==1) {
+        height = 20;
+    }
     
-    if (indexPath.section==1) {
+   else if (indexPath.section==2) {
         
         UIView *currentView= [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 180)];
         CGRect viewFrame=currentView.frame;
@@ -81,7 +121,7 @@
         currentView.frame=viewFrame;
         height=currentView.frame.size.height;
     }
-    if (indexPath.section==2) {
+  else  if (indexPath.section==3) {
         UIView *currentView= [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 271)];
         CGRect viewFrame=currentView.frame;
         viewFrame.origin.x=deviceWidthRation*currentView.frame.origin.x;
@@ -92,7 +132,7 @@
         
         height=currentView.frame.size.height;
     }
-    if (indexPath.section==3) {
+   else if (indexPath.section==4) {
         
         UIView *currentView= [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 271)];
         CGRect viewFrame=currentView.frame;
@@ -104,7 +144,7 @@
         
         height=currentView.frame.size.height;
     }
-    if (indexPath.section==4) {
+  else  if (indexPath.section==5) {
         UIView *currentView= [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 271)];
         CGRect viewFrame=currentView.frame;
         viewFrame.origin.x=deviceWidthRation*currentView.frame.origin.x;
@@ -117,7 +157,16 @@
     }
     return height;
 }
-
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    if (section == 1) {
+        return 0;
+    }
+    else
+    {
+    return 16;
+    }
+}
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     NSString* cellIdentifier = [NSString stringWithFormat:@"cell_%ld", (long)indexPath.section];
@@ -166,8 +215,22 @@
         cell.clipsToBounds = YES;
         
     }
+        else if (indexPath.section == 1)
+        {
+            CGRect rect = [[UIScreen mainScreen] bounds];
+            
+            cell.backgroundColor = [UIColor clearColor];
+            syncLbl = [[UILabel alloc] init];
+            syncLbl.frame = CGRectMake(rect.size.width-220, 0, 200, 20);
+            syncLbl.textAlignment = NSTextAlignmentRight;
+            syncLbl.font = [ UIFont fontWithName: @"Helvetica-Light" size: 13.0 ];
+            syncLbl.text = syncTime;
+            syncLbl.textColor = [UIColor colorWithRed:204.0/255.0 green:43.0/255.0 blue:43.0/255.0 alpha:1];
+            
+            [cell.contentView addSubview:syncLbl];
+        }
     
-    if(indexPath.section==1) {
+ else   if(indexPath.section==2) {
         
         cell.backgroundColor = [UIColor clearColor];
         cell.frame=CGRectMake(10, 0,nationalSalesAggregateCollectionView.bounds.size.width-5 ,nationalSalesAggregateCollectionView.bounds.size.height-5);
@@ -179,7 +242,7 @@
         
         
     }
-    if (indexPath.section == 2) {
+  else  if (indexPath.section == 3) {
         cell.backgroundColor = [UIColor clearColor];
         
         cell.frame=CGRectMake(10, 0,nationalSalesAggregatePieView.bounds.size.width-5 ,nationalSalesAggregatePieView.bounds.size.height-5);
@@ -189,7 +252,7 @@
         cell.clipsToBounds = YES;
         
     }
-    if (indexPath.section == 3) {
+  else  if (indexPath.section == 4) {
         
         
         cell.backgroundColor = [UIColor clearColor];
@@ -202,7 +265,7 @@
         
     }
     
-    if (indexPath.section == 4) {
+ else   if (indexPath.section == 5) {
         
         
         cell.backgroundColor = [UIColor clearColor];
@@ -222,21 +285,21 @@
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    if (indexPath.section ==1) {
+    if (indexPath.section ==2) {
         
         UIActivityIndicatorView *act = [(UIActivityIndicatorView*)self.view viewWithTag:50000];
         [act startAnimating];
         
     }
-    if (indexPath.section ==2) {
+   else if (indexPath.section ==3) {
         UIActivityIndicatorView *act = [(UIActivityIndicatorView*)self.view viewWithTag:50001];
         [act startAnimating];
     }
-    if (indexPath.section ==3) {
+   else if (indexPath.section ==4) {
         UIActivityIndicatorView *act = [(UIActivityIndicatorView*)self.view viewWithTag:50002];
         [act startAnimating];
     }
-    if (indexPath.section ==4) {
+  else  if (indexPath.section ==5) {
         UIActivityIndicatorView *act = [(UIActivityIndicatorView*)self.view viewWithTag:50003];
         [act startAnimating];
     }

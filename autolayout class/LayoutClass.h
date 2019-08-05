@@ -13,6 +13,8 @@
 +(UIPageControl*)pageControlLauout :(UIPageControl*)controller;
 +(UIView*)setFont:(UIView*)currentView forFontWeight:(UIFontWeight)fontWeight;
 +(UILabel*)labelLayout:(UILabel*)label forFontWeight:(UIFontWeight)fontWeight;
++(UILabel*)labelLayout:(UILabel*)label;
+
 +(UIButton*)buttonLayout:(UIButton*)button forFontWeight:(UIFontWeight)fontWeight;
 +(UITextField*)textfieldLayout:(UITextField*)textfield forFontWeight:(UIFontWeight)fontWeight;
 +(UITextField*)textviewLayout:(UITextView*)textview forFontWeight:(UIFontWeight)fontWeight;
