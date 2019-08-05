@@ -47,28 +47,30 @@
     overduePieView = [OverduePieView createInstance];
     [overduePieView configure];
     
-    syncTime = @"20";
 }
 - (void)dashboardForegroundRefresh
 {
-     syncTime = @"30";
-     syncLbl.text = syncTime;
-    [[NSNotificationCenter defaultCenter] postNotificationName:XmwcsConst_NATIONALSALESAGGREGATE_CARD_AUTOREFRESH_IDENTIFIER object:nil];
-    [[NSNotificationCenter defaultCenter] postNotificationName:XmwcsConst_NATIONALSALESAGGREGATEPIE_CARD_AUTOREFRESH_IDENTIFIER object:nil];
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:XmwcsConst_PAYMENTOUTSTANDING_CARD_AUTOREFRESH_IDENTIFIER object:nil];
-     [[NSNotificationCenter defaultCenter] postNotificationName:XmwcsConst_OVERDUEPIE_CARD_AUTOREFRESH_IDENTIFIER object:nil];
+    if([self timerCheck])
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:XmwcsConst_NATIONALSALESAGGREGATE_CARD_AUTOREFRESH_IDENTIFIER object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:XmwcsConst_NATIONALSALESAGGREGATEPIE_CARD_AUTOREFRESH_IDENTIFIER object:nil];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:XmwcsConst_PAYMENTOUTSTANDING_CARD_AUTOREFRESH_IDENTIFIER object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:XmwcsConst_OVERDUEPIE_CARD_AUTOREFRESH_IDENTIFIER object:nil];
+    }
+   
 }
 - (void)refreshTable {
     //TODO: refresh your data
-    syncTime = @"40";
-    syncLbl.text = syncTime;
     [refreshControl endRefreshing];
-    [[NSNotificationCenter defaultCenter] postNotificationName:XmwcsConst_NATIONALSALESAGGREGATE_CARD_AUTOREFRESH_IDENTIFIER object:nil];
-    [[NSNotificationCenter defaultCenter] postNotificationName:XmwcsConst_NATIONALSALESAGGREGATEPIE_CARD_AUTOREFRESH_IDENTIFIER object:nil];
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:XmwcsConst_PAYMENTOUTSTANDING_CARD_AUTOREFRESH_IDENTIFIER object:nil];
-    [[NSNotificationCenter defaultCenter] postNotificationName:XmwcsConst_OVERDUEPIE_CARD_AUTOREFRESH_IDENTIFIER object:nil];
+    if([self timerCheck])
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:XmwcsConst_NATIONALSALESAGGREGATE_CARD_AUTOREFRESH_IDENTIFIER object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:XmwcsConst_NATIONALSALESAGGREGATEPIE_CARD_AUTOREFRESH_IDENTIFIER object:nil];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:XmwcsConst_PAYMENTOUTSTANDING_CARD_AUTOREFRESH_IDENTIFIER object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:XmwcsConst_OVERDUEPIE_CARD_AUTOREFRESH_IDENTIFIER object:nil];
+    }
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView

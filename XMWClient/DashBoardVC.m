@@ -69,7 +69,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
- 
+    
  
    
   
@@ -329,7 +329,15 @@
     } else {
         [tableView addSubview:refreshControl];
     }
-
+    
+    // this code for dashboard refresh
+    autoRefreashTimeLimit = 5;
+    NSDate * now = [NSDate date];
+    NSDateFormatter *outputFormatter = [[NSDateFormatter alloc] init];
+    [outputFormatter setDateFormat:@"HH:mm:ss"];
+    currentSyncTime = [outputFormatter stringFromDate:now];
+    
+    syncTime = [NSString stringWithFormat: @"Last Sync Time: %@",currentSyncTime];
 
 }
 -(void)loadCellView{
@@ -345,66 +353,64 @@
     overdue = [OverDueCollectionView createInstance];
     [overdue configure];
     
-    NSDate * now = [NSDate date];
-    NSDateFormatter *outputFormatter = [[NSDateFormatter alloc] init];
-    [outputFormatter setDateFormat:@"HH:mm:ss"];
-    currentTime = [outputFormatter stringFromDate:now];
-    
-    syncTime = [NSString stringWithFormat: @"Last Sync Time: %@",currentTime];
-    
 }
--(void)dashboardForegroundRefresh
-{
+-(BOOL)timerCheck {
+    BOOL flag = false;
+    
     NSDate * now = [NSDate date];
     NSDateFormatter *outputFormatter = [[NSDateFormatter alloc] init];
     [outputFormatter setDateFormat:@"HH:mm:ss"];
-    NSString *time1 = [outputFormatter stringFromDate:now];
+    NSString *refreshCurrenttime = [outputFormatter stringFromDate:now];
+    
     
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"HH:mm:ss"];
     
-    NSDate *date1= [formatter dateFromString:currentTime];
-    NSDate *date2 = [formatter dateFromString:time1];
+    NSDate *date1= [[formatter dateFromString:currentSyncTime] dateByAddingTimeInterval:60.0*autoRefreashTimeLimit];
+    NSDate *date2 = [formatter dateFromString:refreshCurrenttime];
+    
     
     NSComparisonResult result = [date1 compare:date2];
-  
+    
     if(result == NSOrderedAscending)
     {
-        currentTime = time1;
-        syncLbl.text = [NSString stringWithFormat: @"Last Sync Time: %@",currentTime];
-        
-        [[NSNotificationCenter defaultCenter] postNotificationName:XmwcsConst_SALESAGGREGATE_CARD_AUTOREFRESH_IDENTIFIER object:nil];
-        [[NSNotificationCenter defaultCenter] postNotificationName:XmwcsConst_CREDITDETAILS_CARD_AUTOREFRESH_IDENTIFIER object:nil];
-        [[NSNotificationCenter defaultCenter] postNotificationName:XmwcsConst_OVERDUE_CARD_AUTOREFRESH_IDENTIFIER object:nil];
+        currentSyncTime = refreshCurrenttime;
+        syncLbl.text = [NSString stringWithFormat: @"Last Sync Time: %@",currentSyncTime];
+        flag = true;
     }
+    else
+    {
+        flag = false;
+    }
+    return flag;
+}
+-(void)dashboardForegroundRefresh
+{
+  
+    if([self timerCheck])
+    {
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:XmwcsConst_SALESAGGREGATE_CARD_AUTOREFRESH_IDENTIFIER object:nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:XmwcsConst_CREDITDETAILS_CARD_AUTOREFRESH_IDENTIFIER object:nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:XmwcsConst_OVERDUE_CARD_AUTOREFRESH_IDENTIFIER object:nil];
+        }
+        
+        
     
     
    
 }
 - (void)refreshTable {
+    [refreshControl endRefreshing];
     
-    NSDate * now = [NSDate date];
-    NSDateFormatter *outputFormatter = [[NSDateFormatter alloc] init];
-    [outputFormatter setDateFormat:@"HH:01:00"];
-    NSString *time1 = [outputFormatter stringFromDate:now];
-    
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"HH:mm:ss"];
-    
-    NSDate *date1= [formatter dateFromString:currentTime];
-    NSDate *date2 = [formatter dateFromString:time1];
-    
-    NSComparisonResult result = [date1 compare:date2];
-    
-    if(result == NSOrderedAscending)
+    if([self timerCheck])
     {
-        currentTime = time1;
-        syncLbl.text = [NSString stringWithFormat: @"Last Sync Time: %@",currentTime];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:XmwcsConst_SALESAGGREGATE_CARD_AUTOREFRESH_IDENTIFIER object:nil];
         [[NSNotificationCenter defaultCenter] postNotificationName:XmwcsConst_CREDITDETAILS_CARD_AUTOREFRESH_IDENTIFIER object:nil];
         [[NSNotificationCenter defaultCenter] postNotificationName:XmwcsConst_OVERDUE_CARD_AUTOREFRESH_IDENTIFIER object:nil];
     }
+    
     
 }
 - (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item{

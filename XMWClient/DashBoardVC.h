@@ -18,7 +18,8 @@
     UIRefreshControl*   refreshControl;
     UILabel *syncLbl;
     NSString *syncTime;
-    NSString *currentTime;
+    NSString *currentSyncTime;
+    float autoRefreashTimeLimit;
 }
 @property UIRefreshControl*   refreshControl;
 @property (weak, nonatomic) IBOutlet MarqueeLabel* marqueeText;
@@ -32,5 +33,6 @@
 -(void)loadCellView;
 - (void)refreshTable;
 -(void)dashboardForegroundRefresh;
+-(BOOL)timerCheck;
 @end
 
