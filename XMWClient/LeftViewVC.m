@@ -54,8 +54,13 @@ static HamBurgerMenuView* rightSlideMenu = nil;
     }
     
     NSLog(@"%@",menuDetailsDict);
-    [self getMenuItems];
-    [self configureSideBar];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self getMenuItems];
+        [self configureSideBar];
+    });
+    
+   
     
     
 }

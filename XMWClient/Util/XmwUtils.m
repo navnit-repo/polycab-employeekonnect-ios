@@ -45,29 +45,33 @@
 
 
 + (NSMutableDictionary *) getExtendedPropertyMap : (NSString*) extendedPropertyReport {
-	NSString* work = extendedPropertyReport;
+    NSString* work = extendedPropertyReport;
     NSMutableDictionary *extendedPropertyMap = [[NSMutableDictionary alloc]init];
     
     while ([work length] > 0) {
         NSRange pos = [work rangeOfString:@":[" ];
-        NSString* propertyKey = [work substringToIndex:pos.location];
-        
-        NSRange left = [work rangeOfString:@"[" ];
-        NSRange right = [work rangeOfString:@"]" ];
-        NSRange value;
-        value.location = left.location + 1;
-        value.length  = right.location - left.location - 1;
-        
-        NSString* propertyValue = [work substringWithRange:value];  //work.mid(work.indexOf("[") + 1, work.indexOf("]"));
-       
-        [extendedPropertyMap setObject:propertyValue forKey:propertyKey] ; //.insert(propertyKey, propertyValue);
-       
-        work = [work substringFromIndex:right.location + 1];
-        if( ([work length] > 0) &&  ([work characterAtIndex:0] == '$')) {
-            work = [work substringFromIndex:1];
+        if(pos.length>0) {
+            NSString* propertyKey = [work substringToIndex:pos.location];
+            
+            NSRange left = [work rangeOfString:@"[" ];
+            NSRange right = [work rangeOfString:@"]" ];
+            NSRange value;
+            value.location = left.location + 1;
+            value.length  = right.location - left.location - 1;
+            
+            NSString* propertyValue = [work substringWithRange:value];  //work.mid(work.indexOf("[") + 1, work.indexOf("]"));
+            
+            [extendedPropertyMap setObject:propertyValue forKey:propertyKey] ; //.insert(propertyKey, propertyValue);
+            
+            work = [work substringFromIndex:right.location + 1];
+            if( ([work length] > 0) &&  ([work characterAtIndex:0] == '$')) {
+                work = [work substringFromIndex:1];
+            }
+        } else {
+            break;
         }
     }
-     return extendedPropertyMap;
+    return extendedPropertyMap;
 }
 
 

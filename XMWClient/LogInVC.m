@@ -56,7 +56,11 @@
 #import <Security/Security.h>
 #import "KeychainWrapper.h"
 #import "KeychainItemWrapper.h"
+#import "UpdateAppVersion.h"
 @interface LogInVC ()
+{
+    NSString* versionDownloaderUrl;
+}
 
 @end
 NSMutableDictionary *masterDataForEmployee;
@@ -96,6 +100,9 @@ NSString *chatPersonUserID;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self configureServerUrls];
+    [self checkVersion];
+    
     masterDataForEmployee = [[NSMutableDictionary alloc]init];
     self.constant4.layer.masksToBounds = YES;
     self.constant4.layer.cornerRadius = 2.33f;
@@ -132,7 +139,7 @@ NSString *chatPersonUserID;
     self.userName.layer.borderColor = (__bridge CGColorRef _Nullable)([UIColor colorWithRed:(240/255.0) green:(240/255.0) blue:(240/255.0) alpha:1]);
     self.password.layer.borderColor =(__bridge CGColorRef _Nullable)([UIColor colorWithRed:(240/255.0) green:(240/255.0) blue:(240/255.0) alpha:1]);
     
-    [self configureServerUrls];
+//    [self configureServerUrls];
     // Do any additional setup after loading the view from its nib.
     [self.navigationItem setHidesBackButton:YES animated:YES];
     menuDetailsDict = [[NSMutableDictionary alloc]init];
@@ -145,24 +152,56 @@ NSString *chatPersonUserID;
     
     
     //for auto login if user already loggedIn
-    NSString* isChecked = [[NSUserDefaults standardUserDefaults] objectForKey:@"ISCHECKED"];
-      if (isChecked !=nil &&[isChecked isEqualToString:@"YES"]) {
-          KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:XmwcsConst_KEYCHAIN_IDENTIFIER accessGroup:nil];
-
-          NSString* username = [keychainItem objectForKey:kSecAttrAccount];
-          NSString* password = [[NSString alloc] initWithData:[keychainItem objectForKey:kSecValueData] encoding:NSUTF8StringEncoding];
-          NSLog(@"UserId :- %@",username);
-          NSLog(@"Password :- %@",password);
-        
-        self.userName.text =username;
-        self.password.text =password;
-        [self signInButton:self];
-    }
-    
+//    NSString* isChecked = [[NSUserDefaults standardUserDefaults] objectForKey:@"ISCHECKED"];
+//      if (isChecked !=nil &&[isChecked isEqualToString:@"YES"]) {
+//          KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:XmwcsConst_KEYCHAIN_IDENTIFIER accessGroup:nil];
+//
+//          NSString* username = [keychainItem objectForKey:kSecAttrAccount];
+//          NSString* password = [[NSString alloc] initWithData:[keychainItem objectForKey:kSecValueData] encoding:NSUTF8StringEncoding];
+//          NSLog(@"UserId :- %@",username);
+//          NSLog(@"Password :- %@",password);
+//
+//        self.userName.text =username;
+//        self.password.text =password;
+//        [self signInButton:self];
+//    }
+//
 
 
 }
-
+-(void)autoLogin
+{
+        //for auto login if user already loggedIn
+        NSString* isChecked = [[NSUserDefaults standardUserDefaults] objectForKey:@"ISCHECKED"];
+          if (isChecked !=nil &&[isChecked isEqualToString:@"YES"]) {
+              KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:XmwcsConst_KEYCHAIN_IDENTIFIER accessGroup:nil];
+    
+              NSString* username = [keychainItem objectForKey:kSecAttrAccount];
+              NSString* password = [[NSString alloc] initWithData:[keychainItem objectForKey:kSecValueData] encoding:NSUTF8StringEncoding];
+              NSLog(@"UserId :- %@",username);
+              NSLog(@"Password :- %@",password);
+    
+            self.userName.text =username;
+            self.password.text =password;
+            [self signInButton:self];
+        }
+    
+}
+-(void) checkVersion
+{
+    NSMutableDictionary* versionRequest = [[NSMutableDictionary alloc] init];
+    [versionRequest setObject:[[NSBundle mainBundle] bundleIdentifier] forKey:XmwcsConst_APP_ID];
+    [versionRequest setObject:XmwcsConst_DEVICE_TYPE_IPHONE forKey:XmwcsConst_DEVICE_TYPE];
+    
+    NetworkHelper* networkHelper = [[NetworkHelper alloc] init];
+    [networkHelper versionCheck: versionRequest :self :XmwcsConst_CALL_NAME_FOR_UPDATE_APP_VERSION];
+}
+-(void) handleUpgrade:(NSString*) downloadURL
+{
+    versionDownloaderUrl  = [downloadURL copy];
+    UIAlertView* downloadUpgradePrompt = [[UIAlertView alloc] initWithTitle:@"Polycab Sales Connect Version Check" message:@"Update is available. Do you want to download?" delegate:self cancelButtonTitle:@"NO" otherButtonTitles:@"YES", nil];
+    [downloadUpgradePrompt show];
+}
 - (void)viewWillAppear:(BOOL)animated{
     self.navigationController.navigationBarHidden = YES;
 }
@@ -701,7 +740,38 @@ NSString *chatPersonUserID;
             
         });
             }
+        
+        
+        else if ([callName isEqualToString:XmwcsConst_CALL_NAME_FOR_UPDATE_APP_VERSION])
+        {
+            UpdateAppVersion* versionResponse = (UpdateAppVersion*) respondedObject;
+            // versionResponse.majorVersion
+            // versionResponse.minorVersion
+            NSString* currentShortVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+            NSLog(@"current Short Version is %@", currentShortVersion);
+            NSArray* versionParts = [currentShortVersion  componentsSeparatedByString:@"."];
+            if([versionParts count]>1) {
+                int currentMajorVersion = [[versionParts objectAtIndex:0] intValue];
+                int currentMinorVersion = [[versionParts objectAtIndex:1] intValue];
+                if(versionResponse.majorVersion.intValue > currentMajorVersion) {
+                    // show version update alert
+                    // If this is the case user must upgrade.
+                    [self handleUpgrade:versionResponse.downloadUrl];
+                }
+                else if(versionResponse.majorVersion.intValue == currentMajorVersion ) {
+                    if(versionResponse.minorVersion.intValue>currentMinorVersion) {
+                        // it is minor version, just show user message
+                        [self handleUpgrade:versionResponse.downloadUrl];
+                    } else {
+                        [self autoLogin];
+                    }
+                } else {
+                    [self autoLogin];
+                }
+            }
+        }
     }
+    
 }
 #pragma  mark - fetch local db data from server
 -(void)contactListNetworkCall
@@ -966,5 +1036,20 @@ NSString *chatPersonUserID;
     return YES;
 }
 
+#pragma mark - UIAlertDelegate
 
+-(void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    // 0 is cancel, // 1 is yes
+    NSLog(@"User clicked button index = %ld", buttonIndex);
+    if(buttonIndex==1) {
+        // we need to download the URL
+        dispatch_async(dispatch_get_main_queue(),  ^(void) {
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:versionDownloaderUrl]];
+        });
+    } else if(buttonIndex==0) {
+        // we need to do our normal flow
+        [self autoLogin];
+    }
+}
 @end
