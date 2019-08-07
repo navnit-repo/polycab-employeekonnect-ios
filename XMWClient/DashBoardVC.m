@@ -652,8 +652,10 @@
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
-    if (indexPath.section == 2) {
+    if (indexPath.section == 0) {
+        [lble restartLabel];
+    }
+    else if (indexPath.section == 2) {
         
         UIActivityIndicatorView *act = [(UIActivityIndicatorView*)self.view viewWithTag:50000];
         [act startAnimating];
