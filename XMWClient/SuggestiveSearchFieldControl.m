@@ -128,7 +128,7 @@
         
         if (![previousSearchText isEqualToString:textField.text]) {
              [mainTableView removeFromSuperview];
-            [searchField resignFirstResponder];
+//            [searchField resignFirstResponder];
             previousSearchText = textField.text;
             KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:XmwcsConst_KEYCHAIN_IDENTIFIER accessGroup:nil];
             
@@ -151,7 +151,7 @@
             
             UIViewController *  parentController = [[[[UIApplication sharedApplication] windows] objectAtIndex:0] rootViewController];
             
-            loadingView = [LoadingView loadingViewInView:parentController.view];//self.view];
+            //loadingView = [LoadingView loadingViewInView:parentController.view];//self.view];
             
             NetworkHelper *networkHelper = [[NetworkHelper alloc] init];
             [networkHelper makeXmwNetworkCall:formPost :self : nil :  XmwcsConst_CALL_NAME_FOR_SEARCH];
@@ -196,7 +196,7 @@
 
 - (void) httpResponseObjectHandler : (NSString*) callName : (id) respondedObject : (id) requestedObject
 {
-    [loadingView removeView];
+   // [loadingView removeView];
     if([callName isEqualToString:XmwcsConst_CALL_NAME_FOR_SEARCH]) {
         displayCustomerNameArray = [[NSMutableArray alloc] init];
         searchResponseArray = [[NSMutableArray alloc] init];
@@ -239,6 +239,7 @@
         }
         [combineKeyValueArray addObjectsFromArray: displayCustomerNameArray];
         [mainTableView reloadData];
+        [self textFieldDidChange:searchField];
         
     }
 }
