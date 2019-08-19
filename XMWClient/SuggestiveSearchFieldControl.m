@@ -263,6 +263,12 @@
         view.backgroundColor = [UIColor whiteColor];
         mainTableView.backgroundView  = view;
     }
+    else if (searchResponseArray.count <= 0)
+    {
+        // do nothing
+        [mainTableView removeFromSuperview];
+        
+    }
     else
     {
         UILabel *noDataLabel         = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, mainTableView.bounds.size.width, mainTableView.bounds.size.height)];
