@@ -1,0 +1,85 @@
+
+App Thinning Size Report for All Variants of XMWClient
+
+Variant: XMWClient-06A5A5E7-7EE3-411F-8216-7DEAB57C8D0B.ipa
+Supported variant descriptors: [device: iPad3,4, os-version: 10.0], [device: iPad3,2, os-version: 9.0], [device: iPad3,6, os-version: 10.0], [device: iPad3,3, os-version: 9.0], [device: iPad3,1, os-version: 9.0], and [device: iPad3,5, os-version: 10.0]
+App + On Demand Resources size: 5.1 MB compressed, 8.8 MB uncompressed
+App size: 5.1 MB compressed, 8.8 MB uncompressed
+On Demand Resources size: Zero KB compressed, Zero KB uncompressed
+
+
+Variant: XMWClient-1E127F4F-CC65-46E7-8DC8-35F45E49A190.ipa
+Supported variant descriptors: [device: iPhone5,4, os-version: 10.0], [device: iPhone5,2, os-version: 10.0], [device: iPhone5,1, os-version: 10.0], and [device: iPhone5,3, os-version: 10.0]
+App + On Demand Resources size: 5.1 MB compressed, 8.8 MB uncompressed
+App size: 5.1 MB compressed, 8.8 MB uncompressed
+On Demand Resources size: Zero KB compressed, Zero KB uncompressed
+
+
+Variant: XMWClient-26107C99-0914-4F19-BCD3-2502FD95A4D4.ipa
+Supported variant descriptors: [device: iPad2,7, os-version: 9.0], [device: iPad2,4, os-version: 9.0], [device: iPad2,2, os-version: 9.0], [device: iPad2,1, os-version: 9.0], [device: iPad2,3, os-version: 9.0], [device: iPad2,6, os-version: 9.0], and [device: iPad2,5, os-version: 9.0]
+App + On Demand Resources size: 5.1 MB compressed, 8.8 MB uncompressed
+App size: 5.1 MB compressed, 8.8 MB uncompressed
+On Demand Resources size: Zero KB compressed, Zero KB uncompressed
+
+
+Variant: XMWClient-33B9F04A-2A5A-4FBA-AD7E-CD64769621F3.ipa
+Supported variant descriptors: [device: iPod5,1, os-version: 9.0] and [device: iPhone4,1, os-version: 9.0]
+App + On Demand Resources size: 5.1 MB compressed, 8.8 MB uncompressed
+App size: 5.1 MB compressed, 8.8 MB uncompressed
+On Demand Resources size: Zero KB compressed, Zero KB uncompressed
+
+
+Variant: XMWClient-4A635341-666F-43FC-97A7-1D7290CD6707.ipa
+Supported variant descriptors: [device: iPhone8,2, os-version: 10.0], [device: iPhone7,1, os-version: 12.2], [device: iPhone8,2, os-version: 12.0], [device: iPhone7,1, os-version: 10.0], [device: iPhone8,2, os-version: 12.2], and [device: iPhone7,1, os-version: 12.0]
+App + On Demand Resources size: 5 MB compressed, 9.7 MB uncompressed
+App size: 5 MB compressed, 9.7 MB uncompressed
+On Demand Resources size: Zero KB compressed, Zero KB uncompressed
+
+
+Variant: XMWClient-5535A201-E8B3-4F76-BD19-182F15DDEF20.ipa
+Supported variant descriptors: [device: iPod7,1, os-version: 12.2], [device: iPhone6,2, os-version: 10.0], [device: iPhone8,4, os-version: 10.0], [device: iPhone8,1, os-version: 12.0], [device: iPhone8,4, os-version: 12.2], [device: iPhone6,2, os-version: 12.2], [device: iPhone8,4, os-version: 12.0], [device: iPhone8,1, os-version: 12.2], [device: iPhone8,1, os-version: 10.0], [device: iPhone7,2, os-version: 12.0], [device: iPhone7,2, os-version: 10.0], [device: iPhone6,1, os-version: 10.0], [device: iPhone6,1, os-version: 12.0], [device: iPhone7,2, os-version: 12.2], [device: iPhone6,2, os-version: 12.0], [device: iPhone6,1, os-version: 12.2], [device: iPod7,1, os-version: 10.0], and [device: iPod7,1, os-version: 12.0]
+App + On Demand Resources size: 5 MB compressed, 9.6 MB uncompressed
+App size: 5 MB compressed, 9.6 MB uncompressed
+On Demand Resources size: Zero KB compressed, Zero KB uncompressed
+
+
+Variant: XMWClient-67020F47-68AE-4F55-934F-9709871650F4.ipa
+Supported variant descriptors: [device: iPad4,9, os-version: 12.0], [device: iPad6,12, os-version: 12.0], [device: iPad6,12, os-version: 12.2], [device: iPad4,8, os-version: 12.2], [device: iPad4,7, os-version: 10.0], [device: iPad6,11, os-version: 12.0], [device: iPad4,5, os-version: 10.0], [device: iPad6,11, os-version: 10.0], [device: iPad4,8, os-version: 12.0], [device: iPad7,5, os-version: 12.2], [device: iPad5,1, os-version: 12.2], [device: iPad4,4, os-version: 12.0], [device: iPad4,1, os-version: 12.2], [device: iPad4,3, os-version: 12.2], [device: iPad4,6, os-version: 12.2], [device: iPad5,2, os-version: 12.2], [device: iPad4,7, os-version: 12.2], [device: iPad5,4, os-version: 10.0], [device: iPad6,7, os-version: 12.0], [device: iPad5,2, os-version: 12.0], [device: iPad7,6, os-version: 12.0], [device: iPad5,1, os-version: 10.0], [device: iPad5,1, os-version: 12.0], [device: iPad4,5, os-version: 12.2], [device: iPad5,3, os-version: 12.2], [device: iPad7,6, os-version: 11.0], [device: iPad6,8, os-version: 12.2], [device: iPad4,9, os-version: 10.0], [device: iPad4,3, os-version: 12.0], [device: iPad4,1, os-version: 10.0], [device: iPad4,7, os-version: 12.0], [device: iPad6,11, os-version: 12.2], [device: iPad6,12, os-version: 10.0], [device: iPad5,2, os-version: 10.0], [device: iPad4,5, os-version: 12.0], [device: iPad4,6, os-version: 12.0], [device: iPad7,5, os-version: 12.0], [device: iPad4,2, os-version: 10.0], [device: iPad5,4, os-version: 12.0], [device: iPad6,8, os-version: 12.0], [device: iPad4,4, os-version: 12.2], [device: iPad4,3, os-version: 10.0], [device: iPad4,2, os-version: 12.0], [device: iPad5,3, os-version: 12.0], [device: iPad4,2, os-version: 12.2], [device: iPad7,5, os-version: 11.0], [device: iPad4,1, os-version: 12.0], [device: iPad4,4, os-version: 10.0], [device: iPad6,7, os-version: 10.0], [device: iPad6,7, os-version: 12.2], [device: iPad5,3, os-version: 10.0], [device: iPad4,9, os-version: 12.2], [device: iPad6,8, os-version: 10.0], [device: iPad7,6, os-version: 12.2], [device: iPad4,6, os-version: 10.0], [device: iPad4,8, os-version: 10.0], and [device: iPad5,4, os-version: 12.2]
+App + On Demand Resources size: 5 MB compressed, 9.6 MB uncompressed
+App size: 5 MB compressed, 9.6 MB uncompressed
+On Demand Resources size: Zero KB compressed, Zero KB uncompressed
+
+
+Variant: XMWClient-67359E44-EC1B-478F-92B8-9C0CDC417C19.ipa
+Supported variant descriptors: [device: iPhone9,4, os-version: 12.0], [device: iPhone10,5, os-version: 12.2], [device: iPhone10,5, os-version: 11.0], [device: iPhone11,2, os-version: 12.2], [device: iPhone10,6, os-version: 11.0], [device: iPhone11,4, os-version: 12.2], [device: iPhone11,6, os-version: 12.2], [device: iPhone10,3, os-version: 12.0], [device: iPhone10,2, os-version: 11.0], [device: iPhone11,4, os-version: 12.0], [device: iPhone11,6, os-version: 12.0], [device: iPhone9,2, os-version: 12.0], [device: iPhone10,3, os-version: 11.0], [device: iPhone10,6, os-version: 12.2], [device: iPhone9,4, os-version: 12.2], [device: iPhone10,2, os-version: 12.2], [device: iPhone9,4, os-version: 10.0], [device: iPhone10,5, os-version: 12.0], [device: iPhone9,2, os-version: 10.0], [device: iPhone9,2, os-version: 12.2], [device: iPhone10,6, os-version: 12.0], [device: iPhone11,2, os-version: 12.0], [device: iPhone10,2, os-version: 12.0], and [device: iPhone10,3, os-version: 12.2]
+App + On Demand Resources size: 5 MB compressed, 9.7 MB uncompressed
+App size: 5 MB compressed, 9.7 MB uncompressed
+On Demand Resources size: Zero KB compressed, Zero KB uncompressed
+
+
+Variant: XMWClient-8ABA00C3-5DD7-46D7-9C39-E1A2B11B4FF2.ipa
+Supported variant descriptors: [device: iPad8,6, os-version: 12.2], [device: iPad7,3, os-version: 12.2], [device: iPad7,1, os-version: 12.2], [device: iPad11,1, os-version: 12.2], [device: iPad7,1, os-version: 10.0], [device: iPad7,3, os-version: 12.0], [device: iPad6,4, os-version: 12.0], [device: iPad8,2, os-version: 12.0], [device: iPad8,1, os-version: 12.2], [device: iPad8,8, os-version: 12.2], [device: iPad6,3, os-version: 10.0], [device: iPad11,3, os-version: 12.2], [device: iPad7,4, os-version: 12.0], [device: iPad8,3, os-version: 12.0], [device: iPad11,4, os-version: 12.2], [device: iPad8,5, os-version: 12.2], [device: iPad6,4, os-version: 12.2], [device: iPad8,5, os-version: 12.0], [device: iPad8,7, os-version: 12.0], [device: iPad8,6, os-version: 12.0], [device: iPad7,4, os-version: 12.2], [device: iPad7,2, os-version: 12.2], [device: iPad8,1, os-version: 12.0], [device: iPad8,3, os-version: 12.2], [device: iPad6,3, os-version: 12.2], [device: iPad7,2, os-version: 10.0], [device: iPad8,4, os-version: 12.2], [device: iPad7,2, os-version: 12.0], [device: iPad8,2, os-version: 12.2], [device: iPad6,4, os-version: 10.0], [device: iPad7,4, os-version: 10.0], [device: iPad8,7, os-version: 12.2], [device: iPad7,1, os-version: 12.0], [device: iPad8,8, os-version: 12.0], [device: iPad11,2, os-version: 12.2], [device: iPad8,4, os-version: 12.0], [device: iPad7,3, os-version: 10.0], and [device: iPad6,3, os-version: 12.0]
+App + On Demand Resources size: 5 MB compressed, 9.6 MB uncompressed
+App size: 5 MB compressed, 9.6 MB uncompressed
+On Demand Resources size: Zero KB compressed, Zero KB uncompressed
+
+
+Variant: XMWClient-9B0040A6-DDAD-48F5-9DD0-5959853A8166.ipa
+Supported variant descriptors: [device: iPhone11,8, os-version: 12.0] and [device: iPhone11,8, os-version: 12.2]
+App + On Demand Resources size: 5 MB compressed, 9.7 MB uncompressed
+App size: 5 MB compressed, 9.7 MB uncompressed
+On Demand Resources size: Zero KB compressed, Zero KB uncompressed
+
+
+Variant: XMWClient-CCD93964-876C-4E16-A5D1-D4A956576F8F.ipa
+Supported variant descriptors: [device: iPhone9,3, os-version: 10.0], [device: iPhone10,4, os-version: 11.0], [device: iPhone10,4, os-version: 12.0], [device: iPhone9,3, os-version: 12.2], [device: iPhone10,4, os-version: 12.2], [device: iPhone10,1, os-version: 12.0], [device: iPhone10,1, os-version: 11.0], [device: iPhone9,1, os-version: 12.0], [device: iPhone9,1, os-version: 12.2], [device: iPhone9,1, os-version: 10.0], [device: iPhone10,1, os-version: 12.2], and [device: iPhone9,3, os-version: 12.0]
+App + On Demand Resources size: 5 MB compressed, 9.6 MB uncompressed
+App size: 5 MB compressed, 9.6 MB uncompressed
+On Demand Resources size: Zero KB compressed, Zero KB uncompressed
+
+
+Variant: XMWClient.ipa
+Supported variant descriptors: Universal
+App + On Demand Resources size: 7.1 MB compressed, 14.4 MB uncompressed
+App size: 7.1 MB compressed, 14.4 MB uncompressed
+On Demand Resources size: Zero KB compressed, Zero KB uncompressed
