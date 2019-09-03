@@ -950,7 +950,7 @@
     }
     
     
-    if([toDate timeIntervalSince1970]<=[fromDate timeIntervalSince1970]) {
+    if([toDate timeIntervalSince1970]<[fromDate timeIntervalSince1970]) {
         
         NSString* displayMessage = [NSString stringWithFormat:@"To Date %@ should be greater than or equal to From Date %@", toDateTimeStr, fromDateTimeStr];
         UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Mandatory Validations" message:displayMessage delegate:baseForm cancelButtonTitle:@"OK" otherButtonTitles:nil , nil];
