@@ -28,7 +28,7 @@
     NSNumberFormatter *formatter = [NSNumberFormatter new];
     [formatter setPositiveFormat:@"##,##,###.#"];
     [formatter setRoundingMode: NSNumberFormatterRoundDown];
-    float currency = [actualAmount floatValue];
+    float currency = ABS([actualAmount floatValue]) ;
     
      if (currency ==0)
     {
@@ -50,17 +50,12 @@
         [formatter setRoundingMode: NSNumberFormatterRoundHalfDown];
     }
         
-        
-       
-        
-        
         NSString *formatted = [formatter stringFromNumber:[NSNumber numberWithFloat:shortenedAmount]];
         NSString *requiredString = [formatted stringByAppendingString:suffix];
         NSLog(@"return : %@",requiredString);
         return requiredString;
 }
-    
-    
+
 }
 
 @end

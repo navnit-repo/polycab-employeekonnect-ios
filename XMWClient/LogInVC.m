@@ -1040,16 +1040,20 @@ NSString *chatPersonUserID;
 
 -(void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    // 0 is cancel, // 1 is yes
-    NSLog(@"User clicked button index = %ld", buttonIndex);
-    if(buttonIndex==1) {
-        // we need to download the URL
-        dispatch_async(dispatch_get_main_queue(),  ^(void) {
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:versionDownloaderUrl]];
-        });
-    } else if(buttonIndex==0) {
-        // we need to do our normal flow
-        [self autoLogin];
+    
+    if (versionDownloaderUrl != nil) {
+        // 0 is cancel, // 1 is yes
+        NSLog(@"User clicked button index = %ld", buttonIndex);
+        if(buttonIndex==1) {
+            // we need to download the URL
+            dispatch_async(dispatch_get_main_queue(),  ^(void) {
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:versionDownloaderUrl]];
+            });
+        } else if(buttonIndex==0) {
+            // we need to do our normal flow
+            [self autoLogin];
+        }
     }
+ 
 }
 @end
