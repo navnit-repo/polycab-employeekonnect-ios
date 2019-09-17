@@ -910,6 +910,13 @@ NSString *chatPersonUserID;
     // for WideReportVC drilldown
     [clientVariables registerReportVCClass:@"WideReportVC" forId:@"DOT_REPORT_EMPLOYEE_PORTAL_ORDERS_DD"];
     
+    // for WideReportVC
+    [clientVariables registerReportVCClass:@"WideReportVC" forId:@"BU_HEAD_SALES_ORDER_PENDENCY"];
+    
+    // for WideReportVC
+    [clientVariables registerReportVCClass:@"WideReportVC" forId:@"DOT_REPORT_SALES_ORDER_PENDENCY_DW"];
+    
+    
 }
 
 #pragma mark - custom form VCs

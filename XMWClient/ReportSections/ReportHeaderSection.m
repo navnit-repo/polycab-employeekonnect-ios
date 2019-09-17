@@ -105,7 +105,9 @@
 
 -(CGFloat) heightNoStyle:(NSIndexPath *)indexPath
 {
-    CGFloat screenWidth = self.tableView.frame.size.width;
+//    CGFloat screenWidth = self.tableView.frame.size.width;
+    CGFloat screenWidth = [[UIScreen mainScreen] bounds].size.width;
+
     NSString *keyOfComp =  (NSString *) [sortedElementIds objectAtIndex :indexPath.row];
     DotReportElement *dotReportElement = (DotReportElement *) [reportElements objectForKey:keyOfComp];
     
@@ -128,7 +130,9 @@
 
 -(UIView *)viewNoStyle:(NSIndexPath *)indexPath
 {
-    CGFloat screenWidth = self.tableView.frame.size.width;
+//    CGFloat screenWidth = self.tableView.frame.size.width;
+    CGFloat screenWidth = [[UIScreen mainScreen] bounds].size.width;
+
     NSString *keyOfComp =  (NSString *) [sortedElementIds objectAtIndex :indexPath.row];
     DotReportElement *dotReportElement = (DotReportElement *) [reportElements objectForKey:keyOfComp];
     

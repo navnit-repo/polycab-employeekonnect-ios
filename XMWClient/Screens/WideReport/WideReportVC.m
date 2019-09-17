@@ -131,7 +131,7 @@
     
     hScrollView.scrollEnabled = YES;
     hScrollView.delegate = self;
-    
+    hScrollView.bounces = NO;
     
     // default hScrollView content size is same its size
     
