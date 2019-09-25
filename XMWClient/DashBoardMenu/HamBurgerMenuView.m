@@ -168,12 +168,24 @@ static NSMutableDictionary* g_MenuImageMap = nil;
        
        
         
-        UIView *statusBar = [[[UIApplication sharedApplication] valueForKey:@"statusBarWindow"] valueForKey:@"statusBar"];
-        
-        if ([statusBar respondsToSelector:@selector(setBackgroundColor:)]) {
-            
-            statusBar.backgroundColor = [UIColor whiteColor];//set whatever color you like
-        }
+//        UIView *statusBar = [[[UIApplication sharedApplication] valueForKey:@"statusBarWindow"] valueForKey:@"statusBar"];
+//
+//        if ([statusBar respondsToSelector:@selector(setBackgroundColor:)]) {
+//
+//            statusBar.backgroundColor = [UIColor whiteColor];//set whatever color you like
+//        }
+            UIView *statusBar;
+            if (@available(iOS 13.0, *)) {
+                statusBar = [[UIView alloc]initWithFrame:[UIApplication sharedApplication].keyWindow.windowScene.statusBarManager.statusBarFrame] ;
+                statusBar.backgroundColor = [UIColor whiteColor];
+            } else {
+                // Fallback on earlier versions
+                if ([statusBar respondsToSelector:@selector(setBackgroundColor:)]) {
+
+                    statusBar.backgroundColor = [UIColor whiteColor];//set whatever color you like
+                }
+
+            }
         
         categoryPanel.separatorStyle = UITableViewCellSelectionStyleNone;
         categoryPanel.backgroundColor = [UIColor whiteColor];

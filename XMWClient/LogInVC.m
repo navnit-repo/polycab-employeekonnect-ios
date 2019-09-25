@@ -124,12 +124,27 @@ NSString *chatPersonUserID;
     NSLog(@"LogInVC call");
 
     
-    UIView *statusBar = [[[UIApplication sharedApplication] valueForKey:@"statusBarWindow"] valueForKey:@"statusBar"];
+//    UIView *statusBar = [[[UIApplication sharedApplication] valueForKey:@"statusBarWindow"] valueForKey:@"statusBar"];
+//
+//    if ([statusBar respondsToSelector:@selector(setBackgroundColor:)]) {
+//
+//        statusBar.backgroundColor = [UIColor clearColor];//set whatever color you like
+//    }
+//
     
-    if ([statusBar respondsToSelector:@selector(setBackgroundColor:)]) {
-        
-        statusBar.backgroundColor = [UIColor clearColor];//set whatever color you like
-    }
+    UIView *statusBar;
+
+      if (@available(iOS 13.0, *)) {
+          statusBar = [[UIView alloc]initWithFrame:[UIApplication sharedApplication].keyWindow.windowScene.statusBarManager.statusBarFrame] ;
+          statusBar.backgroundColor = [UIColor clearColor];
+      } else {
+          // Fallback on earlier versions
+          if ([statusBar respondsToSelector:@selector(setBackgroundColor:)]) {
+
+              statusBar.backgroundColor = [UIColor clearColor];//set whatever color you like
+          }
+
+      }
     
     self.navigationController.navigationBarHidden = YES;
     

@@ -248,24 +248,37 @@ static NSString *const kCellSubCatIdentifier = @"kCellSubCatIdentifier";
     [searchBar setReturnKeyType:UIReturnKeyDone];
     searchBar.enablesReturnKeyAutomatically = NO;
     [_headerView addSubview:searchBar];
-    for (id subview in [[searchBar.subviews lastObject] subviews]) {
-        if ([subview isKindOfClass:NSClassFromString(@"UISearchBarBackground")]) {
-            [subview removeFromSuperview];
-        }
-        
-        if ([subview isKindOfClass:[UITextField class]])
-        {
-            UITextField *textFieldObject = (UITextField *)subview;
-            textFieldObject.borderStyle = UITextBorderStyleRoundedRect;
-            textFieldObject.layer.masksToBounds=YES;
-            textFieldObject.layer.borderColor=[[UIColor lightGrayColor]CGColor];
-            textFieldObject.layer.cornerRadius=5.0f;
-            textFieldObject.layer.borderWidth= 1.0f;
-            break;
-        }
-        
-    }
-
+    
+     if (@available(iOS 13.0, *)) {
+                     [searchBar setBackgroundColor:[UIColor clearColor]];
+                     [searchBar setBackgroundImage:[UIImage new]];
+                     [searchBar setTranslucent:YES];
+                     searchBar.searchTextField.borderStyle = UITextBorderStyleRoundedRect;
+                     searchBar.searchTextField.layer.masksToBounds=YES;
+                     searchBar.searchTextField.layer.borderColor=[[UIColor lightGrayColor]CGColor];
+                     searchBar.searchTextField.layer.cornerRadius=5.0f;
+                     searchBar.searchTextField.layer.borderWidth= 1.0f;
+       }
+       else
+       {
+           for (id subview in [[searchBar.subviews lastObject] subviews]) {
+           if ([subview isKindOfClass:NSClassFromString(@"UISearchBarBackground")]) {
+               [subview removeFromSuperview];
+           }
+           
+           if ([subview isKindOfClass:[UITextField class]])
+           {
+               UITextField *textFieldObject = (UITextField *)subview;
+               textFieldObject.borderStyle = UITextBorderStyleRoundedRect;
+               textFieldObject.layer.masksToBounds=YES;
+               textFieldObject.layer.borderColor=[[UIColor lightGrayColor]CGColor];
+               textFieldObject.layer.cornerRadius=5.0f;
+               textFieldObject.layer.borderWidth= 1.0f;
+               break;
+           }
+               
+           }
+       }
     
 }
 
