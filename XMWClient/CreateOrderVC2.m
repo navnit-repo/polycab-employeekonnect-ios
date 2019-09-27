@@ -519,6 +519,7 @@
             }
         }
     }
+    cell.accessoryType = UITableViewCellAccessoryNone;
     return cell;
 }
 

@@ -572,7 +572,7 @@ UITextField* activeTextField = nil;
     if ([info objectForKey:UIImagePickerControllerReferenceURL] == NULL) {
         
         NSDateFormatter *dateFormatter=[[NSDateFormatter alloc] init];
-        [dateFormatter setDateFormat:@"dd_MM_yyyy HH:mm"];
+        [dateFormatter setDateFormat:@"dd_MM_yyyy HH:mm:ss"];
         // or @"yyyy-MM-dd hh:mm:ss a" if you prefer the time with AM/PM
         NSLog(@"%@",[dateFormatter stringFromDate:[NSDate date]]);
         NSString *clickImageDate = [dateFormatter stringFromDate:[NSDate date]];

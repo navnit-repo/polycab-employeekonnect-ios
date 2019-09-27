@@ -29,5 +29,16 @@
 }
 
 
+- (CGRect) rightViewRectForBounds:(CGRect)bounds {
+ CGRect textRect = [super rightViewRectForBounds:bounds];
+    if (@available(iOS 13.0, *)) {
+           
+        textRect.origin.x -= 10;
+        return textRect;
+       } else {
+           
+         return textRect;
+       }
 
+}
 @end
