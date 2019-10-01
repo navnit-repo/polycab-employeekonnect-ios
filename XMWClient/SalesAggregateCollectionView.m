@@ -399,7 +399,7 @@
         }
         NSLog(@"YTD: %@",ytdDataArray);
         
-        [self LMTD_NetworkCall];
+        [self LFTD_NetworkCall];
         
 //        [self maintainArrayFTD_MTD_YTD];
       
@@ -480,8 +480,8 @@
         
         NSLog(@"LFTD: %@",lftdDataArray);
         
-       
-          [self maintainArrayFTD_MTD_YTD];
+        [self LMTD_NetworkCall];
+//          [self maintainArrayFTD_MTD_YTD];
         
     }   fail:^(DotFormPost* formPosted, NSString* message) {
         // we should receive error response here
@@ -654,7 +654,7 @@
             [emptyArray addObject:[addEmptyArray objectAtIndex:i]];
             [emptyArray addObject:@"0.0"];
             [emptyArray addObject:@"0.0"];
-            [lmtdDataArray insertObject:emptyArray atIndex:lftdCount];
+            [lmtdDataArray insertObject:emptyArray atIndex:lmtdCount];
         }
         
     }
