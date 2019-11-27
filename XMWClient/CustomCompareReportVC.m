@@ -474,6 +474,12 @@
             if(loaderCount==0) {
                 [loadingView removeView];
                 loadingView = nil;
+                
+                
+                if([message isEqualToString:@"SESSION_EXPIRED"]) {
+                    [self handleExpiredSession];
+                }
+
             }
         }
         
@@ -519,6 +525,12 @@
             if(loaderCount==0) {
                 [loadingView removeView];
                 loadingView = nil;
+                
+                
+                if([message isEqualToString:@"SESSION_EXPIRED"]) {
+                    [self handleExpiredSession];
+                }
+
             }
         }
     }];
@@ -570,6 +582,12 @@
             if(loaderCount==0) {
                 [loadingView removeView];
                 loadingView = nil;
+                
+                
+                if([message isEqualToString:@"SESSION_EXPIRED"]) {
+                    [self handleExpiredSession];
+                }
+
             }
         }
         
@@ -577,6 +595,45 @@
     }];
     
 }
+
+
+-(void) handleExpiredSession
+{
+
+         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:@"Your Session expired, Please login again !" preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleDefault
+                                                          handler:^(UIAlertAction * action)
+                                                        {
+                                                           LogInVC *vc = [[LogInVC alloc] initWithNibName:@"LogInVC" bundle:nil];
+                                                 vc.password.text = @"";
+                                                                                              UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
+                                                                                              [UIApplication.sharedApplication.keyWindow setRootViewController:nav];
+                                                              
+                                                        }];
+    
+    [alertController addAction:defaultAction];
+    
+    
+     UIViewController* root = [[[[UIApplication sharedApplication]windows]objectAtIndex:0] rootViewController];
+            UIViewController *assignViewController = nil;
+            
+            if ([root isKindOfClass:[SWRevealViewController class]]) {
+                        SWRevealViewController *reveal = (SWRevealViewController*)root;
+                        UINavigationController *check =(UINavigationController*)reveal.frontViewController;
+                        NSArray* viewsList = check.viewControllers;
+                        UIViewController *checkView = (UIViewController *) [viewsList objectAtIndex:viewsList.count - 1];
+                assignViewController = checkView;
+            }
+            else
+            {
+                assignViewController = root;
+            }
+            
+            [assignViewController presentViewController:alertController animated:YES completion:nil];
+    
+}
+
 -(NSArray*)sortSearchDataArray :(NSMutableArray*)array
 {
    

@@ -15,7 +15,9 @@
 #import "ReportPostResponse.h"
 
 #include "iconv.h"
-
+#import "DVAppDelegate.h"
+#import "ClientVariable.h"
+#import "SWRevealViewController.h"
 @interface NetworkHelper ()
 {
     NSURLConnection* urlConnection;
@@ -142,44 +144,124 @@ NSString *g_DeviceSessionId = nil;
 
 //Sent when a connection has finished loading successfully. (required)
 
+//- (void)connectionDidFinishLoading:(NSURLConnection *)connection {
+//    NSLog(@"(void)connectionDidFinishLoading:(NSURLConnection *)connection");
+//    NSLog(@"All content received = %d", responseData.length);
+//
+//    SBJsonParser* sbParser = [[SBJsonParser alloc] init];
+//
+//
+//    // now parse the content to get json data, and notify to response handler.
+//    NSString *jsonResponseStr = [[NSString alloc ] initWithData:[self cleanUTF8 : responseData] encoding:NSUTF8StringEncoding];
+//    id parsedJsonResponseObject = [sbParser objectWithString :jsonResponseStr];
+//
+//    NSLog(@ "Our Data = %@" , jsonResponseStr);
+//
+//
+//
+//
+//    //  NSLog(@"%@", [[NSString alloc ] initWithData:responseData encoding:NSUTF8StringEncoding]);
+//
+//    // id parsedJsonResponseObject = [sbParser objectWithData:responseData];
+//    JSONNetworkRequestData* networkReqResObj = [JSONDataExchange convertFromJsonObject:parsedJsonResponseObject];
+//
+//    /*
+//    if(networkReqResObj!=nil) {
+//        if(networkReqResObj.dServiceId !=nil && ![networkReqResObj isKindOfClass:[NSNull class]]) {
+//            g_DeviceSessionId =  networkReqResObj.dServiceId;
+//        }
+//    }
+//     */
+//
+//    // ClientLoginResponse* clientLoginResponse =  (ClientLoginResponse*) networkReqResObj.responseData;
+//    if(responseHandler != nil) {
+//
+//        if(networkReqResObj!=nil && [networkReqResObj isKindOfClass:[JSONNetworkRequestData class]]) {
+//
+//            if(networkReqResObj.dServiceId !=nil && ![networkReqResObj isKindOfClass:[NSNull class]]) {
+//                g_DeviceSessionId =  networkReqResObj.dServiceId;
+//            }
+//
+//            if( [networkReqResObj.status compare:@"SUCCESS" options:NSCaseInsensitiveSearch]==0) {
+//                if([responseHandler respondsToSelector:@selector(httpResponseObjectHandler:::)]) {
+//                    [responseHandler httpResponseObjectHandler:xmwRequestCallname : networkReqResObj.responseData :xmwRequestObject];
+//                }
+//            } else if( [networkReqResObj.status compare:@"FAIL" options:NSCaseInsensitiveSearch]==0) {
+//
+//                // ERROR_TYPE:3$ERROR_SUB_TYPE:5$ERROR_MSG:Error Send the correct data to submit!
+//
+//                NSArray* parts = [networkReqResObj.message componentsSeparatedByString:@"$"];
+//                if([parts count]==1) {
+//                    if([responseHandler respondsToSelector:@selector(httpFailureHandler::)]) {
+//                        [responseHandler httpFailureHandler:xmwRequestCallname : networkReqResObj.message];
+//                    }
+//                    return;
+//                }
+//
+//                NSMutableString* errorMessage = [[NSMutableString alloc] init];
+//
+//                for(int i=0; i<[parts count]; i++) {
+//                    NSString* line = [parts objectAtIndex:i];
+//                    NSArray* keyVal = [line componentsSeparatedByString:@":"];
+//                    if([keyVal count]==2) {
+//                        if([[keyVal objectAtIndex:0] isEqualToString:@"ERROR_MSG"]) {
+//                            [errorMessage appendString:[keyVal objectAtIndex:1]];
+//                            if([responseHandler respondsToSelector:@selector(httpFailureHandler::)]) {
+//                                [responseHandler httpFailureHandler:xmwRequestCallname : errorMessage];
+//                            }
+//                            return;
+//                        }
+//                    }
+//                }
+//                if([responseHandler respondsToSelector:@selector(httpFailureHandler::)]) {
+//                    [responseHandler httpFailureHandler:xmwRequestCallname : networkReqResObj.message];
+//                }
+//                return;
+//            }
+//
+//        } else  if([networkReqResObj isKindOfClass:[NSDictionary class]]) {
+//
+//            if([responseHandler respondsToSelector:@selector(httpResponseObjectHandler:::)]) {
+//                [responseHandler httpResponseObjectHandler:xmwRequestCallname :networkReqResObj :xmwRequestObject];
+//            }
+//        }
+//
+//
+//    }
+//}
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
     NSLog(@"(void)connectionDidFinishLoading:(NSURLConnection *)connection");
     NSLog(@"All content received = %d", responseData.length);
     
-    SBJsonParser* sbParser = [[SBJsonParser alloc] init];
+    NSError* error;
+    
+    NSDictionary *parsedJsonResponseObject = [NSJSONSerialization JSONObjectWithData:[NetworkHelper cleanUTF8:responseData] options:NSJSONReadingMutableContainers error:&error];
+    
+    if(error!=nil) {
+        NSLog(@"Error in JSON Serialization: %@", [error description]);
+    }
     
     
+    NSString *jsonFormatDataString = [[NSString alloc] initWithData:[NetworkHelper cleanUTF8:responseData] encoding:NSUTF8StringEncoding];
+    NSLog(@"jsonFormatDataString: %@", jsonFormatDataString);
+        
     // now parse the content to get json data, and notify to response handler.
-    NSString *jsonResponseStr = [[NSString alloc ] initWithData:[self cleanUTF8 : responseData] encoding:NSUTF8StringEncoding];
-    id parsedJsonResponseObject = [sbParser objectWithString :jsonResponseStr];
+   //  NSString *jsonResponseStr = [[NSString alloc ] initWithData:[NetworkHelper cleanUTF8 : responseData] encoding:NSUTF8StringEncoding];
+   // id parsedJsonResponseObject = [sbParser objectWithString :jsonResponseStr];
     
-    NSLog(@ "Our Data = %@" , jsonResponseStr);
+   // NSLog(@ "Our Data = %@" , jsonResponseStr);
     
-  
-    
-    
-    //  NSLog(@"%@", [[NSString alloc ] initWithData:responseData encoding:NSUTF8StringEncoding]);
-    
-    // id parsedJsonResponseObject = [sbParser objectWithData:responseData];
     JSONNetworkRequestData* networkReqResObj = [JSONDataExchange convertFromJsonObject:parsedJsonResponseObject];
     
-    /*
-    if(networkReqResObj!=nil) {
+    if(networkReqResObj!=nil && [networkReqResObj isKindOfClass:[JSONNetworkRequestData class]]) {
         if(networkReqResObj.dServiceId !=nil && ![networkReqResObj isKindOfClass:[NSNull class]]) {
             g_DeviceSessionId =  networkReqResObj.dServiceId;
         }
     }
-     */
     
     // ClientLoginResponse* clientLoginResponse =  (ClientLoginResponse*) networkReqResObj.responseData;
-    if(responseHandler != nil) {
-        
-        if(networkReqResObj!=nil && [networkReqResObj isKindOfClass:[JSONNetworkRequestData class]]) {
-            
-            if(networkReqResObj.dServiceId !=nil && ![networkReqResObj isKindOfClass:[NSNull class]]) {
-                g_DeviceSessionId =  networkReqResObj.dServiceId;
-            }
-            
+    if(responseHandler != nil ) {
+        if([networkReqResObj isKindOfClass:[JSONNetworkRequestData class]]) {
             if( [networkReqResObj.status compare:@"SUCCESS" options:NSCaseInsensitiveSearch]==0) {
                 if([responseHandler respondsToSelector:@selector(httpResponseObjectHandler:::)]) {
                     [responseHandler httpResponseObjectHandler:xmwRequestCallname : networkReqResObj.responseData :xmwRequestObject];
@@ -195,39 +277,94 @@ NSString *g_DeviceSessionId = nil;
                     }
                     return;
                 }
+                //
+                // for session expire
+                // "ERROR_TYPE:3$ERROR_SUB_TYPE:3$ERROR_MSG:Your Session expired , Please Login Again!
+                //
                 
-                NSMutableString* errorMessage = [[NSMutableString alloc] init];
+                NSMutableDictionary* failDataDict = [[NSMutableDictionary alloc] init];
                 
                 for(int i=0; i<[parts count]; i++) {
                     NSString* line = [parts objectAtIndex:i];
                     NSArray* keyVal = [line componentsSeparatedByString:@":"];
+                    
                     if([keyVal count]==2) {
-                        if([[keyVal objectAtIndex:0] isEqualToString:@"ERROR_MSG"]) {
-                            [errorMessage appendString:[keyVal objectAtIndex:1]];
-                            if([responseHandler respondsToSelector:@selector(httpFailureHandler::)]) {
-                                [responseHandler httpFailureHandler:xmwRequestCallname : errorMessage];
-                            }
-                            return;
-                        }
+                         [failDataDict setObject:[keyVal objectAtIndex:1] forKey:[keyVal objectAtIndex:0]];
                     }
                 }
-                if([responseHandler respondsToSelector:@selector(httpFailureHandler::)]) {
-                    [responseHandler httpFailureHandler:xmwRequestCallname : networkReqResObj.message];
+                [self serverFailMessageHandler:failDataDict];
+            }
+        } else if([networkReqResObj isKindOfClass:[NSDictionary class]]) {
+        
+                    // API call is not authorized :==> No auth Token Found." ERROR HANDLING
+                    if ([[networkReqResObj valueForKey:@"message"] isEqualToString:@"API call is not authorized :==> No auth Token Found."]) {
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [self defaultSeccionExpireHandler];
+                        });
+        
+                    }
+                    else
+                    {
+                        if([responseHandler respondsToSelector:@selector(httpResponseObjectHandler:::)]) {
+                                       [responseHandler httpResponseObjectHandler:xmwRequestCallname :networkReqResObj :xmwRequestObject];
+                                   }
+                    }
+        
                 }
-                return;
-            }
-            
-        } else  if([networkReqResObj isKindOfClass:[NSDictionary class]]) {
-            
-            if([responseHandler respondsToSelector:@selector(httpResponseObjectHandler:::)]) {
-                [responseHandler httpResponseObjectHandler:xmwRequestCallname :networkReqResObj :xmwRequestObject];
-            }
-        }
-        
-        
     }
 }
 
+-(void) serverFailMessageHandler:(NSDictionary*) failDataDict
+{
+    NSString* errorType = [failDataDict objectForKey:@"ERROR_TYPE"];
+       NSString* errorSubType = [failDataDict objectForKey:@"ERROR_SUB_TYPE"];
+       NSString* errorMessage = [failDataDict objectForKey:@"ERROR_MSG"];
+       
+       if(errorType!=nil && [errorType isEqualToString:@"3"]) {
+            if(errorSubType!=nil && [errorSubType isEqualToString:@"3"]) {
+                // session Expired
+                g_DeviceSessionId = nil;
+                // we need to remove all module context
+                NSString* context = [DVAppDelegate currentModuleContext];
+                while(![context isEqualToString:@""]) {
+                    [ClientVariable removeInstance: context];
+                    [DVAppDelegate popModuleContext];
+                    context = [DVAppDelegate currentModuleContext];
+                }
+                if([responseHandler respondsToSelector:@selector(httpServerSessionExpired)]) {
+                    [responseHandler httpServerSessionExpired];
+                    return;
+                } else {
+                    [self defaultSeccionExpireHandler];
+                    return;
+                }
+            } else {
+                if(errorMessage!=nil && [errorMessage length]>0) {
+                    if([responseHandler respondsToSelector:@selector(httpFailureHandler::)]) {
+                        [responseHandler httpFailureHandler:xmwRequestCallname : errorMessage];
+                    }
+                    return;
+                } else {
+                    if([responseHandler respondsToSelector:@selector(httpFailureHandler::)]) {
+                        [responseHandler httpFailureHandler:xmwRequestCallname : @"Unknown Network Error"];
+                    }
+                    return;
+                }
+            }
+       } else {
+           if(errorMessage!=nil && [errorMessage length]>0) {
+               if([responseHandler respondsToSelector:@selector(httpFailureHandler::)]) {
+                   [responseHandler httpFailureHandler:xmwRequestCallname : errorMessage];
+               }
+               return;
+           } else {
+               if([responseHandler respondsToSelector:@selector(httpFailureHandler::)]) {
+                   [responseHandler httpFailureHandler:xmwRequestCallname : @"Unknown Network Error"];
+               }
+               return;
+           }
+       }
+}
 
 -(void) makeXmwNetworkCall : (id) requestObject : (id <HttpEventListener>) responseListener : (NSString *)in_SessionId: (NSString*) callName
 {
@@ -419,7 +556,8 @@ NSString *g_DeviceSessionId = nil;
     NSLog(@"%@",jsonResponseStr);
     // set request body
     [request setHTTPBody:body];
-    
+    NSString *postDataLength        = [NSString stringWithFormat:@"%lu",(unsigned long)[body length]];
+    [request setValue:postDataLength forHTTPHeaderField:@"Content-Length"];
     urlConnection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
     [urlConnection start];
     
@@ -627,6 +765,61 @@ NSString *g_DeviceSessionId = nil;
 {
     g_DeviceSessionId = nil;
 }
+-(void) defaultSeccionExpireHandler
+{
+//    g_DeviceSessionId = nil;
+     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:@"Your Session expired, Please login again !" preferredStyle:UIAlertControllerStyleAlert];
+     
+     UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleDefault
+                                                           handler:^(UIAlertAction * action)
+                                                         {
+                                                            LogInVC *vc = [[LogInVC alloc] initWithNibName:@"LogInVC" bundle:nil];
+                                                  vc.password.text = @"";
+                                                                                               UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
+                                                                                               [UIApplication.sharedApplication.keyWindow setRootViewController:nav];
+                                                               
+                                                         }];
+     
+     [alertController addAction:defaultAction];
+     
+     
+      UIViewController* root = [[[[UIApplication sharedApplication]windows]objectAtIndex:0] rootViewController];
+             UIViewController *assignViewController = nil;
+             
+             if ([root isKindOfClass:[SWRevealViewController class]]) {
+                         SWRevealViewController *reveal = (SWRevealViewController*)root;
+                         UINavigationController *check =(UINavigationController*)reveal.frontViewController;
+                         NSArray* viewsList = check.viewControllers;
+                         UIViewController *checkView = (UIViewController *) [viewsList objectAtIndex:viewsList.count - 1];
+                 assignViewController = checkView;
+             }
+             else
+             {
+                 assignViewController = root;
+             }
+             
+             [assignViewController presentViewController:alertController animated:YES completion:nil];
+}
 
++ (NSData *)cleanUTF8:(NSData *)data {
+    iconv_t cd = iconv_open("UTF-8", "UTF-8"); // convert to UTF-8 from UTF-8
+    int one = 1;
+    iconvctl(cd, ICONV_SET_DISCARD_ILSEQ, &one); // discard invalid characters
+    
+    size_t inbytesleft, outbytesleft;
+    inbytesleft = outbytesleft = data.length;
+    char *inbuf  = (char *)data.bytes;
+    char *outbuf = malloc(sizeof(char) * data.length);
+    char *outptr = outbuf;
+    if (iconv(cd, &inbuf, &inbytesleft, &outptr, &outbytesleft)
+        == (size_t)-1) {
+        NSLog(@"this should not happen, seriously");
+        return nil;
+    }
+    NSData *result = [NSData dataWithBytes:outbuf length:data.length - outbytesleft];
+    iconv_close(cd);
+    free(outbuf);
+    return result;
+}
 @end
 

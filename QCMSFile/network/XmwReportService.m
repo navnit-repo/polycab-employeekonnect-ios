@@ -80,6 +80,39 @@
     }
 }
 
-
+- (void) httpServerSessionExpired
+{
+    if(failed!=nil) {
+        failed(self.reportFormPost, @"SESSION_EXPIRED");
+        
+        /*
+        
+        UIAlertController * alert = [UIAlertController
+                                     alertControllerWithTitle:@""
+                                     message:@"Your session has expired. Relogin!"
+                                     preferredStyle:UIAlertControllerStyleAlert];
+        //Add Buttons
+        
+        UIAlertAction* reloginButton = [UIAlertAction
+                                    actionWithTitle:@"OK"
+                                    style:UIAlertActionStyleDefault
+                                    handler:^(UIAlertAction * action) {
+                                        //Handle your yes please button action here
+                                       
+                DVAppDelegate* appDelegate = (DVAppDelegate*)[UIApplication sharedApplication].delegate;
+                
+                    PageViewController* pv = [[PageViewController alloc] initWithNibName:@"PageViewController" bundle:nil];
+                    UINavigationController* nv = [[UINavigationController alloc] initWithRootViewController:pv];
+                    appDelegate.window.rootViewController = nv;
+            
+            }];
+        
+        [alert addAction:reloginButton];
+                                            
+        [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:alert animated:YES completion:nil];
+         
+        */
+    }
+}
 
 @end

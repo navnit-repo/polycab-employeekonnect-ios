@@ -79,4 +79,7 @@
 -(DotReport*) dotReport;
 -(NSString*) totalHeaderValue:(ReportPostResponse*) reportResponse;
 -(NSString*) zeroColumnHeading;
+
+-(void) handleExpiredSession;
+
 @end

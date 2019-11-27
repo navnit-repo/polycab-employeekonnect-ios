@@ -493,7 +493,11 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
 //
 + (NSString*) currentModuleContext {
     if(DVAppDelegate_moduleContextStack != nil) {
-        return [DVAppDelegate_moduleContextStack objectAtIndex: [DVAppDelegate_moduleContextStack count] - 1 ];
+//        return [DVAppDelegate_moduleContextStack objectAtIndex: [DVAppDelegate_moduleContextStack count] - 1 ];
+        if([DVAppDelegate_moduleContextStack count]>0) {
+            return [DVAppDelegate_moduleContextStack objectAtIndex: [DVAppDelegate_moduleContextStack count] - 1 ];
+        }
+
     }
     
     return @"";
@@ -508,7 +512,11 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
 
 + (void) popModuleContext {
     if(DVAppDelegate_moduleContextStack != nil) {
-        [DVAppDelegate_moduleContextStack removeObjectAtIndex: [DVAppDelegate_moduleContextStack count] - 1];
+//        [DVAppDelegate_moduleContextStack removeObjectAtIndex: [DVAppDelegate_moduleContextStack count] - 1];
+        if([DVAppDelegate_moduleContextStack count]>0) {
+            [DVAppDelegate_moduleContextStack removeObjectAtIndex: [DVAppDelegate_moduleContextStack count] - 1];
+        }
+
     }
 }
 

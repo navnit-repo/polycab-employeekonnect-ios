@@ -12,5 +12,6 @@
 
 - (void) httpResponseObjectHandler : (NSString*) callName : (id) respondedObject : (id) requestedObject;
 - (void) httpFailureHandler : (NSString*) callName : (NSString*) message;
+- (void) httpServerSessionExpired;
 
 @end

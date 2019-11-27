@@ -82,7 +82,11 @@ static ClientVariable* ClientVariable_DEFAULT_INSTANCE = nil;
     return ClientVariable_DEFAULT_INSTANCE;
 }
 
-
++ (void) removeInstance:(NSString *) contextId {
+    if(ClientVariable_INSTANCE_MAP != nil) {
+        [ClientVariable_INSTANCE_MAP removeObjectForKey:contextId];
+    }
+}
 + (NSMutableDictionary*) getQuoteMap {
     if(ClientVariable_QUOTE_MAP == nil) {
         ClientVariable_QUOTE_MAP = [[NSMutableDictionary alloc] init];

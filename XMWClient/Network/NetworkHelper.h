@@ -33,4 +33,8 @@
 @property NSString *AUTH_TOKEN_VALUE;
 @property (strong, nonatomic) NSDictionary* customerHeaders;
 
+-(void) serverFailMessageHandler:(NSDictionary*) failDataDict;
+-(void) defaultSessionExpiredHandler;
+
+
 @end

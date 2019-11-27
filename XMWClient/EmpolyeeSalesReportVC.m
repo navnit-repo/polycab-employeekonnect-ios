@@ -649,6 +649,10 @@ self.mainTable.frame = CGRectMake(0, titleLblHeight + searchBar.frame.size.heigh
             if(loaderCount==0) {
                 [loadingView removeView];
                 loadingView = nil;
+                
+                if([message isEqualToString:@"SESSION_EXPIRED"]) {
+                    [self handleExpiredSession];
+                }
             }
         }
         

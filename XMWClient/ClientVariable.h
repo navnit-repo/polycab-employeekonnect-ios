@@ -62,5 +62,6 @@
 -(FormVC*) formVCForId:(NSString*) formId;
 -(ReportVC*) reportVCForId:(NSString*) reportId;
 
++ (void) removeInstance:(NSString *) contextId;
 
 @end
