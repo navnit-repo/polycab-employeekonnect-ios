@@ -111,7 +111,14 @@
 
 - (void) backHandler : (id) sender
 {
-    [ [self navigationController]  popViewControllerAnimated:YES];
+//    [ [self navigationController]  popViewControllerAnimated:YES];
+    
+    NSMutableArray *viewControllersArray = [NSMutableArray arrayWithArray:self.navigationController.viewControllers];
+    NSMutableArray *dummyViewControllers = [[NSMutableArray alloc ] init];
+    [dummyViewControllers addObject: [viewControllersArray objectAtIndex:0]];
+    
+                                                  
+     [self.navigationController setViewControllers:dummyViewControllers animated:YES];
     
 }
 

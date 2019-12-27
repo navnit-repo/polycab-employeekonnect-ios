@@ -318,7 +318,7 @@
     else{
         
         if (zeroQuantityFlag) {
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"" message:@"Please enter atleast one item quantity to place the order. s " delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"" message:@"Please enter atleast one item quantity to place the order." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
             [loadingView removeView];
             [alert show];
         }
