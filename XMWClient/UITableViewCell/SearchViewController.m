@@ -42,7 +42,7 @@
 @synthesize multiSelectDelegate;
 @synthesize headerTitle;
 @synthesize primaryCat,subCat;
-
+@synthesize searchBar;
 
 int CHECKBOX_TAG_OFFSET = 9000;
 
@@ -72,6 +72,41 @@ int CHECKBOX_TAG_OFFSET = 9000;
     [super viewDidLoad];
     seachBarText = @"";
     
+    [searchBar setPlaceholder:@"Search"];
+    [searchBar setReturnKeyType:UIReturnKeyDone];
+    searchBar.enablesReturnKeyAutomatically = NO;
+    
+    if (@available(iOS 13.0, *)) {
+                     [searchBar setBackgroundColor:[UIColor clearColor]];
+                     [searchBar setBackgroundImage:[UIImage new]];
+                     [searchBar setTranslucent:YES];
+                     searchBar.searchTextField.borderStyle = UITextBorderStyleRoundedRect;
+                     searchBar.searchTextField.layer.masksToBounds=YES;
+                     searchBar.searchTextField.layer.borderColor=[[UIColor lightGrayColor]CGColor];
+                     searchBar.searchTextField.layer.cornerRadius=5.0f;
+                     searchBar.searchTextField.layer.borderWidth= 1.0f;
+       }
+       else
+       {
+           for (id subview in [[searchBar.subviews lastObject] subviews]) {
+           if ([subview isKindOfClass:NSClassFromString(@"UISearchBarBackground")]) {
+               [subview removeFromSuperview];
+           }
+           
+           if ([subview isKindOfClass:[UITextField class]])
+           {
+               UITextField *textFieldObject = (UITextField *)subview;
+               textFieldObject.borderStyle = UITextBorderStyleRoundedRect;
+               textFieldObject.layer.masksToBounds=YES;
+               textFieldObject.layer.borderColor=[[UIColor lightGrayColor]CGColor];
+               textFieldObject.layer.cornerRadius=5.0f;
+               textFieldObject.layer.borderWidth= 1.0f;
+               break;
+           }
+               
+           }
+       }
+        
     
     
     if (isiPhoneXSMAX) {
@@ -162,7 +197,7 @@ int CHECKBOX_TAG_OFFSET = 9000;
    // backButton.tintColor =[UIColor colorWithRed:119.0/255 green:119.0/255 blue:119.0/255 alpha:1.0];
      backButton.tintColor =[UIColor whiteColor];
     
-    UIImageView *polycabLogo = [[UIImageView alloc] initWithImage:[UIImage  imageNamed:@"polycab_logo"]];
+    UIImageView *polycabLogo = [[UIImageView alloc] initWithImage:[UIImage  imageNamed:@"lixil_logo_white_home"]];
     self.navigationItem.titleView.contentMode = UIViewContentModeCenter;
     self.navigationItem.titleView = polycabLogo;
     [self.navigationItem setLeftBarButtonItem:backButton];
@@ -380,8 +415,8 @@ int CHECKBOX_TAG_OFFSET = 9000;
         
         
         
-        label1.text                              = appendString;
-        label1.textColor                         = [UIColor blackColor];
+        label1.attributedText                              = [self getAttributedString:appendString];
+//        label1.textColor                         = [UIColor blackColor];
         label1.numberOfLines = 0;
         label1.font = [UIFont systemFontOfSize:12];
         label1.backgroundColor = [UIColor clearColor];
@@ -405,14 +440,21 @@ int CHECKBOX_TAG_OFFSET = 9000;
   //  }
     
     if(multiSelect==YES) {
-        DVCheckbox* checkBox = [[DVCheckbox alloc] initWithFrame:CGRectMake(5, label1.frame.size.height/5, 40, 40) check:NO enable:YES];
+        BOOL checkState = NO;
+         if ([[checkBoxState valueForKey:[row objectAtIndex:0]] isEqualToString:@"true"])
+         {
+             checkState = YES;
+        }
+        
+        DVCheckbox* checkBox = [[DVCheckbox alloc] initWithFrame:CGRectMake(5, label1.frame.size.height/5, 40, 40) check:checkState enable:YES];
+        checkBox.elementId  = searchData[indexPath.row][0];
         checkBox.checkboxDelegate = self;
         [cell addSubview:checkBox];
         width = (screenWidth-50)/[row count];
         
         checkBox.tag = CHECKBOX_TAG_OFFSET + indexPath.row;
         
-        if ([[checkBoxState valueForKey:[row objectAtIndex:2]] isEqualToString:@"true"]) {
+        if ([[checkBoxState valueForKey:[row objectAtIndex:0]] isEqualToString:@"true"]) {
             [checkBox.imageHolder setImage:[UIImage imageNamed:@"checkedbox"]];
         }
         
@@ -428,7 +470,33 @@ int CHECKBOX_TAG_OFFSET = 9000;
     return cell;
     
 }
-
+-(NSMutableAttributedString*) getAttributedString :(NSString*) cellText
+{
+    UIColor *searchTextColor = [UIColor colorWithRed:220.0/255.0 green:86.0/255.0 blue:35.0/255.0 alpha:1.0];
+    
+    NSMutableAttributedString *mutableString = nil;
+    NSString *sampleText = @"";
+    if (cellText !=nil) {
+        sampleText = cellText;
+    }
+    
+    mutableString = [[NSMutableAttributedString alloc] initWithString:sampleText];
+    NSString *pattern = @"";
+    if (searchBar.text != nil) {
+        pattern = searchBar.text;
+    }
+    //        NSString *pattern = self.reportVC.searchBar.text;
+    NSRegularExpression *expression = [NSRegularExpression regularExpressionWithPattern:pattern options:1 error:nil];
+    
+    NSRange range = NSMakeRange(0,[sampleText length]);
+    [expression enumerateMatchesInString:sampleText options:1 range:range usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
+        NSRange californiaRange = [result rangeAtIndex:0] ;
+        [mutableString addAttribute:NSForegroundColorAttributeName value:searchTextColor range:californiaRange];
+    }];
+    
+    return mutableString;
+    
+}
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
@@ -440,7 +508,13 @@ int CHECKBOX_TAG_OFFSET = 9000;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return cellHeight;
+    if (cellHeight >= 50.0f) {
+        return cellHeight;
+    }
+    else
+    {
+        return 50.0f;
+    }
     
 }
 
@@ -504,12 +578,17 @@ int CHECKBOX_TAG_OFFSET = 9000;
         @try {
             if (isFilterd) {
                 
-                [checkBoxState setValue:@"true" forKey:[[filteredArray objectAtIndex:rowIdx] objectAtIndex:2]];
-                [selectedRows setObject:[filteredArray objectAtIndex:rowIdx] forKey:[NSString stringWithFormat:@"%d", rowIdx]];
+                [checkBoxState setValue:@"true" forKey:[[filteredArray objectAtIndex:rowIdx] objectAtIndex:0]];
+                
+                
+                 [selectedRows setObject:[filteredArray objectAtIndex:rowIdx] forKey:[NSString stringWithFormat:@"%@", [[filteredArray objectAtIndex:rowIdx] objectAtIndex:0]]];
+//                [selectedRows setObject:[filteredArray objectAtIndex:rowIdx] forKey:[NSString stringWithFormat:@"%d", rowIdx]];
             }
             else{
-                [checkBoxState setValue:@"true" forKey:[[searchData objectAtIndex:rowIdx] objectAtIndex:2]];
-                [selectedRows setObject:[searchData objectAtIndex:rowIdx] forKey:[NSString stringWithFormat:@"%d", rowIdx]];
+                [checkBoxState setValue:@"true" forKey:[[searchData objectAtIndex:rowIdx] objectAtIndex:0]];
+                [selectedRows setObject:[searchData objectAtIndex:rowIdx] forKey:[NSString stringWithFormat:@"%@", [[searchData objectAtIndex:rowIdx] objectAtIndex:0]]];
+                
+//                [selectedRows setObject:[searchData objectAtIndex:rowIdx] forKey:[NSString stringWithFormat:@"%d", rowIdx]];
             }
             
             
@@ -529,6 +608,8 @@ int CHECKBOX_TAG_OFFSET = 9000;
 
 -(void) hasUnchecked:(DVCheckbox*) sender
 {
+    DVCheckbox *checkBox = (DVCheckbox *) sender;
+    
     int rowIdx = sender.tag - CHECKBOX_TAG_OFFSET;
     if(rowIdx>=0 && selectedRows!=nil) {
         @try {
@@ -541,8 +622,14 @@ int CHECKBOX_TAG_OFFSET = 9000;
             //
             //                [selectedRows setObject:[searchData objectAtIndex:rowIdx] forKey:[NSString stringWithFormat:@"%d", rowIdx]];
             //            }
-            [checkBoxState setValue:@"false" forKey:[[selectedRows valueForKey:[NSString stringWithFormat:@"%d", rowIdx]] objectAtIndex:2]];
-            [selectedRows removeObjectForKey:[NSString stringWithFormat:@"%d", rowIdx]];
+            
+            
+//            [checkBoxState setValue:@"false" forKey:[[selectedRows valueForKey:[NSString stringWithFormat:@"%d", rowIdx]] objectAtIndex:0]];
+//            [selectedRows removeObjectForKey:[NSString stringWithFormat:@"%d", rowIdx]];
+            
+           
+            [checkBoxState setValue:@"false" forKey:checkBox.elementId];
+            [selectedRows removeObjectForKey:checkBox.elementId];
             
         }
         @catch (NSException *exception) {

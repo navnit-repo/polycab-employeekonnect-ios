@@ -36,6 +36,9 @@
                                                                   action:@selector(doneClicked:)];
     [keyboardDoneButtonView setItems:[NSArray arrayWithObjects:doneButton, nil]];
     valueTxtFld.inputAccessoryView = keyboardDoneButtonView;
+    [valueTxtFld addTarget:self
+                 action:@selector(textFieldDidChange:)
+       forControlEvents:UIControlEventEditingChanged];
     
     
 }
@@ -97,7 +100,6 @@
         NSLog(@"NO Display Field Found");
     }
 }
-
 -(void)setHeightAllField :(UILabel *)lbl :(NSString *)lblText
 {
     CGSize maximumLabelSize = CGSizeMake(lbl.frame.size.width, FLT_MAX);
@@ -150,5 +152,9 @@
     [self.delegate textFieldValue:textField :self.cancelButton.tag];
     return  [textField resignFirstResponder];
     
+}
+- (void)textFieldDidChange:(UITextField *)textField {
+    NSLog(@"text changed: %@", textField.text);
+    [self.delegate textFieldValue:textField :self.cancelButton.tag];
 }
 @end

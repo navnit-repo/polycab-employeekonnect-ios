@@ -24,11 +24,12 @@
     NSString* context;
       UIImageView* imageHolder;
     id<DVCheckboxDelegate> checkboxDelegate;
+    NSString *elementId;
 }
 @property    UIImageView* imageHolder;
 @property NSString* context;
 @property id<DVCheckboxDelegate> checkboxDelegate;
-
+@property NSString *elementId;
 - (id)initWithFrame:(CGRect)frame check:(BOOL) checkFlag enable:(BOOL) enableFlag;
 -(void) configureCheckBoxCheck:(BOOL) checkFlag enable:(BOOL) enableFlag;
 

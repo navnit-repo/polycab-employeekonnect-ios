@@ -229,6 +229,7 @@
 }
 - (void) placeOrderButtonHandler
 {
+    BOOL zeroQuantityFlag = true;
     loadingView= [LoadingView loadingViewInView:self.view];
     NSString *authToken= [[NSUserDefaults standardUserDefaults] valueForKey:@"AUTH_TOKEN"];
     NSMutableDictionary *data = [[NSMutableDictionary alloc]init];
@@ -245,43 +246,42 @@
         MXTextField *textField = (MXTextField*) vc.valueTxtFld;
         
         checkTextFiledEmpty = textField.text;
-        //        BOOL valid;
-        //        NSCharacterSet *alphaNums = [NSCharacterSet decimalDigitCharacterSet];
-        //        NSCharacterSet *inStringSet = [NSCharacterSet characterSetWithCharactersInString:myInputField.text];
-        //        valid = [alphaNums isSupersetOfSet:inStringSet];
-        //        if (!valid)
-        //        {
-        //
-        //        }
+        
         
         if (checkTextFiledEmpty.length !=0) {
-            
-            //        BOOL valid;
-            //        NSCharacterSet *alphaNums = [NSCharacterSet decimalDigitCharacterSet];
-            //        NSCharacterSet *inStringSet = [NSCharacterSet characterSetWithCharactersInString:myInputField.text];
-            //        valid = [alphaNums isSupersetOfSet:inStringSet];
-            //        if (!valid)
-            //        {
-            //
-            //        }
-            
-            
             NSLog(@"Qnty:%@",checkTextFiledEmpty);
-            long int tag = vc.tag-2000;
-            NSLog(@"Cell Tag: %ld",tag);
-            NSUInteger lenght =[[alreadyAddDisplayCellData objectAtIndex:tag] count];
+            // Tushar, Zero Quantity value check
             
-            [removeTag addObject:[NSString stringWithFormat:@"%ld",tag] ];
+            if ([checkTextFiledEmpty isEqualToString:@"0"]) {
+                long int tag = vc.tag-2000;
+                NSLog(@"Cell Tag: %ld",tag);
+                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:[[alreadyAddDisplayCellData objectAtIndex:tag] objectAtIndex:0] message:@"Please enter quantity greater than zero." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                       [loadingView removeView];
+                       [alert show];
+                zeroQuantityFlag = false;
+                break;
+            }
             
-            NSMutableDictionary *line_items = [[NSMutableDictionary alloc]init];
-            [line_items setObject:[[alreadyAddDisplayCellData objectAtIndex:tag] objectAtIndex:2] forKey:@"INVENTORY_ITEM_ID"];
-            [line_items setObject:[[alreadyAddDisplayCellData objectAtIndex:tag] objectAtIndex:0] forKey:@"ITEM_CODE"];
-            [line_items setObject:[[alreadyAddDisplayCellData objectAtIndex:tag] objectAtIndex:1] forKey:@"ITEM_DESC"];
-            [line_items setObject:[[alreadyAddDisplayCellData objectAtIndex:tag] objectAtIndex:3] forKey:@"UOM"];
-            [line_items setObject:[[alreadyAddDisplayCellData objectAtIndex:tag] objectAtIndex:lenght-2] forKey:@"UOMDESC"];
+            else
+            {
+                long int tag = vc.tag-2000;
+                NSLog(@"Cell Tag: %ld",tag);
+                NSUInteger lenght =[[alreadyAddDisplayCellData objectAtIndex:tag] count];
+                
+                [removeTag addObject:[NSString stringWithFormat:@"%ld",tag] ];
+                
+                NSMutableDictionary *line_items = [[NSMutableDictionary alloc]init];
+                [line_items setObject:[[alreadyAddDisplayCellData objectAtIndex:tag] objectAtIndex:2] forKey:@"INVENTORY_ITEM_ID"];
+                [line_items setObject:[[alreadyAddDisplayCellData objectAtIndex:tag] objectAtIndex:0] forKey:@"ITEM_CODE"];
+                [line_items setObject:[[alreadyAddDisplayCellData objectAtIndex:tag] objectAtIndex:1] forKey:@"ITEM_DESC"];
+                [line_items setObject:[[alreadyAddDisplayCellData objectAtIndex:tag] objectAtIndex:3] forKey:@"UOM"];
+                [line_items setObject:[[alreadyAddDisplayCellData objectAtIndex:tag] objectAtIndex:lenght-2] forKey:@"UOMDESC"];
+                
+                [line_items setObject:checkTextFiledEmpty forKey:@"QTY"];
+                [array addObject:line_items];
+            }
             
-            [line_items setObject:checkTextFiledEmpty forKey:@"QTY"];
-            [array addObject:line_items];
+
             
         }
         
@@ -316,9 +316,17 @@
     }
     
     else{
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"" message:@"Please fill qnty to place order " delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [loadingView removeView];
-        [alert show];
+        
+        if (zeroQuantityFlag) {
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"" message:@"Please enter atleast one item quantity to place the order. s " delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [loadingView removeView];
+            [alert show];
+        }
+        else
+        {
+            // do nothing, show zero validation alert
+        }
+        
         
     }
     
@@ -545,7 +553,9 @@
     NSCharacterSet *numbersSet = [NSCharacterSet characterSetWithCharactersInString:@"-0123456789"];
     name = [verticalName stringByTrimmingCharactersInSet:numbersSet];
     NSLog(@"%@",name);
-    [ displayCell configure:[alreadyAddDisplayCellData objectAtIndex:arrayObjectTag] :cancelButtonTag :name :[cellIndexQntyValueDict valueForKey:[NSString stringWithFormat:@"%ld",indexPath.row]]];
+    NSArray * array = [alreadyAddDisplayCellData objectAtIndex:indexPath.row];
+       NSString *quantity = [cellIndexQntyValueDict valueForKey: [NSString stringWithFormat:@"%@",[array objectAtIndex:0]]];
+    [ displayCell configure:[alreadyAddDisplayCellData objectAtIndex:arrayObjectTag] :cancelButtonTag :name :quantity];
     //   [displayCell configure:[alreadyAddDisplayCellData objectAtIndex:arrayObjectTag] :cancelButtonTag :name];
     //[displayCell configure:[alreadyAddDisplayCellData objectAtIndex:arrayObjectTag] :cancelButtonTag];
     long int cellTag = indexPath.row +2000;
@@ -641,7 +651,7 @@
     
     
 }
-
+/*
 - (void)buttonDelegate:(long)tag{
     [alreadyAddDisplayCellData removeObjectAtIndex:tag];
     
@@ -650,6 +660,33 @@
     
     NSLog(@"%@",alreadyAddDisplayCellData);
     [[NSUserDefaults standardUserDefaults] setObject:alreadyAddDisplayCellData forKey:self.itemName.text];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    [mainTableView reloadData];
+}
+ */
+
+- (void)buttonDelegate:(long)tag{
+    
+    NSArray * array = [alreadyAddDisplayCellData objectAtIndex:tag];
+    
+//    [cellIndexQntyValueDict removeObjectForKey:[NSString stringWithFormat:@"%ld",tag]];
+    [cellIndexQntyValueDict removeObjectForKey:[array objectAtIndex:0]];
+    [alreadyAddDisplayCellData removeObjectAtIndex:tag];
+    
+    NSLog(@"%@",alreadyAddDisplayCellData);
+    
+    NSMutableArray * tempArray = [[NSMutableArray alloc] init];
+    
+    for (int i=0; i<alreadyAddDisplayCellData.count;i++) {
+              [tempArray addObject:[self dictionaryByReplacingNullsWithStrings:[alreadyAddDisplayCellData objectAtIndex:i]]];
+          }
+    alreadyAddDisplayCellData = [[NSMutableArray alloc ] init];
+    [alreadyAddDisplayCellData addObjectsFromArray:tempArray];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:alreadyAddDisplayCellData forKey:self.itemName.text];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:cellIndexQntyValueDict forKey:@"CELL_QUANTITY_VALUES_DICT"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     [mainTableView reloadData];
 }
@@ -711,7 +748,13 @@
 }
 - (void)textFieldValue:(UITextField *)textfield :(long)cellIndex
 {
-    [ cellIndexQntyValueDict setValue:textfield.text forKey:[NSString stringWithFormat:@"%ld",cellIndex]];
+    NSArray * array = [alreadyAddDisplayCellData objectAtIndex:cellIndex];
+   
+//    [ cellIndexQntyValueDict setValue:textfield.text forKey:[NSString stringWithFormat:@"%ld",cellIndex]];
+      [ cellIndexQntyValueDict setValue:textfield.text forKey:[array objectAtIndex:0]];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:cellIndexQntyValueDict forKey:@"CELL_QUANTITY_VALUES_DICT"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 

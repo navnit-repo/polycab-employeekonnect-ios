@@ -22,6 +22,7 @@
 @synthesize context;
 @synthesize checkboxDelegate;
 @synthesize imageHolder;
+@synthesize elementId;
 - (id)initWithFrame:(CGRect)frame check:(BOOL) checkFlag enable:(BOOL) enableFlag
 {
     self = [super initWithFrame:frame];
