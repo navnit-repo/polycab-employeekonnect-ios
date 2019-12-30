@@ -73,6 +73,7 @@
     recordTableData = self.reportPostResponse.tableData;
     orignalReportTableData = [[NSMutableArray alloc]init];
     orignalReportTableData = self.reportPostResponse.tableData;
+    self.reportVC.searchBar.userInteractionEnabled = YES;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
@@ -128,7 +129,25 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [recordTableData count];
+    if(recordTableData.count>0) {
+        self.reportVC.reportTableView.backgroundView = nil;
+        return [recordTableData count];
+    }
+    else
+    {
+        CGRect screen = [UIScreen mainScreen].bounds;
+        UILabel *noDataLabel         = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, screen.size.width, screen.size.height)];
+        noDataLabel.tag = 700;
+        noDataLabel.text             = @"No data available.";
+        noDataLabel.textColor        = [UIColor blackColor];
+        noDataLabel.textAlignment    = NSTextAlignmentCenter;
+        self.reportVC.reportTableView.backgroundView  = noDataLabel;
+        self.reportVC.reportTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        return [recordTableData count];
+    }
+    
+    
+//    return [recordTableData count];
 }
 
 
@@ -153,8 +172,8 @@
     //for (int cntTableColumn = 0; cntTableColumn < lengthKeys.count(); cntTableColumn++)
     for(int cntTableColumn = 0; cntTableColumn < [lengthKeys count]; cntTableColumn++)
     {
-		NSString* tempLen = [columnLengthMap objectForKey:[lengthKeys objectAtIndex:cntTableColumn]];//columnLengthMap->value(lengthKeys.at(cntTableColumn));
-		totalPerc = totalPerc + [tempLen intValue];// tempLen.toInt();
+        NSString* tempLen = [columnLengthMap objectForKey:[lengthKeys objectAtIndex:cntTableColumn]];//columnLengthMap->value(lengthKeys.at(cntTableColumn));
+        totalPerc = totalPerc + [tempLen intValue];// tempLen.toInt();
     }
     //end
     
@@ -175,7 +194,7 @@
         // NSLog(@"column Width = tempLen");
         int normalized = 100/[headerElementId count];//(headerElementId->count());
         if(totalPerc!=0) {
-        	normalized = [tempLen intValue]*100/totalPerc;//tempLen.toInt()*100/totalPerc;
+            normalized = [tempLen intValue]*100/totalPerc;//tempLen.toInt()*100/totalPerc;
            // NSLog(@"normalized value = @%d",normalized);
         }
         
@@ -311,9 +330,9 @@
     //for (int cntTableColumn = 0; cntTableColumn < lengthKeys.count(); cntTableColumn++)
     for(int cntTableColumn = 0; cntTableColumn < [lengthKeys count]; cntTableColumn++)
     {
-		NSString* tempLen = [columnLengthMap objectForKey:[lengthKeys objectAtIndex:cntTableColumn]];
+        NSString* tempLen = [columnLengthMap objectForKey:[lengthKeys objectAtIndex:cntTableColumn]];
         //columnLengthMap->value(lengthKeys.at(cntTableColumn));
-		totalPerc = totalPerc + [tempLen intValue];// tempLen.toInt();
+        totalPerc = totalPerc + [tempLen intValue];// tempLen.toInt();
     }
     //end
     bool heightComputeFlag = false;
@@ -497,9 +516,9 @@
     //for (int cntTableColumn = 0; cntTableColumn < lengthKeys.count(); cntTableColumn++)
     for(int cntTableColumn = 0; cntTableColumn < [lengthKeys count]; cntTableColumn++)
     {
-		NSString* tempLen = [columnLengthMap objectForKey:[lengthKeys objectAtIndex:cntTableColumn]];
+        NSString* tempLen = [columnLengthMap objectForKey:[lengthKeys objectAtIndex:cntTableColumn]];
         //columnLengthMap->value(lengthKeys.at(cntTableColumn));
-		totalPerc = totalPerc + [tempLen intValue];// tempLen.toInt();
+        totalPerc = totalPerc + [tempLen intValue];// tempLen.toInt();
     }
     //end
     
@@ -550,6 +569,17 @@
             {
                 allCheckStr = @"";
             }
+            for (int k=0; k<row.count; k++) {
+                NSString *str = [row objectAtIndex:k];
+                if ([str isEqualToString:@"Rejected"] && ![[elementType objectAtIndex:k] isEqualToString:@"HIDDEN"] ) {
+                                 [mItemLabel setTextColor:[UIColor redColor]];
+                            }
+                            else
+                            {
+                //                [mItemLabel setTextColor:[UIColor redColor]];
+                            }
+            }
+            
             if ([allCheckStr isEqualToString:@"All"] || allFlagCheck) {
                 [mItemLabel setBackgroundColor:[UIColor colorWithRed:204.0/255 green:41.0/255 blue:43.0/255 alpha:1.0f]];
                 [mItemLabel setTextColor:[UIColor whiteColor]];
@@ -882,6 +912,7 @@
             
             ClientVariable* clientVariable = [ClientVariable getInstance];
             ReportVC *reportVC = [clientVariable reportVCForId:dotFormPost.adapterId];
+            reportVC.requestFormPost = dotFormPost;
             
             // ReportVC *reportVC = [[ReportVC alloc] initWithNibName:@"ReportVC" bundle:nil];
             reportVC.screenId = AppConst_SCREEN_ID_REPORT;

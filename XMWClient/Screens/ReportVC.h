@@ -82,7 +82,7 @@
 -(void) initializeHeaderData;
 
 -(void) initializeTableData;
-
+-(void)configureSearchBar;
 -(IBAction) buttonPressed:(id) sender;
 
 @property  NSMutableArray* downloadHistoryMenuList;

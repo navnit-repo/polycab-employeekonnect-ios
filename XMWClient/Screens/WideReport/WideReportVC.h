@@ -14,10 +14,18 @@
 #import "LoadingView.h"
 #import "ReportTabularDataSection.h"
 #import "ReportVC.h"
-
+#define kTotalSections 6
+#define kReportSectionHeader 0
+#define kReportSectionSubHeader 1
+#define kReportSectionLegend 2
+#define kReportSectionTable 3
+#define kReportSectionFooter 4
 
 @interface WideReportVC : ReportVC
-
+{
+    int sectionFlag[kTotalSections];
+     UIScrollView* hScrollView;
+}
 
 
 @end
