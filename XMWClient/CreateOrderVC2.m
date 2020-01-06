@@ -78,6 +78,7 @@
     mainTableView.dataSource = self;
     mainTableView.bounces = NO;
     mainTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    mainTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     [self.view addSubview:mainTableView];
     
     
@@ -163,6 +164,7 @@
     }
     else if (section==2)
     {
+        mainTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         //add place order Button
         return 1;
     }
@@ -198,6 +200,9 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
+    if (section == 0) {
+        return 0;
+    }
     return 5.0f;
 }
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
@@ -229,6 +234,7 @@
 }
 - (void) placeOrderButtonHandler
 {
+    ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
     BOOL zeroQuantityFlag = true;
     loadingView= [LoadingView loadingViewInView:self.view];
     NSString *authToken= [[NSUserDefaults standardUserDefaults] valueForKey:@"AUTH_TOKEN"];
@@ -264,6 +270,7 @@
             
             else
             {
+                zeroQuantityFlag = true;
                 long int tag = vc.tag-2000;
                 NSLog(@"Cell Tag: %ld",tag);
                 NSUInteger lenght =[[alreadyAddDisplayCellData objectAtIndex:tag] count];
@@ -286,6 +293,8 @@
         }
         
     }
+    
+    if (zeroQuantityFlag) {
     [data setObject:array forKey:@"pc_so_line_items"];
     if ([array count] != 0) {
         
@@ -304,7 +313,7 @@
         
         NSMutableDictionary *sendDict = [[NSMutableDictionary alloc]init];
         [sendDict setObject:data forKey:@"data"];
-        [sendDict setObject:authToken forKey:@"authToken"];
+        [sendDict setObject:clientVariables.CLIENT_LOGIN_RESPONSE.authToken forKey:@"authToken"];
         [sendDict setValue:@"createSalesOrder" forKey:@"opcode"];
         
         
@@ -314,21 +323,23 @@
         networkHelper.serviceURLString = url;
         [networkHelper genericJSONPayloadRequestWith:sendDict :self :@"createSalesOrder"];
     }
-    
+        
     else{
-        
-        if (zeroQuantityFlag) {
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"" message:@"Please enter atleast one item quantity to place the order." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-            [loadingView removeView];
-            [alert show];
+            
+            if (zeroQuantityFlag) {
+                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"" message:@"Please enter atleast one item quantity to place the order." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                [loadingView removeView];
+                [alert show];
+            }
+            else
+            {
+                // do nothing, show zero validation alert
+            }
+            
+            
         }
-        else
-        {
-            // do nothing, show zero validation alert
-        }
-        
-        
-    }
+}
+    
     
 }
 
