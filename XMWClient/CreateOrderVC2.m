@@ -257,17 +257,16 @@
         if (checkTextFiledEmpty.length !=0) {
             NSLog(@"Qnty:%@",checkTextFiledEmpty);
             // Tushar, Zero Quantity value check
-            
-            if ([checkTextFiledEmpty isEqualToString:@"0"]) {
+            NSInteger value = [checkTextFiledEmpty integerValue];
+            if (value <= 0) {
                 long int tag = vc.tag-2000;
                 NSLog(@"Cell Tag: %ld",tag);
                 UIAlertView *alert = [[UIAlertView alloc]initWithTitle:[[alreadyAddDisplayCellData objectAtIndex:tag] objectAtIndex:0] message:@"Please enter quantity greater than zero." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                       [loadingView removeView];
-                       [alert show];
+                [loadingView removeView];
+                [alert show];
                 zeroQuantityFlag = false;
                 break;
             }
-            
             else
             {
                 zeroQuantityFlag = true;
@@ -321,7 +320,7 @@
         
         NSString *url = XmwcsConst_OPCODE_URL;
         networkHelper.serviceURLString = url;
-        [networkHelper genericJSONPayloadRequestWith:sendDict :self :@"createSalesOrder"];
+//        [networkHelper genericJSONPayloadRequestWith:sendDict :self :@"createSalesOrder"];
     }
         
     else{

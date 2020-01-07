@@ -923,7 +923,7 @@ NSString *chatPersonUserID;
     [clientVariables registerReportVCClass:@"WideReportVC" forId:@"DOT_REPORT_EMPLOYEE_PORTAL_ORDERS"];
     
     // for WideReportVC drilldown
-    [clientVariables registerReportVCClass:@"WideReportVC" forId:@"DOT_REPORT_EMPLOYEE_PORTAL_ORDERS_DD"];
+    [clientVariables registerReportVCClass:@"WideReportVC" forId:@"DOT_REPORT_EMPLOYEE_PORTAL_ORDERS_DD_MOBILE"];
     
     // for WideReportVC
     [clientVariables registerReportVCClass:@"WideReportVC" forId:@"BU_HEAD_SALES_ORDER_PENDENCY"];
