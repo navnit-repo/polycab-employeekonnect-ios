@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>XMWClient.ipa</key>
+	<array>
+		<dict>
+			<key>architectures</key>
+			<array>
+				<string>armv7</string>
+				<string>arm64</string>
+			</array>
+			<key>certificate</key>
+			<dict>
+				<key>SHA1</key>
+				<string>47462C6F7784D5C2AAF44BF6C0CBE41A758024EF</string>
+				<key>dateExpires</key>
+				<string>21/07/20</string>
+				<key>type</key>
+				<string>Apple Development</string>
+			</dict>
+			<key>embeddedBinaries</key>
+			<array>
+				<dict>
+					<key>architectures</key>
+					<array>
+						<string>armv7</string>
+						<string>arm64</string>
+					</array>
+					<key>certificate</key>
+					<dict>
+						<key>SHA1</key>
+						<string>47462C6F7784D5C2AAF44BF6C0CBE41A758024EF</string>
+						<key>dateExpires</key>
+						<string>21/07/20</string>
+						<key>type</key>
+						<string>Apple Development</string>
+					</dict>
+					<key>name</key>
+					<string>ZXingObjC.framework</string>
+					<key>team</key>
+					<dict>
+						<key>id</key>
+						<string>QS92QH4FZ2</string>
+						<key>name</key>
+						<string>Polycab India Limited (Enterprise)</string>
+					</dict>
+				</dict>
+				<dict>
+					<key>architectures</key>
+					<array>
+						<string>armv7</string>
+						<string>arm64</string>
+					</array>
+					<key>certificate</key>
+					<dict>
+						<key>SHA1</key>
+						<string>47462C6F7784D5C2AAF44BF6C0CBE41A758024EF</string>
+						<key>dateExpires</key>
+						<string>21/07/20</string>
+						<key>type</key>
+						<string>Apple Development</string>
+					</dict>
+					<key>entitlements</key>
+					<dict>
+						<key>application-identifier</key>
+						<string>QS92QH4FZ2.com.polycab.xmw.employee.ent.exten</string>
+						<key>aps-environment</key>
+						<string>development</string>
+						<key>com.apple.developer.team-identifier</key>
+						<string>QS92QH4FZ2</string>
+						<key>com.apple.security.application-groups</key>
+						<array>
+							<string>group.com.polycab.xmw.employee.ent</string>
+						</array>
+						<key>get-task-allow</key>
+						<true/>
+						<key>keychain-access-groups</key>
+						<array>
+							<string>QS92QH4FZ2.com.polycab.xmw.employee.ent</string>
+						</array>
+					</dict>
+					<key>name</key>
+					<string>PushNotificationExtension.appex</string>
+					<key>profile</key>
+					<dict>
+						<key>UUID</key>
+						<string>97dc8e11-0018-4a1c-9eae-c6fd283f0fb6</string>
+						<key>name</key>
+						<string>Polycab Employee Exten Development</string>
+					</dict>
+					<key>team</key>
+					<dict>
+						<key>id</key>
+						<string>QS92QH4FZ2</string>
+						<key>name</key>
+						<string>Polycab India Limited (Enterprise)</string>
+					</dict>
+				</dict>
+			</array>
+			<key>entitlements</key>
+			<dict>
+				<key>application-identifier</key>
+				<string>QS92QH4FZ2.com.polycab.xmw.employee.ent</string>
+				<key>aps-environment</key>
+				<string>development</string>
+				<key>com.apple.developer.team-identifier</key>
+				<string>QS92QH4FZ2</string>
+				<key>com.apple.security.application-groups</key>
+				<array>
+					<string>group.com.polycab.xmw.employee.ent</string>
+				</array>
+				<key>get-task-allow</key>
+				<true/>
+				<key>keychain-access-groups</key>
+				<array>
+					<string>QS92QH4FZ2.com.polycab.xmw.employee.ent</string>
+				</array>
+			</dict>
+			<key>name</key>
+			<string>XMWClient.app</string>
+			<key>profile</key>
+			<dict>
+				<key>UUID</key>
+				<string>1673e3cd-bf66-40b3-a1cc-2e075104bebc</string>
+				<key>name</key>
+				<string>Polycab Employee Devlopment</string>
+			</dict>
+			<key>team</key>
+			<dict>
+				<key>id</key>
+				<string>QS92QH4FZ2</string>
+				<key>name</key>
+				<string>Polycab India Limited (Enterprise)</string>
+			</dict>
+		</dict>
+	</array>
+</dict>
+</plist>

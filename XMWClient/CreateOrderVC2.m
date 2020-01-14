@@ -320,7 +320,7 @@
         
         NSString *url = XmwcsConst_OPCODE_URL;
         networkHelper.serviceURLString = url;
-//        [networkHelper genericJSONPayloadRequestWith:sendDict :self :@"createSalesOrder"];
+        [networkHelper genericJSONPayloadRequestWith:sendDict :self :@"createSalesOrder"];
     }
         
     else{
