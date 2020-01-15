@@ -5818,7 +5818,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 5904;
+				CURRENT_PROJECT_VERSION = 5905;
 				DEVELOPMENT_TEAM = QS92QH4FZ2;
 				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = YES;
 				ENABLE_BITCODE = NO;
@@ -5839,7 +5839,7 @@
 					"$(PROJECT_DIR)/RLMFramework/Alamofire.framework",
 					"$(PROJECT_DIR)/RLMFramework/SwiftyJSON.framework",
 				);
-				MARKETING_VERSION = 7.5;
+				MARKETING_VERSION = 7.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.polycab.xmw.employee.ent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -5860,7 +5860,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 5904;
+				CURRENT_PROJECT_VERSION = 5905;
 				DEVELOPMENT_TEAM = QS92QH4FZ2;
 				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = YES;
 				ENABLE_BITCODE = NO;
@@ -5881,7 +5881,7 @@
 					"$(PROJECT_DIR)/RLMFramework/SwiftyJSON.framework",
 					"$(PROJECT_DIR)/RLMFramework/Alamofire.framework",
 				);
-				MARKETING_VERSION = 7.5;
+				MARKETING_VERSION = 7.6;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PRODUCT_BUNDLE_IDENTIFIER = com.polycab.xmw.employee.ent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -6009,7 +6009,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 5904;
+				CURRENT_PROJECT_VERSION = 5905;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = QS92QH4FZ2;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -6018,7 +6018,7 @@
 				INFOPLIST_FILE = PushNotificationExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				MARKETING_VERSION = 7.5;
+				MARKETING_VERSION = 7.6;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.polycab.xmw.employee.ent.exten;
@@ -6050,7 +6050,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 5904;
+				CURRENT_PROJECT_VERSION = 5905;
 				DEVELOPMENT_TEAM = QS92QH4FZ2;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -6059,7 +6059,7 @@
 				INFOPLIST_FILE = PushNotificationExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				MARKETING_VERSION = 7.5;
+				MARKETING_VERSION = 7.6;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.polycab.xmw.employee.ent.exten;

@@ -254,7 +254,7 @@
         checkTextFiledEmpty = textField.text;
         
         
-        if (checkTextFiledEmpty.length !=0) {
+        if (checkTextFiledEmpty.length !=0 || [checkTextFiledEmpty isEqualToString:@""]) {
             NSLog(@"Qnty:%@",checkTextFiledEmpty);
             // Tushar, Zero Quantity value check
             NSInteger value = [checkTextFiledEmpty integerValue];
