@@ -26,6 +26,7 @@
 #import "FormVC.h"
 
 #import "SuggestiveSearchFieldControl.h"
+#import "MultipleFileAttachmentView.h"
 
 @implementation UIView (DVTFVDelegate)
 
@@ -351,7 +352,10 @@ int uiViewStartIdx = 1001;
     }
     else if([componentType isEqualToString:XmwcsConst_DE_COMPONENT_ATTACHMENT_BUTTON]) {
         tagFormIdx = tagFormIdx + 1;
-        return [self drawAttachmentView:formController :formElement];
+//        return [self drawAttachmentView:formController :formElement];
+        
+        //draw Single AttachmentView
+         return [self drawMultipleFileAttachmentView:formController :formElement];
     }
     
     else if([componentType isEqualToString:XmwcsConst_DE_COMPONENT_SUGGESTIVE_SEARCH_FIELD]) {
@@ -956,6 +960,39 @@ int uiViewStartIdx = 1001;
     [formController putToDataIdMap : multiSelectSearchControl : currentCompName];
     yArguForDrawComp = yArguForDrawComp + formLineHeight;
     return subContainer;
+}
+
+// tushar code
+-(UIView*)drawMultipleFileAttachmentView :(FormVC *) inFormVC :(DotFormElement*) dotFormElement
+{
+    UIView *subContainer = [[UIView alloc]initWithFrame:CGRectMake(0, yArguForDrawComp, screenWidth, 200)];
+    NSString *currentCompName = dotFormElement.elementId;
+    MultipleFileAttachmentView *attachmentView;
+    if (attachmentView == nil) {
+//        attachmentView = [[MultipleFileAttachmentView alloc ] initWithFrame:CGRectMake(0, 0, screenWidth, 200)];
+        attachmentView = [[MultipleFileAttachmentView alloc ] initWithFrame:CGRectMake(0, 0, screenWidth, 200) :inFormVC];
+        attachmentView.formElement = dotFormElement;
+        
+        UIColor *color = [UIColor colorWithRed:204.0/255 green:43.0/255 blue:43.0/255 alpha:1.0];
+        NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:dotFormElement.displayText];
+        [string addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange(0, [string length])];
+        [string addAttribute:NSUnderlineColorAttributeName value:color range:NSMakeRange(0, string.length)];
+        [string addAttribute:NSForegroundColorAttributeName
+                       value:color
+                       range:NSMakeRange(0, [string length])];
+        
+        
+        [attachmentView.addMore setAttributedTitle:string forState:UIControlStateNormal];
+        
+        // for havells
+        attachmentView.addMore.userInteractionEnabled = NO;
+    }
+    
+    [subContainer addSubview:attachmentView];
+    [inFormVC putToDataIdMap : attachmentView : currentCompName];
+    yArguForDrawComp = yArguForDrawComp + 200;
+    return subContainer;
+    
 }
 
 // tushar code 

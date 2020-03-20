@@ -950,6 +950,10 @@ NSString *chatPersonUserID;
     
     // for Create Order
     [clientVariables registerFormVCClass:@"EmployeeCreateOrderVC" forId:@"DOT_FORM_3"];
+    
+    // for SPA Create Order
+    [clientVariables registerFormVCClass:@"EmployeeCreateOrderVC" forId:@"DOT_FORM_4"];
+    
    
   // for BusinessVerticalVC
   [clientVariables registerFormVCClass:@"BusinessVerticalVC" forId:@"DOT_REPORT_5_BUSINESS_VERTICAL_SALES_REPORT"];

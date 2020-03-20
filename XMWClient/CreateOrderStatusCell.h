@@ -10,7 +10,7 @@
 
 
 @interface CreateOrderStatusCell : UIView
-+(CreateOrderStatusCell *) CreateInstance;
++(CreateOrderStatusCell *) CreateInstance :(BOOL) spaFlag;
 -(void)configure:(NSArray *)array :(NSString*)verticalName;
 @property (weak, nonatomic) IBOutlet UILabel *orderedItemLbl;
 @property (weak, nonatomic) IBOutlet UILabel *orderedItemValueLbl;
@@ -34,6 +34,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *prcntDiscntValueLbl;
 @property (weak, nonatomic) IBOutlet UILabel *isCodeLbl;
 @property (weak, nonatomic) IBOutlet UILabel *isCodeValueLbl;
+
+@property (weak, nonatomic) IBOutlet UILabel *spaPriceTextLbl;
+@property (weak, nonatomic) IBOutlet UILabel *spaPriceValueLbl;
 
 @end
 

@@ -11,6 +11,20 @@
 		38A6BFEC1EFD1D3F00537D62 /* ImageUploadFormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38A6BFE91EFD1D3F00537D62 /* ImageUploadFormViewController.m */; };
 		38A6BFED1EFD1D3F00537D62 /* ImageUploadFormViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38A6BFEA1EFD1D3F00537D62 /* ImageUploadFormViewController.xib */; };
 		6AE39772CA05C87C9872A94F /* Pods_XMWClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D69B9DC1A317394B132FD86 /* Pods_XMWClient.framework */; };
+		7875EE0D2424845E0044A491 /* MultipleFileAttachmentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7875EE0B2424845D0044A491 /* MultipleFileAttachmentView.m */; };
+		7875EE0E2424845E0044A491 /* MultipleFileAttachmentView.h in Headers */ = {isa = PBXBuildFile; fileRef = 7875EE0C2424845E0044A491 /* MultipleFileAttachmentView.h */; };
+		7875EE10242488940044A491 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7875EE0F242488940044A491 /* MobileCoreServices.framework */; };
+		7875EE1224248A090044A491 /* lixil_add_grey.png in Resources */ = {isa = PBXBuildFile; fileRef = 7875EE1124248A080044A491 /* lixil_add_grey.png */; };
+		7875EE1424248A1C0044A491 /* lixil_add_grey@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7875EE1324248A1C0044A491 /* lixil_add_grey@2x.png */; };
+		7875EE1624248A280044A491 /* lixil_add_grey@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7875EE1524248A280044A491 /* lixil_add_grey@3x.png */; };
+		7875EE1824248D3D0044A491 /* doc_uploaded.png in Resources */ = {isa = PBXBuildFile; fileRef = 7875EE1724248D3D0044A491 /* doc_uploaded.png */; };
+		7875EE21242491DC0044A491 /* SPACreateOrderViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 7875EE1B242491DC0044A491 /* SPACreateOrderViewController.h */; };
+		7875EE22242491DC0044A491 /* SPACreateOrderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7875EE1C242491DC0044A491 /* SPACreateOrderCell.xib */; };
+		7875EE23242491DC0044A491 /* SPACreateOrderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7875EE1D242491DC0044A491 /* SPACreateOrderCell.m */; };
+		7875EE24242491DC0044A491 /* SPACreateOrderCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 7875EE1E242491DC0044A491 /* SPACreateOrderCell.h */; };
+		7875EE25242491DC0044A491 /* SPACreateOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7875EE1F242491DC0044A491 /* SPACreateOrderViewController.m */; };
+		7875EE26242491DC0044A491 /* SPACreateOrderViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7875EE20242491DC0044A491 /* SPACreateOrderViewController.xib */; };
+		7875EE282424A2280044A491 /* CreateOrderStatusSPACell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7875EE272424A2280044A491 /* CreateOrderStatusSPACell.xib */; };
 		8500DCEB1A78FE10002B534F /* ChartSlider.h in Headers */ = {isa = PBXBuildFile; fileRef = 8500DCE81A78FE10002B534F /* ChartSlider.h */; };
 		8500DCEC1A78FE10002B534F /* ChartSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 8500DCE91A78FE10002B534F /* ChartSlider.m */; };
 		8500DCED1A78FE10002B534F /* ChartSlider.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8500DCEA1A78FE10002B534F /* ChartSlider.xib */; };
@@ -1106,6 +1120,20 @@
 		38CA52811E93B56F00C370F8 /* XMWClient.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = XMWClient.entitlements; sourceTree = "<group>"; };
 		5393CCD56B8B338BFE914E4D /* Pods-XMWClient.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XMWClient.release.xcconfig"; path = "Pods/Target Support Files/Pods-XMWClient/Pods-XMWClient.release.xcconfig"; sourceTree = "<group>"; };
 		75AF25A7A817578B23444BC3 /* Pods-XMWClient.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XMWClient.debug.xcconfig"; path = "Pods/Target Support Files/Pods-XMWClient/Pods-XMWClient.debug.xcconfig"; sourceTree = "<group>"; };
+		7875EE0B2424845D0044A491 /* MultipleFileAttachmentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultipleFileAttachmentView.m; sourceTree = "<group>"; };
+		7875EE0C2424845E0044A491 /* MultipleFileAttachmentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultipleFileAttachmentView.h; sourceTree = "<group>"; };
+		7875EE0F242488940044A491 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS13.2.sdk/System/Library/Frameworks/MobileCoreServices.framework; sourceTree = DEVELOPER_DIR; };
+		7875EE1124248A080044A491 /* lixil_add_grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lixil_add_grey.png; sourceTree = "<group>"; };
+		7875EE1324248A1C0044A491 /* lixil_add_grey@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lixil_add_grey@2x.png"; sourceTree = "<group>"; };
+		7875EE1524248A280044A491 /* lixil_add_grey@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lixil_add_grey@3x.png"; sourceTree = "<group>"; };
+		7875EE1724248D3D0044A491 /* doc_uploaded.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = doc_uploaded.png; sourceTree = "<group>"; };
+		7875EE1B242491DC0044A491 /* SPACreateOrderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPACreateOrderViewController.h; sourceTree = "<group>"; };
+		7875EE1C242491DC0044A491 /* SPACreateOrderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SPACreateOrderCell.xib; sourceTree = "<group>"; };
+		7875EE1D242491DC0044A491 /* SPACreateOrderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPACreateOrderCell.m; sourceTree = "<group>"; };
+		7875EE1E242491DC0044A491 /* SPACreateOrderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPACreateOrderCell.h; sourceTree = "<group>"; };
+		7875EE1F242491DC0044A491 /* SPACreateOrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPACreateOrderViewController.m; sourceTree = "<group>"; };
+		7875EE20242491DC0044A491 /* SPACreateOrderViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SPACreateOrderViewController.xib; sourceTree = "<group>"; };
+		7875EE272424A2280044A491 /* CreateOrderStatusSPACell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateOrderStatusSPACell.xib; sourceTree = "<group>"; };
 		8500DCE81A78FE10002B534F /* ChartSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChartSlider.h; path = Screens/Dashboard/ChartSlider.h; sourceTree = "<group>"; };
 		8500DCE91A78FE10002B534F /* ChartSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChartSlider.m; path = Screens/Dashboard/ChartSlider.m; sourceTree = "<group>"; };
 		8500DCEA1A78FE10002B534F /* ChartSlider.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ChartSlider.xib; path = Screens/Dashboard/ChartSlider.xib; sourceTree = "<group>"; };
@@ -2273,6 +2301,7 @@
 				F075109A1FCD444300586EBC /* AVKit.framework in Frameworks */,
 				F07510981FCD443400586EBC /* AVFoundation.framework in Frameworks */,
 				85D8316A1A9F957A00C9ACBB /* Crashlytics.framework in Frameworks */,
+				7875EE10242488940044A491 /* MobileCoreServices.framework in Frameworks */,
 				90F47F5D1796C24400C6B76C /* SystemConfiguration.framework in Frameworks */,
 				6AE39772CA05C87C9872A94F /* Pods_XMWClient.framework in Frameworks */,
 			);
@@ -2288,6 +2317,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7875EE1A242491DC0044A491 /* SPACreateOrder */ = {
+			isa = PBXGroup;
+			children = (
+				7875EE1B242491DC0044A491 /* SPACreateOrderViewController.h */,
+				7875EE1F242491DC0044A491 /* SPACreateOrderViewController.m */,
+				7875EE20242491DC0044A491 /* SPACreateOrderViewController.xib */,
+				7875EE1D242491DC0044A491 /* SPACreateOrderCell.m */,
+				7875EE1E242491DC0044A491 /* SPACreateOrderCell.h */,
+				7875EE1C242491DC0044A491 /* SPACreateOrderCell.xib */,
+			);
+			path = SPACreateOrder;
+			sourceTree = "<group>";
+		};
 		852A940F18F996F200F5DB5F /* Checkbox */ = {
 			isa = PBXGroup;
 			children = (
@@ -3155,6 +3197,8 @@
 				90EC5A6C1779A426004A2E3C /* RadioGroup.m */,
 				F0E4743D2147EA6F00AEB3FA /* AttachmentViewCell.h */,
 				F0E4743E2147EA6F00AEB3FA /* AttachmentViewCell.m */,
+				7875EE0C2424845E0044A491 /* MultipleFileAttachmentView.h */,
+				7875EE0B2424845D0044A491 /* MultipleFileAttachmentView.m */,
 				F0DF53EF22F012EA00EE0A8D /* SuggestiveSearchFieldControl.h */,
 				F0DF53F022F012EA00EE0A8D /* SuggestiveSearchFieldControl.m */,
 			);
@@ -3241,6 +3285,7 @@
 		9092BB281749FB9B00320B1C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7875EE0F242488940044A491 /* MobileCoreServices.framework */,
 				F0347756227851360040A660 /* Security.framework */,
 				F0084B1522771EF4009E723C /* Fabric.framework */,
 				F01549C1227065F7001570BE /* UserNotifications.framework */,
@@ -3582,6 +3627,7 @@
 		F0224DF52141052200D9A6E2 /* Polycab Images */ = {
 			isa = PBXGroup;
 			children = (
+				7875EE1724248D3D0044A491 /* doc_uploaded.png */,
 				F0B2FB57218851E1006A7C6B /* user_icon.png */,
 				F02903E62148F2B5007D2B2D /* default_file_upload.png */,
 				F059CC65214F6DA600E303F6 /* 1x */,
@@ -3832,6 +3878,7 @@
 		F059CC65214F6DA600E303F6 /* 1x */ = {
 			isa = PBXGroup;
 			children = (
+				7875EE1124248A080044A491 /* lixil_add_grey.png */,
 				F059CC8C214F70D000E303F6 /* 01_splash */,
 				F059CC71214F70CF00E303F6 /* 02_login */,
 				F059CC6B214F70CF00E303F6 /* 04_dashboard */,
@@ -3844,6 +3891,7 @@
 		F059CC66214F6DAF00E303F6 /* 2x */ = {
 			isa = PBXGroup;
 			children = (
+				7875EE1324248A1C0044A491 /* lixil_add_grey@2x.png */,
 				F059CCB4214F70F500E303F6 /* 01_splash */,
 				F059CCC3214F70F600E303F6 /* 02_login */,
 				F059CCB6214F70F500E303F6 /* 03_signup */,
@@ -3857,6 +3905,7 @@
 		F059CC67214F6DB400E303F6 /* 3x */ = {
 			isa = PBXGroup;
 			children = (
+				7875EE1524248A280044A491 /* lixil_add_grey@3x.png */,
 				F059CD0E214F710500E303F6 /* 01_splash */,
 				F059CCF4214F710400E303F6 /* 02_login */,
 				F059CD10214F710500E303F6 /* 03_signup */,
@@ -4203,6 +4252,7 @@
 		F088F5E42105DB3A000E26F4 /* SideBar Menus */ = {
 			isa = PBXGroup;
 			children = (
+				7875EE1A242491DC0044A491 /* SPACreateOrder */,
 				F03484D9221E8B53007E7653 /* Employee Sales Class */,
 				F0C4A0FD21B4F8BE00D7DF53 /* Employee Create Order */,
 				F01D9C0421A3F65800D41B2A /* Payment Outstanding report */,
@@ -4301,6 +4351,7 @@
 				F0580201221D2DDF00682D07 /* CreateOrderStatusCell.h */,
 				F05801FF221D2DDF00682D07 /* CreateOrderStatusCell.m */,
 				F05801FE221D2DDF00682D07 /* CreateOrderStatusCell.xib */,
+				7875EE272424A2280044A491 /* CreateOrderStatusSPACell.xib */,
 				F05801FC221D2DDE00682D07 /* CreateOrderStatusVC.h */,
 				F05801FD221D2DDF00682D07 /* CreateOrderStatusVC.m */,
 				F0580200221D2DDF00682D07 /* CreateOrderStatusVC.xib */,
@@ -4630,6 +4681,7 @@
 				F031563521269F92005DE7F2 /* SearchProductByCatalogVC.h in Headers */,
 				F032190D2106F5C600C24A34 /* CreateSubUserRoleVC.h in Headers */,
 				F022CA28211AFCCB0048DEAD /* SalesAggregateCollectionView.h in Headers */,
+				7875EE24242491DC0044A491 /* SPACreateOrderCell.h in Headers */,
 				F0A358F020FC9ECF00CE34AC /* LogInVC.h in Headers */,
 				F0A3590020FCC6FD00CE34AC /* TermsVC.h in Headers */,
 				90EF3CA117AF7F9400F2663E /* DotReportListCellRenderer.h in Headers */,
@@ -4712,6 +4764,7 @@
 				F088F61D21060C6D000E26F4 /* CreateSubUserVC.h in Headers */,
 				8569B92218E40BBE008D65F5 /* XmwHttpFileDownloader.h in Headers */,
 				857A3EE01A6CFC3500279931 /* FirstDashMTDView.h in Headers */,
+				7875EE0E2424845E0044A491 /* MultipleFileAttachmentView.h in Headers */,
 				8502701C19064604003A7E01 /* NotificationDeviceRegister.h in Headers */,
 				8558B3391D0730960017FA3A /* GoldCardTableFormDelegate.h in Headers */,
 				9000175A180D64860002F464 /* TimeTableViewCell.h in Headers */,
@@ -4757,6 +4810,7 @@
 				F0DF53F122F012EA00EE0A8D /* SuggestiveSearchFieldControl.h in Headers */,
 				F036CDE42281869C000F2448 /* NewChatBoxVC.h in Headers */,
 				901F6E3B180282E500293AB9 /* XMWFaqWebViewController.h in Headers */,
+				7875EE21242491DC0044A491 /* SPACreateOrderViewController.h in Headers */,
 				85AC965B198FFDDF00AC0338 /* ReportBaseSection.h in Headers */,
 				F039CADA20F475D9005CEC02 /* TrackClaimVC.h in Headers */,
 				854304061B0DAD1000328DDD /* MarqueeLabel.h in Headers */,
@@ -4995,6 +5049,7 @@
 				85FBB0671A9EF9B900E962D6 /* pause.png in Resources */,
 				F0B4259622671C240011D3E4 /* ChatThreadCell.xib in Resources */,
 				F059CC95214F70D000E303F6 /* polycab_image.png in Resources */,
+				7875EE1224248A090044A491 /* lixil_add_grey.png in Resources */,
 				85AB14691A727DC500045409 /* incentive.png in Resources */,
 				F059CCA8214F70D000E303F6 /* carticon.png in Resources */,
 				F0B425AC22671C240011D3E4 /* avatar_unfilled.png in Resources */,
@@ -5022,6 +5077,7 @@
 				F059CC9E214F70D000E303F6 /* 09-statutoryrequirement.png in Resources */,
 				85C4AD931D0FB30100D69383 /* undo_normal.png in Resources */,
 				F081178F21916CFF00149035 /* 16-balanceconfirmation@2x.png in Resources */,
+				7875EE282424A2280044A491 /* CreateOrderStatusSPACell.xib in Resources */,
 				85D992661D2B9884003AEBBE /* edit_order@2x.png in Resources */,
 				F059CC93214F70D000E303F6 /* polycab_menu.png in Resources */,
 				858F05051DEED0F200398D46 /* Icon_search@2x.png in Resources */,
@@ -5304,6 +5360,7 @@
 				852A941A18F997D700F5DB5F /* checkedbox.png in Resources */,
 				F0A3590220FCC6FD00CE34AC /* TermsVC.xib in Resources */,
 				857F8C7A1A828D210018A54C /* notification@2x.png in Resources */,
+				7875EE1824248D3D0044A491 /* doc_uploaded.png in Resources */,
 				85C4AD951D0FB30100D69383 /* undo_normal@3x.png in Resources */,
 				F02E3545221573F60007573D /* PaymentOutstandingPieView.xib in Resources */,
 				85BBB0111E710CD500169952 /* arrow_up@3x.png in Resources */,
@@ -5313,12 +5370,14 @@
 				F05E97ED1FEA497E00E06ADE /* CreateOrderDashView.xib in Resources */,
 				857F8C731A828D210018A54C /* create_order@2x.png in Resources */,
 				F059CD29214F710600E303F6 /* 10-testreports@3x.png in Resources */,
+				7875EE26242491DC0044A491 /* SPACreateOrderViewController.xib in Resources */,
 				F0E1A0DE213E4E9A005F4435 /* OrderPendencyCell.xib in Resources */,
 				901F6E3D180282E500293AB9 /* XMWFaqWebViewController.xib in Resources */,
 				F030296F2101F4010089A4E4 /* hide.png in Resources */,
 				85BBB00B1E710CD500169952 /* arrow_left@2x.png in Resources */,
 				F0B2FB25218850F5006A7C6B /* RMACardCell.xib in Resources */,
 				F0B2FB50218850F5006A7C6B /* TravellerController.xib in Resources */,
+				7875EE22242491DC0044A491 /* SPACreateOrderCell.xib in Resources */,
 				F0B425B122671C240011D3E4 /* send@2x.png in Resources */,
 				F038EF492150E2F500AFB080 /* Localizable.strings in Resources */,
 				905FFDC6199A081300E95BFB /* downloadImage1.png in Resources */,
@@ -5334,6 +5393,7 @@
 				F059CD26214F710600E303F6 /* 07-proofofdelivery@3x.png in Resources */,
 				F0B4259B22671C240011D3E4 /* ChatBoxUserListVC.xib in Resources */,
 				F059CD20214F710600E303F6 /* 01-dashboard@3x.png in Resources */,
+				7875EE1424248A1C0044A491 /* lixil_add_grey@2x.png in Resources */,
 				857F8C7D1A828D210018A54C /* special_offer@2x.png in Resources */,
 				F0B425AD22671C240011D3E4 /* avatar_filled.png in Resources */,
 				F0302BBF2229269800F73808 /* password@3x.png in Resources */,
@@ -5341,6 +5401,7 @@
 				85C93EBB1ABC191F00B8EE17 /* refresh.png in Resources */,
 				F059CC98214F70D000E303F6 /* 03-order.png in Resources */,
 				857F8C5D1A828CBD0018A54C /* notification_L@2x.png in Resources */,
+				7875EE1624248A280044A491 /* lixil_add_grey@3x.png in Resources */,
 				857A3EC71A6CFC3500279931 /* categoryJson_orig.json in Resources */,
 				F038EF3F2150C1C400AFB080 /* polycab_arrow_open.png in Resources */,
 				F088F60F2105F683000E26F4 /* ManageSubUserScrennFlow2nd.xib in Resources */,
@@ -5615,6 +5676,7 @@
 				F023B78D211C1B9500D54B38 /* CreditDetailsCollectionView.m in Sources */,
 				F088F5F72105E587000E26F4 /* SalesComparisonLegend.m in Sources */,
 				F0580205221D2DE000682D07 /* CreateOrderStatusCell.m in Sources */,
+				7875EE23242491DC0044A491 /* SPACreateOrderCell.m in Sources */,
 				F0E1A0D6213E4E5D005F4435 /* HamperSchemeCell.m in Sources */,
 				857A3EE11A6CFC3500279931 /* FirstDashMTDView.m in Sources */,
 				F02E355A22157E3A0007573D /* NationalSalesAggregatePieCellView.m in Sources */,
@@ -5683,6 +5745,7 @@
 				9000BF22178153F5009FA483 /* DotFieldDataOperationUtils.m in Sources */,
 				9000BF2517815422009FA483 /* AddRowFormUtils.m in Sources */,
 				900573A41787EC7C003288B3 /* DotDropDownPicker.m in Sources */,
+				7875EE25242491DC0044A491 /* SPACreateOrderViewController.m in Sources */,
 				F02C1EE020EDFEEB002ABF27 /* MyClaimVC.m in Sources */,
 				9036FD98178A8DA2009DB2F2 /* LoginUtils.m in Sources */,
 				F0B425A722671C240011D3E4 /* ChatThreadList_Object.m in Sources */,
@@ -5745,6 +5808,7 @@
 				8595B4EC190FCB790010C685 /* DVDateStruct.m in Sources */,
 				F02E3543221573530007573D /* PaymentOutstandingPieView.m in Sources */,
 				901F6E3C180282E500293AB9 /* XMWFaqWebViewController.m in Sources */,
+				7875EE0D2424845E0044A491 /* MultipleFileAttachmentView.m in Sources */,
 				F0B2FB4C218850F5006A7C6B /* BusinessVerticalReportVC.m in Sources */,
 				F0B425A222671C240011D3E4 /* ChatThreadList_DB.m in Sources */,
 				85D5DA6218E6F51200BE344F /* Styles.m in Sources */,

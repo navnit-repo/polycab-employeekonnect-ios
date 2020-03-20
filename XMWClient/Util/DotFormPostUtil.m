@@ -43,7 +43,8 @@
 #import "AttachmentViewCell.h"
 #import "RMAVC2.h"
 #import "RMAVC.h"
-
+#import "MultipleFileAttachmentView.h"
+#import "SPACreateOrderViewController.h"
 
 @implementation DotFormPostUtil
 
@@ -168,9 +169,16 @@
     
     
     else if ([componentType isEqualToString : XmwcsConst_DE_COMPONENT_ATTACHMENT_BUTTON]) {
+        /*
         AttachmentViewCell* attchmentButton = (AttachmentViewCell *) [baseForm getDataFromId:dotFormElement.elementId];
         if(attchmentButton.ufmrefid==nil) {
             mandatoryMessage = [XmwUtils makeLanguageText : LangConst_PLEASE_SELECT : YES : componentName : NO];
+        }
+         */
+        MultipleFileAttachmentView *attachmentView = (MultipleFileAttachmentView*) [baseForm getDataFromId:dotFormElement.elementId];
+        
+        if (!attachmentView.isUploadImageOnServer) {
+             mandatoryMessage = [XmwUtils makeLanguageText : @"Please" : YES : componentName : NO];
         }
     }
     
@@ -515,7 +523,17 @@
         
                 [[baseForm.self navigationController] pushViewController:nextDotForm  animated:YES];
                 
-            } else {
+            }
+            else  if([dotFormElement.dependedCompValue isEqualToString:@"DOT_FORM_31_SPA"]) {
+                    //my code
+                    SPACreateOrderViewController *nextDotForm = [[SPACreateOrderViewController alloc] initWithNibName:@"SPACreateOrderViewController" :addedData :formPost :false :forwardedDataDisplay :forwardedDataPost];
+            
+                    [[baseForm.self navigationController] pushViewController:nextDotForm  animated:YES];
+                    
+                }
+            
+            
+            else {
 //                FormVC *nextDotForm = [[FormVC alloc] initWithData:addedData :formPost :false :forwardedDataDisplay :forwardedDataPost];
 //
 //                [[baseForm.self navigationController] pushViewController:nextDotForm  animated:YES];
@@ -674,8 +692,25 @@
         
     }
     else if ([componentType isEqualToString : XmwcsConst_DE_COMPONENT_ATTACHMENT_BUTTON]){
+        /*
             AttachmentViewCell *vc = (AttachmentViewCell*) [baseForm getDataFromId:elementid];
         valueToSubmit=  vc.ufmrefid;
+         */
+        
+        MultipleFileAttachmentView *attachmentView = (MultipleFileAttachmentView *) [baseForm getDataFromId:elementid];
+        NSString *submitUFMREFID = @"";
+                // This code for multipile files
+        //         for (int i=0; i< attachmentView.ufmrefidArray.count; i++) {
+        //             submitUFMREFID = [[submitUFMREFID stringByAppendingString: [attachmentView.ufmrefidArray objectAtIndex:i]] stringByAppendingString:@","];
+        //         }
+        //         if(submitUFMREFID.length>0)
+        //         {
+        //              submitUFMREFID = [submitUFMREFID substringWithRange:NSMakeRange(0, submitUFMREFID.length - 1)]; // for remove " , " from end of the string
+        //         }
+                
+                // This code for single files
+                 submitUFMREFID = attachmentView.singleUFMRefid;
+                 valueToSubmit=  submitUFMREFID;
     }
 
     else if ([componentType isEqualToString : XmwcsConst_DE_COMPONENT_MULTI_SELECT] ) {

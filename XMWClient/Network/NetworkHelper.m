@@ -821,5 +821,86 @@ NSString *g_DeviceSessionId = nil;
     free(outbuf);
     return result;
 }
+
+
+- (void)makeXmwNetworkCallForDocumentPost:(id)requestObject :(id<HttpEventListener>)responseListener :(NSString *)in_SessionId :(NSString *)callName :(NSData *)imageData
+{
+    
+    NSString *formID= [requestObject valueForKey:@"formID"];
+
+    NSString *imageID= [requestObject valueForKey:@"image_id"];
+//    NSString *imageName= [imageID stringByAppendingString:@".jpg"];
+     NSString *imageName= imageID;
+    
+    AUTH_TOKEN_VALUE= [[NSUserDefaults standardUserDefaults]valueForKey:@"AUTH_TOKEN"];
+    // BASEAPI_URL_RGUSER
+    xmwRequestObject = requestObject;
+    responseHandler = responseListener;
+    xmwRequestCallname = callName;
+
+    NSString *urlString = nil;
+   
+    if((self.serviceURLString!=nil) && (self.serviceURLString.length>0)) {
+        urlString = XmwcsConst_FILE_UPLOAD_URL;
+    } else {
+        urlString = XmwcsConst_FILE_UPLOAD_URL;
+    }
+    
+    
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    [request setURL:[NSURL URLWithString:urlString]];
+    [request setHTTPMethod:@"POST"];
+    
+    NSDictionary* infoDict = [[NSBundle mainBundle] infoDictionary];
+    NSMutableData *body = [NSMutableData data];
+    NSString *boundary = [NSString stringWithString:@"---------------------------14737809831466499882746641449"];
+    NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@", boundary];
+    [request addValue:contentType forHTTPHeaderField:@"Content-Type"];
+//    [request addValue:@"gzip, deflate" forHTTPHeaderField:@"Accept-Encoding"];
+  
+    
+    
+    [body appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+    [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"file\"; filename=\"%@\"\r\n",imageName] dataUsingEncoding:NSUTF8StringEncoding]];
+    [body appendData:[[NSString stringWithString:@"Content-Type: image/jpeg\r\n\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+    [body appendData:[NSData dataWithData:imageData]];
+    [body appendData:[[NSString stringWithString:@"\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    
+    // formID parameter
+    [body appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+    [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"formId\"\r\n\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+    [body appendData:[formID dataUsingEncoding:NSUTF8StringEncoding]];
+    [body appendData:[[NSString stringWithString:@"\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    
+    
+    
+    
+    // auth token parameter
+    [body appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+    [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"authToken\"\r\n\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+    [body appendData:[[[NSUserDefaults standardUserDefaults] objectForKey:@"AUTH_TOKEN"] dataUsingEncoding:NSUTF8StringEncoding]];
+    [body appendData:[[NSString stringWithString:@"\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    
+   
+    
+    // close form
+    [body appendData:[[NSString stringWithFormat:@"--%@--\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    
+    NSString *jsonResponseStr = [[NSString alloc ] initWithData:[self cleanUTF8 : body] encoding:NSUTF8StringEncoding];
+    NSLog(@"%@",jsonResponseStr);
+    // set request body
+    [request setHTTPBody:body];
+    NSString *postDataLength        = [NSString stringWithFormat:@"%lu",(unsigned long)[body length]];
+    [request setValue:postDataLength forHTTPHeaderField:@"Content-Length"];
+    urlConnection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    [urlConnection start];
+    
+    
+}
 @end
 

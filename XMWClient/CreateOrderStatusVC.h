@@ -38,6 +38,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *lineTaxAmountValueLbl;
 @property (weak, nonatomic) IBOutlet UILabel *totalLineAmountLbl;
 @property (weak, nonatomic) IBOutlet UILabel *totalLineAmountValueLbl;
+@property (weak, nonatomic) IBOutlet UIButton *confirmButtonOutLet;
+@property (weak, nonatomic) IBOutlet UIButton *cancelButtonOutlet;
+
+
 
 @property (weak, nonatomic) IBOutlet UILabel *totalLbl;
 @property (weak, nonatomic) IBOutlet UIScrollView *mainScrollView;
@@ -45,6 +49,7 @@
 @property NSString *businessVerticalName;
 @property id jsonResponse;
 
+@property BOOL isSPAFlag;
 @end
 
 

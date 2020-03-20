@@ -36,5 +36,5 @@
 -(void) serverFailMessageHandler:(NSDictionary*) failDataDict;
 -(void) defaultSessionExpiredHandler;
 
-
+-(void) makeXmwNetworkCallForDocumentPost:(id) requestObject :(id <HttpEventListener>) responseListener :(NSString *)in_SessionId :(NSString*) callName :(NSData *)imageData;
 @end

@@ -10,6 +10,10 @@
 #import "LayoutClass.h"
 #import "CreateOrderStatusCell.h"
 #import "DVAppDelegate.h"
+#import "LoadingView.h"
+#import "NetworkHelper.h"
+#import "ClientVariable.h"
+#import "AppConstants.h"
 @interface CreateOrderStatusVC ()
 
 @end
@@ -18,7 +22,10 @@
 {
     CreateOrderStatusCell *statusCell;
     int cellHeight;
+    LoadingView *loadingView;
+    NetworkHelper *networkHelper;
 }
+@synthesize isSPAFlag;
 @synthesize businessVerticalName;
 @synthesize headerNameLbl;
 @synthesize trackerIdLbl,trackerIdValueLbl,orderNumLbl,orderNumValueLbl,customerPoLbl,customerPoValueLbl,poDateLbl,poDateValueLbl,orderStatusLbl,orderStatusValueLbl,statusMsgLbl,statusMsgValueLbl;
@@ -28,7 +35,18 @@
 @synthesize billToLbl,billToValueLbl,shipToLbl,shipToValueLbl,lineAmountLbl,lineAmountValueLbl,lineTaxAmountLbl,lineTaxAmountValueLbl,totalLineAmountLbl,totalLineAmountValueLbl;
 - (void)viewDidLoad {
     [super viewDidLoad];
-    cellHeight = 345*deviceHeightRation;
+    
+    if (isSPAFlag) {
+        cellHeight = 363 * deviceHeightRation;
+    }
+    else
+    {
+      cellHeight = 345*deviceHeightRation;
+    }
+    
+    
+    
+    
     NSLog(@"Create Order Status VC call");
     [self drawNavigationBarItem];
     [self autoLayout];
@@ -56,7 +74,6 @@
     [ self setHeaderData:headerDataDict :[jsonResponse valueForKey:@"status"]];
    
     [self drawItemCell:cardDataArray];
-    
     
     
     
@@ -91,6 +108,15 @@
     [LayoutClass labelLayout:self.totalLineAmountLbl forFontWeight:UIFontWeightRegular];
     [LayoutClass labelLayout:self.totalLineAmountValueLbl forFontWeight:UIFontWeightRegular];
     
+    [LayoutClass buttonLayout:self.cancelButtonOutlet forFontWeight:UIFontWeightRegular];
+    [LayoutClass buttonLayout:self.confirmButtonOutLet forFontWeight:UIFontWeightRegular];
+    
+    self.cancelButtonOutlet.layer.cornerRadius = 5.0f;
+    self.cancelButtonOutlet.layer.masksToBounds = YES;
+    self.confirmButtonOutLet.layer.cornerRadius = 5.0f;
+    self.confirmButtonOutLet.layer.masksToBounds = YES;
+       
+    
    
 }
 -(void) drawNavigationBarItem
@@ -99,9 +125,9 @@
                                                                           imageNamed:@"back-button"]  style:UIBarButtonItemStylePlain target:self
                                                                   action:@selector(backHandler:)];
 
-  //  backButton.tintColor = [UIColor colorWithRed:119.0/255 green:119.0/255 blue:119.0/255 alpha:1.0];
+    backButton.tintColor = [UIColor colorWithRed:119.0/255 green:119.0/255 blue:119.0/255 alpha:1.0];
     
-      backButton.tintColor = [UIColor whiteColor];
+    
     UIImageView *polycabLogo = [[UIImageView alloc] initWithImage:[UIImage  imageNamed:@"polycab_logo"]];
     self.navigationItem.titleView.contentMode = UIViewContentModeCenter;
     self.navigationItem.titleView = polycabLogo;
@@ -112,13 +138,12 @@
 - (void) backHandler : (id) sender
 {
 //    [ [self navigationController]  popViewControllerAnimated:YES];
-    
     NSMutableArray *viewControllersArray = [NSMutableArray arrayWithArray:self.navigationController.viewControllers];
-    NSMutableArray *dummyViewControllers = [[NSMutableArray alloc ] init];
-    [dummyViewControllers addObject: [viewControllersArray objectAtIndex:0]];
-    
-                                                  
-     [self.navigationController setViewControllers:dummyViewControllers animated:YES];
+       NSMutableArray *dummyViewControllers = [[NSMutableArray alloc ] init];
+       [dummyViewControllers addObject: [viewControllersArray objectAtIndex:0]];
+       
+                                                     
+        [self.navigationController setViewControllers:dummyViewControllers animated:YES];
     
 }
 
@@ -207,7 +232,7 @@
     
     [data removeObjectAtIndex:total_data_count];
     for (int i=0; i<data.count; i++) {
-        statusCell = [CreateOrderStatusCell CreateInstance];
+        statusCell = [CreateOrderStatusCell CreateInstance :isSPAFlag];
         [statusCell configure:[data objectAtIndex:i] :businessVerticalName];
         
         statusCell.frame = CGRectMake(10, i*cellHeight,statusCell.frame.size.width*deviceWidthRation , statusCell.frame.size.height*deviceHeightRation);
@@ -220,5 +245,113 @@
     }
     [mainScrollView setContentSize:CGSizeMake(self.mainScrollView.frame.size.width,totalScrollViewHeight)];
 }
+#pragma mark - Button Handler
 
+- (IBAction)confirmButton:(id)sender {
+       loadingView = [LoadingView loadingViewInView:self.view];
+       ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
+       NSMutableDictionary *headerDataDict = [[NSMutableDictionary alloc] init];
+       [headerDataDict setDictionary:[jsonResponse valueForKey:@"so_header"]];
+    
+       NSMutableDictionary *sendDict = [[NSMutableDictionary alloc]init];
+       NSMutableDictionary *data = [[NSMutableDictionary alloc]init];
+       [data setValue:@"Confirm" forKey:@"confirmation_flag"];
+       [data setObject:[headerDataDict objectForKey:@"USERNAME"] forKey:@"user_id"];
+       [data setObject:[headerDataDict objectForKey:@"TRACKER_ID"] forKey:@"tracker_id"];
+       [data setObject:[headerDataDict objectForKey:@"ACCOUNT_NUMBER"] forKey:@"account_number"];
+       [data setObject:[headerDataDict objectForKey:@"BILL_TO"] forKey:@"bill_to"];
+       [data setObject:[headerDataDict objectForKey:@"SHIP_TO"] forKey:@"ship_to"];
+    
+       [sendDict setValue:@"reConfirmation" forKey:@"opcode"];
+       [sendDict setValue:clientVariables.CLIENT_LOGIN_RESPONSE.authToken forKey:@"authToken"];
+       [sendDict setObject: data forKey:@"data"];
+
+
+       NetworkHelper *networkHelper = [[NetworkHelper alloc]init];
+
+       NSString *url = XmwcsConst_OPCODE_URL;
+       networkHelper.serviceURLString = url;
+       [networkHelper genericJSONPayloadRequestWith:sendDict :self :@"reConfirmation"];
+}
+- (IBAction)cancelButton:(id)sender {
+       loadingView = [LoadingView loadingViewInView:self.view];
+       ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
+       NSMutableDictionary *headerDataDict = [[NSMutableDictionary alloc] init];;
+       [headerDataDict setDictionary:[jsonResponse valueForKey:@"so_header"]];
+    
+       NSMutableDictionary *sendDict = [[NSMutableDictionary alloc]init];
+       NSMutableDictionary *data = [[NSMutableDictionary alloc]init];
+       [data setValue:@"Cancel" forKey:@"confirmation_flag"];
+       [data setObject:[headerDataDict objectForKey:@"USERNAME"] forKey:@"user_id"];
+       [data setObject:[headerDataDict objectForKey:@"TRACKER_ID"] forKey:@"tracker_id"];
+       [data setObject:[headerDataDict objectForKey:@"ACCOUNT_NUMBER"] forKey:@"account_number"];
+       [data setObject:[headerDataDict objectForKey:@"BILL_TO"] forKey:@"bill_to"];
+       [data setObject:[headerDataDict objectForKey:@"SHIP_TO"] forKey:@"ship_to"];
+    
+       [sendDict setValue:@"reConfirmation" forKey:@"opcode"];
+       [sendDict setValue:clientVariables.CLIENT_LOGIN_RESPONSE.authToken forKey:@"authToken"];
+       [sendDict setObject: data forKey:@"data"];
+
+
+       NetworkHelper *networkHelper = [[NetworkHelper alloc]init];
+
+       NSString *url = XmwcsConst_OPCODE_URL;
+       networkHelper.serviceURLString = url;
+       [networkHelper genericJSONPayloadRequestWith:sendDict :self :@"reConfirmation"];
+}
+
+- (void) httpResponseObjectHandler : (NSString*) callName : (id) respondedObject : (id) requestedObject
+{
+    [loadingView removeView];
+    if ([callName isEqualToString:@"reConfirmation"]) {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Polycab Connect" message:[respondedObject objectForKey:@"message"]  preferredStyle:UIAlertControllerStyleAlert];
+           
+           UIAlertAction *action = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+               
+               NSString *flag = requestedObject[@"data"][@"confirmation_flag"];
+               
+               [self setDummyViewController :flag];
+           }];
+           [alert addAction:action];
+           [self presentViewController:alert animated:YES completion:nil];
+       
+    }
+    
+}
+- (void) httpFailureHandler : (NSString*) callName : (NSString*) message {
+    [loadingView removeView];
+    
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Polycab Connect" message:message preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *action = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        [self setDummyViewControllerToDashboard];
+    }];
+    [alert addAction:action];
+    [self presentViewController:alert animated:YES completion:nil];
+    
+    
+}
+-(void) setDummyViewControllerToDashboard
+{
+    NSMutableArray *viewControllersArray = [NSMutableArray arrayWithArray:self.navigationController.viewControllers];
+    NSMutableArray *dummyViewControllers = [[NSMutableArray alloc ] init];
+    [dummyViewControllers addObject: [viewControllersArray objectAtIndex:0]];
+    [self.navigationController setViewControllers:dummyViewControllers animated:YES];
+}
+-(void) setDummyViewController :(NSString*) flag
+{
+    if ([flag isEqualToString:@"Confirm"]) {
+        [self setDummyViewControllerToDashboard];
+    }
+    else if ([flag isEqualToString:@"Cancel"])
+    {
+        NSMutableArray *viewControllersArray = [NSMutableArray arrayWithArray:self.navigationController.viewControllers];
+           NSMutableArray *dummyViewControllers = [[NSMutableArray alloc ] init];
+           [dummyViewControllers addObject: [viewControllersArray objectAtIndex:0]];
+           [dummyViewControllers addObject: [viewControllersArray objectAtIndex:1]];
+           [self.navigationController setViewControllers:dummyViewControllers animated:YES];
+    }
+    
+}
 @end

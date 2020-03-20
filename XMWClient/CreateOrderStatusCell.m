@@ -11,6 +11,7 @@
 @implementation CreateOrderStatusCell
 @synthesize orderedItemLbl,orderedItemValueLbl,descLbl,descValueLbl,qntyLbl,qntyValueLbl,statusFlgLbl,statusFlgValueLbl,listPriceLbl,listPriceValueLbl,unitSellPriceLbl,unitSellPriceValueLbl,lineAmntLbl,lineAmntValueLbl,linTaxAmntLbl,linTaxAmntValueLbl,totlLineAmntLbl,totlLineAmntValueLbl,prcntDiscntLbl,prcntDiscntValueLbl,isCodeLbl,isCodeValueLbl;
 
+@synthesize spaPriceTextLbl,spaPriceValueLbl;
 
 -(void)autoLayout
 {
@@ -37,6 +38,9 @@
     [LayoutClass labelLayout:self.isCodeLbl forFontWeight:UIFontWeightRegular];
     [LayoutClass labelLayout:self.isCodeValueLbl forFontWeight:UIFontWeightRegular];
     
+    [LayoutClass labelLayout:self.spaPriceValueLbl forFontWeight:UIFontWeightRegular];
+    [LayoutClass labelLayout:self.spaPriceTextLbl forFontWeight:UIFontWeightRegular];
+    
     
  
  
@@ -45,8 +49,20 @@
     self.descValueLbl.adjustsFontSizeToFitWidth = YES;
     
 }
-+ (CreateOrderStatusCell *)CreateInstance{
-    CreateOrderStatusCell *view = (CreateOrderStatusCell *) [[[NSBundle mainBundle] loadNibNamed:@"CreateOrderStatusCell" owner:self options:nil] objectAtIndex:0];
+
+
++ (CreateOrderStatusCell *)CreateInstance :(BOOL) spaFlag{
+    
+    NSString *nibName;
+    if (spaFlag) {
+        nibName = @"CreateOrderStatusSPACell";
+    }
+    else
+    {
+         nibName = @"CreateOrderStatusCell";
+    }
+    
+    CreateOrderStatusCell *view = (CreateOrderStatusCell *) [[[NSBundle mainBundle] loadNibNamed:nibName owner:self options:nil] objectAtIndex:0];
     return view;
 }
 
@@ -64,7 +80,8 @@
     NSString *TotlLneAmt;
     NSString *prcDsc;
     NSString *isCode;
-    
+    NSString *spaPrice;
+
     ordItm = [array valueForKey:@"ORDERED_ITEM"];
     desc = [array valueForKey:@"DESCRIPTION"];
     qnty = [array valueForKey:@"QUANTITY"];
@@ -76,6 +93,7 @@
     TotlLneAmt = [array valueForKey:@"TOT_LINE_AMOUNT"];
     prcDsc = [array valueForKey:@"PERCENT_DISCOUNT"];
     isCode =[array valueForKey:@"ISCODE"];
+    spaPrice = [array valueForKey:@"SPA_UNIT_PRICE"];
     if (isCode == nil || [isCode isKindOfClass:[NSNull class]]) {
         isCode =@"";
     }
@@ -130,6 +148,7 @@
     linTaxAmntValueLbl.text = lneTxAmt;
     totlLineAmntValueLbl.text = TotlLneAmt;
     prcntDiscntValueLbl.text = prcDsc;
+    spaPriceValueLbl.text = spaPrice;
 }
 
 -(void)configure:(NSArray *)array
