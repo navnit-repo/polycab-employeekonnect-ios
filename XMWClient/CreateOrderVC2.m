@@ -149,9 +149,9 @@
         // Display Cell section
         if (alreadyAddDisplayCellData.count!=0) {
             mainTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-            for (int j=0;  j<alreadyAddDisplayCellData.count; j++) {
-                [cellIndexQntyValueDict setValue:@"" forKey:[NSString stringWithFormat:@"%d",j]];
-            }
+//            for (int j=0;  j<alreadyAddDisplayCellData.count; j++) {
+//                [cellIndexQntyValueDict setValue:@"" forKey:[NSString stringWithFormat:@"%d",j]];
+//            }
             
         }
         else
@@ -352,8 +352,7 @@
 
 -(void)trackNetworkCall
 {
-    
-    NSString *authToken= [[NSUserDefaults standardUserDefaults] valueForKey:@"AUTH_TOKEN"];
+    ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
     NSMutableDictionary *sendDict = [[NSMutableDictionary alloc]init];
     NSMutableDictionary *data = [[NSMutableDictionary alloc]init];
     [data setObject:trackerID forKey:@"TRACKER_ID"];
@@ -361,7 +360,7 @@
     [data setObject:[self.forwardedDataPost valueForKey:@"BUSINESS_VERTICAL"] forKey:@"ACCOUNT_NUMBER"];
     
     [sendDict setValue:@"statusSalesOrder" forKey:@"opcode"];
-    [sendDict setValue:authToken forKey:@"authToken"];
+    [sendDict setValue:clientVariables.CLIENT_LOGIN_RESPONSE.authToken forKey:@"authToken"];
     [sendDict setObject: data forKey:@"data"];
     
     

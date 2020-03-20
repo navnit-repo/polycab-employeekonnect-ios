@@ -47,6 +47,7 @@
          [[NSUserDefaults standardUserDefaults ] setObject:display forKey:@"selectedRegisterID"];
          [[NSUserDefaults standardUserDefaults ] setObject:code forKey:@"selectedRegisterIDCode"];
          [[NSUserDefaults standardUserDefaults ] setObject:[myArray objectAtIndex:1] forKey:@"selectedRegisterIDCustomerName"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
         //////////////
        
         
