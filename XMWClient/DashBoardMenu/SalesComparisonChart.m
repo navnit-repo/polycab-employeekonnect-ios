@@ -567,12 +567,6 @@
     [dotFormPost setPostData:postData];
     [dotFormPost setDisplayData:displayData];
     
-    
-    
-    
-    
-    
-    
     return dotFormPost;
 }
 -(NSString*)formateCurrency:(NSString *)actualAmount{
