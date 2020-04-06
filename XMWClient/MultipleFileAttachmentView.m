@@ -591,7 +591,7 @@
 
 -(void)configureDocumentsPicker
 {
-    NSArray*types=@[(NSString*)kUTTypeImage,(NSString*)kUTTypeSpreadsheet,(NSString*)kUTTypePresentation,(NSString*)kUTTypeFolder,(NSString*)kUTTypeZipArchive,(NSString*)kUTTypePDF,(NSString*)kUTTypeText];
+    NSArray*types=@[(NSString*)kUTTypePDF];
 
 
     //Create a object of document picker view and set the mode to Import
