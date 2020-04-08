@@ -42,6 +42,8 @@
     BOOL packSizeFlagCheck;
     UIButton *searchButton;
     NSMutableDictionary *spaPriceDict;
+    int lineItemCount;
+    bool oneTimeSuccessFlagCheck;
 }
 @synthesize itemName,orderRefNo,dateofDelivery;
 @synthesize mainView;
@@ -270,6 +272,10 @@
         
         NSMutableArray * array = [[NSMutableArray alloc]init];
         removeTag = [[NSMutableArray alloc]init];
+        
+        lineItemCount = 0;
+        oneTimeSuccessFlagCheck = true;
+        
         for (int i=0; i<alreadyAddDisplayCellData.count; i++) {
             
             int tag = i + 2000;
@@ -346,6 +352,8 @@
                     
                     [line_items setObject:checkTextFiledEmpty forKey:@"QTY"];
                     [array addObject:line_items];
+                    
+                    lineItemCount = lineItemCount + 1;
                 }
             }
             
@@ -458,41 +466,28 @@
         if ([status_flag isEqualToString:@"S"] || [status_flag isEqualToString:@"E"]) {
             if ([status_flag isEqualToString:@"S"]) {
                 
-                //send data to next screen
-                NSString *name;
-                NSString *verticalName= [forwardedDataDisplay valueForKey:@"BUSINESS_VERTICAL"];
-                NSCharacterSet *numbersSet = [NSCharacterSet characterSetWithCharactersInString:@"-0123456789"];
-                name = [verticalName stringByTrimmingCharactersInSet:numbersSet];
-                NSLog(@"%@",name);
+                // One exta time check if line item count  not line item count + 1
+               
+                    NSDictionary *so_lines = respondedObject[@"so_lines"];
+                    if (so_lines.count != (lineItemCount + 1)) {
+                        if (oneTimeSuccessFlagCheck) {
+                        oneTimeSuccessFlagCheck = false;
+                        loadingView= [LoadingView loadingViewInView:self.view];
+                        [self performSelector:@selector(trackNetworkCall) withObject:nil afterDelay:10.0];
+                                        
+                      }
+                        
+                        else
+                        {
+                           [self configureSummaryVC:respondedObject];
+                        }
+                                         
+                    }
                 
-                
-                CreateOrderStatusVC *vc = [[CreateOrderStatusVC alloc]init];
-                vc.isSPAFlag = true;
-                vc.jsonResponse = respondedObject;
-                vc.businessVerticalName = name;
-                [self.navigationController pushViewController:vc animated:YES];
-            
-                
-                
-                 //remove cell
-                            NSMutableArray *updatedArrayList = [[NSMutableArray alloc]init];
-                            for (int i=0; i<[alreadyAddDisplayCellData count]; i++) {
-                                BOOL contains;
-                                NSString *str = [NSString stringWithFormat:@"%i", i];
-                                contains = [removeTag containsObject:str];
-                                if (contains==false) {
-                                    [updatedArrayList addObject:[alreadyAddDisplayCellData objectAtIndex:i]];
-                                }
-                                else {
-                                 //do nothing
-                                }
-                            }
-                            alreadyAddDisplayCellData = [[NSMutableArray alloc]init];
-                            [alreadyAddDisplayCellData addObjectsFromArray:updatedArrayList];
-                            //locally save cell
-                            [[NSUserDefaults standardUserDefaults] setObject:alreadyAddDisplayCellData forKey:self.itemName.text];
-                [[NSUserDefaults standardUserDefaults] synchronize];
-                   [mainTableView reloadData];
+                    else {
+                        [self configureSummaryVC:respondedObject];
+                    }
+
                 
             }
             else
@@ -530,6 +525,45 @@
     }
 }
 
+-(void)configureSummaryVC :(id)respondedObject{
+    
+    //send data to next screen
+    NSString *name;
+    NSString *verticalName= [forwardedDataDisplay valueForKey:@"BUSINESS_VERTICAL"];
+    NSCharacterSet *numbersSet = [NSCharacterSet characterSetWithCharactersInString:@"-0123456789"];
+    name = [verticalName stringByTrimmingCharactersInSet:numbersSet];
+    NSLog(@"%@",name);
+    
+    
+    CreateOrderStatusVC *vc = [[CreateOrderStatusVC alloc]init];
+    vc.isSPAFlag = true;
+    vc.jsonResponse = respondedObject;
+    vc.businessVerticalName = name;
+    [self.navigationController pushViewController:vc animated:YES];
+
+    
+    
+     //remove cell
+                NSMutableArray *updatedArrayList = [[NSMutableArray alloc]init];
+                for (int i=0; i<[alreadyAddDisplayCellData count]; i++) {
+                    BOOL contains;
+                    NSString *str = [NSString stringWithFormat:@"%i", i];
+                    contains = [removeTag containsObject:str];
+                    if (contains==false) {
+                        [updatedArrayList addObject:[alreadyAddDisplayCellData objectAtIndex:i]];
+                    }
+                    else {
+                     //do nothing
+                    }
+                }
+                alreadyAddDisplayCellData = [[NSMutableArray alloc]init];
+                [alreadyAddDisplayCellData addObjectsFromArray:updatedArrayList];
+                //locally save cell
+                [[NSUserDefaults standardUserDefaults] setObject:alreadyAddDisplayCellData forKey:self.itemName.text];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+       [mainTableView reloadData];
+    
+}
 - (void) httpFailureHandler : (NSString*) callName : (NSString*) message {
     [loadingView removeView];
     UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Polycab" message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil , nil];
