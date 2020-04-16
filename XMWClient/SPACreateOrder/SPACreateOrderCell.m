@@ -10,7 +10,13 @@
 #import "LayoutClass.h"
 #import "CreateOrderVC2.h"
 #import "SWRevealViewController.h"
+
 @implementation SPACreateOrderCell
+{
+    NSArray* packSizeFeatureVerticals;
+    
+}
+
 @synthesize titleLbl,descriptionLbl,cancelButton,valueTxtFld,measurementLbl,priceLabel,mainDescLbl,packSizeLabel,dividerLine,spaPriceTextField;
 
 + (SPACreateOrderCell *)CreateInstance{
@@ -52,9 +58,19 @@
     
     spaPriceTextField.elementId = @"SPA_PRICE_FIELD";
     
+
     
+    packSizeFeatureVerticals = @[@"PP & Flexibles", @"Fan and Appliances", @"Lighting And Luminary", @"Switches", @"Switchgear", @"Dowells" , @"Lighting", @"Luminary"];
     
-    }
+    // // Tushar, For PP & Flexibles
+    // Pradeep,
+    // Fan and Appliances,
+    // Lighting And Luminary, Switches, Switchgear,
+    // and Dowells
+    
+}
+
+
 - (IBAction)doneClicked:(id)sender
 {
      [self.delegate textFieldValue:self.valueTxtFld :self.cancelButton.tag];
@@ -107,8 +123,12 @@
         
         
         // Tushar, For PP & Flexibles
+        // Pradeep,
+        // Fan and Appliances,
+        // Lighting And Luminary, Switches, Switchgear,
+        // and Dowells
         
-        if ([verticalName isEqualToString:@"PP & Flexibles"]) {
+        if ([packSizeFeatureVerticals containsObject:verticalName]) {
                     NSInteger  packSize = [array[array.count - 1] integerValue];
             if (packSize > 0) {
                 self.packSizeLabel.text = [NSString stringWithFormat:@"Pack Size: %@",array[array.count - 1]];
@@ -218,7 +238,8 @@
    
 //     [self.delegate textFieldValue:textField :self.cancelButton.tag];
     MXTextField *mxTextField = (MXTextField *) textField;
-       if ([mxTextField.elementId isEqualToString:@"QUANTITY_FIELD"] || [mxTextField.elementId isEqualToString:@"PP & Flexibles"]) {
+       if ([mxTextField.elementId isEqualToString:@"QUANTITY_FIELD"] ||
+           [packSizeFeatureVerticals containsObject:mxTextField.elementId]) {
         [self.delegate textFieldValue:textField :self.cancelButton.tag];
        }
        else if ([mxTextField.elementId isEqualToString:@"SPA_PRICE_FIELD"])
@@ -231,7 +252,7 @@
 - (void)textFieldDidChange:(UITextField *)textField {
     NSLog(@"text changed: %@", textField.text);
     MXTextField *mxTextField = (MXTextField *) textField;
-    if ([mxTextField.elementId isEqualToString:@"QUANTITY_FIELD"] || [mxTextField.elementId isEqualToString:@"PP & Flexibles"]) {
+    if ([mxTextField.elementId isEqualToString:@"QUANTITY_FIELD"] || [packSizeFeatureVerticals containsObject:mxTextField.elementId]) {
      [self.delegate textFieldValue:textField :self.cancelButton.tag];
     }
     else if ([mxTextField.elementId isEqualToString:@"SPA_PRICE_FIELD"])
@@ -243,9 +264,9 @@
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
     MXTextField *quantityField = (MXTextField *) textField;
-    if ([quantityField.elementId isEqualToString:@"QUANTITY_FIELD"] || [quantityField.elementId isEqualToString:@"PP & Flexibles"]) {
+    if ([quantityField.elementId isEqualToString:@"QUANTITY_FIELD"] || [packSizeFeatureVerticals containsObject:quantityField.elementId]) {
          
-    if ([quantityField.elementId isEqualToString:@"PP & Flexibles"]) {
+    if ([packSizeFeatureVerticals containsObject:quantityField.elementId]) {
            [self packSizeMethodCall:quantityField.attachedData :quantityField.text];
        }
        else
@@ -440,7 +461,7 @@
 {
 
     MXTextField *mxTextField = (MXTextField *) textField;
-    if ([mxTextField.elementId isEqualToString:@"QUANTITY_FIELD"] || [mxTextField.elementId isEqualToString:@"PP & Flexibles"]) {
+    if ([mxTextField.elementId isEqualToString:@"QUANTITY_FIELD"] || [packSizeFeatureVerticals containsObject:mxTextField.elementId]) {
         return YES;
     }
     else if ([mxTextField.elementId isEqualToString:@"SPA_PRICE_FIELD"])
