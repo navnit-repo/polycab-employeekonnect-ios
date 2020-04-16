@@ -571,7 +571,8 @@
             }
             for (int k=0; k<row.count; k++) {
                 NSString *str = [row objectAtIndex:k];
-                if ([str isEqualToString:@"Rejected"] && ![[elementType objectAtIndex:k] isEqualToString:@"HIDDEN"] ) {
+                
+                if ([str isKindOfClass:[NSString class]] && [str isEqualToString:@"Rejected"] && ![[elementType objectAtIndex:k] isEqualToString:@"HIDDEN"] ) {
                                  [mItemLabel setTextColor:[UIColor redColor]];
                             }
                             else
