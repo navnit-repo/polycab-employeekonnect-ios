@@ -252,7 +252,8 @@
 - (void)textFieldDidChange:(UITextField *)textField {
     NSLog(@"text changed: %@", textField.text);
     MXTextField *mxTextField = (MXTextField *) textField;
-    if ([mxTextField.elementId isEqualToString:@"QUANTITY_FIELD"] || [packSizeFeatureVerticals containsObject:mxTextField.elementId]) {
+    if ([mxTextField.elementId isEqualToString:@"QUANTITY_FIELD"]
+        || [packSizeFeatureVerticals containsObject:mxTextField.elementId]) {
      [self.delegate textFieldValue:textField :self.cancelButton.tag];
     }
     else if ([mxTextField.elementId isEqualToString:@"SPA_PRICE_FIELD"])
@@ -264,7 +265,8 @@
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
     MXTextField *quantityField = (MXTextField *) textField;
-    if ([quantityField.elementId isEqualToString:@"QUANTITY_FIELD"] || [packSizeFeatureVerticals containsObject:quantityField.elementId]) {
+    if ([quantityField.elementId isEqualToString:@"QUANTITY_FIELD"]
+        || [packSizeFeatureVerticals containsObject:quantityField.elementId]) {
          
     if ([packSizeFeatureVerticals containsObject:quantityField.elementId]) {
            [self packSizeMethodCall:quantityField.attachedData :quantityField.text];
@@ -466,16 +468,17 @@
     }
     else if ([mxTextField.elementId isEqualToString:@"SPA_PRICE_FIELD"])
     {
-    NSString *newString = [textField.text stringByReplacingCharactersInRange:range withString:string];
+        NSString *newString = [textField.text stringByReplacingCharactersInRange:range withString:string];
 
-    NSArray *sep = [newString componentsSeparatedByString:@"."];
-    if([sep count] >= 2)
-    {
-        NSString *sepStr=[NSString stringWithFormat:@"%@",[sep objectAtIndex:1]];
-        return !([sepStr length]>2);
+        NSArray *sep = [newString componentsSeparatedByString:@"."];
+        if([sep count] >= 2)
+        {
+            NSString *sepStr=[NSString stringWithFormat:@"%@",[sep objectAtIndex:1]];
+            return !([sepStr length]>2);
+        }
+        return YES;
+
     }
     return YES;
-
-    }
 }
 @end

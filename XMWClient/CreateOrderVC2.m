@@ -41,6 +41,8 @@
     int totalSeconds;
     NSTimer *fiveMinTimer;
     NSMutableDictionary *cellIndexQntyValueDict;
+    BOOL packSizeFlagCheck;
+    UIButton *searchButton;
     int lineItemCount;
     bool oneTimeSuccessFlagCheck;
 }
@@ -218,7 +220,7 @@
     UIImage *blueImage          = [UIImage imageNamed:@"blueButton.png"];
     UIImage *blueButtonImage    = [blueImage stretchableImageWithLeftCapWidth:8 topCapHeight:0];
     
-    UIButton *searchButton   = [[UIButton alloc]init];
+    searchButton   = [[UIButton alloc]init];
     
     searchButton       = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     
@@ -799,6 +801,19 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
+
+- (void)returnPackSizeFlag:(BOOL)flag
+{
+    packSizeFlagCheck = flag;
+    
+    if (flag) {
+        [searchButton setBackgroundColor:nil];
+        UIImage *blueImage          = [UIImage imageNamed:@"blueButton.png"];
+        UIImage *blueButtonImage    = [blueImage stretchableImageWithLeftCapWidth:8 topCapHeight:0];
+        [searchButton setBackgroundImage:blueButtonImage forState:UIControlStateNormal];
+        
+    }
+}
 
 @end
 
