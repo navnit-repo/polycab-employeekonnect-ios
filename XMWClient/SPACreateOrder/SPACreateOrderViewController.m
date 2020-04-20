@@ -346,7 +346,7 @@
                     [line_items setObject:[[alreadyAddDisplayCellData objectAtIndex:tag] objectAtIndex:0] forKey:@"ITEM_CODE"];
                     [line_items setObject:[[alreadyAddDisplayCellData objectAtIndex:tag] objectAtIndex:1] forKey:@"ITEM_DESC"];
                     [line_items setObject:[[alreadyAddDisplayCellData objectAtIndex:tag] objectAtIndex:3] forKey:@"UOM"];
-                    [line_items setObject:[[alreadyAddDisplayCellData objectAtIndex:tag] objectAtIndex:10] forKey:@"UOMDESC"];
+                    [line_items setObject:[[alreadyAddDisplayCellData objectAtIndex:tag] objectAtIndex:8] forKey:@"UOMDESC"];
                     
                     [line_items setObject:spaPriceText forKey:@"USER_PRICE"];
                     
