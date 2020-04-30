@@ -418,11 +418,8 @@ self.mainTable.frame = CGRectMake(0, titleLblHeight + searchBar.frame.size.heigh
             {
               fieldName =[[[rowData objectAtIndex:0] stringByAppendingString:@"-"]stringByAppendingString:[rowData objectAtIndex:1]];
             }
-            
-    
-        }
-        else{
-            
+        } else{
+            fieldName = [self firstColumnRowValue:rowData];
         }
         tupleObject.fieldName = fieldName;
         tupleObject.firstRawData = rowData;
@@ -482,9 +479,8 @@ self.mainTable.frame = CGRectMake(0, titleLblHeight + searchBar.frame.size.heigh
                 fieldName =[[[rowData objectAtIndex:0] stringByAppendingString:@"-"]stringByAppendingString:[rowData objectAtIndex:1]];
             }
             
-        }
-        else{
-            
+        } else{
+            fieldName = [self firstColumnRowValue:rowData];
         }
         tupleObject.fieldName = fieldName;
         tupleObject.secondRawData = rowData;
@@ -543,10 +539,10 @@ self.mainTable.frame = CGRectMake(0, titleLblHeight + searchBar.frame.size.heigh
                 fieldName =[[[rowData objectAtIndex:0] stringByAppendingString:@"-"]stringByAppendingString:[rowData objectAtIndex:1]];
             }
             
+        } else{
+            fieldName = [self firstColumnRowValue:rowData];
         }
-        else{
-            
-        }
+        
         tupleObject.fieldName = fieldName;
         tupleObject.thirdRawData = rowData;
     }
@@ -865,7 +861,7 @@ self.mainTable.frame = CGRectMake(0, titleLblHeight + searchBar.frame.size.heigh
             
             rowCell.thirdLabel.frame  =  CGRectMake(rowCell.thirdLabel.frame.origin.x, rowCell.thirdLabel.frame.origin.y, rowCell.thirdLabel.frame.size.width, expectedLabelSize.height);
             
-            [self tableView:self heightForRowAtIndexPath:indexPath];
+            [self tableView:tableView heightForRowAtIndexPath:indexPath];
         }
         
         rowCell.clipsToBounds = YES;
@@ -888,8 +884,8 @@ self.mainTable.frame = CGRectMake(0, titleLblHeight + searchBar.frame.size.heigh
         XmwCompareTuple* tuple = [dataSet objectForKey:key];
         
         
-        UILabel *temLbl = [[UILabel alloc]init];
-        temLbl.frame = CGRectMake(0, 0, 77, 42);
+        UILabel *temLbl = [[UILabel alloc] init];
+        temLbl.frame = CGRectMake(0, 0, tableView.frame.size.width/4.0f, 42);
         temLbl.numberOfLines = 0;
         temLbl.textAlignment = NSTextAlignmentCenter;
         temLbl.lineBreakMode = NSLineBreakByWordWrapping;
@@ -903,7 +899,7 @@ self.mainTable.frame = CGRectMake(0, titleLblHeight + searchBar.frame.size.heigh
         
         if (temLbl.frame.size.height < expectedLabelSize.height) {
             //adjust the label the the new height.
-            height = expectedLabelSize.height+4;
+            height = expectedLabelSize.height + 10.0f;
             NSLog(@"Cell height :- %f",height);
             return height;
         }
@@ -1003,4 +999,28 @@ self.mainTable.frame = CGRectMake(0, titleLblHeight + searchBar.frame.size.heigh
     }
 
 }
+
+
+-(NSString*) firstColumnRowValue:(NSArray*) rowData
+{
+    NSString* retVal = @"";
+    
+    if(rowData!=nil && [rowData count]>0) {
+        if ([[rowData objectAtIndex:0] isEqualToString:@"All"]) {
+            retVal = [rowData objectAtIndex:0];
+        } else {
+            if([rowData count]==1) {
+                retVal = [rowData objectAtIndex:0];
+            } else if([rowData count]>1) {
+                if([[rowData objectAtIndex:1] length]>0) {
+                    retVal =[[[rowData objectAtIndex:0] stringByAppendingString:@"-"]stringByAppendingString:[rowData objectAtIndex:1]];
+                } else {
+                    retVal = [rowData objectAtIndex:0];
+                }
+            }
+        }
+    }
+    return retVal;
+}
+
 @end

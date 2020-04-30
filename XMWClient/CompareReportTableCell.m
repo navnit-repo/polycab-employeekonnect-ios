@@ -23,10 +23,16 @@
      [LayoutClass setLayoutForIPhone6:self.view4];
     [LayoutClass setLayoutForIPhone6:self.containerView];
     
-    [LayoutClass labelLayout:self.fieldLabel forFontWeight:UIFontWeightRegular];
-    [LayoutClass labelLayout:self.firstLabel forFontWeight:UIFontWeightRegular];
-    [LayoutClass labelLayout:self.secondLabel forFontWeight:UIFontWeightRegular];
-    [LayoutClass labelLayout:self.thirdLabel forFontWeight:UIFontWeightRegular];
+   //  [LayoutClass labelLayout:self.fieldLabel forFontWeight:UIFontWeightRegular];
+   // [LayoutClass labelLayout:self.firstLabel forFontWeight:UIFontWeightRegular];
+   // [LayoutClass labelLayout:self.secondLabel forFontWeight:UIFontWeightRegular];
+   // [LayoutClass labelLayout:self.thirdLabel forFontWeight:UIFontWeightRegular];
+    
+    
+    [LayoutClass labelLayout:self.fieldLabel];
+    [LayoutClass labelLayout:self.firstLabel];
+    [LayoutClass labelLayout:self.secondLabel];
+    [LayoutClass labelLayout:self.thirdLabel];
     
     
 }

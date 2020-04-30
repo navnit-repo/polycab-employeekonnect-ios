@@ -961,6 +961,8 @@ NSString *chatPersonUserID;
     // for SalesComparisonVC
     [clientVariables registerFormVCClass:@"SalesComparisonVC" forId:@"DOT_REPORT_5_SALES_COMPARISON"];
     
+   
+    
     // for RMAVC
      [clientVariables registerFormVCClass:@"RMAVC" forId:@"DOT_FORM_REQUEST_FOR_RETURN_MATERIAL"];
     
@@ -974,6 +976,8 @@ NSString *chatPersonUserID;
     // for SalesComparisonVC
     [clientVariables registerFormVCClass:@"EmployeeSalesFormVC" forId:@"DOT_FORM_BU_REGION_SALES_STATE_WISE"];
      [clientVariables registerFormVCClass:@"EmployeeSalesFormVC" forId:@"DOT_FORM_BU_SALES_CUSTOMER_WISE"];
+    
+     [clientVariables registerFormVCClass:@"EmployeeSalesFormVC" forId:@"DOT_FORM_CUSTOMER_WISE_SALES"];
     
 /////////////////////////////
     
