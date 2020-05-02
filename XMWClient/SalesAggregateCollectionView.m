@@ -546,8 +546,25 @@
     NSUInteger lftdCount = [lftdDataArray count];
     NSUInteger lmtdCount = [lmtdDataArray count];
     
-     //count total number of cell draw
+   NSArray* arrayList = [NSArray arrayWithObjects:ftdDataArray, mtdDataArray, ytdDataArray, lftdDataArray, lmtdDataArray,  nil];
     
+    arrayList = [arrayList sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        NSArray* array1 = (NSArray*) obj1;
+        NSArray* array2 = (NSArray*) obj2;
+        if([array1 count] < [array2 count])  {
+            return NSOrderedAscending;
+        } else if([array1 count] == [array2 count]) {
+            return NSOrderedSame;
+        }
+        return NSOrderedDescending;
+    }];
+    
+    NSArray* largestArray = [arrayList objectAtIndex:4];
+    numberOfCell = (int) [largestArray count];
+    [maxCellArray addObjectsFromArray:largestArray];
+    
+     //count total number of cell draw
+    /*
     if (ftdCount > mtdCount)
     {
         if (ftdCount > ytdCount)
@@ -579,7 +596,7 @@
         numberOfCell = (int)ytdCount;
         [maxCellArray addObjectsFromArray:ytdDataArray];
     }
-    
+    */
     
     
     //before add empty data
