@@ -73,7 +73,7 @@
         // for total labels
         
         UIView* totalRow = [view viewWithTag:20];
-//        [LayoutClass setLayoutForIPhone6:totalRow];
+        [LayoutClass setLayoutForIPhone6:totalRow];
         
         MXButton *totalRowButton = [[MXButton alloc]initWithFrame:CGRectMake(0, 0, totalRow.frame.size.width, totalRow.frame.size.height)];
         totalRowButton.backgroundColor = [UIColor clearColor];
@@ -870,7 +870,6 @@ self.mainTable.frame = CGRectMake(0, titleLblHeight + searchBar.frame.size.heigh
     cell.clipsToBounds = YES;
     return cell;
 }
-
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

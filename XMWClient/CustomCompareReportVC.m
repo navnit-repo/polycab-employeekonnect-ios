@@ -331,7 +331,7 @@
     if(section==0 ) {
         return 0.0f;
     } else if(section==1) {
-        return 100.0f;
+        return 100.0f*deviceHeightRation;
     }
     return 0.0f;
 }
@@ -346,7 +346,7 @@
         
         UIView* view = [[headerNib instantiateWithOwner:nil options:nil] objectAtIndex:0];
         
-        view.bounds = CGRectMake(0, 0, self.view.frame.size.width, 60.0f);
+        view.bounds = CGRectMake(0, 0, self.view.frame.size.width, 100.0f*deviceHeightRation);
         
 
         UIView* lView = nil;

@@ -8,9 +8,9 @@
 #import <Foundation/Foundation.h>
 #import "XmwcsConstant.h"
 
-//#define CONFIG_PROD
-#define CONFIG_QA
-//#define CONFIG_DEV
+// #define CONFIG_PROD
+// #define CONFIG_QA
+// #define CONFIG_DEV
 
 
 NSString *const XmwcsConst_APP_MODULE_ESS = @"xess";
@@ -26,7 +26,7 @@ int const XmwcsConst_SORT_AS_STRING =  2;
 NSString *const  XmwcsConst_FORGOT_PWD_USER_ID = @"USER_ID";
 NSString *const  XmwcsConst_FORGOT_PWD_MODULE_ID = @"MODULE_ID";
 NSString* XmwcsConst_SERVICE_UPDATE_DROPDOWM_URL_NOTIFY_CONTEXT=@"https://pconnect.polycab.com:443/xmwpolycab/store";
-NSString* XmwcsConst_SERVICE_URL = @"http://pconnect.polycab.com:443/xmwpolycab/feed";
+NSString* XmwcsConst_SERVICE_URL = @"https://pconnect.polycab.com:443/xmwpolycab/feed";
 NSString* XmwcsConst_SERVICE_URL_NOTIFY_CONTEXT = @"https://pconnect.polycab.com:443/xmwpolycab/nms";
 NSString* XmwcsConst_PRODUCT_TREE_SERVICE_URL = @"https://pconnect.polycab.com:443/xmwpolycab/productsearch";
 NSString* XmwcsConst_SERVICE_URL_APP_CONTROL = @"https://pconnect.polycab.com:443/xmwpolycab/appControl";
