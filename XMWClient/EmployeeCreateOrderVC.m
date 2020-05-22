@@ -28,6 +28,7 @@
     LoadingView *loadingView;
     NSString *registryID;
 }
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     registryID = [[NSUserDefaults standardUserDefaults]valueForKey:@"selectedRegisterIDCode"];

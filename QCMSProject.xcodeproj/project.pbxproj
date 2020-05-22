@@ -7,6 +7,35 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		270B771F24779BA60024960F /* CreditNotesVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 270B771D24779BA60024960F /* CreditNotesVC.m */; };
+		270B772024779BA60024960F /* CreditNotesVC.h in Headers */ = {isa = PBXBuildFile; fileRef = 270B771E24779BA60024960F /* CreditNotesVC.h */; };
+		270B77392477B04D0024960F /* frame-4.png in Resources */ = {isa = PBXBuildFile; fileRef = 270B77222477B04D0024960F /* frame-4.png */; };
+		270B773A2477B04D0024960F /* frame-22.png in Resources */ = {isa = PBXBuildFile; fileRef = 270B77232477B04D0024960F /* frame-22.png */; };
+		270B773B2477B04D0024960F /* frame-5.png in Resources */ = {isa = PBXBuildFile; fileRef = 270B77242477B04D0024960F /* frame-5.png */; };
+		270B773C2477B04D0024960F /* frame-7.png in Resources */ = {isa = PBXBuildFile; fileRef = 270B77252477B04D0024960F /* frame-7.png */; };
+		270B773D2477B04D0024960F /* frame-21.png in Resources */ = {isa = PBXBuildFile; fileRef = 270B77262477B04D0024960F /* frame-21.png */; };
+		270B773E2477B04D0024960F /* frame-20.png in Resources */ = {isa = PBXBuildFile; fileRef = 270B77272477B04D0024960F /* frame-20.png */; };
+		270B773F2477B04D0024960F /* frame-6.png in Resources */ = {isa = PBXBuildFile; fileRef = 270B77282477B04D0024960F /* frame-6.png */; };
+		270B77402477B04D0024960F /* frame-2.png in Resources */ = {isa = PBXBuildFile; fileRef = 270B77292477B04D0024960F /* frame-2.png */; };
+		270B77412477B04D0024960F /* frame-18.png in Resources */ = {isa = PBXBuildFile; fileRef = 270B772A2477B04D0024960F /* frame-18.png */; };
+		270B77422477B04D0024960F /* frame-19.png in Resources */ = {isa = PBXBuildFile; fileRef = 270B772B2477B04D0024960F /* frame-19.png */; };
+		270B77432477B04D0024960F /* frame-3.png in Resources */ = {isa = PBXBuildFile; fileRef = 270B772C2477B04D0024960F /* frame-3.png */; };
+		270B77442477B04D0024960F /* frame-1.png in Resources */ = {isa = PBXBuildFile; fileRef = 270B772D2477B04D0024960F /* frame-1.png */; };
+		270B77452477B04D0024960F /* frame-0.png in Resources */ = {isa = PBXBuildFile; fileRef = 270B772E2477B04D0024960F /* frame-0.png */; };
+		270B77462477B04D0024960F /* frame-17.png in Resources */ = {isa = PBXBuildFile; fileRef = 270B772F2477B04D0024960F /* frame-17.png */; };
+		270B77472477B04D0024960F /* frame-16.png in Resources */ = {isa = PBXBuildFile; fileRef = 270B77302477B04D0024960F /* frame-16.png */; };
+		270B77482477B04D0024960F /* frame-14.png in Resources */ = {isa = PBXBuildFile; fileRef = 270B77312477B04D0024960F /* frame-14.png */; };
+		270B77492477B04D0024960F /* frame-15.png in Resources */ = {isa = PBXBuildFile; fileRef = 270B77322477B04D0024960F /* frame-15.png */; };
+		270B774A2477B04D0024960F /* frame-11.png in Resources */ = {isa = PBXBuildFile; fileRef = 270B77332477B04D0024960F /* frame-11.png */; };
+		270B774B2477B04D0024960F /* frame-10.png in Resources */ = {isa = PBXBuildFile; fileRef = 270B77342477B04D0024960F /* frame-10.png */; };
+		270B774C2477B04D0024960F /* frame-8.png in Resources */ = {isa = PBXBuildFile; fileRef = 270B77352477B04D0024960F /* frame-8.png */; };
+		270B774D2477B04D0024960F /* frame-12.png in Resources */ = {isa = PBXBuildFile; fileRef = 270B77362477B04D0024960F /* frame-12.png */; };
+		270B774E2477B04D0024960F /* frame-13.png in Resources */ = {isa = PBXBuildFile; fileRef = 270B77372477B04D0024960F /* frame-13.png */; };
+		270B774F2477B04D0024960F /* frame-9.png in Resources */ = {isa = PBXBuildFile; fileRef = 270B77382477B04D0024960F /* frame-9.png */; };
+		270B77522477B0900024960F /* download.png in Resources */ = {isa = PBXBuildFile; fileRef = 270B77502477B08F0024960F /* download.png */; };
+		270B77532477B0900024960F /* genrate.png in Resources */ = {isa = PBXBuildFile; fileRef = 270B77512477B0900024960F /* genrate.png */; };
+		2795FF03247251440085DFC3 /* TSIFormVC.h in Headers */ = {isa = PBXBuildFile; fileRef = 2795FF01247251440085DFC3 /* TSIFormVC.h */; };
+		2795FF04247251440085DFC3 /* TSIFormVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2795FF02247251440085DFC3 /* TSIFormVC.m */; };
 		38A6BFEB1EFD1D3F00537D62 /* ImageUploadFormViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 38A6BFE81EFD1D3F00537D62 /* ImageUploadFormViewController.h */; };
 		38A6BFEC1EFD1D3F00537D62 /* ImageUploadFormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38A6BFE91EFD1D3F00537D62 /* ImageUploadFormViewController.m */; };
 		38A6BFED1EFD1D3F00537D62 /* ImageUploadFormViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38A6BFEA1EFD1D3F00537D62 /* ImageUploadFormViewController.xib */; };
@@ -1114,6 +1143,35 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		270B771D24779BA60024960F /* CreditNotesVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreditNotesVC.m; sourceTree = "<group>"; };
+		270B771E24779BA60024960F /* CreditNotesVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreditNotesVC.h; sourceTree = "<group>"; };
+		270B77222477B04D0024960F /* frame-4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "frame-4.png"; sourceTree = "<group>"; };
+		270B77232477B04D0024960F /* frame-22.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "frame-22.png"; sourceTree = "<group>"; };
+		270B77242477B04D0024960F /* frame-5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "frame-5.png"; sourceTree = "<group>"; };
+		270B77252477B04D0024960F /* frame-7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "frame-7.png"; sourceTree = "<group>"; };
+		270B77262477B04D0024960F /* frame-21.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "frame-21.png"; sourceTree = "<group>"; };
+		270B77272477B04D0024960F /* frame-20.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "frame-20.png"; sourceTree = "<group>"; };
+		270B77282477B04D0024960F /* frame-6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "frame-6.png"; sourceTree = "<group>"; };
+		270B77292477B04D0024960F /* frame-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "frame-2.png"; sourceTree = "<group>"; };
+		270B772A2477B04D0024960F /* frame-18.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "frame-18.png"; sourceTree = "<group>"; };
+		270B772B2477B04D0024960F /* frame-19.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "frame-19.png"; sourceTree = "<group>"; };
+		270B772C2477B04D0024960F /* frame-3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "frame-3.png"; sourceTree = "<group>"; };
+		270B772D2477B04D0024960F /* frame-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "frame-1.png"; sourceTree = "<group>"; };
+		270B772E2477B04D0024960F /* frame-0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "frame-0.png"; sourceTree = "<group>"; };
+		270B772F2477B04D0024960F /* frame-17.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "frame-17.png"; sourceTree = "<group>"; };
+		270B77302477B04D0024960F /* frame-16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "frame-16.png"; sourceTree = "<group>"; };
+		270B77312477B04D0024960F /* frame-14.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "frame-14.png"; sourceTree = "<group>"; };
+		270B77322477B04D0024960F /* frame-15.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "frame-15.png"; sourceTree = "<group>"; };
+		270B77332477B04D0024960F /* frame-11.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "frame-11.png"; sourceTree = "<group>"; };
+		270B77342477B04D0024960F /* frame-10.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "frame-10.png"; sourceTree = "<group>"; };
+		270B77352477B04D0024960F /* frame-8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "frame-8.png"; sourceTree = "<group>"; };
+		270B77362477B04D0024960F /* frame-12.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "frame-12.png"; sourceTree = "<group>"; };
+		270B77372477B04D0024960F /* frame-13.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "frame-13.png"; sourceTree = "<group>"; };
+		270B77382477B04D0024960F /* frame-9.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "frame-9.png"; sourceTree = "<group>"; };
+		270B77502477B08F0024960F /* download.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = download.png; path = "Polycab Assests/assests/download.png"; sourceTree = SOURCE_ROOT; };
+		270B77512477B0900024960F /* genrate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = genrate.png; path = "Polycab Assests/assests/genrate.png"; sourceTree = SOURCE_ROOT; };
+		2795FF01247251440085DFC3 /* TSIFormVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TSIFormVC.h; sourceTree = "<group>"; };
+		2795FF02247251440085DFC3 /* TSIFormVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TSIFormVC.m; sourceTree = "<group>"; };
 		38A6BFE81EFD1D3F00537D62 /* ImageUploadFormViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageUploadFormViewController.h; sourceTree = "<group>"; };
 		38A6BFE91EFD1D3F00537D62 /* ImageUploadFormViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageUploadFormViewController.m; sourceTree = "<group>"; };
 		38A6BFEA1EFD1D3F00537D62 /* ImageUploadFormViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImageUploadFormViewController.xib; sourceTree = "<group>"; };
@@ -2317,6 +2375,54 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		270B771C24779B230024960F /* CreditNotes */ = {
+			isa = PBXGroup;
+			children = (
+				270B771E24779BA60024960F /* CreditNotesVC.h */,
+				270B771D24779BA60024960F /* CreditNotesVC.m */,
+			);
+			path = CreditNotes;
+			sourceTree = "<group>";
+		};
+		270B77212477B04D0024960F /* Spinner-0.8s-174px */ = {
+			isa = PBXGroup;
+			children = (
+				270B77222477B04D0024960F /* frame-4.png */,
+				270B77232477B04D0024960F /* frame-22.png */,
+				270B77242477B04D0024960F /* frame-5.png */,
+				270B77252477B04D0024960F /* frame-7.png */,
+				270B77262477B04D0024960F /* frame-21.png */,
+				270B77272477B04D0024960F /* frame-20.png */,
+				270B77282477B04D0024960F /* frame-6.png */,
+				270B77292477B04D0024960F /* frame-2.png */,
+				270B772A2477B04D0024960F /* frame-18.png */,
+				270B772B2477B04D0024960F /* frame-19.png */,
+				270B772C2477B04D0024960F /* frame-3.png */,
+				270B772D2477B04D0024960F /* frame-1.png */,
+				270B772E2477B04D0024960F /* frame-0.png */,
+				270B772F2477B04D0024960F /* frame-17.png */,
+				270B77302477B04D0024960F /* frame-16.png */,
+				270B77312477B04D0024960F /* frame-14.png */,
+				270B77322477B04D0024960F /* frame-15.png */,
+				270B77332477B04D0024960F /* frame-11.png */,
+				270B77342477B04D0024960F /* frame-10.png */,
+				270B77352477B04D0024960F /* frame-8.png */,
+				270B77362477B04D0024960F /* frame-12.png */,
+				270B77372477B04D0024960F /* frame-13.png */,
+				270B77382477B04D0024960F /* frame-9.png */,
+			);
+			path = "Spinner-0.8s-174px";
+			sourceTree = "<group>";
+		};
+		2795FF00247251090085DFC3 /* TSIFormVC */ = {
+			isa = PBXGroup;
+			children = (
+				2795FF01247251440085DFC3 /* TSIFormVC.h */,
+				2795FF02247251440085DFC3 /* TSIFormVC.m */,
+			);
+			path = TSIFormVC;
+			sourceTree = "<group>";
+		};
 		7875EE1A242491DC0044A491 /* SPACreateOrder */ = {
 			isa = PBXGroup;
 			children = (
@@ -3627,6 +3733,8 @@
 		F0224DF52141052200D9A6E2 /* Polycab Images */ = {
 			isa = PBXGroup;
 			children = (
+				270B77502477B08F0024960F /* download.png */,
+				270B77512477B0900024960F /* genrate.png */,
 				7875EE1724248D3D0044A491 /* doc_uploaded.png */,
 				F0B2FB57218851E1006A7C6B /* user_icon.png */,
 				F02903E62148F2B5007D2B2D /* default_file_upload.png */,
@@ -4252,6 +4360,7 @@
 		F088F5E42105DB3A000E26F4 /* SideBar Menus */ = {
 			isa = PBXGroup;
 			children = (
+				2795FF00247251090085DFC3 /* TSIFormVC */,
 				7875EE1A242491DC0044A491 /* SPACreateOrder */,
 				F03484D9221E8B53007E7653 /* Employee Sales Class */,
 				F0C4A0FD21B4F8BE00D7DF53 /* Employee Create Order */,
@@ -4318,6 +4427,8 @@
 		F0A358E820FC9EC300CE34AC /* Polycab */ = {
 			isa = PBXGroup;
 			children = (
+				270B77212477B04D0024960F /* Spinner-0.8s-174px */,
+				270B771C24779B230024960F /* CreditNotes */,
 				F00849A022770E94009E723C /* Push Notification Handler Class */,
 				F0B4256922671BAE0011D3E4 /* chatBox */,
 				F055728221AE862A00D1160C /* Dependent DropDown Class */,
@@ -4587,6 +4698,7 @@
 				F0FE2BA11F71406E00D8FCEF /* WebViewController.h in Headers */,
 				F088F6032105E587000E26F4 /* SalesComparisonLegend.h in Headers */,
 				8595B4F1190FCB790010C685 /* DVMonthYearPicker.h in Headers */,
+				270B772024779BA60024960F /* CreditNotesVC.h in Headers */,
 				F0B2FB36218850F5006A7C6B /* RMAVC2.h in Headers */,
 				9028B16C1994DBDF0027C3BD /* DownloadHistoryMenuView.h in Headers */,
 				905FFDBC1999EEBB00E95BFB /* iToast.h in Headers */,
@@ -4762,6 +4874,7 @@
 				F0B2FB38218850F5006A7C6B /* ReportQuantityValue.h in Headers */,
 				F033A0C220E637A000366E3B /* showInfoClaimVC.h in Headers */,
 				F088F61D21060C6D000E26F4 /* CreateSubUserVC.h in Headers */,
+				2795FF03247251440085DFC3 /* TSIFormVC.h in Headers */,
 				8569B92218E40BBE008D65F5 /* XmwHttpFileDownloader.h in Headers */,
 				857A3EE01A6CFC3500279931 /* FirstDashMTDView.h in Headers */,
 				7875EE0E2424845E0044A491 /* MultipleFileAttachmentView.h in Headers */,
@@ -4955,12 +5068,14 @@
 				F07CC7A320E0EB8B005917AC /* InvoiceView.xib in Resources */,
 				905FFDC7199A081300E95BFB /* downloadImage2.png in Resources */,
 				857F8C591A828CBD0018A54C /* logout_L@2x.png in Resources */,
+				270B774E2477B04D0024960F /* frame-13.png in Resources */,
 				F059CD38214F710600E303F6 /* proofofdelivery@3x.png in Resources */,
 				F02D14232119724D001B1967 /* PolycabHeader.xib in Resources */,
 				8530E0691AC05965001E5E79 /* ProductSearchVC.xib in Resources */,
 				85D7DAA218F749CB00CF7D94 /* plus_pressed.png in Resources */,
 				8500DCED1A78FE10002B534F /* ChartSlider.xib in Resources */,
 				F081179221916D0E00149035 /* 16-balanceconfirmation@3x.png in Resources */,
+				270B773C2477B04D0024960F /* frame-7.png in Resources */,
 				8558B3381D0730960017FA3A /* GoldCardSubFormVC.xib in Resources */,
 				850482401D2FD20100333C2C /* EditOrderSubFormVC-568h.xib in Resources */,
 				F032190F2106F5C600C24A34 /* CreateSubUserRoleVC.xib in Resources */,
@@ -4970,6 +5085,7 @@
 				F059CCEB214F70F600E303F6 /* 06-reports@2x.png in Resources */,
 				857A3EE81A6CFC3500279931 /* ForthDashView.xib in Resources */,
 				F088F5E32105DB12000E26F4 /* reveal-icon.png in Resources */,
+				270B77442477B04D0024960F /* frame-1.png in Resources */,
 				F081179321916D0E00149035 /* 15-feedbackfromcustomer@3x.png in Resources */,
 				85770BEC1EB750030038B65A /* proof_of_delivery@2x.png in Resources */,
 				85453902190F2B0F0023D0FC /* ReportVC4.xib in Resources */,
@@ -4997,6 +5113,7 @@
 				F059CCAB214F70D000E303F6 /* proofofdelivery.png in Resources */,
 				8579E71D174CD04700D7945F /* Default@2x.png in Resources */,
 				8579E71F174CD04700D7945F /* Default-568h@2x.png in Resources */,
+				270B77462477B04D0024960F /* frame-17.png in Resources */,
 				852A941B18F997D700F5DB5F /* checkedbox@2x.png in Resources */,
 				F059CCE7214F70F600E303F6 /* 02-mydetails@2x.png in Resources */,
 				F059CCAD214F70D000E303F6 /* polycab_logo1.png in Resources */,
@@ -5012,6 +5129,7 @@
 				85DB6AC41E634CB90018710B /* WideReportVC.xib in Resources */,
 				90E810B0174F451D003BDF77 /* back.png in Resources */,
 				F0B425AE22671C240011D3E4 /* chat_add.png in Resources */,
+				270B77392477B04D0024960F /* frame-4.png in Resources */,
 				F036CDF02282CBDA000F2448 /* close@3x.png in Resources */,
 				F088F61F21060C6D000E26F4 /* CreateSubUserVC.xib in Resources */,
 				F088F5D92105CCC0000E26F4 /* LaunchScreen.xib in Resources */,
@@ -5027,6 +5145,7 @@
 				F088F5F92105E587000E26F4 /* SalesComparisonChart.xib in Resources */,
 				F059CCED214F70F600E303F6 /* 08-stockmovement@2x.png in Resources */,
 				90E810B3174F451D003BDF77 /* closeButton.png in Resources */,
+				270B773E2477B04D0024960F /* frame-20.png in Resources */,
 				F081178E21916CFF00149035 /* 15-feedbackfromcustomer@2x.png in Resources */,
 				F02E3568221584DE0007573D /* OverduePieCellView.xib in Resources */,
 				85E738A81A8B9E2C00FADD4C /* popup_close.png in Resources */,
@@ -5040,12 +5159,16 @@
 				F031563721269F92005DE7F2 /* SearchProductByCatalogVC.xib in Resources */,
 				857F8C781A828D210018A54C /* logout@2x.png in Resources */,
 				F0E1A0D2213E48DD005F4435 /* SalesCell.xib in Resources */,
+				270B774A2477B04D0024960F /* frame-11.png in Resources */,
 				F02786CE20FDC60700096AFB /* notification1.png in Resources */,
 				F059CCA2214F70D000E303F6 /* 13-feedback.png in Resources */,
+				270B77422477B04D0024960F /* frame-19.png in Resources */,
+				270B77482477B04D0024960F /* frame-14.png in Resources */,
 				90E810B4174F451D003BDF77 /* ColoredSeparator.png in Resources */,
 				857F8C5C1A828CBD0018A54C /* notification_L.png in Resources */,
 				859F97201A9BB3160004BBAF /* blankDashIcon@2x.png in Resources */,
 				85284F7119D5FC600010ED87 /* XmwNotificationWebViewController.xib in Resources */,
+				270B774B2477B04D0024960F /* frame-10.png in Resources */,
 				85FBB0671A9EF9B900E962D6 /* pause.png in Resources */,
 				F0B4259622671C240011D3E4 /* ChatThreadCell.xib in Resources */,
 				F059CC95214F70D000E303F6 /* polycab_image.png in Resources */,
@@ -5081,6 +5204,7 @@
 				85D992661D2B9884003AEBBE /* edit_order@2x.png in Resources */,
 				F059CC93214F70D000E303F6 /* polycab_menu.png in Resources */,
 				858F05051DEED0F200398D46 /* Icon_search@2x.png in Resources */,
+				270B77522477B0900024960F /* download.png in Resources */,
 				F04B2F3A20FF2AAE00E6120A /* SWReavelViewController.xib in Resources */,
 				F05D9A6220F332A3007BB9A8 /* MyClaimResponseView.xib in Resources */,
 				85CBEA51195AD1F6004D0050 /* top_banner@2x.png in Resources */,
@@ -5107,7 +5231,9 @@
 				F059CD27214F710600E303F6 /* 08-stockmovement@3x.png in Resources */,
 				851D93B21A81333900C61982 /* DotDualAxisHBarChart.xib in Resources */,
 				857F8C651A828CE00018A54C /* menus.json in Resources */,
+				270B774F2477B04D0024960F /* frame-9.png in Resources */,
 				F059CCEF214F70F600E303F6 /* 10-testreports@2x.png in Resources */,
+				270B773F2477B04D0024960F /* frame-6.png in Resources */,
 				852BC2E81A89973D00102963 /* default_hum.png in Resources */,
 				857A3EF01A6CFC3500279931 /* my_details.png in Resources */,
 				856DC9E01D06613700B7F48E /* EditOrderVC.xib in Resources */,
@@ -5119,6 +5245,7 @@
 				85F9D7E319E8AF3F000413B0 /* radio-off@2x.png in Resources */,
 				8595B4FC191004120010C685 /* DVCalendarController.xib in Resources */,
 				F0A358F820FC9F1400CE34AC /* Logo.jpg in Resources */,
+				270B77412477B04D0024960F /* frame-18.png in Resources */,
 				F0644114211020F4005C5540 /* FeedbackFormCustomerVC.xib in Resources */,
 				F059CCD4214F70F600E303F6 /* calendar@2x.png in Resources */,
 				F0B2FB19218850F5006A7C6B /* ReportQuantityValueTableCell.xib in Resources */,
@@ -5168,6 +5295,7 @@
 				857F8C571A828CBD0018A54C /* forgot_password_L@2x.png in Resources */,
 				905FFDBE1999EEBB00E95BFB /* LICENSE.txt in Resources */,
 				F059CCE3214F70F600E303F6 /* cart@2x.png in Resources */,
+				270B77402477B04D0024960F /* frame-2.png in Resources */,
 				F059CCD9214F70F600E303F6 /* polycab_logo1@2x.png in Resources */,
 				F059CD30214F710600E303F6 /* polycab_logo1@3x.png in Resources */,
 				905FFDC8199A081300E95BFB /* downloadImage3.png in Resources */,
@@ -5210,6 +5338,7 @@
 				F059CCA6214F70D000E303F6 /* blackeyeicon.png in Resources */,
 				F022CA2C211AFCEC0048DEAD /* SalesAggregateCollectionView.xib in Resources */,
 				F08F14D521C2592C00B48A04 /* OverDueCollectionView.xib in Resources */,
+				270B773B2477B04D0024960F /* frame-5.png in Resources */,
 				F059CCE5214F70F600E303F6 /* polycab_image@2x.png in Resources */,
 				857F8C791A828D210018A54C /* my_details@2x.png in Resources */,
 				904053FD1754C61400203856 /* FormVC.xib in Resources */,
@@ -5220,9 +5349,11 @@
 				857A3EF91A6CFC3500279931 /* SixDashView.xib in Resources */,
 				85F9D7E019E8AEF7000413B0 /* plus_normal@2x.png in Resources */,
 				90E064481758B9DC00C13B78 /* ReportVC.xib in Resources */,
+				270B77492477B04D0024960F /* frame-15.png in Resources */,
 				F0C4A10321B4F8FF00D7DF53 /* EmployeeCreateOrderVC.xib in Resources */,
 				F0B425D3226734550011D3E4 /* Artboard@3x.png in Resources */,
 				85DB6ABC1E6337C00018710B /* zbar-back.png in Resources */,
+				270B77532477B0900024960F /* genrate.png in Resources */,
 				F059CD1F214F710600E303F6 /* polycab_notification@3x.png in Resources */,
 				857F8C601A828CBD0018A54C /* report_L.png in Resources */,
 				90F4E00E175C4EEB005FE7D7 /* MenuVC.xib in Resources */,
@@ -5270,6 +5401,7 @@
 				85D9926C1D2B9894003AEBBE /* edit_order_L.png in Resources */,
 				F058021D221D7DE100682D07 /* polycab_loading_logo@3x.png in Resources */,
 				F0B2FB2B218850F5006A7C6B /* CustomCompareReportVC.xib in Resources */,
+				270B773A2477B04D0024960F /* frame-22.png in Resources */,
 				852A941818F997D700F5DB5F /* checkbox.png in Resources */,
 				F088F5FB2105E587000E26F4 /* SalesIncentiveLegend.xib in Resources */,
 				85770BF01EB750210038B65A /* proof_of_delivery_L@1x.png in Resources */,
@@ -5311,6 +5443,7 @@
 				859F971F1A9BB3160004BBAF /* blankDashIcon.png in Resources */,
 				F059CC99214F70D000E303F6 /* 04-requestanorder.png in Resources */,
 				F038EF4F2150EFF200AFB080 /* BalanceConfirmationVC.xib in Resources */,
+				270B774D2477B04D0024960F /* frame-12.png in Resources */,
 				F088F5FD2105E587000E26F4 /* SalesIncentiveItemPopup.xib in Resources */,
 				F0A8EA7C211D6A2C001C4FAD /* CreateOrderVC1.xib in Resources */,
 				F0B2FB4B218850F5006A7C6B /* ReportQuantityValue.xib in Resources */,
@@ -5329,6 +5462,7 @@
 				F033A0C420E637A000366E3B /* showInfoClaimVC.xib in Resources */,
 				857A3ED61A6CFC3500279931 /* category-menu-selected.png in Resources */,
 				85804F3D1A69166F0093CDBB /* DotVerticalBarCell.xib in Resources */,
+				270B77452477B04D0024960F /* frame-0.png in Resources */,
 				F059CCA0214F70D000E303F6 /* 11-policies.png in Resources */,
 				8530E0781AC2AABA001E5E79 /* refresh@2x.png in Resources */,
 				90F47F551796B47500C6B76C /* HavellsMenuScreenVC.xib in Resources */,
@@ -5338,7 +5472,9 @@
 				F059CCA9214F70D000E303F6 /* downarrow.png in Resources */,
 				F059CC97214F70D000E303F6 /* 02-mydetails.png in Resources */,
 				F04B2F4620FF2B3D00E6120A /* LeftViewVC.xib in Resources */,
+				270B77472477B04D0024960F /* frame-16.png in Resources */,
 				85D5DA6D18E6F60700BE344F /* havells_120x120.png in Resources */,
+				270B774C2477B04D0024960F /* frame-8.png in Resources */,
 				857F8C5A1A828CBD0018A54C /* my_details_L.png in Resources */,
 				F0580217221D7D8500682D07 /* polycab_loading_logo.png in Resources */,
 				F02E354C221576040007573D /* OverduePieView.xib in Resources */,
@@ -5398,6 +5534,7 @@
 				F0B425AD22671C240011D3E4 /* avatar_filled.png in Resources */,
 				F0302BBF2229269800F73808 /* password@3x.png in Resources */,
 				F059CC8F214F70D000E303F6 /* crossicon.png in Resources */,
+				270B77432477B04D0024960F /* frame-3.png in Resources */,
 				85C93EBB1ABC191F00B8EE17 /* refresh.png in Resources */,
 				F059CC98214F70D000E303F6 /* 03-order.png in Resources */,
 				857F8C5D1A828CBD0018A54C /* notification_L@2x.png in Resources */,
@@ -5406,6 +5543,7 @@
 				F038EF3F2150C1C400AFB080 /* polycab_arrow_open.png in Resources */,
 				F088F60F2105F683000E26F4 /* ManageSubUserScrennFlow2nd.xib in Resources */,
 				85AB146D1A727E4400045409 /* notification.png in Resources */,
+				270B773D2477B04D0024960F /* frame-21.png in Resources */,
 				902416F91802DBC8000BCC7C /* RecentRequestController.xib in Resources */,
 				85FBB0661A9EF9B900E962D6 /* flip.png in Resources */,
 				F038EF432150C2B200AFB080 /* polycab_arrow_open@2x.png in Resources */,
@@ -5550,6 +5688,7 @@
 				F04B2F4520FF2B3D00E6120A /* LeftViewVC.m in Sources */,
 				858082B41A5D8A8A00207EAB /* DotLIneChart.m in Sources */,
 				855342371D04482300741B18 /* XMWTableFormDelegate.m in Sources */,
+				270B771F24779BA60024960F /* CreditNotesVC.m in Sources */,
 				85E245FC19D98CB90052A4D5 /* NotificationRequestItem.m in Sources */,
 				F058020D221D2E3200682D07 /* PolycabSearchViewController.m in Sources */,
 				F04D564A2100622000FF6CA8 /* MyDetailsVC.m in Sources */,
@@ -5702,6 +5841,7 @@
 				857A3EC91A6CFC3500279931 /* DotMenuObject.m in Sources */,
 				90001756180D45600002F464 /* TimePickerViewController.m in Sources */,
 				F0B2FB45218850F5006A7C6B /* SearchProductListVC.m in Sources */,
+				2795FF04247251440085DFC3 /* TSIFormVC.m in Sources */,
 				85AC9666198FFDDF00AC0338 /* ReportSubheaderSection.m in Sources */,
 				8595B4EA190FCB790010C685 /* DVDateCell.m in Sources */,
 				90182A351767287100B401E5 /* DotFormDraw.m in Sources */,
@@ -5903,7 +6043,7 @@
 					"$(PROJECT_DIR)/RLMFramework/Alamofire.framework",
 					"$(PROJECT_DIR)/RLMFramework/SwiftyJSON.framework",
 				);
-				MARKETING_VERSION = 7.7;
+				MARKETING_VERSION = 8.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.polycab.xmw.employee.ent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -5945,7 +6085,7 @@
 					"$(PROJECT_DIR)/RLMFramework/SwiftyJSON.framework",
 					"$(PROJECT_DIR)/RLMFramework/Alamofire.framework",
 				);
-				MARKETING_VERSION = 7.7;
+				MARKETING_VERSION = 8.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PRODUCT_BUNDLE_IDENTIFIER = com.polycab.xmw.employee.ent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -6082,7 +6222,7 @@
 				INFOPLIST_FILE = PushNotificationExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				MARKETING_VERSION = 7.7;
+				MARKETING_VERSION = 8.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.polycab.xmw.employee.ent.exten;
@@ -6123,7 +6263,7 @@
 				INFOPLIST_FILE = PushNotificationExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				MARKETING_VERSION = 7.7;
+				MARKETING_VERSION = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.polycab.xmw.employee.ent.exten;

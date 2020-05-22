@@ -17,9 +17,16 @@
 
 
 @protocol DrilldownControlDelegate <NSObject>
+
 -(void) handleDrilldownForRow:(NSInteger) rowIndex withRowData:(NSArray*) rowData;
+
 @end
 
+@protocol CustomRenderDelegate <NSObject>
+
+-(void) renderElement:(DotReportElement*) element row:(NSInteger) rowIndex col:(NSInteger) colIndex data:(NSString*) text view:(UIView*) view;
+
+@end
 
 @interface ReportVC : UIViewController <HttpEventListener>
 {
@@ -67,6 +74,10 @@
 
 // for PowerPlus, need custom drilldown handler concept
 @property (nonatomic, assign) id<DrilldownControlDelegate> drilldownDelegate;
+
+// Pradeep: for many reports we want to add some button, and action rather just showing the data
+@property (nonatomic, assign) id<CustomRenderDelegate> customRenderDelegate;
+
 
 
 -(id) initWithDocIds:(NSMutableArray *)_docIdData;

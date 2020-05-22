@@ -469,6 +469,20 @@
             firstCol.tag = firstColTag;
             x = x + columnWidth;
             [rowView  addSubview: firstCol];
+        } else if ([[elementType objectAtIndex:i] isEqualToString:XmwcsConst_DRE_COLUMN_TYPE_CUSTOM_COLUMN])
+        {
+            firstCol = [[UIView alloc] initWithFrame:CGRectMake(x, 0, columnWidth, height)];
+            firstCol.tag = firstColTag;
+            firstCol.backgroundColor = [UIColor clearColor];
+            
+            UIView* innerView = [[UIView alloc] initWithFrame:CGRectMake(2,1.5, columnWidth - 2, height-1)];
+            innerView.tag = indexPath.row;
+            innerView.backgroundColor = [UIColor colorWithRed:236.0/255 green:236.0/255 blue:236.0/255 alpha:1.0];
+            
+            [firstCol addSubview:innerView];
+                        
+            x = x + columnWidth;
+            [rowView  addSubview: firstCol];
         }
     }
 //    NSLog(@"Row %ld height %f",(long)indexPath.row,rowView.frame.size.height);
@@ -643,6 +657,17 @@
             
             firstCol = [dataCell viewWithTag:firstColTag];
             // we need to set open close here hooks here
+            
+        } else if ([[elementType objectAtIndex:i] isEqualToString:XmwcsConst_DRE_COLUMN_TYPE_CUSTOM_COLUMN]) {
+            firstCol = [dataCell viewWithTag:firstColTag];
+            
+            DotReportElement* dotReportElement = [reportElements objectForKey:[elementId objectAtIndex:i]];
+            
+            if(self.reportVC.customRenderDelegate!=nil) {
+                if([self.reportVC.customRenderDelegate respondsToSelector:@selector(renderElement:row:col:data:view:)]) {
+                    [self.reportVC.customRenderDelegate renderElement:dotReportElement row:indexPath.row col:i data:[row objectAtIndex:i] view:firstCol];
+                }
+            }
             
         }
        

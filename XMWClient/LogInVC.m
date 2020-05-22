@@ -881,6 +881,8 @@ NSString *chatPersonUserID;
         XmwcsConst_OPCODE_URL = XmwcsConst_SERVICE_URL_OPCODE_SERVICE_DEV;
         XmwcsConst_FILE_UPLOAD_URL = XmwcsConst_SERVICE_URL_FILE_UPLOAD_SERVICE_DEV;
         XmwcsConst_CHAT_URL =XmwcsConst_SERVICE_URL_CHAT_SERVICE_DEV;
+        XmwcsConst_DEALER_OPCODE_URL = XmwcsConst_DEALER_OPCODE_URL_DEV;
+        
     } else if([currentServerStr isEqualToString:@"QA"]) {
         XmwcsConst_SERVICE_URL = XmwcsConst_SERVICE_URL_DEMO;
         XmwcsConst_SERVICE_URL_NOTIFY_CONTEXT = XmwcsConst_SERVICE_URL_NOTIFY_CONTEXT_DEMO;
@@ -890,6 +892,8 @@ NSString *chatPersonUserID;
         XmwcsConst_OPCODE_URL = XmwcsConst_SERVICE_URL_OPCODE_SERVICE_DEMO;
         XmwcsConst_FILE_UPLOAD_URL =XmwcsConst_SERVICE_URL_FILE_UPLOAD_SERVICE_DEMO;
         XmwcsConst_CHAT_URL =XmwcsConst_SERVICE_URL_CHAT_SERVICE_DEMO;
+        XmwcsConst_DEALER_OPCODE_URL = XmwcsConst_DEALER_OPCODE_URL_DEMO;
+        
     } else {
         // also set production server URLs here.
         XmwcsConst_SERVICE_URL = XmwcsConst_SERVICE_URL_PROD;
@@ -900,6 +904,8 @@ NSString *chatPersonUserID;
         XmwcsConst_OPCODE_URL = XmwcsConst_SERVICE_URL_OPCODE_SERVICE_PROD;
         XmwcsConst_FILE_UPLOAD_URL = XmwcsConst_SERVICE_URL_FILE_UPLOAD_SERVICE_PROD;
         XmwcsConst_CHAT_URL =XmwcsConst_SERVICE_URL_CHAT_SERVICE_PROD;
+        
+        XmwcsConst_DEALER_OPCODE_URL = XmwcsConst_DEALER_OPCODE_URL_PROD;
     }
 }
 
@@ -931,6 +937,9 @@ NSString *chatPersonUserID;
     // for WideReportVC
     [clientVariables registerReportVCClass:@"WideReportVC" forId:@"DOT_REPORT_SALES_ORDER_PENDENCY_DW"];
     
+    
+    // for Credit Notes
+    [clientVariables registerReportVCClass:@"CreditNotesVC" forId:@"DOT_REPORT_CREDIT_NOTES"];
     
 }
 
@@ -978,6 +987,10 @@ NSString *chatPersonUserID;
      [clientVariables registerFormVCClass:@"EmployeeSalesFormVC" forId:@"DOT_FORM_BU_SALES_CUSTOMER_WISE"];
     
      [clientVariables registerFormVCClass:@"EmployeeSalesFormVC" forId:@"DOT_FORM_CUSTOMER_WISE_SALES"];
+    
+    
+    [clientVariables registerFormVCClass:@"TSIFormVC" forId:@"DOT_FORM_CREDIT_NOTES"];
+    
     
 /////////////////////////////
     

@@ -25,14 +25,19 @@ int const XmwcsConst_SORT_AS_STRING =  2;
 //forgot password at login screen
 NSString *const  XmwcsConst_FORGOT_PWD_USER_ID = @"USER_ID";
 NSString *const  XmwcsConst_FORGOT_PWD_MODULE_ID = @"MODULE_ID";
+
 NSString* XmwcsConst_SERVICE_UPDATE_DROPDOWM_URL_NOTIFY_CONTEXT=@"https://pconnect.polycab.com:443/xmwpolycab/store";
 NSString* XmwcsConst_SERVICE_URL = @"https://pconnect.polycab.com:443/xmwpolycab/feed";
 NSString* XmwcsConst_SERVICE_URL_NOTIFY_CONTEXT = @"https://pconnect.polycab.com:443/xmwpolycab/nms";
 NSString* XmwcsConst_PRODUCT_TREE_SERVICE_URL = @"https://pconnect.polycab.com:443/xmwpolycab/productsearch";
 NSString* XmwcsConst_SERVICE_URL_APP_CONTROL = @"https://pconnect.polycab.com:443/xmwpolycab/appControl";
 NSString* XmwcsConst_SERVICE_URL_DEAL_STORE = @"https://pconnect.polycab.com:443/xmwpolycab/deal/home.html";
+
 NSString* XmwcsConst_OPCODE_URL  = @"https://pconnect.polycab.com:443/xmwpolycab/jsonservice";
 NSString* XmwcsConst_FILE_UPLOAD_URL  = @"https://pconnect.polycab.com:443/xmwpolycab/xmwfileupload";
+NSString* XmwcsConst_DEALER_OPCODE_URL = @"https://pconnect.polycab.com:443/pcdealer/jsonservice";
+
+
 NSString* const XmwcsConst_DEMO_USER = @"testuser";
 NSString* const XmwcsConst_DEMO_USER_MAPPED = @"111152";
 NSString* XmwcsConst_CHAT_URL =@"https://pconnect.polycab.com:443/";
@@ -47,6 +52,8 @@ NSString* const XmwcsConst_SERVICE_URL_DEAL_STORE_PROD = @"https://pconnect.poly
 NSString* const XmwcsConst_SERVICE_URL_OPCODE_SERVICE_PROD = @"https://pconnect.polycab.com:443/xmwpolycab/jsonservice";
 NSString *const XmwcsConst_SERVICE_URL_FILE_UPLOAD_SERVICE_PROD= @"https://pconnect.polycab.com:443/xmwpolycab/xmwfileupload";
 NSString *const XmwcsConst_SERVICE_URL_CHAT_SERVICE_PROD =@"https://pconnect.polycab.com:443/";
+NSString* XmwcsConst_DEALER_OPCODE_URL_PROD = @"https://pconnect.polycab.com:443/pcdealer/jsonservice";
+
 
 
 
@@ -60,6 +67,8 @@ NSString* const XmwcsConst_SERVICE_URL_DEAL_STORE_DEMO = @"http://polycab.dotvik
 NSString* const XmwcsConst_SERVICE_URL_OPCODE_SERVICE_DEMO = @"http://polycab.dotvik.com:8080/xmwpolycab/jsonservice";
 NSString *const XmwcsConst_SERVICE_URL_FILE_UPLOAD_SERVICE_DEMO= @"http://polycab.dotvik.com:8080/xmwpolycab/xmwfileupload";
 NSString *const XmwcsConst_SERVICE_URL_CHAT_SERVICE_DEMO =@"http://polycab.dotvik.com:8080/";
+NSString* XmwcsConst_DEALER_OPCODE_URL_DEMO = @"http://polycab.dotvik.com:8080/pcdealer/jsonservice";
+
 
 // DEV is same on QA but port is different
 NSString* const XmwcsConst_SERVICE_URL_DEV = @"http://polycab.dotvik.com:8080/xmwpolycab/feed";
@@ -70,6 +79,8 @@ NSString* const XmwcsConst_SERVICE_URL_DEAL_STORE_DEV = @"http://polycab.dotvik.
 NSString* const XmwcsConst_SERVICE_URL_OPCODE_SERVICE_DEV = @"http://polycab.dotvik.com:8080/xmwpolycab/jsonservice";
 NSString *const XmwcsConst_SERVICE_URL_FILE_UPLOAD_SERVICE_DEV= @"http://polycab.dotvik.com:8080/xmwpolycab/xmwfileupload";
 NSString *const XmwcsConst_SERVICE_URL_CHAT_SERVICE_DEV =@"http://polycab.dotvik.com:8080/";
+NSString* XmwcsConst_DEALER_OPCODE_URL_DEV = @"http://polycab.dotvik.com:8080/pcdealer/jsonservice";
+
 
 #else
 
@@ -81,7 +92,9 @@ NSString* const XmwcsConst_SERVICE_URL_APP_CONTROL_PROD = @"http://polycab.dotvi
 NSString* const XmwcsConst_SERVICE_URL_DEAL_STORE_PROD = @"http://polycab.dotvik.com:8080/xmwpolycab/deal/home.html";
 NSString* const XmwcsConst_SERVICE_URL_OPCODE_SERVICE_PROD =  @"http://polycab.dotvik.com:8080/xmwpolycab/jsonservice";
 NSString *const XmwcsConst_SERVICE_URL_FILE_UPLOAD_SERVICE_PROD= @"http://polycab.dotvik.com:8080/xmwpolycab/xmwfileupload";
-NSString *const XmwcsConst_SERVICE_URL_CHAT_SERVICE_PROD =@"http://polycab.dotvik.com:8080/";
+NSString *const XmwcsConst_SERVICE_URL_CHAT_SERVICE_PROD = @"http://polycab.dotvik.com:8080/";
+NSString* const XmwcsConst_DEALER_OPCODE_URL_PROD = @"http://polycab.dotvik.com:8080/pcdealer/jsonservice";
+
 
 ////check
 //NSString*  XmwcsConst_OPCODE_URL  = @"http://polycab.dotvik.com:8080/pcdealer/jsonservice";
@@ -97,6 +110,7 @@ NSString* const XmwcsConst_SERVICE_URL_DEAL_STORE_DEMO = @"http://polycab.dotvik
 NSString* const XmwcsConst_SERVICE_URL_OPCODE_SERVICE_DEMO = @"http://polycab.dotvik.com:8080/xmwpolycab/jsonservice";
 NSString *const XmwcsConst_SERVICE_URL_FILE_UPLOAD_SERVICE_DEMO= @"http://polycab.dotvik.com:8080/xmwpolycab/xmwfileupload";
 NSString *const XmwcsConst_SERVICE_URL_CHAT_SERVICE_DEMO =@"http://polycab.dotvik.com:8080/";
+NSString* const XmwcsConst_DEALER_OPCODE_URL_DEMO = @"http://polycab.dotvik.com:8080/pcdealer/jsonservice";
 
 
 // For connects to DEV server
@@ -108,12 +122,13 @@ NSString* const XmwcsConst_SERVICE_URL_DEAL_STORE_DEV = @"http://polycab.dotvik.
 NSString* const XmwcsConst_SERVICE_URL_OPCODE_SERVICE_DEV = @"http://polycab.dotvik.com:8080/xmwpolycab/jsonservice";
 NSString *const XmwcsConst_SERVICE_URL_FILE_UPLOAD_SERVICE_DEV= @"http://polycab.dotvik.com:8080/xmwpolycab/xmwfileupload";
 NSString *const XmwcsConst_SERVICE_URL_CHAT_SERVICE_DEV =@"http://polycab.dotvik.com:8080/";
+NSString* const XmwcsConst_DEALER_OPCODE_URL_DEV = @"http://polycab.dotvik.com:8080/pcdealer/jsonservice";
 
 #endif
 
 
 NSString *const XmwcsConst_HAVELLS_TRAVELLER_URL = @"http://polycab.dotvik.com/servlet/traveler";
-NSString *const  XmwcsConst_MKONNECT_FAQ_URL = @"http://polycab.dotvik.com:8080/xmwcshavells/faq.html";
+NSString *const  XmwcsConst_MKONNECT_FAQ_URL = @"http://polycab.dotvik.com:8080/xmwpolycab/faq.html";
 
 
 
@@ -245,6 +260,9 @@ NSString *const XmwcsConst_DRE_COLUMN_TYPE_EXPAND  = @"EXPAND";
 NSString *const XmwcsConst_DRE_COLUMN_TYPE_SPEC_CHAR_IND = @"SPEC_CHAR_IND";
 NSString *const XmwcsConst_DRE_COLUMN_TYPE_CURRENT_DATE_TIME  = @"CURRENT_DATE_TIME";
 NSString *const XmwcsConst_DRE_COLUMN_TYPE_URL = @"URL";
+NSString *const XmwcsConst_DRE_COLUMN_TYPE_LABEL  = @"LABEL";
+NSString *const XmwcsConst_DRE_COLUMN_TYPE_CUSTOM_COLUMN  = @"CUSTOM_COLUMN";
+
 
 
 
