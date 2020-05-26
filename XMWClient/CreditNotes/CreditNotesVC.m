@@ -64,7 +64,11 @@
     
 }
 
-
+-(void) makeReportScreenV2
+{
+    self.searchBar.frame = CGRectMake(0, 0, 0, 0);
+    [super makeReportScreenV2];
+}
 
 
 
