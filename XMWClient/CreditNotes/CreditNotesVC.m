@@ -337,7 +337,7 @@
         // message format is Regenerate Request created: <Some Number>
         
         if(apiMessage!=nil && [apiMessage containsString:@"Regenerate Request"]) {
-            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:@"Your Credit Note PDF request is queued." preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Polycab" message:@"Credit Note PDF generation request is in process." preferredStyle:UIAlertControllerStyleAlert];
             
             UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleDefault
                 handler:^(UIAlertAction * action)
@@ -370,7 +370,7 @@
     } else {
         
         if(apiMessage!=nil && [apiMessage length]>0) {
-             UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:apiMessage preferredStyle:UIAlertControllerStyleAlert];
+             UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Polycab" message:apiMessage preferredStyle:UIAlertControllerStyleAlert];
                 
             UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleDefault
                         handler:^(UIAlertAction * action)

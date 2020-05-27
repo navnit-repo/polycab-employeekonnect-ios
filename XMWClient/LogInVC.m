@@ -186,19 +186,29 @@ NSString *chatPersonUserID;
 }
 -(void)autoLogin
 {
-        //for auto login if user already loggedIn
-        NSString* isChecked = [[NSUserDefaults standardUserDefaults] objectForKey:@"ISCHECKED"];
-          if (isChecked !=nil &&[isChecked isEqualToString:@"YES"]) {
-              KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:XmwcsConst_KEYCHAIN_IDENTIFIER accessGroup:nil];
+    // if server under maintenence
+    NSString* maintenenceFlag = [[NSUserDefaults standardUserDefaults] objectForKey:@"SERVER_UNDER_MAINTENANCE"];
     
-              NSString* username = [keychainItem objectForKey:kSecAttrAccount];
-              NSString* password = [[NSString alloc] initWithData:[keychainItem objectForKey:kSecValueData] encoding:NSUTF8StringEncoding];
-              NSLog(@"UserId :- %@",username);
-              NSLog(@"Password :- %@",password);
+    //for auto login if user already loggedIn
+    NSString* isChecked = [[NSUserDefaults standardUserDefaults] objectForKey:@"ISCHECKED"];
     
-            self.userName.text =username;
-            self.password.text =password;
-            [self signInButton:self];
+      if (isChecked !=nil &&[isChecked isEqualToString:@"YES"]) {
+          KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:XmwcsConst_KEYCHAIN_IDENTIFIER accessGroup:nil];
+
+          NSString* username = [keychainItem objectForKey:kSecAttrAccount];
+          NSString* password = [[NSString alloc] initWithData:[keychainItem objectForKey:kSecValueData] encoding:NSUTF8StringEncoding];
+          NSLog(@"UserId :- %@",username);
+          NSLog(@"Password :- %@",password);
+
+        self.userName.text =username;
+        self.password.text =password;
+          
+          if(maintenenceFlag!=nil && [maintenenceFlag isEqualToString:@"YES"]) {
+              NSLog(@"Server flag under maintenance is YES");
+          } else {
+              [self signInButton:self];
+          }
+            
         }
     
 }

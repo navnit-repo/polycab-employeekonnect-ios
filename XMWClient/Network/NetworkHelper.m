@@ -263,6 +263,10 @@ NSString *g_DeviceSessionId = nil;
     if(responseHandler != nil ) {
         if([networkReqResObj isKindOfClass:[JSONNetworkRequestData class]]) {
             if( [networkReqResObj.status compare:@"SUCCESS" options:NSCaseInsensitiveSearch]==0) {
+                
+                [[NSUserDefaults standardUserDefaults] setObject:@"NO" forKey:@"SERVER_UNDER_MAINTENANCE"];
+                [[NSUserDefaults standardUserDefaults]  synchronize];
+
                 if([responseHandler respondsToSelector:@selector(httpResponseObjectHandler:::)]) {
                     [responseHandler httpResponseObjectHandler:xmwRequestCallname : networkReqResObj.responseData :xmwRequestObject];
                 }
@@ -288,8 +292,14 @@ NSString *g_DeviceSessionId = nil;
                     NSString* line = [parts objectAtIndex:i];
                     NSArray* keyVal = [line componentsSeparatedByString:@":"];
                     
-                    if([keyVal count]==2) {
+                                        if([keyVal count]==1) {
+                        [failDataDict setObject:[keyVal objectAtIndex:0] forKey:[keyVal objectAtIndex:0]];
+                    } else if([keyVal count]==2) {
                          [failDataDict setObject:[keyVal objectAtIndex:1] forKey:[keyVal objectAtIndex:0]];
+                    } else if([keyVal count]>2) {
+                        NSUInteger location = [line rangeOfString:@":"].location + 1;
+                        NSString* otherPart = [line substringFromIndex:location];
+                        [failDataDict setObject:otherPart forKey:[keyVal objectAtIndex:0]];
                     }
                 }
                 [self serverFailMessageHandler:failDataDict];
@@ -299,7 +309,7 @@ NSString *g_DeviceSessionId = nil;
                     // API call is not authorized :==> No auth Token Found." ERROR HANDLING
                     if ([[networkReqResObj valueForKey:@"message"] isEqualToString:@"API call is not authorized :==> No auth Token Found."]) {
                         dispatch_async(dispatch_get_main_queue(), ^{
-                            [self defaultSeccionExpireHandler];
+                            [self defaultSessionExpireHandler];
                         });
         
                     }
@@ -316,28 +326,41 @@ NSString *g_DeviceSessionId = nil;
 
 -(void) serverFailMessageHandler:(NSDictionary*) failDataDict
 {
-    NSString* errorType = [failDataDict objectForKey:@"ERROR_TYPE"];
+       NSString* errorType = [failDataDict objectForKey:@"ERROR_TYPE"];
        NSString* errorSubType = [failDataDict objectForKey:@"ERROR_SUB_TYPE"];
        NSString* errorMessage = [failDataDict objectForKey:@"ERROR_MSG"];
        
        if(errorType!=nil && [errorType isEqualToString:@"3"]) {
-            if(errorSubType!=nil && [errorSubType isEqualToString:@"3"]) {
-                // session Expired
-                g_DeviceSessionId = nil;
-                // we need to remove all module context
-                NSString* context = [DVAppDelegate currentModuleContext];
-                while(![context isEqualToString:@""]) {
-                    [ClientVariable removeInstance: context];
-                    [DVAppDelegate popModuleContext];
-                    context = [DVAppDelegate currentModuleContext];
-                }
-                if([responseHandler respondsToSelector:@selector(httpServerSessionExpired)]) {
-                    [responseHandler httpServerSessionExpired];
-                    return;
-                } else {
-                    [self defaultSeccionExpireHandler];
-                    return;
-                }
+           if(errorSubType!=nil) {
+                
+               if([errorSubType isEqualToString:@"3"]) {
+                    // session Expired
+                    g_DeviceSessionId = nil;
+                    // we need to remove all module context
+                    NSString* context = [DVAppDelegate currentModuleContext];
+                    while(![context isEqualToString:@""]) {
+                        [ClientVariable removeInstance: context];
+                        [DVAppDelegate popModuleContext];
+                        context = [DVAppDelegate currentModuleContext];
+                    }
+                    if([responseHandler respondsToSelector:@selector(httpServerSessionExpired)]) {
+                        [responseHandler httpServerSessionExpired];
+                        return;
+                    } else {
+                        [self defaultSessionExpireHandler];
+                        return;
+                    }
+               } else if([errorSubType isEqualToString:@"13"]) {
+                   // maintainenance
+                   [[NSUserDefaults standardUserDefaults] setObject:@"YES" forKey:@"SERVER_UNDER_MAINTENANCE"];
+                   [[NSUserDefaults standardUserDefaults]  synchronize];
+                   
+                   if([responseHandler respondsToSelector:@selector(httpFailureHandler::)]) {
+                       [responseHandler httpFailureHandler:xmwRequestCallname : errorMessage];
+                   } else {
+                       [self serverUnderMaintenance:errorMessage];
+                   }
+               }
             } else {
                 if(errorMessage!=nil && [errorMessage length]>0) {
                     if([responseHandler respondsToSelector:@selector(httpFailureHandler::)]) {
@@ -366,7 +389,7 @@ NSString *g_DeviceSessionId = nil;
        }
 }
 
--(void) makeXmwNetworkCall : (id) requestObject : (id <HttpEventListener>) responseListener : (NSString *)in_SessionId: (NSString*) callName
+-(void) makeXmwNetworkCall:(id) requestObject :(id <HttpEventListener>) responseListener :(NSString *)in_SessionId :(NSString*) callName
 {
     xmwRequestObject = requestObject;
     responseHandler = responseListener;
@@ -765,7 +788,8 @@ NSString *g_DeviceSessionId = nil;
 {
     g_DeviceSessionId = nil;
 }
--(void) defaultSeccionExpireHandler
+
+-(void) defaultSessionExpireHandler
 {
 //    g_DeviceSessionId = nil;
      UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:@"Your Session expired, Please login again !" preferredStyle:UIAlertControllerStyleAlert];
@@ -779,6 +803,44 @@ NSString *g_DeviceSessionId = nil;
                                                                                                [UIApplication.sharedApplication.keyWindow setRootViewController:nav];
                                                                
                                                          }];
+     
+     [alertController addAction:defaultAction];
+     
+     
+      UIViewController* root = [[[[UIApplication sharedApplication]windows]objectAtIndex:0] rootViewController];
+             UIViewController *assignViewController = nil;
+             
+             if ([root isKindOfClass:[SWRevealViewController class]]) {
+                         SWRevealViewController *reveal = (SWRevealViewController*)root;
+                         UINavigationController *check =(UINavigationController*)reveal.frontViewController;
+                         NSArray* viewsList = check.viewControllers;
+                         UIViewController *checkView = (UIViewController *) [viewsList objectAtIndex:viewsList.count - 1];
+                 assignViewController = checkView;
+             }
+             else
+             {
+                 assignViewController = root;
+             }
+             
+             [assignViewController presentViewController:alertController animated:YES completion:nil];
+}
+
+
+
+-(void) serverUnderMaintenance:(NSString*) message
+{
+//    g_DeviceSessionId = nil;
+     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:message preferredStyle:UIAlertControllerStyleAlert];
+     
+     UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleDefault
+                                                           handler:^(UIAlertAction * action)
+                         {
+                            LogInVC *vc = [[LogInVC alloc] initWithNibName:@"LogInVC" bundle:nil];
+                            vc.password.text = @"";
+         
+                            UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
+                            [UIApplication.sharedApplication.keyWindow setRootViewController:nav];
+                         }];
      
      [alertController addAction:defaultAction];
      

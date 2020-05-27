@@ -478,6 +478,8 @@
                 
                 if([message isEqualToString:@"SESSION_EXPIRED"]) {
                     [self handleExpiredSession];
+                } else {
+                    [XmwUtils toastView:message];
                 }
 
             }
@@ -529,6 +531,8 @@
                 
                 if([message isEqualToString:@"SESSION_EXPIRED"]) {
                     [self handleExpiredSession];
+                } else {
+                    [XmwUtils toastView:message];
                 }
 
             }
@@ -586,11 +590,12 @@
                 
                 if([message isEqualToString:@"SESSION_EXPIRED"]) {
                     [self handleExpiredSession];
+                } else {
+                    [XmwUtils toastView:message];
                 }
 
             }
         }
-        
         
     }];
     
