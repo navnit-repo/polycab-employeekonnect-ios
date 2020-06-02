@@ -734,7 +734,6 @@ int uiViewStartIdx = 1001;
 -(UIView*)dependentDrawDropDown : (FormVC *) formController :(DotFormElement*) dotFormElement
 {
     
-    
     UIView *subContainer = [[UIView alloc]initWithFrame:CGRectMake(0, yArguForDrawComp, screenWidth, formLineHeight)];
     
     NSString *currentCompName = dotFormElement.elementId;
@@ -791,8 +790,10 @@ int uiViewStartIdx = 1001;
             yArguForDrawComp =yArguForDrawComp+formLineHeight;
     
     //this code for set selected regid according customer account data
-    
-    if ([dropDownCell.dropDownField.elementId isEqualToString:@"CUSTOMER_ACCOUNT"] &&regIDCheck ==YES) {
+    if (regIDCheck ==YES &&
+        ([dropDownCell.dropDownField.elementId isEqualToString:@"CUSTOMER_ACCOUNT"] ||
+         [dropDownCell.dropDownField.elementId isEqualToString:@"CUSTOMER_NUMBER"] ||
+         [dropDownCell.dropDownField.elementId isEqualToString:@"BUSINESS_VERTICAL"])) {
         NSMutableArray *key = [[NSMutableArray alloc]init];
         NSMutableArray *value = [[NSMutableArray alloc]init];
         NSMutableArray *customerAccountButtonDropDownArray = [[NSMutableArray alloc]init];
@@ -822,44 +823,8 @@ int uiViewStartIdx = 1001;
         }
     }
     
-    
-    if ([dropDownCell.dropDownField.elementId isEqualToString:@"BUSINESS_VERTICAL"] &&regIDCheck ==YES) {
-        NSMutableArray *key = [[NSMutableArray alloc]init];
-        NSMutableArray *value = [[NSMutableArray alloc]init];
-        NSMutableArray *customerAccountButtonDropDownArray = [[NSMutableArray alloc]init];
-        
-        
-        NSString* selectedRegIDCode = [[NSUserDefaults standardUserDefaults] valueForKey:@"selectedRegisterIDCode"];
-        if ([selectedRegIDCode isEqualToString:@""] || selectedRegIDCode == nil || selectedRegIDCode.length ==0 || [selectedRegIDCode isKindOfClass:[NSNull class]]) {
-            selectedRegIDCode = @"";
-        }
-        
-        
-        NSString *selectKey = [@"BUSINESS_VERTICAL_" stringByAppendingString:selectedRegIDCode];
-        NSMutableArray *getDataArray = [[NSMutableArray alloc]init];
-        [getDataArray addObjectsFromArray:[masterDataForEmployee  valueForKey:selectKey]];
-        NSLog(@"%@",getDataArray);
-        
-        for (int i=0; i<getDataArray.count; i++) {
-            [key addObject: [[getDataArray objectAtIndex:i] objectAtIndex:0]];
-            [value addObject: [[getDataArray objectAtIndex:i] objectAtIndex:1]];
-        }
-        
-        
-        [customerAccountButtonDropDownArray addObject:key];
-        [customerAccountButtonDropDownArray addObject:value];
-        
-        if (getDataArray.count !=0) {
-            dropDownCell.dropDownButton.attachedData = customerAccountButtonDropDownArray;
-            //dropDownCell.dropDownField.text = [value objectAtIndex:0];
-        }
-    }
-    
-   
-    
-    
-    
-            return subContainer;
+
+    return subContainer;
 }
 
 -(UIView*)drawCheckBoxGroup : (FormVC *) formController :(DotFormElement*) dotFormElement
