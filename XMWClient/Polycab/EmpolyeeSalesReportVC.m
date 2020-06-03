@@ -272,20 +272,22 @@
     [label setFont:[UIFont fontWithName:@"Helvetica-Bold" size:18]];
     [label setText: [headername uppercaseString]];
     //[label setText: headername];
-    label.lineBreakMode = UILineBreakModeWordWrap;
+    label.lineBreakMode = NSLineBreakByWordWrapping;
     label.textAlignment = NSTextAlignmentCenter;
-    [label sizeToFit];
+    
     [label setNumberOfLines: 0];
-    [label setCenter: CGPointMake(self.view.center.x, label.center.y)];
     
-    CGSize maximumLabelSize = CGSizeMake(label.frame.size.width, FLT_MAX);
+    CGSize maximumLabelSize = CGSizeMake(self.view.bounds.size.width, FLT_MAX);
     
-    CGSize expectedLabelSize = [headername sizeWithFont:label.font constrainedToSize:maximumLabelSize lineBreakMode:label.lineBreakMode];
+    CGRect expectedLabelSize =  [headername boundingRectWithSize:maximumLabelSize
+                                                         options:NSStringDrawingUsesLineFragmentOrigin
+                                                      attributes:@{ NSFontAttributeName:label.font }
+                                                         context:nil];
+    
     
     //adjust the label the the new height.
-    CGRect newFrame = label.frame;
-    newFrame.size.height = expectedLabelSize.height;
-    label.frame = newFrame;
+    label.frame = CGRectMake(0, 10, self.view.bounds.size.width, expectedLabelSize.size.height);
+    
     
     titleLblHeight = label.frame.size.height+10;
     
@@ -335,7 +337,7 @@
            }
        }
     
-self.mainTable.frame = CGRectMake(0, titleLblHeight + searchBar.frame.size.height, self.view.frame.size.width, self.view.frame.size.height-(35+searchBar.frame.size.height));
+    self.mainTable.frame = CGRectMake(0, titleLblHeight + searchBar.frame.size.height, self.view.frame.size.width, self.view.frame.size.height-(35+searchBar.frame.size.height));
 }
 
 - (void)handleDrilldown:(NSInteger)rowIndex
@@ -624,13 +626,13 @@ self.mainTable.frame = CGRectMake(0, titleLblHeight + searchBar.frame.size.heigh
             
         }
         [label setText: [dotReport.screenHeader uppercaseString]];
-        label.lineBreakMode = UILineBreakModeWordWrap;
-        label.textAlignment = NSTextAlignmentCenter;
-        [label sizeToFit];
-        [label setNumberOfLines: 0];
-        [label setCenter: CGPointMake(self.view.center.x, label.center.y)];
-      //  label.text = dotReport.screenHeader;
-        titleLblHeight = label.frame.size.height+10;
+        // label.lineBreakMode = UILineBreakModeWordWrap;
+        // label.textAlignment = NSTextAlignmentCenter;
+        // [label sizeToFit];
+        // [label setNumberOfLines: 0];
+        // [label setCenter: CGPointMake(self.view.center.x, label.center.y)];
+        //  label.text = dotReport.screenHeader;
+        // titleLblHeight = label.frame.size.height+10;
         [self configureSearchBar];
         
         [self addFirstSetData:firstResponse into:dataSet];

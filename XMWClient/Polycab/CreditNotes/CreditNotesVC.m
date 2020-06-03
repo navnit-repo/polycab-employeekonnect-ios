@@ -6,11 +6,31 @@
 //  Copyright © 2020 dotvik. All rights reserved.
 //
 
+#import <objc/runtime.h>
+
 #import "CreditNotesVC.h"
 
 #import "NetworkHelper.h"
 #import "ClientVariable.h"
 #import "DVAppDelegate.h"
+
+#define kICON_TAG 9999
+
+@interface UIView (GenerateIcon)
+@property NSNumber* itemIndex;
+@end
+
+@implementation UIView (GenerateIcon)
+- (NSNumber*)itemIndex;
+{
+    return objc_getAssociatedObject(self, "itemIndex");
+}
+
+- (void)setItemIndex:(NSNumber*)property;
+{
+    objc_setAssociatedObject(self, "itemIndex", property, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+@end
 
 @interface CreditNotesVC () <CustomRenderDelegate, UIDocumentInteractionControllerDelegate>
 {
@@ -113,13 +133,11 @@
 {
    // NSLog(@"Custom Cell Render: %ld, %ld", (long)rowIndex, (long)colIndex);
     
-    UIView* innerView = [view viewWithTag:rowIndex];
-    if(innerView==nil) {
-        innerView =  [[UIView alloc] initWithFrame:view.bounds];
-        innerView.tag = rowIndex;
-        [view addSubview:innerView];
-    }
+    UIView* innerView = [view viewWithTag:1000];
     
+    if(innerView!=nil) {
+        innerView.itemIndex = [NSNumber numberWithInteger:rowIndex];
+    }
     
     NSDictionary* pdfStatus = [pdfStatusList objectAtIndex:rowIndex];
     NSNumber* status = [pdfStatus objectForKey:@"status"];
@@ -130,28 +148,31 @@
     
     // initial status, we need to check from server for this entry
     if(status.intValue==-1) {
-        UIImageView* iconView = [innerView viewWithTag:11];
-        if(iconView==nil) {
-            UIImage* iconImage = [UIImage imageNamed:@"genrate"];
-            iconView = [[UIImageView alloc] initWithImage:iconImage];
-            iconView.frame = innerView.bounds;
-            iconView.contentMode = UIViewContentModeCenter;
-            iconView.tag = 11;
-            [innerView addSubview:iconView];
-        }
+        UIImageView* iconView = [innerView viewWithTag:kICON_TAG];
+        
+        [iconView removeFromSuperview];
+       
+        UIImage* iconImage = [UIImage imageNamed:@"genrate"];
+        iconView = [[UIImageView alloc] initWithImage:iconImage];
+        iconView.frame = innerView.bounds;
+        iconView.contentMode = UIViewContentModeCenter;
+        iconView.tag = kICON_TAG;
+        [innerView addSubview:iconView];
+        
         
         // we need to send checkStatus call
         [self checkDocumentStatus:rowIndex];
     } else if(status.intValue==0) {
-        UIImageView* iconView = [innerView viewWithTag:11];
-        if(iconView==nil) {
-            UIImage* iconImage = [UIImage imageNamed:@"genrate"];
-            iconView = [[UIImageView alloc] initWithImage:iconImage];
-            iconView.frame = innerView.bounds;
-            iconView.contentMode = UIViewContentModeCenter;
-            iconView.tag = 11;
-            [innerView addSubview:iconView];
-        }
+        UIImageView* iconView = [innerView viewWithTag:kICON_TAG];
+        
+        [iconView removeFromSuperview];
+        
+        UIImage* iconImage = [UIImage imageNamed:@"genrate"];
+        iconView = [[UIImageView alloc] initWithImage:iconImage];
+        iconView.frame = innerView.bounds;
+        iconView.contentMode = UIViewContentModeCenter;
+        iconView.tag = kICON_TAG;
+        [innerView addSubview:iconView];
         
         // user need to click and send regenerate request
         
@@ -160,12 +181,12 @@
         // we need to check after 10 secs check again, if it is generated
         innerView.userInteractionEnabled = NO;
         
-        UIImageView* iconView = [innerView viewWithTag:11];
+        UIImageView* iconView = [innerView viewWithTag:kICON_TAG];
          [iconView removeFromSuperview];
                 
         iconView = [[UIImageView alloc] initWithFrame:innerView.bounds];
         iconView.contentMode = UIViewContentModeScaleAspectFit;
-        iconView.tag = 11;
+        iconView.tag = kICON_TAG;
         
         iconView.animationImages = nil;
         iconView.animationImages = self->spinnerImages;
@@ -179,14 +200,14 @@
     } else if(status.intValue==2) {
         // 2 is download
         
-        UIImageView* iconView = [innerView viewWithTag:11];
+        UIImageView* iconView = [innerView viewWithTag:kICON_TAG];
         [iconView removeFromSuperview];
                
        UIImage* iconImage = [UIImage imageNamed:@"download"];
        iconView = [[UIImageView alloc] initWithImage:iconImage];
        iconView.frame = innerView.bounds;
        iconView.contentMode = UIViewContentModeCenter;
-        iconView.tag = 11;
+        iconView.tag = kICON_TAG;
         
        [innerView addSubview:iconView];
         
@@ -201,14 +222,14 @@
     } else if(status.intValue==3) {
         // 3 is for regenerate
     
-        UIImageView* iconView = [innerView viewWithTag:11];
+        UIImageView* iconView = [innerView viewWithTag:kICON_TAG];
         [iconView removeFromSuperview];
         
         UIImage* iconImage = [UIImage imageNamed:@"genrate"];
         iconView = [[UIImageView alloc] initWithImage:iconImage];
         iconView.frame = innerView.bounds;
         iconView.contentMode = UIViewContentModeCenter;
-        iconView.tag = 11;
+        iconView.tag = kICON_TAG;
         [innerView addSubview:iconView];
         
         innerView.userInteractionEnabled = YES;
@@ -262,7 +283,9 @@
     /*
     {"status":"SUCCESS","message":"Download CN","downloadurl":"documentdownload?registryid=10461&customernumber=3453&taxinvoicenumber=2003010550&doctype=CN","generateurl":""}
      */
-    
+    if(rowIndex==11) {
+        NSLog(@"special case");
+    }
     NSDictionary* pdfStatus = [pdfStatusList objectAtIndex:rowIndex];
     
     
@@ -404,11 +427,9 @@
 
 -(void)downloadTapped:(UIGestureRecognizer*) gesture
 {
-    NSLog(@"downloadTapped enter, rowIndex = %ld",  (long)gesture.view.tag);
+    NSLog(@"downloadTapped enter, rowIndex = %ld",  [gesture.view.itemIndex integerValue]);
     
-    
-    [self  downloadPDF:gesture.view.tag];
-    
+    [self  downloadPDF:[gesture.view.itemIndex integerValue]];
     
 }
 
@@ -476,9 +497,9 @@
 
 -(void)generateTapped:(UIGestureRecognizer*) gesture
 {
-    NSLog(@"generateTapped enter, rowIndex = %ld",  (long)gesture.view.tag);
+    NSLog(@"generateTapped enter, rowIndex = %ld",  [gesture.view.itemIndex integerValue]);
     
-    [self  generatePDF:gesture.view.tag];
+    [self  generatePDF:[gesture.view.itemIndex integerValue]];
 }
 
 

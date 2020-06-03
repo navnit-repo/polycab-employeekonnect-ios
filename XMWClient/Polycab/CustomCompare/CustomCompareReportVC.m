@@ -73,6 +73,7 @@
 //    self.mainTable.frame = CGRectMake(self.mainTable.frame.origin.x, self.mainTable.frame.origin.y, self.view.frame.size.width, self.view.frame.size.height  - self.mainTable.frame.origin.y);
     
     [super viewDidLoad];
+    
     if (isiPhoneXSMAX) {
         self.view.frame = CGRectMake(0, 64, 414, 832);
     }

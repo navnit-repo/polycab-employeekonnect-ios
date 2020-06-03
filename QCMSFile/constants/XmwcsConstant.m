@@ -43,7 +43,7 @@ NSString* const XmwcsConst_DEMO_USER_MAPPED = @"111152";
 NSString* XmwcsConst_CHAT_URL =@"https://pconnect.polycab.com:443/";
 
 #ifdef CONFIG_PROD
-//"http://125.16.219.249:8080/pcdealer"; prod url
+
 NSString* const XmwcsConst_SERVICE_URL_PROD = @"https://pconnect.polycab.com:443/xmwpolycab/feed";
 NSString* const XmwcsConst_SERVICE_URL_NOTIFY_CONTEXT_PROD = @"https://pconnect.polycab.com:443/xmwpolycab/nms";
 NSString* const XmwcsConst_PRODUCT_TREE_SERVICE_URL_PROD = @"https://pconnect.polycab.com:443/xmwpolycab/productsearch";
@@ -52,7 +52,7 @@ NSString* const XmwcsConst_SERVICE_URL_DEAL_STORE_PROD = @"https://pconnect.poly
 NSString* const XmwcsConst_SERVICE_URL_OPCODE_SERVICE_PROD = @"https://pconnect.polycab.com:443/xmwpolycab/jsonservice";
 NSString *const XmwcsConst_SERVICE_URL_FILE_UPLOAD_SERVICE_PROD= @"https://pconnect.polycab.com:443/xmwpolycab/xmwfileupload";
 NSString *const XmwcsConst_SERVICE_URL_CHAT_SERVICE_PROD =@"https://pconnect.polycab.com:443/";
-NSString* XmwcsConst_DEALER_OPCODE_URL_PROD = @"https://pconnect.polycab.com:443/pcdealer/jsonservice";
+NSString* const XmwcsConst_DEALER_OPCODE_URL_PROD = @"https://pconnect.polycab.com:443/pcdealer/jsonservice";
 
 
 
@@ -67,7 +67,7 @@ NSString* const XmwcsConst_SERVICE_URL_DEAL_STORE_DEMO = @"http://polycab.dotvik
 NSString* const XmwcsConst_SERVICE_URL_OPCODE_SERVICE_DEMO = @"http://polycab.dotvik.com:8080/xmwpolycab/jsonservice";
 NSString *const XmwcsConst_SERVICE_URL_FILE_UPLOAD_SERVICE_DEMO= @"http://polycab.dotvik.com:8080/xmwpolycab/xmwfileupload";
 NSString *const XmwcsConst_SERVICE_URL_CHAT_SERVICE_DEMO =@"http://polycab.dotvik.com:8080/";
-NSString* XmwcsConst_DEALER_OPCODE_URL_DEMO = @"http://polycab.dotvik.com:8080/pcdealer/jsonservice";
+NSString* const XmwcsConst_DEALER_OPCODE_URL_DEMO = @"http://polycab.dotvik.com:8080/pcdealer/jsonservice";
 
 
 // DEV is same on QA but port is different
@@ -79,7 +79,7 @@ NSString* const XmwcsConst_SERVICE_URL_DEAL_STORE_DEV = @"http://polycab.dotvik.
 NSString* const XmwcsConst_SERVICE_URL_OPCODE_SERVICE_DEV = @"http://polycab.dotvik.com:8080/xmwpolycab/jsonservice";
 NSString *const XmwcsConst_SERVICE_URL_FILE_UPLOAD_SERVICE_DEV= @"http://polycab.dotvik.com:8080/xmwpolycab/xmwfileupload";
 NSString *const XmwcsConst_SERVICE_URL_CHAT_SERVICE_DEV =@"http://polycab.dotvik.com:8080/";
-NSString* XmwcsConst_DEALER_OPCODE_URL_DEV = @"http://polycab.dotvik.com:8080/pcdealer/jsonservice";
+NSString* const XmwcsConst_DEALER_OPCODE_URL_DEV = @"http://polycab.dotvik.com:8080/pcdealer/jsonservice";
 
 
 #else
