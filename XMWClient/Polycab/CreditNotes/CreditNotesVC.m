@@ -35,7 +35,8 @@
 @interface CreditNotesVC () <CustomRenderDelegate, UIDocumentInteractionControllerDelegate>
 {
     NSMutableArray* pdfStatusList;
-    NSArray* spinnerImages;;
+    NSArray* spinnerImages;
+    UIDocumentInteractionController* docController;
 }
 
 @end
@@ -470,17 +471,24 @@
           {
               if(!error)
               {
+                  NSString *filePath = [NSTemporaryDirectory() stringByAppendingPathComponent:[response suggestedFilename]];
                   
-                  NSString *filePath = [[self applicationDocumentsDirectory] stringByAppendingPathComponent:[response suggestedFilename]];
+                  // NSString *filePath = [[self applicationDocumentsDirectory] stringByAppendingPathComponent:[response suggestedFilename]];
                   NSLog(@"PDF path: %@", filePath);
                   [data writeToFile:filePath atomically:YES];
+                  
                   dispatch_async(dispatch_get_main_queue(), ^{
                       
                       [self->loadingView removeView];
                       
-                      UIDocumentInteractionController* docController = [UIDocumentInteractionController interactionControllerWithURL:[NSURL fileURLWithPath:filePath]];
+                      NSURL* savedFileURL = [NSURL fileURLWithPath:filePath isDirectory:NO];
+                      
+                      docController = [UIDocumentInteractionController interactionControllerWithURL:savedFileURL];
                             docController.delegate = self;
-                            docController.UTI = [[invoiceNum stringByAppendingString:@"_INV"] stringByAppendingString:@".pdf"];
+                            
+                            // docController.UTI = [[invoiceNum stringByAppendingString:@"_INV"] stringByAppendingString:@".pdf"];
+                      
+                            docController.name = [[invoiceNum stringByAppendingString:@"_INV"] stringByAppendingString:@".pdf"];
                       
                             [docController presentOpenInMenuFromRect:CGRectZero inView:self.view animated:YES];
                       
