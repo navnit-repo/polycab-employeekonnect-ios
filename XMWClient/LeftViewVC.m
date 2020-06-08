@@ -11,6 +11,9 @@
 #import "HamBurgerMenuView.h"
 #import "XmwUtils.h"
 #import "XmwcsConstant.h"
+#import "ClientVariable.h"
+#import "DVAppDelegate.h"
+
 @interface LeftViewVC ()
 
 @end
@@ -66,6 +69,13 @@ static HamBurgerMenuView* rightSlideMenu = nil;
 }
 -(void) getMenuItems
 {
+    // Pradeep: 2020-06-05, if there are no booking verticals, then we need to remove create order menus
+    // Same already working on Portal
+    
+    ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
+    NSArray* bookingVerticals = [clientVariables.CLIENT_LOGIN_RESPONSE.clientMasterDetail.masterDataRefresh objectForKey:@"BOOKING_VERTICALS"];
+    
+    
     menuItems           = [[NSMutableArray alloc] init];
     keyIdName           = [[NSMutableArray alloc] initWithArray:[XmwUtils sortHashtableKey : menuDetailsDict : XmwcsConst_SORT_AS_INTEGER]];
     //add log out filed in dictionary
@@ -102,10 +112,19 @@ static HamBurgerMenuView* rightSlideMenu = nil;
     keyIdName = [[NSMutableArray alloc]init];
     for(int i=0; i<keys.count;i++)
     {
-        [keyIdName addObject: [NSString stringWithFormat:@"%@",[keys objectAtIndex:i]]];
+        NSString* tempKeyIdName = [NSString stringWithFormat:@"%@",[keys objectAtIndex:i]];
+        NSMutableDictionary* menuItemDetail = [menuDetailsDict objectForKey:tempKeyIdName];
+        NSString* menuTitle = [menuItemDetail objectForKey: XmwcsConst_MENU_CONSTANT_MENU_NAME ];
+        
+        if(([menuTitle compare:@"Create Order" options:NSCaseInsensitiveSearch]==NSOrderedSame)
+                  || ([menuTitle compare:@"Create Order - SPA" options:NSCaseInsensitiveSearch]==NSOrderedSame)) {
+            if(bookingVerticals!=nil && [bookingVerticals count]>0) {
+                [keyIdName addObject: tempKeyIdName];
+            }
+        } else {
+            [keyIdName addObject: tempKeyIdName];
+        }
     }
-    
-    
     
     NSLog(@"menuDetail = %@",menuDetailsDict);
     long int sizeOfKeyVec    = [keyIdName count];
@@ -115,7 +134,15 @@ static HamBurgerMenuView* rightSlideMenu = nil;
     {
         NSMutableDictionary* menuItemDetail = [menuDetailsDict objectForKey:[keyIdName objectAtIndex:idx]];
         menuTitle = [menuItemDetail objectForKey: XmwcsConst_MENU_CONSTANT_MENU_NAME ];
-        [menuItems addObject:menuTitle];
+        
+        if(([menuTitle compare:@"Create Order" options:NSCaseInsensitiveSearch]==NSOrderedSame)
+           || ([menuTitle compare:@"Create Order - SPA" options:NSCaseInsensitiveSearch]==NSOrderedSame)) {
+            if(bookingVerticals!=nil && [bookingVerticals count]>0) {
+                [menuItems addObject:menuTitle];
+            }
+        } else {
+            [menuItems addObject:menuTitle];
+        }
     }
     NSLog(@"menuDetailAfter = %@",menuItems);
 }
