@@ -142,7 +142,7 @@
         [formPost.postData setObject: @"SBN"forKey:DotSearchConst_SEARCH_BY];
         [formPost.postData setObject:billTo forKey:@"BILL_TO"];
         [formPost.postData setObject:shipTo forKey:@"SHIP_TO"];
-        [formPost.postData setObject:[ClientVariable getInstance].CLIENT_USER_LOGIN.userName forKey:@"USERNAME"];
+        [formPost.postData setObject:[[NSUserDefaults standardUserDefaults] valueForKey:@"selectedRegisterIDCode"] forKey:@"USERNAME"];
         [formPost.postData setObject:[catalogReqstData valueForKey:@"CUSTOMER_NUMBER"] forKey:@"BUSINESS_VERTICAL"];
         [formPost.postData setObject:[catalogReqstData valueForKey:@"PRY_ITEMCATEGORY"] forKey:@"PRY_ITEMCATEGORY"];
         [formPost.postData setObject:[catalogReqstData valueForKey:@"PRY_SUBITEMCATEGORY"] forKey:@"PRY_SUBITEMCATEGORY"];
@@ -181,7 +181,7 @@
         [formPost.postData setObject:@"SBN" forKey:DotSearchConst_SEARCH_BY];
         [formPost.postData setObject:billTo forKey:@"BILL_TO"];
         [formPost.postData setObject:shipTo forKey:@"SHIP_TO"];
-        [formPost.postData setObject:[ClientVariable getInstance].CLIENT_USER_LOGIN.userName forKey:@"USERNAME"];
+        [formPost.postData setObject:[[NSUserDefaults standardUserDefaults] valueForKey:@"selectedRegisterIDCode"] forKey:@"USERNAME"];
         [formPost.postData setObject:[catalogReqstData valueForKey:@"CUSTOMER_NUMBER"] forKey:@"BUSINESS_VERTICAL"];
         [formPost.postData setObject:[catalogReqstData valueForKey:@"CUSTOMER_NUMBER"] forKey:@"BUSINESS_VERTICAL"];
         [formPost.postData setObject:[catalogReqstData valueForKey:@"PRY_ITEMCATEGORY"] forKey:@"PRY_ITEMCATEGORY"];
@@ -220,7 +220,7 @@
         [formPost.postData setObject:@"SBN" forKey:DotSearchConst_SEARCH_BY];
         [formPost.postData setObject:billTo forKey:@"BILL_TO"];
         [formPost.postData setObject:shipTo forKey:@"SHIP_TO"];
-        [formPost.postData setObject:[ClientVariable getInstance].CLIENT_USER_LOGIN.userName forKey:@"USERNAME"];
+        [formPost.postData setObject:[[NSUserDefaults standardUserDefaults] valueForKey:@"selectedRegisterIDCode"] forKey:@"USERNAME"];
         [formPost.postData setObject:[catalogReqstData valueForKey:@"CUSTOMER_NUMBER"] forKey:@"BUSINESS_VERTICAL"];
         [formPost.postData setObject:[catalogReqstData valueForKey:@"CUSTOMER_NUMBER"] forKey:@"BUSINESS_VERTICAL"];
         [formPost.postData setObject:[catalogReqstData valueForKey:@"PRY_ITEMCATEGORY"] forKey:@"PRY_ITEMCATEGORY"];
@@ -312,7 +312,7 @@
     [formPost.postData setObject:@"SBN" forKey:DotSearchConst_SEARCH_BY];
     [formPost.postData setObject:billTo forKey:@"BILL_TO"];
     [formPost.postData setObject:shipTo forKey:@"SHIP_TO"];
-    [formPost.postData setObject:[ClientVariable getInstance].CLIENT_USER_LOGIN.userName forKey:@"USERNAME"];
+    [formPost.postData setObject:[[NSUserDefaults standardUserDefaults] valueForKey:@"selectedRegisterIDCode"] forKey:@"USERNAME"];
     [formPost.postData setObject:[catalogReqstData valueForKey:@"CUSTOMER_NUMBER"] forKey:@"BUSINESS_VERTICAL"];
     [formPost.postData setObject:[catalogReqstData valueForKey:@"PRY_ITEMCATEGORY"] forKey:@"PRY_ITEMCATEGORY"];
     [formPost.postData setObject:[catalogReqstData valueForKey:@"PRY_SUBITEMCATEGORY"] forKey:@"PRY_SUBITEMCATEGORY"];
@@ -862,7 +862,7 @@
     }
     
     
-    [formPost.postData setObject:[ClientVariable getInstance].CLIENT_USER_LOGIN.userName forKey:@"USERNAME"];
+    [formPost.postData setObject:[[NSUserDefaults standardUserDefaults] valueForKey:@"selectedRegisterIDCode"] forKey:@"USERNAME"];
     [formPost setModuleId: [DVAppDelegate currentModuleContext]];
     [formPost setDocId: @"MATERIAL_LOB_TREE_JDBC"];
      [formPost.postData setObject:[catalogReqstData valueForKey:@"CUSTOMER_NUMBER"] forKey:@"BUSINESS_VERTICAL"];

@@ -18,7 +18,7 @@
 @end
 
 
-@interface SelectedListVC : UIViewController<UITableViewDelegate,UITableViewDataSource>
+@interface SelectedListVC : UIViewController<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate>
 {
 
     id attachedData ;
@@ -28,8 +28,20 @@
     NSString *selectedPickerValue;
     NSString *selectedPickerKey;
     MXButton* mxButton;
+    NSString* dropDownName;
+    UISearchBar *searchBar;
+    NSMutableArray *orignalDataArray;
+    NSMutableArray *orignalDataKeyArray;
+    NSMutableArray *searchTextArray;
+    NSMutableArray *searchTextKeyArray;
     
 }
+@property NSMutableArray *searchTextKeyArray;
+@property NSMutableArray *orignalDataKeyArray;
+@property NSMutableArray *orignalDataArray;
+@property NSMutableArray *searchTextArray;
+@property UISearchBar *searchBar;
+@property NSString* dropDownName;
 @property MXButton* mxButton;
 @property (strong, nonatomic) IBOutlet UITableView *tableSelected;
 @property id attachedData;

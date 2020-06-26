@@ -92,7 +92,7 @@
         
         [catalogQuery setObject:self.productDivision forKey:@"BUSINESS_VERTICAL"];
         [catalogQuery setObject:self.productDivision forKey:@"CUSTOMER_NUMBER"];
-        [catalogQuery setObject:[ClientVariable getInstance].CLIENT_USER_LOGIN.userName forKey:@"USERNAME"];
+        [catalogQuery setObject:[[NSUserDefaults standardUserDefaults] valueForKey:@"selectedRegisterIDCode"] forKey:@"USERNAME"];
         
         
         
@@ -207,7 +207,7 @@
 {
 
     NSMutableDictionary* catalogQuery = [[NSMutableDictionary alloc] init];
-    [catalogQuery setObject:[ClientVariable getInstance].CLIENT_USER_LOGIN.userName forKey:@"USERNAME"];
+    [catalogQuery setObject:[[NSUserDefaults standardUserDefaults] valueForKey:@"selectedRegisterIDCode"] forKey:@"USERNAME"];
     [catalogQuery setObject:category.lobCode  forKey:@"BUSINESS_VERTICAL"];
     [catalogQuery setObject:self.productDivision forKey:@"CUSTOMER_NUMBER"];
     [catalogQuery setObject:category.primaryCategory forKey:@"PRY_ITEMCATEGORY"];
@@ -233,7 +233,7 @@
         [formPost.postData setObject:@"SBN" forKey:DotSearchConst_SEARCH_BY];
         [formPost.postData setObject:billTO forKey:@"BILL_TO"];
         [formPost.postData setObject:shipTO forKey:@"SHIP_TO"];
-        [formPost.postData setObject:[ClientVariable getInstance].CLIENT_USER_LOGIN.userName forKey:@"USERNAME"];
+        [formPost.postData setObject:[[NSUserDefaults standardUserDefaults] valueForKey:@"selectedRegisterIDCode"] forKey:@"USERNAME"];
         //[formPost.postData setObject:category.lobCode  forKey:@"CUSTOMER_NUMBER"];
         [formPost.postData setObject:self.productDivision forKey:@"BUSINESS_VERTICAL"];
         [formPost.postData setObject:category.primaryCategory forKey:@"PRY_ITEMCATEGORY"];

@@ -44,11 +44,10 @@
       cellHeight = 345*deviceHeightRation;
     }
     
-    
-    
-    
     NSLog(@"Create Order Status VC call");
+
     [self drawNavigationBarItem];
+    
     [self autoLayout];
     NSMutableDictionary *headerDataDict = [[NSMutableDictionary alloc]init];
     NSMutableArray *cardDataArray = [[NSMutableArray alloc]init];
@@ -131,7 +130,9 @@
     UIImageView *polycabLogo = [[UIImageView alloc] initWithImage:[UIImage  imageNamed:@"polycab_logo"]];
     self.navigationItem.titleView.contentMode = UIViewContentModeCenter;
     self.navigationItem.titleView = polycabLogo;
-    [self.navigationItem setLeftBarButtonItem:backButton];
+    
+    // Pradeep: 2020-06-26, we do not want to show back button
+    // [self.navigationItem setLeftBarButtonItem:backButton];
     
 }
 

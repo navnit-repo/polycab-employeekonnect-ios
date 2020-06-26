@@ -39,7 +39,7 @@
         user5 = [[[dataArray objectAtIndex:5]objectAtIndex:2] floatValue];
         totalAmmount = user1+user2+user3+user4+user5;
         
-        
+       // [NSString stringWithFormat:@"%@ - %@", [[dataArray objectAtIndex:1]objectAtIndex:0], [[dataArray objectAtIndex:1]objectAtIndex:1]];
         
         self.user1.text = [[dataArray objectAtIndex:1]objectAtIndex:0];
         self.user2.text = [[dataArray objectAtIndex:2]objectAtIndex:0];

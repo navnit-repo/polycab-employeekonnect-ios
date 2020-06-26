@@ -174,7 +174,7 @@
         [formPost.postData setObject:@"SBN" forKey:DotSearchConst_SEARCH_BY];
         [formPost.postData setObject:billTo forKey:@"BILL_TO"];
         [formPost.postData setObject:shipTo forKey:@"SHIP_TO"];
-        [formPost.postData setObject:[ClientVariable getInstance].CLIENT_USER_LOGIN.userName forKey:@"USERNAME"];
+        [formPost.postData setObject:[[NSUserDefaults standardUserDefaults] valueForKey:@"selectedRegisterIDCode"] forKey:@"USERNAME"];
         [formPost.postData setObject:self.productDivision forKey:@"BUSINESS_VERTICAL"];
         
         
@@ -211,7 +211,7 @@
         [formPost.postData setObject:@"SBN" forKey:DotSearchConst_SEARCH_BY];
         [formPost.postData setObject:billTo forKey:@"BILL_TO"];
         [formPost.postData setObject:shipTo forKey:@"SHIP_TO"];
-        [formPost.postData setObject:[ClientVariable getInstance].CLIENT_USER_LOGIN.userName forKey:@"USERNAME"];
+        [formPost.postData setObject:[[NSUserDefaults standardUserDefaults] valueForKey:@"selectedRegisterIDCode"] forKey:@"USERNAME"];
         [formPost.postData setObject:self.productDivision forKey:@"BUSINESS_VERTICAL"];
         
         
@@ -247,7 +247,7 @@
         [formPost.postData setObject:@"SBN" forKey:DotSearchConst_SEARCH_BY];
         [formPost.postData setObject:billTo forKey:@"BILL_TO"];
         [formPost.postData setObject:shipTo forKey:@"SHIP_TO"];
-        [formPost.postData setObject:[ClientVariable getInstance].CLIENT_USER_LOGIN.userName forKey:@"USERNAME"];
+        [formPost.postData setObject:[[NSUserDefaults standardUserDefaults] valueForKey:@"selectedRegisterIDCode"] forKey:@"USERNAME"];
         [formPost.postData setObject:self.productDivision forKey:@"BUSINESS_VERTICAL"];
         
         
@@ -336,7 +336,7 @@
     [formPost.postData setObject:@"SBN" forKey:DotSearchConst_SEARCH_BY];
     [formPost.postData setObject:billTo forKey:@"BILL_TO"];
     [formPost.postData setObject:shipTo forKey:@"SHIP_TO"];
-    [formPost.postData setObject:[ClientVariable getInstance].CLIENT_USER_LOGIN.userName forKey:@"USERNAME"];
+    [formPost.postData setObject:[[NSUserDefaults standardUserDefaults] valueForKey:@"selectedRegisterIDCode"] forKey:@"USERNAME"];
     [formPost.postData setObject:self.productDivision forKey:@"BUSINESS_VERTICAL"];
     [formPost setModuleId: [DVAppDelegate currentModuleContext]];
     [formPost setDocId: @"CORES_BY_CAT_TREE"];
@@ -912,7 +912,7 @@
     }
     
     
-    [formPost.postData setObject:[ClientVariable getInstance].CLIENT_USER_LOGIN.userName forKey:@"USERNAME"];
+    [formPost.postData setObject:[[NSUserDefaults standardUserDefaults] valueForKey:@"selectedRegisterIDCode"] forKey:@"USERNAME"];
     [formPost.postData setObject:billTo forKey:@"BILL_TO"];
     [formPost.postData setObject:shipTo forKey:@"SHIP_TO"];
     [formPost.postData setObject:self.productDivision forKey:@"BUSINESS_VERTICAL"];

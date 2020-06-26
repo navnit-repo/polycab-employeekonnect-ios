@@ -167,6 +167,8 @@
 		273259A2248502E3003F979C /* growth_arrow_up@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2732599E248502E2003F979C /* growth_arrow_up@2x.png */; };
 		273259A3248502E3003F979C /* growth_arrow_down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2732599F248502E3003F979C /* growth_arrow_down@2x.png */; };
 		273259A4248502E3003F979C /* growth_arrow_down.png in Resources */ = {isa = PBXBuildFile; fileRef = 273259A0248502E3003F979C /* growth_arrow_down.png */; };
+		279D43B524A58DFD0046BB33 /* DataManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 279D43B324A58DFD0046BB33 /* DataManager.h */; };
+		279D43B624A58DFD0046BB33 /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 279D43B424A58DFD0046BB33 /* DataManager.m */; };
 		38A6BFEB1EFD1D3F00537D62 /* ImageUploadFormViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 38A6BFE81EFD1D3F00537D62 /* ImageUploadFormViewController.h */; };
 		38A6BFEC1EFD1D3F00537D62 /* ImageUploadFormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38A6BFE91EFD1D3F00537D62 /* ImageUploadFormViewController.m */; };
 		38A6BFED1EFD1D3F00537D62 /* ImageUploadFormViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38A6BFEA1EFD1D3F00537D62 /* ImageUploadFormViewController.xib */; };
@@ -1334,6 +1336,8 @@
 		2732599E248502E2003F979C /* growth_arrow_up@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "growth_arrow_up@2x.png"; path = "Images/growth_arrow_up@2x.png"; sourceTree = "<group>"; };
 		2732599F248502E3003F979C /* growth_arrow_down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "growth_arrow_down@2x.png"; path = "Images/growth_arrow_down@2x.png"; sourceTree = "<group>"; };
 		273259A0248502E3003F979C /* growth_arrow_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = growth_arrow_down.png; path = Images/growth_arrow_down.png; sourceTree = "<group>"; };
+		279D43B324A58DFD0046BB33 /* DataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataManager.h; sourceTree = "<group>"; };
+		279D43B424A58DFD0046BB33 /* DataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataManager.m; sourceTree = "<group>"; };
 		38A6BFE81EFD1D3F00537D62 /* ImageUploadFormViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageUploadFormViewController.h; sourceTree = "<group>"; };
 		38A6BFE91EFD1D3F00537D62 /* ImageUploadFormViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageUploadFormViewController.m; sourceTree = "<group>"; };
 		38A6BFEA1EFD1D3F00537D62 /* ImageUploadFormViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImageUploadFormViewController.xib; sourceTree = "<group>"; };
@@ -2553,6 +2557,15 @@
 			path = Polycab/SPACreateOrder;
 			sourceTree = "<group>";
 		};
+		279D43B224A58DFD0046BB33 /* DataManager */ = {
+			isa = PBXGroup;
+			children = (
+				279D43B324A58DFD0046BB33 /* DataManager.h */,
+				279D43B424A58DFD0046BB33 /* DataManager.m */,
+			);
+			path = DataManager;
+			sourceTree = "<group>";
+		};
 		852A940F18F996F200F5DB5F /* Checkbox */ = {
 			isa = PBXGroup;
 			children = (
@@ -2658,6 +2671,7 @@
 		8579E70E174CD04700D7945F /* XMWClient */ = {
 			isa = PBXGroup;
 			children = (
+				279D43B224A58DFD0046BB33 /* DataManager */,
 				F038EF482150E2F400AFB080 /* Localizable.strings */,
 				F0A358E820FC9EC300CE34AC /* Polycab */,
 				38CA52811E93B56F00C370F8 /* XMWClient.entitlements */,
@@ -4923,6 +4937,7 @@
 				F0B2FB2A218850F5006A7C6B /* TravellerController.h in Headers */,
 				F02E3526221542A70007573D /* NationalDashboardVC.h in Headers */,
 				856B3E1F1DCA0F1E00096100 /* SimpleEditForm.h in Headers */,
+				279D43B524A58DFD0046BB33 /* DataManager.h in Headers */,
 				273259222484DA1E003F979C /* CreateOrderDisplayCell.h in Headers */,
 				90023D8517FD685100DA0C31 /* RecentRequestStorage.h in Headers */,
 				F01FCBF920F5F941001B0C4E /* ShowInvoice.h in Headers */,
@@ -5920,6 +5935,7 @@
 				902D3F6A1755E92200E079AB /* MessageTableViewCell.m in Sources */,
 				8595B4F4190FCB790010C685 /* DVTwoWeekView.m in Sources */,
 				F088F6022105E587000E26F4 /* SalesIncentiveLegend.m in Sources */,
+				279D43B624A58DFD0046BB33 /* DataManager.m in Sources */,
 				8500DCF21A794D45002B534F /* XYPieChart.m in Sources */,
 				2732594B2484DA5B003F979C /* SPACreateOrderCell.m in Sources */,
 				902D3F6B1755E92200E079AB /* RadioTableViewCell.m in Sources */,

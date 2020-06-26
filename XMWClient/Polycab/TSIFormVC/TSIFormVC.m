@@ -44,7 +44,8 @@
         [[NSUserDefaults standardUserDefaults] synchronize];
         //////////////
        
-        [ClientVariable getInstance].CLIENT_USER_LOGIN.userName = code; // set userName accoring to userID
+         // Pradeep: 2020-06-26 we should not be changing this, username is logged in user, code is registry id
+        // [ClientVariable getInstance].CLIENT_USER_LOGIN.userName = code; // set userName accoring to userID
       
         //////////////
         

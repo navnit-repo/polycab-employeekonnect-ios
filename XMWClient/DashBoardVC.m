@@ -42,6 +42,8 @@
 #import "ChatThreadList_Object.h"
 #import "ChatThreadList_DB.h"
 #import "LayoutClass.h"
+#import "DataManager.h"
+
 #define TAG_LOGOUT_DIALOG 1000
 @interface DashBoardVC ()
 @end
@@ -995,6 +997,8 @@
     
     networkHelper = [[NetworkHelper alloc] init];
     [networkHelper makeXmwNetworkCall:logOutPost :self :self  :@"FOR_LOGOUT"];
+    
+    [[DataManager getInstance] clear];
     
     
 }

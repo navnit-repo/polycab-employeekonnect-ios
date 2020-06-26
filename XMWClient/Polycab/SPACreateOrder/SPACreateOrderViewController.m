@@ -425,7 +425,10 @@
     NSMutableDictionary *sendDict = [[NSMutableDictionary alloc]init];
     NSMutableDictionary *data = [[NSMutableDictionary alloc]init];
     [data setObject:trackerID forKey:@"TRACKER_ID"];
-    [data setObject:[ClientVariable getInstance].CLIENT_USER_LOGIN.userName forKey:@"USERNAME"];
+    
+    // it should be registry id selected from previous screen.
+    
+    [data setObject:[[NSUserDefaults standardUserDefaults] valueForKey:@"selectedRegisterIDCode"] forKey:@"USERNAME"];
     [data setObject:[self.forwardedDataPost valueForKey:@"BUSINESS_VERTICAL"] forKey:@"ACCOUNT_NUMBER"];
     
     [sendDict setValue:@"statusSalesOrder" forKey:@"opcode"];

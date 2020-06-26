@@ -24,6 +24,10 @@
 @synthesize dropDownListKey;
 @synthesize selectedPickerValue;
 @synthesize selectedPickerKey;
+@synthesize dropDownName;
+@synthesize searchBar;
+@synthesize orignalDataArray,orignalDataKeyArray;
+@synthesize searchTextArray,searchTextKeyArray;
 
 - (void)viewDidLoad {
     
@@ -35,12 +39,77 @@
     self.tableSelected.backgroundColor = [UIColor whiteColor];
     
     [self configureNavigationBar];
-   
+    [self configureSearchBarAndUpdatedTableHeight];
     
     
     // Do any additional setup after loading the view from its nib.
 }
+-(void)configureSearchBarAndUpdatedTableHeight
+{
+    orignalDataKeyArray = [[NSMutableArray alloc ] init];
+    orignalDataArray = [[NSMutableArray alloc ] init];
+    [orignalDataArray addObjectsFromArray:dropDownList];
+    [orignalDataKeyArray addObjectsFromArray:dropDownListKey];
+    searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(20, 8, [[UIScreen mainScreen]bounds].size.width - 40, 44*deviceHeightRation)];
+    searchBar.delegate = self;
+    [searchBar setPlaceholder:@"Search"];
+    [searchBar setReturnKeyType:UIReturnKeyDone];
+    searchBar.enablesReturnKeyAutomatically = NO;
+    [self.view addSubview:searchBar];
+    
+   /* old code for customize uiserachBar
+    for (id subview in [[searchBar.subviews lastObject] subviews]) {
+    if ([subview isKindOfClass:NSClassFromString(@"UISearchBarBackground")]) {
+        [subview removeFromSuperview];
+    }
+    
+    if ([subview isKindOfClass:[UITextField class]])
+    {
+        UITextField *textFieldObject = (UITextField *)subview;
+        textFieldObject.borderStyle = UITextBorderStyleRoundedRect;
+        textFieldObject.layer.masksToBounds=YES;
+        textFieldObject.layer.borderColor=[[UIColor lightGrayColor]CGColor];
+        textFieldObject.layer.cornerRadius=5.0f;
+        textFieldObject.layer.borderWidth= 1.0f;
+        break;
+    }
+    */
+    if (@available(iOS 13.0, *)) {
+                  [searchBar setBackgroundColor:[UIColor clearColor]];
+                  [searchBar setBackgroundImage:[UIImage new]];
+                  [searchBar setTranslucent:YES];
+                  searchBar.searchTextField.borderStyle = UITextBorderStyleRoundedRect;
+                  searchBar.searchTextField.layer.masksToBounds=YES;
+                  searchBar.searchTextField.layer.borderColor=[[UIColor lightGrayColor]CGColor];
+                  searchBar.searchTextField.layer.cornerRadius=5.0f;
+                  searchBar.searchTextField.layer.borderWidth= 1.0f;
+    }
+    else
+    {
+        for (id subview in [[searchBar.subviews lastObject] subviews]) {
+        if ([subview isKindOfClass:NSClassFromString(@"UISearchBarBackground")]) {
+            [subview removeFromSuperview];
+        }
+        
+        if ([subview isKindOfClass:[UITextField class]])
+        {
+            UITextField *textFieldObject = (UITextField *)subview;
+            textFieldObject.borderStyle = UITextBorderStyleRoundedRect;
+            textFieldObject.layer.masksToBounds=YES;
+            textFieldObject.layer.borderColor=[[UIColor lightGrayColor]CGColor];
+            textFieldObject.layer.cornerRadius=5.0f;
+            textFieldObject.layer.borderWidth= 1.0f;
+            break;
+        }
+            
+        }
+    }
+ 
+          
+    
 
+    self.tableSelected.frame = CGRectMake(self.tableSelected.frame.origin.x, searchBar.frame.size.height+searchBar.frame.origin.y, self.tableSelected.bounds.size.width, self.tableSelected.bounds.size.height-(searchBar.frame.size.height+searchBar.frame.origin.y));
+}
 
 -(void) configureNavigationBar
 {
@@ -48,7 +117,18 @@
     self.navigationController.navigationBar.opaque = YES;
     self.navigationController.navigationBar.translucent = NO;
    
+
+    //Do any additional setup after loading the view, typically from a nib.
+    UILabel *titleLabelView = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 40)]; //<<---- Actually will be auto-resized according to frame of navigation bar;
+    [titleLabelView setBackgroundColor:[UIColor clearColor]];
+    [titleLabelView setTextAlignment: NSTextAlignmentCenter];
+    [titleLabelView setTextColor:[UIColor whiteColor]];
+    [titleLabelView setFont:[UIFont systemFontOfSize:16 weight:UIFontWeightBold]]; //<<--- Greatest font size
+    [titleLabelView setAdjustsFontSizeToFitWidth:YES]; //<<---- Allow shrink
+    // [titleLabelView setAdjustsLetterSpacingToFitWidth:YES];  //<<-- Another option for iOS 6+
+    titleLabelView.text = dropDownName;
     
+    self.navigationItem.titleView = titleLabelView;
     
     
     // Need to add Our left back button
@@ -158,15 +238,38 @@
 
 #pragma mark UITableViewDelegate
 
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSString* text = @"";
+    
+    if ([[dropDownList objectAtIndex:indexPath.row] isKindOfClass:[NSNull class]]) {
+        text = @"";
+    } else{
+        text = [dropDownList objectAtIndex:indexPath.row];
+    }
+    
+    // tableView.frame.size.width - 20;
+    CGSize labelFrameSize = CGSizeMake(tableView.frame.size.width - 20, tableView.frame.size.height);
+    
+    CGSize expectedSize = [text boundingRectWithSize:labelFrameSize options:NSStringDrawingUsesLineFragmentOrigin attributes:@{ NSFontAttributeName: [UIFont systemFontOfSize:17] } context:nil].size;
+    
+    if(expectedSize.height < 25.0f) {
+        return 44.0f;
+    }  else {
+        return expectedSize.height + 25.0f;
+    }
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     static NSString *simpleTableIdentifier = @"SimpleTableItem";
 
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:simpleTableIdentifier];
     
-    if (cell == nil) {
+//    if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:simpleTableIdentifier];
-    }
+//    }
     if([self.checkedIndexPath isEqual:indexPath])
     {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
@@ -184,11 +287,13 @@
         text = @"";
     }
     else{
-    text = [dropDownList objectAtIndex:indexPath.row];
+        text = [dropDownList objectAtIndex:indexPath.row];
     }
-    cell.textLabel.text =text;
-    ////
     
+    cell.textLabel.attributedText = [self getAttributedString:text];
+    cell.textLabel.numberOfLines = 0;
+    cell.textLabel.lineBreakMode = NSLineBreakByWordWrapping;
+
     return cell;
 }
 
@@ -227,6 +332,74 @@
     }
 
     
+    
+}
+
+
+#pragma mark - searchBar handler
+-(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
+    [searchBar resignFirstResponder];
+}
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    NSLog(@"%@",searchText);
+    searchTextArray = [[NSMutableArray alloc]init];
+    searchTextKeyArray = [[NSMutableArray alloc ] init];
+    if (searchText.length>0) {
+
+        for (int i=0; i<orignalDataArray.count; i++) {
+            NSString *name  = [orignalDataArray objectAtIndex:i];
+            
+            NSRange nameRange = [name rangeOfString:searchText options:NSCaseInsensitiveSearch];
+            if (nameRange.location != NSNotFound) {
+                [searchTextArray addObject: [orignalDataArray objectAtIndex:i]];
+                [searchTextKeyArray addObject:[orignalDataKeyArray objectAtIndex:i]];
+            }
+            
+        }
+        dropDownListKey = [[NSMutableArray alloc ] init];
+        dropDownList =[[NSMutableArray alloc]init];
+        [dropDownList addObjectsFromArray:searchTextArray];
+        [dropDownListKey addObjectsFromArray:searchTextKeyArray];
+        
+        [self.tableSelected reloadData];
+    }
+    else
+    {   dropDownList  = [[NSMutableArray alloc]init];
+        dropDownListKey = [[NSMutableArray alloc ] init];
+        [dropDownList addObjectsFromArray:orignalDataArray];
+        [dropDownListKey addObjectsFromArray:orignalDataKeyArray];
+        [self.tableSelected reloadData];
+    }
+    
+}
+
+
+-(NSMutableAttributedString*) getAttributedString :(NSString*) cellText
+{
+    UIColor *searchTextColor = [UIColor colorWithRed:220.0/255.0 green:86.0/255.0 blue:35.0/255.0 alpha:1.0];
+    
+    NSMutableAttributedString *mutableString = nil;
+    NSString *sampleText = @"";
+    if (cellText !=nil) {
+        sampleText = cellText;
+    }
+    
+    mutableString = [[NSMutableAttributedString alloc] initWithString:sampleText];
+    NSString *pattern = @"";
+    if (searchBar.text != nil) {
+        pattern = searchBar.text;
+    }
+    //        NSString *pattern = self.reportVC.searchBar.text;
+    NSRegularExpression *expression = [NSRegularExpression regularExpressionWithPattern:pattern options:1 error:nil];
+    
+    NSRange range = NSMakeRange(0,[sampleText length]);
+    [expression enumerateMatchesInString:sampleText options:1 range:range usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
+        NSRange californiaRange = [result rangeAtIndex:0] ;
+        [mutableString addAttribute:NSForegroundColorAttributeName value:searchTextColor range:californiaRange];
+    }];
+    
+    return mutableString;
     
 }
 @end

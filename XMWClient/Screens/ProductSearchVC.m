@@ -134,7 +134,7 @@
         
         [catalogQuery setObject:self.productDivision forKey:@"BUSINESS_VERTICAL"];
         [catalogQuery setObject:self.productDivision forKey:@"CUSTOMER_NUMBER"];
-        [catalogQuery setObject:[ClientVariable getInstance].CLIENT_USER_LOGIN.userName forKey:@"USERNAME"];
+        [catalogQuery setObject:[[NSUserDefaults standardUserDefaults] valueForKey:@"selectedRegisterIDCode"] forKey:@"USERNAME"];
         // [catalogQuery setObject:@"" forKey:@"BILL_TO"];
         
         // sample division fan, 45
@@ -156,7 +156,7 @@
     
     
     NSMutableDictionary* catalogQuery = [[NSMutableDictionary alloc] init];
-    [catalogQuery setObject:[ClientVariable getInstance].CLIENT_USER_LOGIN.userName forKey:@"USERNAME"];
+    [catalogQuery setObject:[[NSUserDefaults standardUserDefaults] valueForKey:@"selectedRegisterIDCode"] forKey:@"USERNAME"];
     [catalogQuery setObject:category.lobCode  forKey:@"BUSINESS_VERTICAL"];
     [catalogQuery setObject:self.productDivision forKey:@"CUSTOMER_NUMBER"];
     [catalogQuery setObject:category.primaryCategory forKey:@"PRIMARY_CATEGORY"];
@@ -453,7 +453,7 @@
     }
     
     
-    [formPost.postData setObject:[ClientVariable getInstance].CLIENT_USER_LOGIN.userName forKey:@"USERNAME"];
+    [formPost.postData setObject:[[NSUserDefaults standardUserDefaults] valueForKey:@"selectedRegisterIDCode"] forKey:@"USERNAME"];
     
     [formPost setModuleId: [DVAppDelegate currentModuleContext]];
     [formPost setDocId: inMasterValueMapping];
