@@ -1019,6 +1019,7 @@ UITextField* activeTextField = nil;
         [[NSUserDefaults standardUserDefaults ] setObject:display forKey:@"selectedRegisterID"];
         [[NSUserDefaults standardUserDefaults ] setObject:code forKey:@"selectedRegisterIDCode"];
         
+        [[NSUserDefaults standardUserDefaults ] synchronize];
         //////////////
         // Pradeep: 2020-06-25 This should not happen, we cannot change username, code is registry id.
         // [ClientVariable getInstance].CLIENT_USER_LOGIN.userName = code; // set userName accoring to userID
