@@ -68,6 +68,10 @@
         [roles addObject:roleName];
     }
     
+     // Pradeep: 2020-07-02 non tsi cusotmer api also return booking accounts for TSI as well
+    // so no need to use explicit default employee role.
+
+    /*
     if (![roles containsObject:@"EMPLOYEE_USER"]) {
         // non tsi employee state head etc.
         
@@ -76,7 +80,13 @@
         } else {
             [self initializeFiltersWithNonTSIData];
         }
-        
+    }
+     */
+    
+    if([DataManager getInstance].non_tsi_customers == nil) {
+        [self getNonTSI_Accounts];
+    } else {
+        [self initializeFiltersWithNonTSIData];
     }
 
     
@@ -155,12 +165,17 @@
             NSMutableArray *getDataArray = [[NSMutableArray alloc]init];
             
             
+            // Pradeep: 2020-07-02 non tsi cusotmer api also return booking accounts for TSI as well
+            // so no need to use explicit default employee role.
+            /*
              if (![roles containsObject:@"EMPLOYEE_USER"]) {
                  [getDataArray addObjectsFromArray:[[DataManager getInstance].non_tsi_accounts objectForKey:selectKey]];
              } else {
                  [getDataArray addObjectsFromArray:[masterDataForEmployee  valueForKey:selectKey]];
              }
+             */
             
+            [getDataArray addObjectsFromArray:[[DataManager getInstance].non_tsi_accounts objectForKey:selectKey]];
             
             
             NSLog(@"%@",getDataArray);

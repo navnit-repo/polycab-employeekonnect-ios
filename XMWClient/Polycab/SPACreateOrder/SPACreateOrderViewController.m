@@ -383,6 +383,8 @@
                 [sendDict setObject:clientVariables.CLIENT_LOGIN_RESPONSE.authToken forKey:@"authToken"];
                 [sendDict setValue:@"createSalesOrder" forKey:@"opcode"];
                 
+                // Pradeep, 2020-06-26 We need to disable back button
+                // so that user cannot go back
                 
                 networkHelper = [[NetworkHelper alloc]init];
                 
@@ -459,6 +461,9 @@
         [alert show];
     }
 }
+
+#pragma mark - HttpEventListener
+
 - (void) httpResponseObjectHandler : (NSString*) callName : (id) respondedObject : (id) requestedObject
 {
     [loadingView removeView];
