@@ -755,8 +755,8 @@
 //    [ytdDataArray addObjectsFromArray:sortedArray3];
     
     sortDone = true;
-    if (numberOfCell >10) {
-        numberOfCell = 10;
+    if (numberOfCell >15) {
+        numberOfCell = 15;
    
     }
     if (ytdDataArray.count>0) {
