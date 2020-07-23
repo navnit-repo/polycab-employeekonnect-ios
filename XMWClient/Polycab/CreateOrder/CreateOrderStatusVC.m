@@ -33,8 +33,56 @@
 @synthesize mainScrollView;
 @synthesize jsonResponse;
 @synthesize billToLbl,billToValueLbl,shipToLbl,shipToValueLbl,lineAmountLbl,lineAmountValueLbl,lineTaxAmountLbl,lineTaxAmountValueLbl,totalLineAmountLbl,totalLineAmountValueLbl;
+
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        self.ALLOW_BACK = NO;
+    }
+    return self;
+}
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    self.ALLOW_BACK = NO;
+    
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    
+    
+    if (isiPhoneXSMAX) {
+           self.view.frame = CGRectMake(0, 64, 414, 832);
+       }
+       else if(isiPhoneXR) {
+           self.view.frame = CGRectMake(0, 64, 414, 832);
+       }
+       
+       else if(isiPhoneXS) {
+           self.view.frame = CGRectMake(0, 64, 375, 748);
+       }
+       else if(isiPhone10) {
+           self.view.frame = CGRectMake(0, 64, 375, 748);
+       }
+       
+       else if(isiPhone6Plus) {
+           self.view.frame = CGRectMake(0, 64, 414, 672);
+       }
+       else if(isiPhone6) {
+           self.view.frame = CGRectMake(0, 64, 375, 600);
+       } else if(isiPhone5) {
+           self.view.frame = CGRectMake(0, 64, 320, 504);
+       } else {
+           // 0, 64, 320, 416
+           self.view.frame = CGRectMake(0, 64, 320, 416);
+       }
+    
+    
     
     if (isSPAFlag) {
         cellHeight = 363 * deviceHeightRation;
@@ -124,27 +172,32 @@
                                                                           imageNamed:@"back-button"]  style:UIBarButtonItemStylePlain target:self
                                                                   action:@selector(backHandler:)];
 
-    backButton.tintColor = [UIColor colorWithRed:119.0/255 green:119.0/255 blue:119.0/255 alpha:1.0];
+    // backButton.tintColor = [UIColor colorWithRed:119.0/255 green:119.0/255 blue:119.0/255 alpha:1.0];
     
+    backButton.tintColor = [UIColor whiteColor];
     
     UIImageView *polycabLogo = [[UIImageView alloc] initWithImage:[UIImage  imageNamed:@"polycab_logo"]];
     self.navigationItem.titleView.contentMode = UIViewContentModeCenter;
     self.navigationItem.titleView = polycabLogo;
     
     // Pradeep: 2020-06-26, we do not want to show back button
-    // [self.navigationItem setLeftBarButtonItem:backButton];
+    
+    if( self.ALLOW_BACK) [self.navigationItem setLeftBarButtonItem:backButton];
     
 }
 
 - (void) backHandler : (id) sender
 {
-//    [ [self navigationController]  popViewControllerAnimated:YES];
+    [ [self navigationController]  popViewControllerAnimated:YES];
+    
+    /*
     NSMutableArray *viewControllersArray = [NSMutableArray arrayWithArray:self.navigationController.viewControllers];
-       NSMutableArray *dummyViewControllers = [[NSMutableArray alloc ] init];
-       [dummyViewControllers addObject: [viewControllersArray objectAtIndex:0]];
+    NSMutableArray *dummyViewControllers = [[NSMutableArray alloc ] init];
+    [dummyViewControllers addObject: [viewControllersArray objectAtIndex:0]];
        
                                                      
-        [self.navigationController setViewControllers:dummyViewControllers animated:YES];
+    [self.navigationController setViewControllers:dummyViewControllers animated:YES];
+     */
     
 }
 

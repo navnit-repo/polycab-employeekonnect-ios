@@ -15,6 +15,9 @@
     id jsonResponse;
     NSString *businessVerticalName;
 }
+
+@property BOOL ALLOW_BACK;
+
 @property (weak, nonatomic) IBOutlet UILabel *headerNameLbl;
 @property (weak, nonatomic) IBOutlet UILabel *trackerIdLbl;
 @property (weak, nonatomic) IBOutlet UILabel *trackerIdValueLbl;

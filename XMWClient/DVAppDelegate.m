@@ -171,11 +171,9 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
     [self.window makeKeyAndVisible];
 
     
-    
-    
-    
     deviceWidthRation = self.window.frame.size.width/320;
     deviceHeightRation = self.window.frame.size.width/320;
+    // deviceHeightRation = self.window.frame.size.height/568;
     
     
     NSArray *versionCompatibility = [[UIDevice currentDevice].systemVersion componentsSeparatedByString:@"."];

@@ -46,7 +46,13 @@
       [clientVariables registerReportVCClass:@"CreditNotesVC" forId:@"DOT_REPORT_CREDIT_NOTES"];
     
     
-
+    
+    // for WideReportVC
+    [clientVariables registerReportVCClass:@"OrderAwaitingConfirmation" forId:@"DR_ORDERS_AWAITING_CONFIRMATION"];
+    [clientVariables registerReportVCClass:@"WideReportVC" forId:@"DR_SALES_ORDER_EXECUTION"];
+    
+    [clientVariables registerReportVCClass:@"WideReportVC" forId:@"DR_SALES_ORDER_EXECUTION_DD"];
+    
 }
 
 #pragma mark - custom form VCs

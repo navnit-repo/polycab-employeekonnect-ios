@@ -104,8 +104,8 @@
 
 -(void) makeReportScreenV2;
 -(ReportTabularDataSection*) addTabularDataSection;
-- (void) httpResponseObjectHandler : (NSString*) callName : (id) respondedObject : (id) requestedObject;
-- (void) httpFailureHandler : (NSString*) callName : (NSString*) message;
+-(void) httpResponseObjectHandler:(NSString*) callName :(id) respondedObject :(id) requestedObject;
+-(void) httpFailureHandler:(NSString*) callName :(NSString*) message;
 
 -(void)setNeedRefresh:(BOOL) inNeedRefresh;
 
