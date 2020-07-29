@@ -171,6 +171,8 @@
 		273259A4248502E3003F979C /* growth_arrow_down.png in Resources */ = {isa = PBXBuildFile; fileRef = 273259A0248502E3003F979C /* growth_arrow_down.png */; };
 		279D43B524A58DFD0046BB33 /* DataManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 279D43B324A58DFD0046BB33 /* DataManager.h */; };
 		279D43B624A58DFD0046BB33 /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 279D43B424A58DFD0046BB33 /* DataManager.m */; };
+		27A7485E24D1958C00E87A76 /* MXTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A7485C24D1958C00E87A76 /* MXTextView.m */; };
+		27A7485F24D1958C00E87A76 /* MXTextView.h in Headers */ = {isa = PBXBuildFile; fileRef = 27A7485D24D1958C00E87A76 /* MXTextView.h */; };
 		38A6BFEB1EFD1D3F00537D62 /* ImageUploadFormViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 38A6BFE81EFD1D3F00537D62 /* ImageUploadFormViewController.h */; };
 		38A6BFEC1EFD1D3F00537D62 /* ImageUploadFormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38A6BFE91EFD1D3F00537D62 /* ImageUploadFormViewController.m */; };
 		38A6BFED1EFD1D3F00537D62 /* ImageUploadFormViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38A6BFEA1EFD1D3F00537D62 /* ImageUploadFormViewController.xib */; };
@@ -1342,6 +1344,8 @@
 		273259A0248502E3003F979C /* growth_arrow_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = growth_arrow_down.png; path = Images/growth_arrow_down.png; sourceTree = "<group>"; };
 		279D43B324A58DFD0046BB33 /* DataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataManager.h; sourceTree = "<group>"; };
 		279D43B424A58DFD0046BB33 /* DataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataManager.m; sourceTree = "<group>"; };
+		27A7485C24D1958C00E87A76 /* MXTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MXTextView.m; path = Views/TextView/MXTextView.m; sourceTree = "<group>"; };
+		27A7485D24D1958C00E87A76 /* MXTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MXTextView.h; path = Views/TextView/MXTextView.h; sourceTree = "<group>"; };
 		38A6BFE81EFD1D3F00537D62 /* ImageUploadFormViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageUploadFormViewController.h; sourceTree = "<group>"; };
 		38A6BFE91EFD1D3F00537D62 /* ImageUploadFormViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageUploadFormViewController.m; sourceTree = "<group>"; };
 		38A6BFEA1EFD1D3F00537D62 /* ImageUploadFormViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImageUploadFormViewController.xib; sourceTree = "<group>"; };
@@ -2579,6 +2583,15 @@
 			path = DataManager;
 			sourceTree = "<group>";
 		};
+		27A7485B24D194F600E87A76 /* TextView */ = {
+			isa = PBXGroup;
+			children = (
+				27A7485D24D1958C00E87A76 /* MXTextView.h */,
+				27A7485C24D1958C00E87A76 /* MXTextView.m */,
+			);
+			name = TextView;
+			sourceTree = "<group>";
+		};
 		852A940F18F996F200F5DB5F /* Checkbox */ = {
 			isa = PBXGroup;
 			children = (
@@ -3277,6 +3290,7 @@
 		90272EF1174DCFC100115D7B /* View */ = {
 			isa = PBXGroup;
 			children = (
+				27A7485B24D194F600E87A76 /* TextView */,
 				9028B1691994DBDF0027C3BD /* DownloadHistoryMenuView */,
 				852A940F18F996F200F5DB5F /* Checkbox */,
 				90001752180D45600002F464 /* TimePickerViewController.h */,
@@ -4798,6 +4812,7 @@
 				905FFDBC1999EEBB00E95BFB /* iToast.h in Headers */,
 				90F47D731796A69900C6B76C /* PageViewController.h in Headers */,
 				85284F6F19D5FC600010ED87 /* XmwNotificationWebViewController.h in Headers */,
+				27A7485F24D1958C00E87A76 /* MXTextView.h in Headers */,
 				8595B4FF19100D4A0010C685 /* NSDate+Helpers.h in Headers */,
 				2724689E24C92DCD00B71C62 /* OrderAwaitingConfirmation.h in Headers */,
 				F0B4259F22671C240011D3E4 /* ChatThreadList_Object.h in Headers */,
@@ -5943,6 +5958,7 @@
 				2732587C2484CEA8003F979C /* ScreenMapper.m in Sources */,
 				902D3F691755E92200E079AB /* LabelTableViewCell.m in Sources */,
 				85804F2D1A69087E0093CDBB /* DotVBarChart.m in Sources */,
+				27A7485E24D1958C00E87A76 /* MXTextView.m in Sources */,
 				85900FBA18E008580052067B /* TagKeyConstant.m in Sources */,
 				F023B78D211C1B9500D54B38 /* CreditDetailsCollectionView.m in Sources */,
 				F088F5F72105E587000E26F4 /* SalesComparisonLegend.m in Sources */,

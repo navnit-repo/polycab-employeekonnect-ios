@@ -40,7 +40,11 @@
 
 -(NSMutableDictionary *) getDropDownList:(DotFormElement *)component;
 -(NSMutableDictionary *) methodCall : (NSString *) structFieldName : (NSString *)selectedValue : (NSString *)dependedFieldName : (NSString *)refreshDropDown : (NSString *)dropDownMasterValueMapping;
-+(id) getMasterValueForComponent : (NSString *) elementId :  (NSString *) masterValueMapping;
+
++(id) getMasterValueForComponent: (NSString *) elementId :(NSString *) masterValueMapping;
++(id) getSortedMasterValueForComponent:(NSString *) elementId :(NSString *) masterValueMapping;
++(id) getSortedMasterValueForComponent:(DotFormElement*) formElement;
++(id) getSortedMasterValueForComponent:(DotFormElement*) formElement  masterKey:(NSString*)masterValueMapping;
 
 +(NSMutableDictionary*) makeMenuForButtonScreen : (NSString*) formId;
 

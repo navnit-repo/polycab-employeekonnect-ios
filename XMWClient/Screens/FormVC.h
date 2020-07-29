@@ -67,6 +67,8 @@
     
 @protected
     
+    NSMutableDictionary *loadingViewComponentMap;
+    
     int screenId;
     // core members as similar to members of SimpleDotForm
     NSString *auth_Token;

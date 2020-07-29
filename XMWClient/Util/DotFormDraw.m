@@ -1415,8 +1415,7 @@ int uiViewStartIdx = 1001;
 }
 
 
-
-+(id) getMasterValueForComponent : (NSString *) elementId :  (NSString *) masterValueMapping
++(id) getMasterValueForComponent:(NSString *) elementId :(NSString *) masterValueMapping
 {
     ClientVariable *clientVariables = [ClientVariable getInstance:[DVAppDelegate currentModuleContext]];
     if ((masterValueMapping != nil) && ![masterValueMapping isEqualToString: @""])
@@ -1432,16 +1431,16 @@ int uiViewStartIdx = 1001;
     if( [ddKeyValue count] > 0) {
         NSMutableArray* arrayValue = [[NSMutableArray alloc]init];
         NSMutableArray* arrayKey = [[NSMutableArray alloc]init];
-    
+        
         for (int cntIndex = 0; cntIndex<[keysMap count]; cntIndex++)
         {
             NSString* key = (NSString*) [keysMap objectAtIndex: cntIndex];  //.nextElement();
             [arrayKey insertObject:key atIndex:cntIndex ];
             [arrayValue insertObject: [ddKeyValue objectForKey:key] atIndex:cntIndex];
-        
+            
             // arrayValue[cntIndex] = ((String) ddKeyValue.get(key));
         }
-    
+        
         NSMutableArray* finalObjArray = [[NSMutableArray alloc]init];
         [finalObjArray insertObject:arrayKey atIndex:0 ];
         [finalObjArray insertObject:arrayValue atIndex:1 ];
@@ -1451,7 +1450,7 @@ int uiViewStartIdx = 1001;
     return nil;
 }
 
-+(id) getSortedMasterValueForComponent : (NSString *) elementId :  (NSString *) masterValueMapping
++(id) getSortedMasterValueForComponent:(NSString *) elementId :(NSString *) masterValueMapping
 {
     ClientVariable *clientVariables = [ClientVariable getInstance:[DVAppDelegate currentModuleContext]];
     if ((masterValueMapping != nil) && ![masterValueMapping isEqualToString: @""])
@@ -1471,7 +1470,7 @@ int uiViewStartIdx = 1001;
         {
             NSArray* pair = (NSArray*) [sortedPairs objectAtIndex: cntIndex];  //.nextElement();
             [arrayKey insertObject:[pair objectAtIndex:0] atIndex:cntIndex ];
-            [arrayValue insertObject:[pair objectAtIndex:1] atIndex:cntIndex];            
+            [arrayValue insertObject:[pair objectAtIndex:1] atIndex:cntIndex];
         }
         
         NSMutableArray* finalObjArray = [[NSMutableArray alloc]init];
@@ -1481,29 +1480,118 @@ int uiViewStartIdx = 1001;
     }
     
     /*
-    NSArray* sortedKeys = [XmwUtils sortHashtableKey:ddKeyValue :XmwcsConst_SORT_AS_STRING];
-    if( [ddKeyValue count] > 0) {
-        NSMutableArray* arrayValue = [[NSMutableArray alloc]init];
-        NSMutableArray* arrayKey = [[NSMutableArray alloc]init];
-        
-        for (int cntIndex = 0; cntIndex<[sortedKeys count]; cntIndex++)
-        {
-            NSString* key = (NSString*) [sortedKeys objectAtIndex: cntIndex];  //.nextElement();
-            [arrayKey insertObject:key atIndex:cntIndex ];
-            [arrayValue insertObject: [ddKeyValue objectForKey:key] atIndex:cntIndex];
-            
-            // arrayValue[cntIndex] = ((String) ddKeyValue.get(key));
-        }
-        
-        NSMutableArray* finalObjArray = [[NSMutableArray alloc]init];
-        [finalObjArray insertObject:arrayKey atIndex:0 ];
-        [finalObjArray insertObject:arrayValue atIndex:1 ];
-        return finalObjArray;
-    }
+     NSArray* sortedKeys = [XmwUtils sortHashtableKey:ddKeyValue :XmwcsConst_SORT_AS_STRING];
+     if( [ddKeyValue count] > 0) {
+     NSMutableArray* arrayValue = [[NSMutableArray alloc]init];
+     NSMutableArray* arrayKey = [[NSMutableArray alloc]init];
+     
+     for (int cntIndex = 0; cntIndex<[sortedKeys count]; cntIndex++)
+     {
+     NSString* key = (NSString*) [sortedKeys objectAtIndex: cntIndex];  //.nextElement();
+     [arrayKey insertObject:key atIndex:cntIndex ];
+     [arrayValue insertObject: [ddKeyValue objectForKey:key] atIndex:cntIndex];
+     
+     // arrayValue[cntIndex] = ((String) ddKeyValue.get(key));
+     }
+     
+     NSMutableArray* finalObjArray = [[NSMutableArray alloc]init];
+     [finalObjArray insertObject:arrayKey atIndex:0 ];
+     [finalObjArray insertObject:arrayValue atIndex:1 ];
+     return finalObjArray;
+     }
      */
     
     return nil;
 }
+
+
++(id) getSortedMasterValueForComponent:(DotFormElement*) formElement
+{
+    
+    NSString* masterValueMapping = [formElement masterValueMapping];
+    
+    if ((masterValueMapping == nil) || [masterValueMapping isEqualToString: @""])
+    {
+        masterValueMapping = formElement.elementId;
+    }
+    
+    return [DotFormDraw getSortedMasterValueForComponent:formElement masterKey:masterValueMapping];
+    
+}
+
++(id) getSortedMasterValueForComponent:(DotFormElement*) formElement  masterKey:(NSString*)masterValueMapping
+{
+    ClientVariable *clientVariables = [ClientVariable getInstance:[DVAppDelegate currentModuleContext]];
+    
+    NSDictionary* exProperties = nil;
+    
+    if(formElement.extendedProperty!=nil && [formElement.extendedProperty length]>0) {
+        exProperties = [XmwUtils getExtendedPropertyMap:formElement.extendedProperty];
+    }
+    
+    // VALUES_ORDER_BY:[CODE]$VALUES_ORDERING:[ASC]
+    NSString* orderBy = @"CODE";
+    NSString* ordering = @"ASC";
+    
+    if(exProperties!=nil) {
+        NSString* valuesOrderBy = [exProperties objectForKey:@"VALUES_ORDER_BY"];
+        if(valuesOrderBy!=nil && [valuesOrderBy length]>0) {
+            // must be CODE or NAME
+            orderBy = valuesOrderBy;
+        }
+        NSString* orderingAscOrDesc = [exProperties objectForKey:@"VALUES_ORDERING"];
+        if(orderingAscOrDesc!=nil && [orderingAscOrDesc length]>0) {
+            // must be ASC or DESC
+            ordering = orderingAscOrDesc;
+        }
+    }
+    
+    NSMutableDictionary* ddKeyValue =[clientVariables.CLIENT_APP_MASTER_DATA objectForKey: masterValueMapping];
+    
+    if([orderBy isEqualToString:@"NAME"]) {
+        // NSArray* unsortedKeys = [ddKeyValue allKeys];
+        NSArray* sortedPairs = [XmwUtils sortHashtableByValue:ddKeyValue :XmwcsConst_SORT_AS_STRING];
+        if( [sortedPairs count] > 0) {
+            NSMutableArray* arrayValue = [[NSMutableArray alloc]init];
+            NSMutableArray* arrayKey = [[NSMutableArray alloc]init];
+            
+            for (int cntIndex = 0; cntIndex<[sortedPairs count]; cntIndex++)
+            {
+                NSArray* pair = (NSArray*) [sortedPairs objectAtIndex: cntIndex];  //.nextElement();
+                [arrayKey insertObject:[pair objectAtIndex:0] atIndex:cntIndex ];
+                [arrayValue insertObject:[pair objectAtIndex:1] atIndex:cntIndex];
+            }
+            
+            NSMutableArray* finalObjArray = [[NSMutableArray alloc]init];
+            [finalObjArray insertObject:arrayKey atIndex:0 ];
+            [finalObjArray insertObject:arrayValue atIndex:1 ];
+            return finalObjArray;
+        }
+    } else if([orderBy isEqualToString:@"CODE"]) {
+        NSArray* sortedKeys = [XmwUtils sortHashtableKey:ddKeyValue :XmwcsConst_SORT_AS_STRING];
+        if( [ddKeyValue count] > 0) {
+            NSMutableArray* arrayValue = [[NSMutableArray alloc]init];
+            NSMutableArray* arrayKey = [[NSMutableArray alloc]init];
+            
+            for (int cntIndex = 0; cntIndex<[sortedKeys count]; cntIndex++)
+            {
+                NSString* key = (NSString*) [sortedKeys objectAtIndex: cntIndex];  //.nextElement();
+                [arrayKey insertObject:key atIndex:cntIndex ];
+                [arrayValue insertObject: [ddKeyValue objectForKey:key] atIndex:cntIndex];
+                
+                // arrayValue[cntIndex] = ((String) ddKeyValue.get(key));
+            }
+            
+            NSMutableArray* finalObjArray = [[NSMutableArray alloc]init];
+            [finalObjArray insertObject:arrayKey atIndex:0 ];
+            [finalObjArray insertObject:arrayValue atIndex:1 ];
+            return finalObjArray;
+        }
+    }
+    
+    return nil;
+}
+
 
 +(NSMutableDictionary*) makeMenuForButtonScreen : (NSString*) formId {
 	ClientVariable *clientVariables = [ClientVariable getInstance:[DVAppDelegate currentModuleContext]];

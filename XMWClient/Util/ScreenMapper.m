@@ -53,6 +53,10 @@
     
     [clientVariables registerReportVCClass:@"WideReportVC" forId:@"DR_SALES_ORDER_EXECUTION_DD"];
     
+    
+    [clientVariables registerReportVCClass:@"WideReportVC" forId:@"DOT_REPORT_INVENTORY_STOCK"];
+    
+    
 }
 
 #pragma mark - custom form VCs

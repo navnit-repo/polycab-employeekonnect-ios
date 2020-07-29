@@ -20,8 +20,12 @@
 
 
 @interface MultiSelectViewCell : UIView <MultiSelectDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
-
-
+@property (strong, nonatomic) UIView* rightView;
+@property (nonatomic, retain) UIView* upperView;
+@property (nonatomic, retain) NSMutableArray* selectedValueItems;
+@property (nonatomic, retain) NSMutableArray* selectedDisplayItems;
+@property (nonatomic, retain) NSArray* masterDisplayList;
+@property (nonatomic, retain) NSArray* masterValueList;
 @property (nonatomic, retain) UILabel* titleLabel;
 @property (nonatomic, retain) UILabel* mandatoryLabel;
 @property (nonatomic, retain) UIButton* selectButton;
@@ -38,5 +42,8 @@
 -(NSArray*) selectedDisplayItems;
 
 -(DotFormElement*) dotFormElement;
+-(void)setDisplayItemsAndValueItems :(NSString*)displayItem :(NSString*)valueItem;
+-(void) configureViewForSelectedItems;
+-(void)setEditDisplayItemsAndValueItems :(NSArray*)displayItem :(NSArray*)valueItem;
 
 @end

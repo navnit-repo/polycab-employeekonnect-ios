@@ -9,24 +9,24 @@
 #import "MultiSelectViewCell.h"
 #import "DotFormElement.h"
 #import "MultiSelectPopup.h"
-
+#import "XmwUtils.h"
 @interface MultiSelectViewCell ()
 {
     DotFormElement* _dotFormElement;
-    NSArray* masterDisplayList;
-    NSArray* masterValueList;
+//    NSArray* masterDisplayList;
+//    NSArray* masterValueList;
     
-    NSMutableArray* selectedValueItems;
-    NSMutableArray* selectedDisplayItems;
+//    NSMutableArray* selectedValueItems;
+//    NSMutableArray* selectedDisplayItems;
     
 }
-
-@property (strong, nonatomic) UIView* rightView;
 
 @end
 
 @implementation MultiSelectViewCell
-
+@synthesize upperView;
+@synthesize masterValueList,masterDisplayList;
+@synthesize selectedDisplayItems,selectedValueItems;
 - (void)awakeFromNib {
     // Initialization code
 }
@@ -41,11 +41,11 @@
     masterValueList = valueItems;
     
     
-    UIView* upperView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
+    upperView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
     upperView.backgroundColor = [UIColor clearColor];
     
     // Initialization code
-    self.mandatoryLabel = [[UILabel alloc] initWithFrame:CGRectMake(4, 11, 8, 16)];
+    self.mandatoryLabel = [[UILabel alloc] initWithFrame:CGRectMake(16, 11, 8, 16)];
     self.mandatoryLabel.textColor = [UIColor colorWithRed:0.968f green:0.0f blue:0.0f alpha:1.0];
     self.mandatoryLabel.backgroundColor = [UIColor clearColor];
     self.mandatoryLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
@@ -54,36 +54,37 @@
     self.mandatoryLabel.text = @"*";
     [upperView addSubview:self.mandatoryLabel];
     
-    self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 6, 137, self.frame.size.height - 4)];
-    self.titleLabel.textColor = [UIColor colorWithRed:0.227f green:0.227f blue:0.227f alpha:1.0];
+    self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(24, 11, 137, 20)];
+    // self.titleLabel.textColor = [UIColor colorWithRed:0.227f green:0.227f blue:0.227f alpha:1.0];
+    self.titleLabel.textColor = [UIColor colorWithRed:119.0/255 green:119.0/255 blue:119.0/255 alpha:1.0];
     self.titleLabel.backgroundColor = [UIColor clearColor];
     self.titleLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-
+    
     self.titleLabel.adjustsFontSizeToFitWidth = YES;
     self.titleLabel.textAlignment = NSTextAlignmentLeft;
     self.titleLabel.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
-    self.titleLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:13.0];
+    self.titleLabel.font = [UIFont fontWithName:@"Helvetica-Light" size:16.0];
     [upperView addSubview:self.titleLabel];
     
     
     if([_dotFormElement isOptionalBool])
-        self.mandatoryLabel.hidden	= YES;
+        self.mandatoryLabel.hidden    = YES;
     else
-        self.mandatoryLabel.hidden	= NO;
+        self.mandatoryLabel.hidden    = NO;
     
     self.titleLabel.text = _dotFormElement.displayText;
     
     
-    self.rightView = [[UIView alloc] initWithFrame:CGRectMake( 144, 6, 169, self.frame.size.height-8)];
+    self.rightView = [[UIView alloc] initWithFrame:CGRectMake( 16, 35, self.bounds.size.width-32, 40)];
     self.rightView.backgroundColor = [UIColor whiteColor];
     [self.rightView.layer setCornerRadius:5.0f];
     [self.rightView.layer setBorderColor:[UIColor lightGrayColor].CGColor];
-    [self.rightView.layer setBorderWidth:0.5f];
+    [self.rightView.layer setBorderWidth:1.0f];
     
     
-    UIImageView* arrowImage =  [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Icon-Arrow"]];
-    arrowImage.frame = CGRectMake(170 - 30, 4, 32, 32);
-    
+    UIImageView* arrowImage =  [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"downarrow_right_arrow"]];
+    arrowImage.frame = CGRectMake(self.rightView.frame.size.width-25, 4, 27, 27);
+    arrowImage.contentMode = UIViewContentModeCenter;
     [self.rightView addSubview:arrowImage];
     
     [upperView addSubview:self.rightView];
@@ -95,8 +96,38 @@
     tapGesture.numberOfTapsRequired = 1;
     [upperView addGestureRecognizer:tapGesture];
     
+    [self configureDefaults];
+    
 }
-
+-(void) configureDefaults
+{
+    
+    if(_dotFormElement.defaultVal !=nil && [_dotFormElement.defaultVal length]>0) {
+        NSDictionary* defMap = [XmwUtils getExtendedPropertyMap:_dotFormElement.defaultVal];
+        NSString* displayValue = [defMap objectForKey:@"VALUE"];
+        NSString* postValue = [defMap objectForKey:@"KEY"];
+        
+        if(displayValue!=nil && [displayValue length]>0) {
+            NSInteger defIdx = [self hasItem:displayValue inItems:masterDisplayList];
+            if(defIdx>=0) {
+                NSArray* selectedIndices = [NSArray arrayWithObject:[NSNumber numberWithInt:defIdx]];
+                [self selected:nil items:selectedIndices];
+            }
+        }
+    }
+}
+-(NSInteger) hasItem:(NSString*) item inItems:(NSArray*) stringItems
+{
+    NSInteger retVal = -1;
+    
+    for(int i=0; i<[stringItems count];i++) {
+        if([item caseInsensitiveCompare:[stringItems objectAtIndex:i]] == NSOrderedSame) {
+            retVal = i;
+            break;
+        }
+    }
+    return retVal;
+}
 -(IBAction)tapHandling:(id)sender
 {
     NSLog(@"tap handled here");
@@ -158,15 +189,15 @@
         [flowLayout setMinimumInteritemSpacing:0.0f];
         [flowLayout setMinimumLineSpacing:0.0f];
         
-        collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake( 0, 0, 135, 32) collectionViewLayout:flowLayout];
+        collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake( 0, 0, self.bounds.size.width-75, 32) collectionViewLayout:flowLayout];
         [collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"CollectionViewCell"];
         
         collectionView.delegate = self;
-        collectionView.dataSource	= self;
+        collectionView.dataSource    = self;
         collectionView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-        collectionView.showsVerticalScrollIndicator	 = NO;
+        collectionView.showsVerticalScrollIndicator     = NO;
         collectionView.showsHorizontalScrollIndicator = NO;
-        collectionView.backgroundColor = [UIColor whiteColor];
+        collectionView.backgroundColor = [UIColor clearColor];
         collectionView.tag = 1001;
     
         [self.rightView addSubview:collectionView];
@@ -192,13 +223,22 @@
     
     UILabel *textLabel = (UILabel *)[cell viewWithTag:101];
     if(textLabel==nil) {
-        textLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 100, 32)];
+        textLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, self.bounds.size.width-35, 20)];
         textLabel.tag = 101;
         textLabel.font = [UIFont systemFontOfSize:13.0f];
+        textLabel.lineBreakMode = NSLineBreakByWordWrapping;
+        textLabel.textColor =  [UIColor colorWithRed:119.0/255 green:119.0/255 blue:119.0/255 alpha:1.0];
+//        textLabel.backgroundColor = [UIColor lightGrayColor];
+//        textLabel.layer.masksToBounds=YES;
+        textLabel.layer.borderColor= [[UIColor lightGrayColor]CGColor];
+        textLabel.layer.borderWidth= 1.0f;
+   
         [cell addSubview:textLabel];
     }
     textLabel.text = [selectedDisplayItems objectAtIndex:indexPath.row];
-    
+    [textLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
+    CGSize labelSize = [textLabel intrinsicContentSize];
+    textLabel.frame = CGRectMake(textLabel.frame.origin.x, textLabel.frame.origin.y, labelSize.width+6, 20);
     return cell;
 }
 
@@ -212,7 +252,7 @@
     [label setText:[selectedDisplayItems objectAtIndex:indexPath.row]];
     CGSize labelSize = [label intrinsicContentSize];
     
-    return CGSizeMake(labelSize.width + 6, 32);
+    return CGSizeMake(labelSize.width + 18, 32);
 }
 
 
@@ -233,4 +273,33 @@
     return _dotFormElement;
 }
 
+- (void)setEditDisplayItemsAndValueItems:(NSArray *)displayItem :(NSArray *)valueItem
+{
+    
+    selectedValueItems= [[NSMutableArray alloc]init];
+    selectedDisplayItems = [[NSMutableArray alloc] init];
+    [selectedDisplayItems addObjectsFromArray:displayItem];
+    [selectedValueItems addObjectsFromArray:valueItem];
+    [self configureViewForSelectedItems];
+}
+-(void)setDisplayItemsAndValueItems :(NSString*)displayItem :(NSString*)valueItem
+{
+    NSData *webData = [displayItem dataUsingEncoding:NSUTF8StringEncoding];
+    NSError *error;
+    NSArray *displayItemArray = [NSJSONSerialization JSONObjectWithData:webData options:0 error:&error];
+    NSLog(@"%@",displayItemArray);
+    
+    NSData *webData1 = [valueItem dataUsingEncoding:NSUTF8StringEncoding];
+    NSError *error1;
+    NSArray *valueItemArray = [NSJSONSerialization JSONObjectWithData:webData1 options:0 error:&error1];
+    NSLog(@"%@",valueItemArray);
+    selectedValueItems= [[NSMutableArray alloc]init];
+    selectedDisplayItems = [[NSMutableArray alloc] init];
+    
+    for (int i=0; i<displayItemArray.count; i++) {
+        [selectedDisplayItems addObject:[displayItemArray objectAtIndex:i]];
+        [selectedValueItems addObject:[valueItemArray objectAtIndex:i]];
+    }
+    [self configureViewForSelectedItems];
+}
 @end

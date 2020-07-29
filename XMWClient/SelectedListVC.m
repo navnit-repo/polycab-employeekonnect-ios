@@ -315,7 +315,9 @@
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
         selectedPickerValue = [dropDownList objectAtIndex:indexPath.row];
         selectedPickerKey = [dropDownListKey objectAtIndex:indexPath.row];
-        elementId = [dropDownListKey objectAtIndex:indexPath.row];
+        
+        // Pradeep: 2020-07-29, elementId is the context id from which this control popped.
+        // elementId = [dropDownListKey objectAtIndex:indexPath.row];
         self.checkedIndexPath = indexPath;
     }
     

@@ -72,6 +72,14 @@
 #import "ProgressBarView.h"
 #import "SimpleEditForm.h"
 #import "LogInVC.h"
+#import "MultiSelectViewCell.h"
+#import "MultiSelectSearchViewCell.h"
+#import "MultipleFileAttachmentView.h"
+#import "MXTextView.h"
+
+#define MAX_CONTACT_FIELD_LENGTH 10
+#define DROP_DOWN_REQUEST_ELEMENT_KEY @"REQUEST_ELEMENT_ID"
+
 #if 0
 #import "ZBarSDK.h"
 #endif
@@ -226,6 +234,8 @@ UITextField* activeTextField = nil;
 	isSubmit				= NO;
     
     componentMap = [[NSMutableDictionary alloc]init];
+    
+    loadingViewComponentMap = [[NSMutableDictionary alloc ] init];
     
     
 }
@@ -670,6 +680,9 @@ UITextField* activeTextField = nil;
     selectedListVC.dropDownListKey = dropDownListKey;
     selectedListVC.delegate=self;
     
+    NSString* elementId = [selectedTextFieldKey stringByReplacingOccurrencesOfString:@"_button" withString:@""];
+    selectedListVC.elementId = elementId;
+    
     [self.navigationController pushViewController:selectedListVC animated:YES];
     
     
@@ -1003,14 +1016,15 @@ UITextField* activeTextField = nil;
     isOpenPicker = YES;
     
 }
+
+#pragma mark - SelectedPopUpdelegate
 -(void) done:(SelectedListVC*) selectedListVC context:(NSString*) context code:(NSString*) code display:(NSString*) display;
 {
     //for polycab chnage some handling
     NSString *search= [self.mxButton.elementId stringByReplacingOccurrencesOfString:@"_button" withString:@""];
     MXTextField *dropDownField = (MXTextField *) [self getDataFromId:search];
     
-    
-    
+
     // this code for set selected reg id
     if ([dropDownField.elementId isEqualToString:@"REGISTRY_ID"]) {
         regIDCheck = YES;
@@ -1108,6 +1122,9 @@ UITextField* activeTextField = nil;
     
     [UIView commitAnimations];
     
+    
+    [self configureDependentControl:context];
+    
 }
 
 
@@ -1145,6 +1162,641 @@ UITextField* activeTextField = nil;
     
 }
 
+-(void) configureDependentControl:(NSString*) elementId
+{
+    //code for depended component network call
+       DotFormElement *element =(DotFormElement *) [dotForm.formElements objectForKey:elementId];
+       
+       NSArray *dependedCompNetworkCall = [element.dependedCompName componentsSeparatedByString:@","];
+       
+       if (dependedCompNetworkCall!=nil && dependedCompNetworkCall.count >0) {
+           for (int i=0; i < dependedCompNetworkCall.count; i++) {
+               NSMutableArray *sortedElements =[DotFormDraw sortFormComponents : dotForm.formElements];
+               NSMutableArray * componentNames = [[NSMutableArray alloc ] init];
+               
+               for (int j=0; j<sortedElements.count; j++) {
+                   if ([[sortedElements objectAtIndex:j] isEqualToString:elementId]) {
+                       [componentNames addObject:[sortedElements objectAtIndex:j]];
+                       break;
+                   }
+                   else
+                   {
+                       [componentNames addObject:[sortedElements objectAtIndex:j]];
+                   }
+               }
+               
+               
+               NSString *dependedElementName = [dependedCompNetworkCall objectAtIndex:i];
+               DotFormElement *element =(DotFormElement *) [dotForm.formElements objectForKey:dependedElementName];
+               
+               NSDictionary* extendedProperty = [XmwUtils getExtendedPropertyMap:element.extendedProperty];
+               
+               NSMutableArray *reSeTextFieldNameArray = [[NSMutableArray alloc ] init];
+               [reSeTextFieldNameArray addObject:dependedElementName];
+               [self reSetDropDown:reSeTextFieldNameArray];
+               
+               
+               // This code only work for drop down only
+               if (extendedProperty.count >0 && [[extendedProperty objectForKey:@"MASTER_VALUE_FROM"] isEqualToString:@"LOCAL"]) {
+                   // Fetch Data From Master Value
+                   id masterValues = [DotFormDraw getSortedMasterValueForComponent:element];
+                   NSString *buttonElementID = [element.elementId stringByAppendingString:@"_button"];
+                   MXButton *mxbutton = (MXButton*)[self getDataFromId:buttonElementID];
+                   mxbutton.attachedData = masterValues;
+                   
+                   if(element.defaultVal !=nil && [element.defaultVal length]>0) {
+                       NSDictionary* defMap = [XmwUtils getExtendedPropertyMap:element.defaultVal];
+                       NSString* displayValue = [defMap objectForKey:@"VALUE"];
+                       NSString* postValue = [defMap objectForKey:@"KEY"];
+                       
+                       MXTextField *texField = (MXTextField *) [self getDataFromId:element.elementId];
+                       texField.text = displayValue;
+                       texField.keyvalue = postValue;
+                   }
+                   
+                   
+                   if( element.isEnableAll == true)
+                   {
+                       NSArray* sortedMasterValues = [DotFormDraw getSortedMasterValueForComponent:[element elementId] : [element masterValueMapping]];
+                       
+                       NSDictionary* defMap = [XmwUtils getExtendedPropertyMap:element.defaultVal];
+                       NSString* displayValue = [defMap objectForKey:@"VALUE"];
+                       NSString* postValue = [defMap objectForKey:@"KEY"];
+                       
+                       NSMutableArray* keysArray = [sortedMasterValues objectAtIndex:0];
+                       NSMutableArray* valuesArray = [sortedMasterValues objectAtIndex:1];
+                       [keysArray insertObject:postValue atIndex:0];
+                       [valuesArray insertObject:displayValue atIndex:0];
+                       
+                       
+                       MXTextField *texField = (MXTextField *) [self getDataFromId:element.elementId];
+                       texField.text = displayValue;
+                       texField.keyvalue = postValue;
+                       NSString *buttonElementID = [element.elementId stringByAppendingString:@"_button"];
+                       MXButton *mxbutton = (MXButton*)[self getDataFromId:buttonElementID];
+                       
+                       mxbutton.attachedData = sortedMasterValues;
+                   }
+                   
+               }
+               
+               else
+               {
+                   // Fetch Data From Network call
+                   
+                   NSDictionary* extendedProperty = [XmwUtils getExtendedPropertyMap:element.extendedProperty];
+                   
+                   if ([extendedProperty[@"REQUEST_DEFAULT_VALUE"] isEqualToString:@"TRUE"]) {
+                       
+                       NSString *docID = extendedProperty[@"REQUEST_DOC_ID"];
+                       
+                       [self dependendComponentnetworkCall:componentNames :docID :element.elementId];
+                   }
+                   else{
+                       // default implementation
+                       NSString *docID = element.masterValueMapping;
+                       [self dependendComponentnetworkCall:componentNames :docID :element.elementId];
+                   }
+               }
+           }
+       }
+    
+}
+
+
+-(void) reSetDropDown :(NSArray *) textFieldNameArray
+{
+    for (int i=0; i<textFieldNameArray.count; i++) {
+        NSString *elementId = [textFieldNameArray objectAtIndex:i];
+        DotFormElement *element =(DotFormElement *) [dotForm.formElements objectForKey:elementId];
+        
+        if ([element.componentType isEqualToString:XmwcsConst_DE_COMPONENT_MULTI_SELECT]) {
+            MultiSelectViewCell* multiSelectControl = (MultiSelectViewCell *) [self getDataFromId:elementId];
+            multiSelectControl.masterDisplayList = [[NSArray alloc ] init];
+            multiSelectControl.masterValueList = [[NSArray alloc ] init];
+            multiSelectControl.selectedValueItems = nil;
+            multiSelectControl.selectedDisplayItems = nil;
+            [multiSelectControl configureViewForSelectedItems];
+        }
+        else
+        {
+            MXTextField *dropDownField = (MXTextField *) [self getDataFromId:elementId];
+            dropDownField.text = @"";
+            dropDownField.keyvalue = @"";
+            NSString *buttonElementId = [elementId stringByAppendingString:@"_button"];
+            
+            MXButton *dropDownButton = (MXButton *) [self getDataFromId:buttonElementId];
+            dropDownButton.attachedData = nil;
+        }
+    }
+    
+}
+
+-(void) dependendComponentnetworkCall :(NSArray *) sendDataComponentNames :(NSString *) docID :(NSString*)requestForElement
+{
+    loadingView = [LoadingView loadingViewInView:self.view];
+    [self loadingViewPutToDataIdMap :loadingView :docID];
+    
+    DotFormPost *dotFormPost = [[DotFormPost alloc]init];
+    [dotFormPost setAdapterType:@"JDBC"];
+    [dotFormPost setAdapterId:docID];
+    [dotFormPost setModuleId:[DVAppDelegate currentModuleContext]];
+    [dotFormPost setDocId:docID];
+    [dotFormPost setReportCacheRefresh:@"true"];
+    [dotFormPost.postData setObject:@"" forKey:@"SEARCH_TEXT"];
+    [dotFormPost.postData setObject:@"SBC" forKey:@"SEARCH_BY"];
+    
+    for (int i=0; i<sendDataComponentNames.count; i++) {
+        NSString *elementId = [sendDataComponentNames objectAtIndex:i];
+        DotFormElement *element =(DotFormElement *) [dotForm.formElements objectForKey:elementId];
+        
+        NSLog(@"%@:%@",element.elementId, [self getDotFormElementData:element :self]);
+        [dotFormPost.postData setObject:[self getDotFormElementData:element :self] forKey:element.elementId];
+    }
+    [dotFormPost.postData setObject:requestForElement forKey:DROP_DOWN_REQUEST_ELEMENT_KEY];
+    
+    NetworkHelper * networkHelper = [[NetworkHelper alloc] init];
+    [networkHelper makeXmwNetworkCall:dotFormPost :self : nil :  XmwcsConst_CALL_NAME_FOR_SEARCH];
+}
+
+
+-(NSString * ) getDotFormElementData :(DotFormElement *) dotFormElement :(FormVC *) baseForm
+{
+    NSString *componentType = dotFormElement.componentType;
+    NSString *elementid = dotFormElement.elementId;
+    NSString *valueToSubmit = @"";
+    NSString *valueToDisplay = @"";
+    
+    
+    // "USE" field defined for dropdown and multiselect
+    // telling to use code (Key value) or name (display value)
+    NSString* useValue = @"PARAMCODE";
+    NSDictionary* propMap = [XmwUtils getExtendedPropertyMap:dotFormElement.extendedProperty];
+    if(propMap!=nil) {
+        NSString* tempProp = [propMap objectForKey:@"USE"];
+        if(tempProp!=nil && [tempProp isKindOfClass:[NSString class]] && [tempProp length]>0) {
+            useValue = tempProp;
+            // value is either PARAMCODE or PARAMNAME
+        }
+    }
+    
+    
+    NSMutableArray *valueOfComponent = [[NSMutableArray alloc] init];
+    
+    if ([componentType isEqualToString : XmwcsConst_DE_COMPONENT_TEXTFIELD]
+        || [componentType isEqualToString : XmwcsConst_DE_COMPONENT_TEXTFIELD_PASSWORD]
+        || [componentType isEqualToString : XmwcsConst_DE_COMPONENT_DATE_FIELD])
+    {
+        MXTextField *textField = (MXTextField *)[baseForm getDataFromId:elementid];
+        valueToSubmit = valueToDisplay = textField.text;
+        
+    }
+    else if ([componentType isEqualToString : XmwcsConst_DE_COMPONENT_TEXTAREA])
+    {
+        MXTextView *textField = (MXTextView *)[baseForm getDataFromId:elementid];
+        valueToSubmit = valueToDisplay = textField.text;
+    }
+    else if ([componentType isEqualToString : XmwcsConst_DE_COMPONENT_DROPDOWN] )
+    {
+        if([useValue isEqualToString:@"PARAMCODE"]) {
+            MXTextField *dropDownField = (MXTextField *) [baseForm getDataFromId:elementid];
+            valueToSubmit =  dropDownField.keyvalue;
+            valueToDisplay = dropDownField.text;
+        } else {
+            MXTextField *dropDownField = (MXTextField *) [baseForm getDataFromId:elementid];
+            valueToSubmit =  dropDownField.text;
+            valueToDisplay = dropDownField.text;
+        }
+    }
+    else if ([componentType isEqualToString:XmwcsConst_DE_COMPONENT_SEARCH_FIELD])
+    {
+        DropDownTableViewCell *dropDownCell = [baseForm getDataFromId:elementid];
+        MXTextField *dropDownField = dropDownCell.dropDownField;
+        valueToDisplay = dropDownField.text;
+        valueToSubmit = dropDownField.keyvalue;
+    } else if([componentType isEqualToString : XmwcsConst_DE_COMPONENT_EDIT_SEARCH_FIELD]) {
+        EditSearchField* editSearchField = (EditSearchField *) [baseForm getDataFromId: dotFormElement.elementId];
+        valueToDisplay = editSearchField.editText.text;
+        valueToSubmit =  editSearchField.editText.text;
+    } else if ([componentType isEqualToString : XmwcsConst_DE_COMPONENT_CHECKBOX])
+    {
+        //tushar code
+        
+        MXButton *mxButton  = (MXButton*)[baseForm getDataFromId:elementid];
+        CheckBoxButton* checkBoxButton = (CheckBoxButton*)mxButton.parent;
+        
+        //        CheckBoxButton *checkBoxButton = (CheckBoxButton *)[baseForm getDataFromId:elementid];
+        
+        if(checkBoxButton.isChecked)
+        {
+            valueToDisplay = @"1";
+            valueToSubmit = (NSString *) checkBoxButton.elementId;
+            
+        }
+    } else if ([componentType isEqualToString : XmwcsConst_DE_COMPONENT_CHECKBOX_GROUP]) {
+        // not used anywhere
+        
+    } else if ([componentType isEqualToString : XmwcsConst_DE_COMPONENT_LABEL])
+    {
+        MXLabel *label = (MXLabel *) [baseForm getDataFromId:elementid];
+        valueToSubmit =  valueToDisplay = label.text;
+        if(label.attachedData != nil){
+            valueToSubmit = label.attachedData;
+        }
+        
+        
+        // valueToSubmit = label.attachedData;
+        
+    } else if ([componentType isEqualToString : XmwcsConst_DE_COMPONENT_TIME_FIELD]){
+        
+        MXTextField *textField = (MXTextField *)[baseForm getDataFromId:elementid];
+        valueToSubmit = valueToDisplay = textField.attachedData;
+        
+    }
+    else if ([componentType isEqualToString : XmwcsConst_DE_COMPONENT_RADIO_GROUP]){
+        RadioGroup *radioGroup = (RadioGroup*)[baseForm getDataFromId:elementid];
+        
+        valueToSubmit = valueToDisplay = [radioGroup.displayValueArray objectAtIndex:radioGroup.selectedIndex];
+        
+    }
+    else if ([componentType isEqualToString : XmwcsConst_DE_COMPONENT_ATTACHMENT_BUTTON]){
+        /* this code for single file Attachment Code
+         AttachmentViewCell *vc = (AttachmentViewCell*) [baseForm getDataFromId:elementid];
+         valueToSubmit=  vc.ufmrefid;
+         
+         */
+        
+        MultipleFileAttachmentView *attachmentView = (MultipleFileAttachmentView *) [baseForm getDataFromId:elementid];
+        NSString *submitUFMREFID = @"";
+        for (int i=0; i< attachmentView.ufmrefidArray.count; i++) {
+            submitUFMREFID = [[submitUFMREFID stringByAppendingString: [attachmentView.ufmrefidArray objectAtIndex:i]] stringByAppendingString:@","];
+        }
+        if(submitUFMREFID.length>0)
+        {
+            submitUFMREFID = [submitUFMREFID substringWithRange:NSMakeRange(0, submitUFMREFID.length - 1)]; // for remove " , " from end of the string
+        }
+        
+        valueToSubmit=  submitUFMREFID;
+    }
+    
+    else if ([componentType isEqualToString : XmwcsConst_DE_COMPONENT_MULTI_SELECT] ) {
+        
+        MultiSelectViewCell* multiSelectControl = (MultiSelectViewCell *) [baseForm getDataFromId:elementid];
+        
+        NSError *writeError = nil;
+        NSData* jsonData = nil;
+        
+        if([useValue isEqualToString:@"PARAMCODE"]) {
+            if([multiSelectControl selectedValueItems]!=nil) {
+                jsonData = [NSJSONSerialization dataWithJSONObject:[multiSelectControl selectedValueItems] options:NSJSONWritingPrettyPrinted error:&writeError];
+                valueToSubmit = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+            } else {
+                valueToSubmit = @"[]";
+            }
+            
+            if([multiSelectControl selectedDisplayItems]!=nil) {
+                jsonData = [NSJSONSerialization dataWithJSONObject:[multiSelectControl selectedDisplayItems] options:NSJSONWritingPrettyPrinted error:&writeError];
+                valueToDisplay = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+            } else {
+                valueToDisplay = @"[]";
+            }
+        } else {
+            
+            if([multiSelectControl selectedValueItems]!=nil) {
+                jsonData = [NSJSONSerialization dataWithJSONObject:[multiSelectControl selectedValueItems] options:NSJSONWritingPrettyPrinted error:&writeError];
+                valueToDisplay  = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+            } else {
+                valueToDisplay  = @"[]";
+            }
+            
+            if([multiSelectControl selectedDisplayItems]!=nil) {
+                jsonData = [NSJSONSerialization dataWithJSONObject:[multiSelectControl selectedDisplayItems] options:NSJSONWritingPrettyPrinted error:&writeError];
+                valueToSubmit = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+            } else {
+                valueToSubmit = @"[]";
+            }
+        }
+        
+    } else if ([componentType isEqualToString : XmwcsConst_DE_COMPONENT_MULTI_SELECT_SEARCH] ) {
+        
+        MultiSelectSearchViewCell* multiSelectSearchControl = (MultiSelectSearchViewCell *) [baseForm getDataFromId:elementid];
+        
+        NSError *writeError = nil;
+        NSData* jsonData = nil;
+        
+        if([useValue isEqualToString:@"PARAMCODE"]) {
+            if([multiSelectSearchControl selectedValueItems]!=nil) {
+                jsonData = [NSJSONSerialization dataWithJSONObject:[multiSelectSearchControl selectedValueItems] options:NSJSONWritingPrettyPrinted error:&writeError];
+                valueToSubmit = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+            } else {
+                valueToSubmit = @"[]";
+            }
+            
+            if([multiSelectSearchControl selectedDisplayItems]!=nil) {
+                jsonData = [NSJSONSerialization dataWithJSONObject:[multiSelectSearchControl selectedDisplayItems] options:NSJSONWritingPrettyPrinted error:&writeError];
+                valueToDisplay = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+            } else {
+                valueToDisplay = @"[]";
+            }
+        } else {
+            // only display values to sent
+            if([multiSelectSearchControl selectedDisplayItems]!=nil) {
+                jsonData = [NSJSONSerialization dataWithJSONObject:[multiSelectSearchControl selectedDisplayItems] options:NSJSONWritingPrettyPrinted error:&writeError];
+                valueToSubmit = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+            } else {
+                valueToSubmit = @"[]";
+            }
+            
+            if([multiSelectSearchControl selectedDisplayItems]!=nil) {
+                jsonData = [NSJSONSerialization dataWithJSONObject:[multiSelectSearchControl selectedDisplayItems] options:NSJSONWritingPrettyPrinted error:&writeError];
+                valueToDisplay = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+            } else {
+                valueToDisplay = @"[]";
+            }
+        }
+        
+    } else if([componentType isEqualToString : XmwcsConst_DE_COMPONENT_BARCODE_SCAN_FIELD]) {
+        
+        BarCodeScanField* barCodeScanField = (BarCodeScanField *) [baseForm getDataFromId:elementid];
+        valueToDisplay = barCodeScanField.editText.text;
+        valueToSubmit =  barCodeScanField.editText.text;
+        
+    }
+    
+    else if([componentType isEqualToString : XmwcsConst_DE_COMPONENT_SUGGESTIVE_SEARCH_FIELD]) {
+        
+        MXTextField *textField = (MXTextField *)[baseForm getDataFromId:elementid];
+        valueToSubmit = textField.keyvalue;
+        valueToDisplay = textField.text;
+        
+    }
+    /*
+    else if ([componentType isEqualToString:XmwcsConst_DE_COMPONENT_LOCATION_TYPE])
+    {
+        valueToSubmit = valueToDisplay = [self getCurrentLatLong];
+    }*/
+    
+    
+    if(XmwcsConst_IS_DEBUG) {
+        
+    }
+    
+    NSString *returnValue;
+    
+    if (valueToSubmit.length >0 && valueToSubmit!=nil) {
+        returnValue = valueToSubmit;
+    }
+    
+    else
+    {
+        returnValue = @"";
+    }
+    return returnValue;
+    
+}
+
+#pragma mark - GPS LOCATION
+-(NSString *) getCurrentLatLong
+{
+    NSString * combineLatLongString = @"";
+    
+    NSMutableArray * locationArray = [[NSMutableArray alloc ] init];
+    NSMutableDictionary *locationDict = [[NSMutableDictionary alloc ] init];
+    [locationArray addObjectsFromArray: [[NSUserDefaults standardUserDefaults] objectForKey:XmwcsConst_GPS_LOCATION_KEY]];
+    if (locationArray == nil ) {
+        locationArray = [[NSMutableArray alloc ] init];
+    }
+    if (locationArray.count > 0) {
+        [locationDict setDictionary:[locationArray objectAtIndex:0]];
+        
+        NSString *savedTime = [NSString stringWithFormat:@"%@",[locationDict objectForKey:XmwcsConst_GPS_LOCATION_GET_CURRENT_TIME_KEY]];
+        
+        if ([self timerCheck:savedTime]) {
+            
+            NSString * latitude = [NSString stringWithFormat:@"%@",[locationDict objectForKey:XmwcsConst_GPS_LOCATION_LATITUDE_KEY]];
+            NSString * longitude = [NSString stringWithFormat:@"%@",[locationDict objectForKey:XmwcsConst_GPS_LOCATION_LONGITUDE_KEY]];
+            
+            NSLog(@"Latitude : %@",latitude);
+            NSLog(@"Longitude : %@",longitude);
+            
+            combineLatLongString = [[latitude stringByAppendingString:@";"] stringByAppendingString:longitude];
+            
+            //                valueToDisplay = valueToSubmit = combineLatLongString;
+        }
+    }
+    return combineLatLongString;
+    
+}
+
+-(BOOL)timerCheck :(NSString *) savedTime {
+    BOOL flag = false;
+    
+    NSDate * now = [NSDate date];
+    NSDateFormatter *outputFormatter = [[NSDateFormatter alloc] init];
+    [outputFormatter setDateFormat:@"HH:mm:ss"];
+    NSString *currenttime = [outputFormatter stringFromDate:now];
+    
+    
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"HH:mm:ss"];
+    
+    NSDate *date1= [[formatter dateFromString:savedTime] dateByAddingTimeInterval:60.0 * XmwcsConst_GPS_LOCATION_GET_DEFAULT_TIME_VARIABLE];
+    NSDate *date2 = [formatter dateFromString:currenttime];
+    
+    NSLog(@"%f is the time difference",[date2 timeIntervalSinceDate:date1]/60);
+    CGFloat timeDifference = [date2 timeIntervalSinceDate:date1] / 60;
+    
+    if (timeDifference < XmwcsConst_GPS_LOCATION_GET_DEFAULT_TIME_VARIABLE) {
+        flag = true;
+    }
+    else
+    {
+        flag = false;
+    }
+    return flag;
+}
+-(void) setDropDownResponseDataForTextfield :(id)respondedObject :(NSString *) fieldElementId{
+    SearchResponse *searchResponseObj = (SearchResponse*)respondedObject;
+    DotFormElement *element =(DotFormElement *) [dotForm.formElements objectForKey:fieldElementId];
+    if ([element.componentType isEqualToString:XmwcsConst_DE_COMPONENT_TEXTFIELD]) {
+        MXTextField *textField = (MXTextField *) [self getDataFromId:element.elementId];
+        textField.text = searchResponseObj.searchRecord[0][0];
+        textField.attachedData = searchResponseObj.searchRecord[0][0];
+    }
+}
+
+-(void) setDropDownResponseDefaultValue :(id)respondedObject :(NSString *) fieldElementId
+{
+    SearchResponse *searchResponseObj = (SearchResponse*)respondedObject;
+    NSMutableArray *searchResponseData = [[NSMutableArray alloc]init];
+    [searchResponseData addObjectsFromArray:searchResponseObj.searchRecord];
+    NSMutableArray  *dropDownData = [[NSMutableArray alloc]init];
+    NSMutableArray *keys =[[NSMutableArray alloc]init];
+    NSMutableArray *values= [[NSMutableArray alloc]init];
+    for (int i=0; i<searchResponseData.count; i++) {
+        NSString *key;
+        NSString *value;
+        if ([[[searchResponseData objectAtIndex:i] objectAtIndex:0] isKindOfClass:[NSNull class]]) {
+            key = @"";
+        } else {
+            key =[[searchResponseData objectAtIndex:i] objectAtIndex:0];
+        }
+        if ([[[searchResponseData objectAtIndex:i] objectAtIndex:1] isKindOfClass:[NSNull class]]) {
+            value = @"";
+        } else {
+            value =[[searchResponseData objectAtIndex:i] objectAtIndex:1];
+        }
+        
+        [keys addObject: key];
+        [values addObject: value];
+    }
+    
+    
+    if (keys.count >0) {
+        
+        NSString*responsiblePersonDropDownKey = keys[0];
+        
+        if (responsiblePersonDropDownKey.length > 0 && ![responsiblePersonDropDownKey isEqualToString:@""]) {
+            ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext]];
+            DotFormElement *formElement = (DotFormElement *) [dotForm.formElements valueForKey:fieldElementId];
+            MXTextField *textField = (MXTextField*) [self getDataFromId:fieldElementId];
+            if ([[clientVariables.CLIENT_APP_MASTER_DATA objectForKey:formElement.masterValueMapping] objectForKey:responsiblePersonDropDownKey]) {
+                textField.keyvalue = responsiblePersonDropDownKey;
+                textField.text = [NSString stringWithFormat:@"%@",[[clientVariables.CLIENT_APP_MASTER_DATA objectForKey:formElement.masterValueMapping] objectForKey:responsiblePersonDropDownKey]];
+                
+            }
+            else{
+                // do nothing
+            }
+            
+        }
+        else{
+            // do nothing
+        }
+    }
+    else{
+        // do nothing
+    }
+    
+    // Set Master Value again
+    DotFormElement *formElement = (DotFormElement *) [dotForm.formElements valueForKey:fieldElementId];
+    id masterValues = [DotFormDraw getSortedMasterValueForComponent:formElement];
+    NSString *buttonElementID = [formElement.elementId stringByAppendingString:@"_button"];
+    MXButton *mxbutton = (MXButton*)[self getDataFromId:buttonElementID];
+    mxbutton.attachedData = masterValues;
+    
+    
+}
+-(void) setDropDownResponseData :(id)respondedObject :(NSString *) fieldElementId
+{
+    SearchResponse *searchResponseObj = (SearchResponse*)respondedObject;
+    NSMutableArray *searchResponseData = [[NSMutableArray alloc]init];
+    [searchResponseData addObjectsFromArray:searchResponseObj.searchRecord];
+    
+    NSMutableArray  *dropDownData = [[NSMutableArray alloc]init];
+    NSMutableArray *keys =[[NSMutableArray alloc]init];
+    NSMutableArray *values= [[NSMutableArray alloc]init];
+    for (int i=0; i<searchResponseData.count; i++) {
+        NSString *key;
+        NSString *value;
+        if ([[[searchResponseData objectAtIndex:i] objectAtIndex:0] isKindOfClass:[NSNull class]]) {
+            key = @"";
+        } else {
+            key =[[searchResponseData objectAtIndex:i] objectAtIndex:0];
+        }
+        
+        if([[searchResponseData objectAtIndex:i] count]>1) {
+            if ([[[searchResponseData objectAtIndex:i] objectAtIndex:1] isKindOfClass:[NSNull class]]) {
+                value = @"";
+            } else {
+                value =[[searchResponseData objectAtIndex:i] objectAtIndex:1];
+            }
+        } else {
+            if ([[[searchResponseData objectAtIndex:i] objectAtIndex:0] isKindOfClass:[NSNull class]]) {
+                value = @"";
+            } else {
+                value =[[searchResponseData objectAtIndex:i] objectAtIndex:0];
+            }
+        }
+        
+        [keys addObject: key];
+        [values addObject: value];
+    }
+    
+    NSMutableArray *key_value_Array = [[NSMutableArray alloc]init];
+    for (int i=0; i<keys.count; i++) {
+        NSString *key;
+        NSString *value;
+        key = [keys objectAtIndex:i];
+        value = [values objectAtIndex:i];
+        if ([key isEqualToString:@""] || [key isKindOfClass:[NSNull class]] || key == nil || key.length <=0) {
+            key = @"";
+        }
+        if ([value isEqualToString:@""] || [value isKindOfClass:[NSNull class]] || value == nil || value.length <=0) {
+            value = @"";
+        }
+        
+        //        NSString *finalValue = [[key stringByAppendingString:@"-"]stringByAppendingString:value];
+        [key_value_Array addObject:value];
+    }
+    
+    [dropDownData addObject:keys];
+    [dropDownData addObject:key_value_Array];
+    
+    
+    DotFormElement *element =(DotFormElement *) [dotForm.formElements objectForKey:fieldElementId];
+    
+    if ([element.componentType isEqualToString:XmwcsConst_DE_COMPONENT_DROPDOWN]) {
+        NSString *buttonElementID = [fieldElementId stringByAppendingString:@"_button"];
+        
+        
+        // add All key value in drop down master data if dotformElement is Enable All
+        if( element.isEnableAll == true)
+        {
+            
+            NSDictionary* defMap = [XmwUtils getExtendedPropertyMap:element.defaultVal];
+            NSString* displayValue = [defMap objectForKey:@"VALUE"];
+            NSString* postValue = [defMap objectForKey:@"KEY"];
+            
+            NSMutableArray* keysArray = [dropDownData objectAtIndex:0];
+            NSMutableArray* valuesArray = [dropDownData objectAtIndex:1];
+            [keysArray insertObject:postValue atIndex:0];
+            [valuesArray insertObject:displayValue atIndex:0];
+        }
+        
+        MXButton *mxbutton = (MXButton*)[self getDataFromId:buttonElementID];
+        mxbutton.attachedData = dropDownData;
+    }
+    
+    else if ([element.componentType isEqualToString:XmwcsConst_DE_COMPONENT_MULTI_SELECT])
+    {
+        
+        if( element.isEnableAll == true)
+        {
+            
+            NSDictionary* defMap = [XmwUtils getExtendedPropertyMap:element.defaultVal];
+            NSString* displayValue = [defMap objectForKey:@"VALUE"];
+            NSString* postValue = [defMap objectForKey:@"KEY"];
+            
+            NSMutableArray* keysArray = [dropDownData objectAtIndex:0];
+            NSMutableArray* valuesArray = [dropDownData objectAtIndex:1];
+            [keysArray insertObject:postValue atIndex:0];
+            [valuesArray insertObject:displayValue atIndex:0];
+            
+        }
+        
+        
+        
+        MultiSelectViewCell* multiSelectControl = (MultiSelectViewCell *) [self getDataFromId:fieldElementId];
+        multiSelectControl.masterDisplayList = [[NSArray alloc ] init];
+        multiSelectControl.masterValueList = [[NSArray alloc ] init];
+        multiSelectControl.masterDisplayList = dropDownData [1];
+        multiSelectControl.masterValueList = dropDownData [0];
+        
+        
+    }
+    
+}
 -(void) changeToEditableTotalAmount
 {
     UIView* rmAmtCont = nil;
@@ -2088,12 +2740,45 @@ UITextField* activeTextField = nil;
             [myAlertView show];
             
         }
-    }
-    
-    else  if ([callName isEqualToString : XmwcsConst_CALL_NAME_FOR_VIEW_EDIT]) {
+    } else  if ([callName isEqualToString : XmwcsConst_CALL_NAME_FOR_VIEW_EDIT]) {
         
         
         
+    } else if ([callName isEqualToString: XmwcsConst_CALL_NAME_FOR_SEARCH]) {
+        DotFormPost* postReqs = (DotFormPost*)requestedObject;
+           LoadingView *removeLoadingView = (LoadingView *) [self loadingViewGetDataFromId:postReqs.docId];
+           
+           [removeLoadingView removeView];
+           [loadingView removeView];
+        DotFormPost* dotformPostReqs = (DotFormPost*)requestedObject;
+        for (int i=0; i<dotFormElements.count; i++) {
+            
+            DotFormElement * formElement = [dotFormElements objectAtIndex:i];
+            NSDictionary* extendedProperty = [XmwUtils getExtendedPropertyMap:formElement.extendedProperty];
+            
+            if ([extendedProperty[@"REQUEST_DEFAULT_VALUE"] isEqualToString:@"TRUE"] && [extendedProperty[@"REQUEST_DOC_ID"] isEqualToString:dotformPostReqs.adapterId] && [dotformPostReqs.postData[DROP_DOWN_REQUEST_ELEMENT_KEY] isEqualToString:formElement.elementId]) {
+                // This code only work for Drop Down, as per current requriment
+                // set default value into drop down
+                if ([formElement.componentType isEqualToString:XmwcsConst_DE_COMPONENT_DROPDOWN]) {
+                    [self setDropDownResponseDefaultValue:respondedObject :formElement.elementId];
+                    break;
+                }
+                else{
+                    // Future implementation pending for other component
+                }
+                
+            } else{
+                // defualt implementation works.
+                if ([dotformPostReqs.adapterId isEqualToString:formElement.masterValueMapping] && ![formElement.componentType isEqualToString:XmwcsConst_DE_COMPONENT_TEXTFIELD] && [dotformPostReqs.postData[DROP_DOWN_REQUEST_ELEMENT_KEY] isEqualToString:formElement.elementId]) {
+                    
+                    [self setDropDownResponseData:respondedObject :formElement.elementId];
+                    break;
+                }
+                else if([dotformPostReqs.adapterId isEqualToString:formElement.masterValueMapping] && [formElement.componentType isEqualToString:XmwcsConst_DE_COMPONENT_TEXTFIELD] && [dotformPostReqs.postData[DROP_DOWN_REQUEST_ELEMENT_KEY] isEqualToString:formElement.elementId]) {
+                    [self setDropDownResponseDataForTextfield:respondedObject :formElement.elementId];
+                }
+            }
+        }
     }
 }
 
@@ -2388,6 +3073,23 @@ UITextField* activeTextField = nil;
     
     
 }
+
+
+
+-(void) loadingViewPutToDataIdMap : (id) component : (NSString *) objectId
+{
+    
+    [loadingViewComponentMap setObject:component forKey:objectId];
+    
+}
+
+-(id) loadingViewGetDataFromId : (NSString *) objectId
+{
+    
+    return[loadingViewComponentMap objectForKey : objectId];
+    
+}
+
 
 
 @end
