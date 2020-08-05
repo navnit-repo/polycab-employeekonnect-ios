@@ -14,10 +14,17 @@ NS_ASSUME_NONNULL_BEGIN
 {
     NSMutableArray< NSMutableArray< NSString* >* >* non_tsi_customers;
     NSMutableDictionary<NSString*, NSMutableArray< NSMutableArray< NSString*>* >* >*  non_tsi_accounts;
+    
+    NSMutableArray< NSMutableArray< NSString* >* >* unfiltered_customers;
+    NSMutableDictionary<NSString*, NSMutableArray< NSMutableArray< NSString*>* >* >* unfiltered_accounts;
+
 }
 
 @property (strong, nonatomic) NSMutableDictionary* non_tsi_accounts;
 @property (strong, nonatomic) NSMutableArray* non_tsi_customers;
+
+@property (strong, nonatomic) NSMutableDictionary* unfiltered_accounts;
+@property (strong, nonatomic) NSMutableArray* unfiltered_customers;
 
 
 +(DataManager*) getInstance;    // for default instance;

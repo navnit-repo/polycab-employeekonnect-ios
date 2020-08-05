@@ -22,6 +22,9 @@ static DataManager* g_DataManagerInstance = nil;
 
 @synthesize non_tsi_accounts;
 @synthesize non_tsi_customers;
+@synthesize unfiltered_customers;
+@synthesize unfiltered_accounts;
+
 
 
 + (DataManager*) getInstance

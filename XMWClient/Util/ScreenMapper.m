@@ -107,7 +107,19 @@
     [clientVariables registerFormVCClass:@"GrowthIndicatorFormVC" forId:@"DOT_FORM_BU_SALES_CUSTOMER_WISE"];
     [clientVariables registerFormVCClass:@"GrowthIndicatorFormVC" forId:@"DOT_FORM_CUSTOMER_WISE_SALES"];
 
-     [clientVariables registerFormVCClass:@"TSIFormVC" forId:@"DOT_FORM_CREDIT_NOTES"];
+    [clientVariables registerFormVCClass:@"TSIFormVC" forId:@"DOT_FORM_CREDIT_NOTES"];
+    
+    [clientVariables registerFormVCClass:@"TSIFormVC" forId:@"DOT_REPORT_OVERDUE"];
+    [clientVariables registerFormVCClass:@"TSIFormVC" forId:@"DOT_REPORT_PAYMENT_OUTSTANDING"];
+    [clientVariables registerFormVCClass:@"TSIFormVC" forId:@"DOT_REPORT_CREDIT_DETAILS"];
+    [clientVariables registerFormVCClass:@"TSIFormVC" forId:@"DOT_REPORT_SALES_ORDER_PENDENCY"];
+    [clientVariables registerFormVCClass:@"TSIFormVC" forId:@"DOT_REPORT_DISPATCH_DETAILS"];
+    
+    
+    
+    
+    
+    
 
 }
 

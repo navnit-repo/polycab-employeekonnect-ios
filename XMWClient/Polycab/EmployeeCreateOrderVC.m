@@ -441,51 +441,99 @@
 
 -(void) handleNonTSI_Response:(NSDictionary*) response
 {
-    NSArray* customers = [response objectForKey:@"customers"];
-    
-    NSMutableArray< NSMutableArray< NSString* >* >* registryIds = [[NSMutableArray alloc] init];
-    
-    NSMutableDictionary<NSString*, NSMutableArray< NSMutableArray< NSString*>* >* >*  nonTSIAccounts = [[NSMutableDictionary alloc] init];
-
-
-    for(int i=0; i<[customers count]; i++) {
-        NSDictionary* customer = [customers objectAtIndex:i];
-        NSString* registryId = [customer  objectForKey:@"registry_id"];
-
-        NSMutableArray<NSString*>* details = [[NSMutableArray alloc] init];
+    if([[response allKeys] containsObject:@"customers"]) {
+        NSArray* customers = [response objectForKey:@"customers"];
         
-        [details addObject:[[customer objectForKey:@"registry_id"] copy]];
-        [details addObject:[[customer objectForKey:@"customer_name"] copy]];
+        NSMutableArray< NSMutableArray< NSString* >* >* registryIds = [[NSMutableArray alloc] init];
         
-        // details.add(customer.getString("display_value"));
+        NSMutableDictionary<NSString*, NSMutableArray< NSMutableArray< NSString*>* >* >*  nonTSIAccounts = [[NSMutableDictionary alloc] init];
 
-        // accounts
-        [registryIds addObject:details];
 
-        NSString* key = [@"BUSINESS_VERTICAL_" stringByAppendingString:registryId];
+        for(int i=0; i<[customers count]; i++) {
+            NSDictionary* customer = [customers objectAtIndex:i];
+            NSString* registryId = [customer  objectForKey:@"registry_id"];
 
-        NSArray* customerAccounts = [customer objectForKey:@"accounts"];
-
-        NSMutableArray< NSMutableArray< NSString*>* >* accountsVertical =  [[NSMutableArray alloc] init];
-
-        for(int j=0; j<[customerAccounts count]; j++) {
-            NSDictionary* account = [customerAccounts objectAtIndex:j];
-            NSString* customerNumber = [account objectForKey:@"customer_number"];
-            NSString* buGroup = [account objectForKey:@"bu_group"];
-            // account.getString("display_value_account");
-            NSMutableArray<NSString*>* numberList = [[NSMutableArray alloc] init];
-            [numberList addObject:[customerNumber copy]];
-            [numberList addObject:[NSString stringWithFormat:@"%@-%@", customerNumber, buGroup]];
+            NSMutableArray<NSString*>* details = [[NSMutableArray alloc] init];
             
-            [accountsVertical addObject:numberList];
+            [details addObject:[[customer objectForKey:@"registry_id"] copy]];
+            [details addObject:[[customer objectForKey:@"customer_name"] copy]];
+            
+            // details.add(customer.getString("display_value"));
+
+            // accounts
+            [registryIds addObject:details];
+
+            NSString* key = [@"BUSINESS_VERTICAL_" stringByAppendingString:registryId];
+
+            NSArray* customerAccounts = [customer objectForKey:@"accounts"];
+
+            NSMutableArray< NSMutableArray< NSString*>* >* accountsVertical =  [[NSMutableArray alloc] init];
+
+            for(int j=0; j<[customerAccounts count]; j++) {
+                NSDictionary* account = [customerAccounts objectAtIndex:j];
+                NSString* customerNumber = [account objectForKey:@"customer_number"];
+                NSString* buGroup = [account objectForKey:@"bu_group"];
+                // account.getString("display_value_account");
+                NSMutableArray<NSString*>* numberList = [[NSMutableArray alloc] init];
+                [numberList addObject:[customerNumber copy]];
+                [numberList addObject:[NSString stringWithFormat:@"%@-%@", customerNumber, buGroup]];
+                
+                [accountsVertical addObject:numberList];
+            }
+            [nonTSIAccounts setObject:accountsVertical forKeyedSubscript:key];
         }
-        [nonTSIAccounts setObject:accountsVertical forKeyedSubscript:key];
+        
+        [DataManager getInstance].non_tsi_customers = registryIds;
+        [DataManager getInstance].non_tsi_accounts = nonTSIAccounts;
+        
+        [self initializeFiltersWithNonTSIData];
     }
     
-    [DataManager getInstance].non_tsi_customers = registryIds;
-    [DataManager getInstance].non_tsi_accounts = nonTSIAccounts;
-    
-    [self initializeFiltersWithNonTSIData];
+    if([[response allKeys] containsObject:@"customers_unfiltered"]) {
+           NSArray* customers = [response objectForKey:@"customers_unfiltered"];
+           
+           NSMutableArray< NSMutableArray< NSString* >* >* unfilteredIds = [[NSMutableArray alloc] init];
+           
+           NSMutableDictionary<NSString*, NSMutableArray< NSMutableArray< NSString*>* >* >*  unfilteredAccounts = [[NSMutableDictionary alloc] init];
+
+
+           for(int i=0; i<[customers count]; i++) {
+               NSDictionary* customer = [customers objectAtIndex:i];
+               NSString* registryId = [customer  objectForKey:@"registry_id"];
+
+               NSMutableArray<NSString*>* details = [[NSMutableArray alloc] init];
+               
+               [details addObject:[[customer objectForKey:@"registry_id"] copy]];
+               [details addObject:[[customer objectForKey:@"customer_name"] copy]];
+               
+               // details.add(customer.getString("display_value"));
+
+               // accounts
+               [unfilteredIds addObject:details];
+
+               NSString* key = [@"BUSINESS_VERTICAL_" stringByAppendingString:registryId];
+
+               NSArray* customerAccounts = [customer objectForKey:@"accounts"];
+
+               NSMutableArray< NSMutableArray< NSString*>* >* accountsVertical =  [[NSMutableArray alloc] init];
+
+               for(int j=0; j<[customerAccounts count]; j++) {
+                   NSDictionary* account = [customerAccounts objectAtIndex:j];
+                   NSString* customerNumber = [account objectForKey:@"customer_number"];
+                   NSString* buGroup = [account objectForKey:@"bu_group"];
+                   // account.getString("display_value_account");
+                   NSMutableArray<NSString*>* numberList = [[NSMutableArray alloc] init];
+                   [numberList addObject:[customerNumber copy]];
+                   [numberList addObject:[NSString stringWithFormat:@"%@-%@", customerNumber, buGroup]];
+                   
+                   [accountsVertical addObject:numberList];
+               }
+               [unfilteredAccounts setObject:accountsVertical forKeyedSubscript:key];
+           }
+           
+           [DataManager getInstance].unfiltered_customers = unfilteredIds;
+           [DataManager getInstance].unfiltered_accounts = unfilteredAccounts;
+       }
 
 }
 

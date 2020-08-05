@@ -45,8 +45,14 @@
 #import "DataManager.h"
 
 #define TAG_LOGOUT_DIALOG 1000
-@interface DashBoardVC ()
+@interface DashBoardVC () <HttpEventListener>
+{
+    
+    
+}
+
 @end
+
 @implementation DashBoardVC
 {
     NetworkHelper* networkHelper;
@@ -68,6 +74,9 @@
 @synthesize auth_Token;
 @synthesize tabBar;
 @synthesize tableView;
+
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -112,6 +121,8 @@
 
     
     [self fetchPendingNotifications];
+    
+    [self getNonTSI_Accounts];
     
 }
 
@@ -888,15 +899,15 @@
     
     
 }
+
+# pragma mark - HttpEventListener
 - (void) httpResponseObjectHandler : (NSString*) callName : (id) respondedObject : (id) requestedObject
 {
     [loadingView removeView];
     
     if ([callName isEqualToString : @"FOR_FETCH_NOTIFICATION_LIST"]) {
         NSLog(@"FOR_FETCH_NOTIFICATION_LIST response");
-    }
-    
-    if ([callName isEqualToString : @"FOR_LOGOUT"])
+    } else if ([callName isEqualToString : @"FOR_LOGOUT"])
     {
         DocPostResponse *reportPostResponse = (DocPostResponse*) respondedObject;
         if ([[reportPostResponse submitStatus] isEqualToString:@"S"]) {
@@ -915,9 +926,7 @@
 //            [alert show];
         }
         
-    }
-    
-    if ([callName isEqualToString : XmwcsConst_CALL_NAME_FOR_REPORT])
+    } else if ([callName isEqualToString : XmwcsConst_CALL_NAME_FOR_REPORT])
     {
         DotFormPost* dotFormPost = (DotFormPost*) requestedObject;
         
@@ -930,6 +939,9 @@
         reportVC.screenId = AppConst_SCREEN_ID_REPORT;
         reportVC.reportPostResponse = reportPostResponse;
       [(UINavigationController*)self.revealViewController.frontViewController pushViewController:reportVC animated:YES];
+    } else if([callName isEqualToString:@"role_based_registry_ids_accounts"]){
+        [self handleNonTSI_Response:respondedObject];
+        [loadingView removeView];
     }
 }
 
@@ -1023,5 +1035,140 @@
     
 }
 
+
+-(void)getNonTSI_Accounts
+{
+    ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
+    NSMutableArray* roleList = [[NSMutableArray alloc]init];
+    
+    [roleList addObjectsFromArray:[clientVariables.CLIENT_LOGIN_RESPONSE.clientMasterDetail.masterDataRefresh valueForKey:@"LEVEL_WISE_ROLES"]];
+    
+    
+    NSMutableArray* roles = [[NSMutableArray alloc] init];
+    
+
+    for (int i=0; i<roleList.count; i++) {
+        NSString* roleName = [[roleList objectAtIndex:i] valueForKey:@"rolename"];
+        [roles addObject:roleName];
+    }
+        
+    NSMutableDictionary * postCall = [[NSMutableDictionary  alloc]init];
+    [postCall setObject:@"role_based_registry_ids_accounts" forKey:@"opcode"];
+    [postCall setObject:clientVariables.CLIENT_LOGIN_RESPONSE.authToken forKey:@"authToken"];
+    
+    
+    NSMutableDictionary* postData = [[NSMutableDictionary alloc] init];
+    // here it is logged in user (not registy id as used in other apis)
+    [postData setObject:clientVariables.CLIENT_USER_LOGIN.userName forKey:@"username"];
+    [postData setObject:roles forKey:@"roles"];
+        
+    [postCall setObject: postData forKey:@"userdetails"];
+    
+   
+    loadingView = [LoadingView loadingViewInView:self.view];
+    
+    NetworkHelper * networkHelper = [[NetworkHelper alloc] init];
+    NSString* url = XmwcsConst_OPCODE_URL;
+    networkHelper.serviceURLString = url;
+    [networkHelper genericJSONPayloadRequestWith:postCall :self :@"role_based_registry_ids_accounts"];
+
+}
+
+-(void) handleNonTSI_Response:(NSDictionary*) response
+{
+    if([[response allKeys] containsObject:@"customers"]) {
+        NSArray* customers = [response objectForKey:@"customers"];
+        
+        NSMutableArray< NSMutableArray< NSString* >* >* registryIds = [[NSMutableArray alloc] init];
+        
+        NSMutableDictionary<NSString*, NSMutableArray< NSMutableArray< NSString*>* >* >*  nonTSIAccounts = [[NSMutableDictionary alloc] init];
+
+
+        for(int i=0; i<[customers count]; i++) {
+            NSDictionary* customer = [customers objectAtIndex:i];
+            NSString* registryId = [customer  objectForKey:@"registry_id"];
+
+            NSMutableArray<NSString*>* details = [[NSMutableArray alloc] init];
+            
+            [details addObject:[[customer objectForKey:@"registry_id"] copy]];
+            [details addObject:[[customer objectForKey:@"customer_name"] copy]];
+            
+            // details.add(customer.getString("display_value"));
+
+            // accounts
+            [registryIds addObject:details];
+
+            NSString* key = [@"BUSINESS_VERTICAL_" stringByAppendingString:registryId];
+
+            NSArray* customerAccounts = [customer objectForKey:@"accounts"];
+
+            NSMutableArray< NSMutableArray< NSString*>* >* accountsVertical =  [[NSMutableArray alloc] init];
+
+            for(int j=0; j<[customerAccounts count]; j++) {
+                NSDictionary* account = [customerAccounts objectAtIndex:j];
+                NSString* customerNumber = [account objectForKey:@"customer_number"];
+                NSString* buGroup = [account objectForKey:@"bu_group"];
+                // account.getString("display_value_account");
+                NSMutableArray<NSString*>* numberList = [[NSMutableArray alloc] init];
+                [numberList addObject:[customerNumber copy]];
+                [numberList addObject:[NSString stringWithFormat:@"%@-%@", customerNumber, buGroup]];
+                
+                [accountsVertical addObject:numberList];
+            }
+            [nonTSIAccounts setObject:accountsVertical forKeyedSubscript:key];
+        }
+        
+        [DataManager getInstance].non_tsi_customers = registryIds;
+        [DataManager getInstance].non_tsi_accounts = nonTSIAccounts;
+        
+    }
+    
+    if([[response allKeys] containsObject:@"customers_unfiltered"]) {
+           NSArray* customers = [response objectForKey:@"customers_unfiltered"];
+           
+           NSMutableArray< NSMutableArray< NSString* >* >* unfilteredIds = [[NSMutableArray alloc] init];
+           
+           NSMutableDictionary<NSString*, NSMutableArray< NSMutableArray< NSString*>* >* >*  unfilteredAccounts = [[NSMutableDictionary alloc] init];
+
+
+           for(int i=0; i<[customers count]; i++) {
+               NSDictionary* customer = [customers objectAtIndex:i];
+               NSString* registryId = [customer  objectForKey:@"registry_id"];
+
+               NSMutableArray<NSString*>* details = [[NSMutableArray alloc] init];
+               
+               [details addObject:[[customer objectForKey:@"registry_id"] copy]];
+               [details addObject:[[customer objectForKey:@"customer_name"] copy]];
+               
+               // details.add(customer.getString("display_value"));
+
+               // accounts
+               [unfilteredIds addObject:details];
+
+               NSString* key = [@"BUSINESS_VERTICAL_" stringByAppendingString:registryId];
+
+               NSArray* customerAccounts = [customer objectForKey:@"accounts"];
+
+               NSMutableArray< NSMutableArray< NSString*>* >* accountsVertical =  [[NSMutableArray alloc] init];
+
+               for(int j=0; j<[customerAccounts count]; j++) {
+                   NSDictionary* account = [customerAccounts objectAtIndex:j];
+                   NSString* customerNumber = [account objectForKey:@"customer_number"];
+                   NSString* buGroup = [account objectForKey:@"bu_group"];
+                   // account.getString("display_value_account");
+                   NSMutableArray<NSString*>* numberList = [[NSMutableArray alloc] init];
+                   [numberList addObject:[customerNumber copy]];
+                   [numberList addObject:[NSString stringWithFormat:@"%@-%@", customerNumber, buGroup]];
+                   
+                   [accountsVertical addObject:numberList];
+               }
+               [unfilteredAccounts setObject:accountsVertical forKeyedSubscript:key];
+           }
+           
+           [DataManager getInstance].unfiltered_customers = unfilteredIds;
+           [DataManager getInstance].unfiltered_accounts = unfilteredAccounts;
+       }
+
+}
 
 @end
