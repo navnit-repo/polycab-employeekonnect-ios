@@ -56,6 +56,9 @@
     
     [clientVariables registerReportVCClass:@"WideReportVC" forId:@"DOT_REPORT_INVENTORY_STOCK"];
     
+    [clientVariables registerReportVCClass:@"WideReportVC" forId:@"DOT_REPORT_CUSTOMER_COLLECTION"];
+    [clientVariables registerReportVCClass:@"WideReportVC" forId:@"DOT_REPORT_COLLECTION_LINE_ITEMS"];
+    
     
 }
 
@@ -114,6 +117,8 @@
     [clientVariables registerFormVCClass:@"TSIFormVC" forId:@"DOT_REPORT_CREDIT_DETAILS"];
     [clientVariables registerFormVCClass:@"TSIFormVC" forId:@"DOT_REPORT_SALES_ORDER_PENDENCY"];
     [clientVariables registerFormVCClass:@"TSIFormVC" forId:@"DOT_REPORT_DISPATCH_DETAILS"];
+    
+    [clientVariables registerFormVCClass:@"TSIFormVC" forId:@"DOT_FORM_CUSTOMER_COLLECTION"];
     
     
     

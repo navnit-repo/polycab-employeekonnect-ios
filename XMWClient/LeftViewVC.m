@@ -118,7 +118,8 @@ static HamBurgerMenuView* rightSlideMenu = nil;
         
         if(([menuTitle compare:@"Create Order" options:NSCaseInsensitiveSearch]==NSOrderedSame)
            || ([menuTitle compare:@"Create Order - SPA" options:NSCaseInsensitiveSearch]==NSOrderedSame)
-           || ([menuTitle compare:@"My Orders" options:NSCaseInsensitiveSearch]==NSOrderedSame) ) {
+           || ([menuTitle compare:@"My Orders" options:NSCaseInsensitiveSearch]==NSOrderedSame)
+           || ([menuTitle compare:@"Orders Awaiting Confirmation" options:NSCaseInsensitiveSearch]==NSOrderedSame)) {
             if(bookingVerticals!=nil && [bookingVerticals count]>0) {
                 [keyIdName addObject: tempKeyIdName];
             }
@@ -138,7 +139,8 @@ static HamBurgerMenuView* rightSlideMenu = nil;
         
         if(([menuTitle compare:@"Create Order" options:NSCaseInsensitiveSearch]==NSOrderedSame)
            || ([menuTitle compare:@"Create Order - SPA" options:NSCaseInsensitiveSearch]==NSOrderedSame)
-           || ([menuTitle compare:@"My Orders" options:NSCaseInsensitiveSearch]==NSOrderedSame)) {
+           || ([menuTitle compare:@"My Orders" options:NSCaseInsensitiveSearch]==NSOrderedSame)
+           || ([menuTitle compare:@"Orders Awaiting Confirmation" options:NSCaseInsensitiveSearch]==NSOrderedSame)) {
             if(bookingVerticals!=nil && [bookingVerticals count]>0) {
                 [menuItems addObject:menuTitle];
             }
