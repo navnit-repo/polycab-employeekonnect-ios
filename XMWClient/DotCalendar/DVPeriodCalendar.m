@@ -30,6 +30,34 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    if (isiPhoneXSMAX) {
+        self.view.frame = CGRectMake(0, 64, 414, 832);
+    }
+    else if(isiPhoneXR) {
+        self.view.frame = CGRectMake(0, 64, 414, 832);
+    }
+    
+    else if(isiPhoneXS) {
+        self.view.frame = CGRectMake(0, 64, 375, 748);
+    }
+    else if(isiPhone10) {
+        self.view.frame = CGRectMake(0, 64, 375, 748);
+    }
+    
+    else if(isiPhone6Plus) {
+        self.view.frame = CGRectMake(0, 64, 414, 672);
+    }
+    else if(isiPhone6) {
+        self.view.frame = CGRectMake(0, 64, 375, 600);
+    } else if(isiPhone5) {
+        self.view.frame = CGRectMake(0, 64, 320, 504);
+    } else {
+        // 0, 64, 320, 416
+        self.view.frame = CGRectMake(0, 64, 320, 416);
+    }
+    
+    
     // Do any additional setup after loading the view from its nib.
     currentTabCtx = 0;
     
@@ -107,7 +135,7 @@
     }
     UIButton* cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
     
-    cancelButton.frame = CGRectMake(10, 20, 80, 40);
+    cancelButton.frame = CGRectMake(10, 30, 80, 40);
     [cancelButton setTitle:@"Cancel" forState:UIControlStateNormal];
     [cancelButton addTarget:self action:@selector(backHandler:) forControlEvents:UIControlEventTouchUpInside];
     [cancelButton setTitleColor:[Styles barButtonTextColor] forState:UIControlStateNormal];
@@ -119,7 +147,7 @@
     
     UIButton* doneButton = [UIButton buttonWithType:UIButtonTypeCustom];
     
-    doneButton.frame = CGRectMake(self.view.frame.size.width-90.0f, 20, 80, 40);
+    doneButton.frame = CGRectMake(self.view.frame.size.width-90.0f, 30, 80, 40);
     
     [doneButton setTitle:@"Done" forState:UIControlStateNormal];
     [doneButton addTarget:self action:@selector(doneHandler:) forControlEvents:UIControlEventTouchUpInside];
@@ -144,7 +172,7 @@
            [monthView removeFromSuperview];
         }
         
-        monthView = [[DVMonthView alloc] initWithFrame:CGRectMake(6, 0, 308, 360) lowerLimit:self.fromLowerDate upperLimit:self.fromUpperDate displayDate:self.fromDisplayDate Renderer:self];
+        monthView = [[DVMonthView alloc] initWithFrame:CGRectMake(6, 0, self.view.frame.size.width-12, 360) lowerLimit:self.fromLowerDate upperLimit:self.fromUpperDate displayDate:self.fromDisplayDate Renderer:self];
         
         monthView.monthViewDelegate = self;
         // 255 235 235
@@ -163,7 +191,7 @@
             self.toDisplayDate = [fromSelectedDate  convertToNSDate];
         }
         
-        monthView = [[DVMonthView alloc] initWithFrame:CGRectMake(6, 0, 308, 360) lowerLimit:self.toLowerDate upperLimit:self.toUpperDate displayDate:self.toDisplayDate Renderer:self];
+        monthView = [[DVMonthView alloc] initWithFrame:CGRectMake(6, 0, self.view.frame.size.width-12, 360) lowerLimit:self.toLowerDate upperLimit:self.toUpperDate displayDate:self.toDisplayDate Renderer:self];
         
         monthView.monthViewDelegate = self;
         // 255 235 235
@@ -175,7 +203,7 @@
 
 -(void) drawTitle:(NSString *)headerStr
 {
-    UILabel*  titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(90.0f, 20.0f, self.view.frame.size.width - 180.0f, 40)];
+    UILabel*  titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(90.0f, 30.0f, self.view.frame.size.width - 180.0f, 40)];
     titleLabel.text = headerStr;
     titleLabel.textColor = [Styles headerTextColor];
     titleLabel.textAlignment = NSTextAlignmentCenter;
