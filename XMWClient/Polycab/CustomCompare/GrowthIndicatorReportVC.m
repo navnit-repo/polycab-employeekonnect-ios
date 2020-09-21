@@ -249,8 +249,8 @@
         rowCell.secondLabel.text = tuple.secondValue;
         rowCell.thirdLabel.text = tuple.thirdValue;
         
-        double currYear = [tuple.firstValue doubleValue];
-        double lastYear = [tuple.thirdValue doubleValue];
+        double currYear =  [self unformattedValue:tuple.firstRawData];  // [tuple.firstValue doubleValue];
+        double lastYear = [self unformattedValue:tuple.thirdRawData];  // [tuple.thirdValue doubleValue];
         
         if(lastYear>0.0) {
             double growthValue = currYear-lastYear;
@@ -332,8 +332,8 @@
         tThird.text = [self totalHeaderValue:thirdResponse];
         tThird.textAlignment = NSTextAlignmentRight;
         
-        double currYear = [[self totalHeaderValue:firstResponse] doubleValue];
-        double lastYear = [[self totalHeaderValue:thirdResponse] doubleValue];
+        double currYear = [self unformattedTotalHeaderValue:firstResponse];
+        double lastYear = [self unformattedTotalHeaderValue:thirdResponse];
         
         if(lastYear>0.0) {
             double growthValue = currYear-lastYear;
@@ -562,6 +562,23 @@
     
     return  [NSString stringWithFormat:@"%@/%@/%@\r\n%@/%@/%@", fromDateParts[0], fromDateParts[1], fromyy,
                        toDateParts[0], toDateParts[1], toyy];
+}
+
+
+
+-(double) unformattedValue:(NSArray*) rowData
+{
+    if(rowData==nil) return 0.0f;
+    
+    if([rowData count]>2) {
+        return [[XmwUtils nullSafeEmptyString:[rowData objectAtIndex:2]] doubleValue];
+    }
+    
+    if([rowData count]>1) {
+        return [[XmwUtils nullSafeEmptyString:[rowData objectAtIndex:1]] doubleValue];
+    }
+    
+    return 0.0f;
 }
 
 @end

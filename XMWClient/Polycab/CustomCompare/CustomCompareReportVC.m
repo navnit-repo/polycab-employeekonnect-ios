@@ -1011,9 +1011,32 @@
 
 -(NSString*) totalHeaderValue:(ReportPostResponse*) reportResponse
 {
+    NSString* amtAsString = [reportResponse.headerData objectForKey:@"TOTAL_AMT"];
+    if(amtAsString==nil) return @"0.0";
+    
+    if([amtAsString isKindOfClass:[NSNull class]]) return @"0.0";
+    
     return [reportResponse.headerData objectForKey:@"TOTAL_AMT"];
 }
 
+
+-(double) unformattedTotalHeaderValue:(ReportPostResponse*) reportResponse
+{
+    
+    NSString* amtAsString = [reportResponse.headerData objectForKey:@"TOTAL_AMT"];
+    if(amtAsString==nil) return 0.0f;
+    
+    if([amtAsString isKindOfClass:[NSNull class]]) return 0.0f;
+    
+    // we need to remove formatted characters i.e comma etc.
+    
+    // NSCharacterSet* numbers = [NSCharacterSet characterSetWithCharactersInString:@".0123456789"];
+    
+    NSArray* parts = [amtAsString  componentsSeparatedByString:@","];
+    return [[parts componentsJoinedByString:@""] doubleValue];
+    
+    //  return [reportResponse.headerData objectForKey:@"TOTAL_AMT"];
+}
 
 
 #pragma mark - sorting on client side

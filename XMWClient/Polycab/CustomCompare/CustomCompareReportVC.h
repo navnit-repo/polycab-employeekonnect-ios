@@ -78,6 +78,7 @@
 -(NSArray*) sortKeys;
 -(DotReport*) dotReport;
 -(NSString*) totalHeaderValue:(ReportPostResponse*) reportResponse;
+-(double) unformattedTotalHeaderValue:(ReportPostResponse*) reportResponse;
 -(NSString*) zeroColumnHeading;
 
 -(void) handleExpiredSession;
