@@ -48,5 +48,6 @@
 
 +(void) toastView:(NSString*) message;
 
++(NSString*) nullSafeEmptyString:(NSObject*) jsonValue;
 
 @end

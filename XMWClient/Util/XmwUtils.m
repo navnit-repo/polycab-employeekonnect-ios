@@ -366,4 +366,29 @@
 }
 
 
+
++(NSString*) nullSafeEmptyString:(NSObject*) jsonValue
+{
+    NSString* retVal = @"";
+    
+    if(jsonValue ==nil) {
+        // return empty String
+        return retVal;
+    }
+    if([jsonValue isKindOfClass:[NSString class]]) {
+        return (NSString*)jsonValue;
+    }
+    
+    if([jsonValue isKindOfClass:[NSNull class]]) {
+        return retVal;
+    }
+    
+    if([jsonValue isKindOfClass:[NSNumber class]]) {
+        return [(NSNumber*)jsonValue description];
+    }
+    
+    return retVal;
+    
+}
+
 @end
