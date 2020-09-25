@@ -6167,7 +6167,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 14502;
+				CURRENT_PROJECT_VERSION = 14503;
 				DEVELOPMENT_TEAM = QS92QH4FZ2;
 				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = YES;
 				ENABLE_BITCODE = NO;
@@ -6188,7 +6188,7 @@
 					"$(PROJECT_DIR)/RLMFramework/Alamofire.framework",
 					"$(PROJECT_DIR)/RLMFramework/SwiftyJSON.framework",
 				);
-				MARKETING_VERSION = 10.2;
+				MARKETING_VERSION = 10.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.polycab.xmw.employee.ent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -6209,7 +6209,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 14502;
+				CURRENT_PROJECT_VERSION = 14503;
 				DEVELOPMENT_TEAM = QS92QH4FZ2;
 				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = YES;
 				ENABLE_BITCODE = NO;
@@ -6230,7 +6230,7 @@
 					"$(PROJECT_DIR)/RLMFramework/SwiftyJSON.framework",
 					"$(PROJECT_DIR)/RLMFramework/Alamofire.framework",
 				);
-				MARKETING_VERSION = 10.2;
+				MARKETING_VERSION = 10.3;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PRODUCT_BUNDLE_IDENTIFIER = com.polycab.xmw.employee.ent;
 				PRODUCT_NAME = "$(TARGET_NAME)";

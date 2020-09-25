@@ -8,6 +8,8 @@
 
 #import "OverduePieCellView.h"
 #import "CurrencyConversationClass.h"
+#import "XmwUtils.h"
+
 @implementation OverduePieCellView
 +(OverduePieCellView*) createInstance
 
@@ -41,11 +43,12 @@
         
         
         
-        self.user1.text = [[dataArray objectAtIndex:1]objectAtIndex:0];
-        self.user2.text = [[dataArray objectAtIndex:2]objectAtIndex:0];
-        self.user3.text = [[dataArray objectAtIndex:3]objectAtIndex:0];
-        self.user4.text = [[dataArray objectAtIndex:4]objectAtIndex:0];
-        self.user5.text = [[dataArray objectAtIndex:5]objectAtIndex:0];
+        self.user1.text = [XmwUtils nullSafeEmptyString:[[dataArray objectAtIndex:1]objectAtIndex:0]];
+        self.user2.text = [XmwUtils nullSafeEmptyString:[[dataArray objectAtIndex:2]objectAtIndex:0]];
+        self.user3.text = [XmwUtils nullSafeEmptyString:[[dataArray objectAtIndex:3]objectAtIndex:0]];
+        self.user4.text = [XmwUtils nullSafeEmptyString:[[dataArray objectAtIndex:4]objectAtIndex:0]];
+        self.user5.text = [XmwUtils nullSafeEmptyString:[[dataArray objectAtIndex:5]objectAtIndex:0]];
+
         
         
         self.value1.text = [[NSString stringWithFormat:@"%@",rupee]stringByAppendingString:[currencyFormate formateCurrency:[NSString stringWithFormat:@"%f", user1]]];
