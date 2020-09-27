@@ -858,8 +858,6 @@
     moveToPage = moveToPage % [ftdDataArray count];
     pageIndicator.currentPage = moveToPage;
     
-
-    
 }
 
 

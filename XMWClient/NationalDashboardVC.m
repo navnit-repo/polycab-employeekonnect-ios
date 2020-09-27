@@ -182,9 +182,7 @@
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    
-    
-    
+
     if(indexPath.section==0) {
         
         cell.backgroundColor = [UIColor clearColor];
@@ -213,7 +211,7 @@
         lble.rate = 30.0;
         lble.labelize = NO;
         lble.holdScrolling = NO;
-        [cell addSubview:lble];
+        [cell.contentView addSubview:lble];
         cell.clipsToBounds = YES;
         
     }
@@ -238,7 +236,7 @@
         cell.frame=CGRectMake(10, 0,nationalSalesAggregateCollectionView.bounds.size.width-5 ,nationalSalesAggregateCollectionView.bounds.size.height-5);
         cell.layer.cornerRadius = 5;
         cell.layer.masksToBounds = true;
-        [cell addSubview:nationalSalesAggregateCollectionView];
+        [cell.contentView addSubview:nationalSalesAggregateCollectionView];
         cell.clipsToBounds = YES;
         
         
@@ -250,7 +248,7 @@
         cell.frame=CGRectMake(10, 0,nationalSalesAggregatePieView.bounds.size.width-5 ,nationalSalesAggregatePieView.bounds.size.height-5);
         cell.layer.cornerRadius = 5;
         cell.layer.masksToBounds = true;
-        [cell addSubview:nationalSalesAggregatePieView];
+        [cell.contentView addSubview:nationalSalesAggregatePieView];
         cell.clipsToBounds = YES;
         
     }
@@ -262,7 +260,7 @@
         cell.frame=CGRectMake(10, 0,paymentOutstandingPieView.bounds.size.width-5 ,paymentOutstandingPieView.bounds.size.height-5);
         cell.layer.cornerRadius = 5;
         cell.layer.masksToBounds = true;
-        [cell addSubview:paymentOutstandingPieView];
+        [cell.contentView addSubview:paymentOutstandingPieView];
         cell.clipsToBounds = YES;
         
     }
@@ -275,7 +273,7 @@
         cell.frame=CGRectMake(10, 0,overduePieView.bounds.size.width-5 ,overduePieView.bounds.size.height-5);
         cell.layer.cornerRadius = 5;
         cell.layer.masksToBounds = true;
-        [cell addSubview:overduePieView];
+        [cell.contentView addSubview:overduePieView];
         cell.clipsToBounds = YES;
         
     }
