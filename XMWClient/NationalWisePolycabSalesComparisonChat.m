@@ -29,8 +29,10 @@
 -(NSString*)formateCurrency:(NSString *)actualAmount{
     
     float shortenedAmount = [actualAmount floatValue];
-    NSString *suffix = @"";
+    NSString *suffix = @"L";
     float currency = [actualAmount floatValue];
+    
+    /*
     if(currency >= 100.0f) {
         suffix = @"Cr";
         shortenedAmount /= 100.0f;
@@ -40,8 +42,8 @@
     //    }
     else {
         suffix = @"L";
-        
     }
+     */
     //    else if(currency >= 1000.0f) {
     //        suffix = @"K";
     //        shortenedAmount /= 1000.0f;

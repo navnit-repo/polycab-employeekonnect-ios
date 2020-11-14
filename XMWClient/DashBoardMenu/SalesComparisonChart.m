@@ -573,6 +573,15 @@
     
     float shortenedAmount = [actualAmount floatValue];
     NSString *suffix = @"";
+    
+    suffix = @"Cr";
+    shortenedAmount /= 10000000.0f;
+    
+    /*
+     //
+     // Pradeep 2020-11-12 bad implementation, there should be only one unit
+     // Unit suppose to computed from the max value, we will do that later
+     //
     float currency = [actualAmount floatValue];
     if(currency >= 10000000.0f) {
         suffix = @"Cr";
@@ -586,6 +595,7 @@
         suffix = @"K";
         shortenedAmount /= 1000.0f;
     }
+     */
     
     NSString *requiredString = [NSString stringWithFormat:@"%0.2f%@", shortenedAmount, suffix];
     return requiredString;
@@ -601,7 +611,9 @@
         if(tupleObject==nil) {
             tupleObject = [[SalesCompareTuple alloc] init];
             tupleObject.secondValue = @"0.0";
-            [dataSet setObject:tupleObject forKey:divisionName];
+            if([divisionName compare:@"All" options:NSCaseInsensitiveSearch] != NSOrderedSame) {
+                [dataSet setObject:tupleObject forKey:divisionName];
+            }
         }
         
         // [self formateCurrency:[ftdData objectAtIndex:2]];
@@ -625,7 +637,13 @@
         if(tupleObject==nil) {
             tupleObject = [[SalesCompareTuple alloc] init];
             tupleObject.firstValue = @"0.0";
-            [dataSet setObject:tupleObject forKey:divisionName];
+            
+            // Pradeep: 2020-11-13, do not add if it is 'All' in it
+            // does not make sense to show bar for 'All'
+            // as data then cannot be compared
+            if([divisionName compare:@"All" options:NSCaseInsensitiveSearch] != NSOrderedSame) {
+                [dataSet setObject:tupleObject forKey:divisionName];
+            }
         }
         tupleObject.secondValue = [self formateCurrency:[rowData objectAtIndex:2]];
         tupleObject.uomSecondValue = [self formateCurrency:[rowData objectAtIndex:2]];

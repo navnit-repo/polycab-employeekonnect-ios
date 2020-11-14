@@ -278,10 +278,14 @@ UITextField* activeTextField = nil;
     [self drawHeaderItem];
     [self registerForKeyboardNotifications];
 
-    
-         
+    [self postLayoutInitialization];
+             
 }
 
+-(void) postLayoutInitialization
+{
+    
+}
 
 -(void) viewWillAppear:(BOOL)animated
 {
@@ -1758,8 +1762,12 @@ UITextField* activeTextField = nil;
             NSString* displayValue = [defMap objectForKey:@"VALUE"];
             NSString* postValue = [defMap objectForKey:@"KEY"];
             
+            if(displayValue==nil) displayValue = @"All";
+            if(postValue==nil) postValue = @"";
+            
             NSMutableArray* keysArray = [dropDownData objectAtIndex:0];
             NSMutableArray* valuesArray = [dropDownData objectAtIndex:1];
+            
             [keysArray insertObject:postValue atIndex:0];
             [valuesArray insertObject:displayValue atIndex:0];
         }
@@ -2604,7 +2612,7 @@ UITextField* activeTextField = nil;
 
 #pragma mark - HttpEventListener
 
-- (void) httpResponseObjectHandler : (NSString*) callName : (id) respondedObject : (id) requestedObject
+- (void) httpResponseObjectHandler:(NSString*) callName :(id) respondedObject :(id) requestedObject
 {
     
     [loadingView removeView];
@@ -2794,7 +2802,6 @@ UITextField* activeTextField = nil;
 
 - (void) httpInterruptHandler : (NSString*) callName : (NSString*) message {
     [loadingView removeView];
-    
     
     
 }

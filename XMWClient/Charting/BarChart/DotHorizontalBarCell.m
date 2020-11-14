@@ -9,6 +9,7 @@
 #import "DotHorizontalBarCell.h"
 #import "DotHBar.h"
 #import "DotHBarChart.h"
+#import "LayoutClass.h"
 
 #define BAR_TAG_START 2500
 #define BAR_LABEL_TAG_START 4500
@@ -25,12 +26,28 @@
 
 - (void)awakeFromNib {
     // Initialization code
+    
+    [super awakeFromNib];
+    
     rowsCount = 0;
     self.barView.backgroundColor = [UIColor clearColor];
     self.leftAxisPartView.backgroundColor = [UIColor clearColor];
     self.needLeftAxis = YES;
     
     self.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+    [self autolayout];
+}
+
+
+-(void)autolayout
+{
+    [LayoutClass setLayoutForIPhone6:self.contentView];
+    
+    [LayoutClass setLayoutForIPhone6:self.barView];
+   // [LayoutClass setLayoutForIPhone6:self.line];
+    [LayoutClass setLayoutForIPhone6:self.leftAxisPartView];
+        
 }
 
 

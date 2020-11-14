@@ -231,6 +231,11 @@
 
 -(void) initializePhoneData;
 -(void)loadForm;
+
+//  called after full form got initialized or renderd, and we may want
+// add some customization in the derived class
+-(void) postLayoutInitialization;
+
 -(UIView*) rowFormInSameForm;
 
 -(void) drawNavigationBar:(NSString *)title;
@@ -284,6 +289,14 @@
 
 -(void)barCodeScanButtonAction:(id) sender;
 -(void)removeElementFrom :(NSString*) elementId;
+
+- (void) httpResponseObjectHandler: (NSString*) callName :(id) respondedObject :(id) requestedObject;
+- (void) httpFailureHandler:(NSString*) callName :(NSString*) message;
+- (void) httpInterruptHandler: (NSString*) callName :(NSString*) message;
+
+// network response on receiving the data
+-(void) setDropDownResponseDefaultValue :(id)respondedObject :(NSString *) fieldElementId;
+
 @end
 
 

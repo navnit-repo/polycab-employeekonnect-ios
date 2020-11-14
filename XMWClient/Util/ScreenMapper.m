@@ -60,6 +60,15 @@
     [clientVariables registerReportVCClass:@"WideReportVC" forId:@"DOT_REPORT_COLLECTION_LINE_ITEMS"];
     
     
+    [clientVariables registerReportVCClass:@"WideReportVC" forId:@"DOT_REPORT_COLLECTION_BU_WISE"];
+    [clientVariables registerReportVCClass:@"WideReportVC" forId:@"DOT_REPORT_COLLECTION_REGION_WISE"];
+    [clientVariables registerReportVCClass:@"WideReportVC" forId:@"DOT_REPORT_COLLECTION_STATE_WISE"];
+    [clientVariables registerReportVCClass:@"WideReportVC" forId:@"DOT_REPORT_COLLECTION_CUSTOMER_WISE"];
+    
+    [clientVariables registerReportVCClass:@"WideReportVC" forId:@"DOT_REPORT_CHAT_HEAD"];
+    
+    [clientVariables registerReportVCClass:@"WideReportVC" forId:@"DOT_REPORT_CHAT_THREAD_MESSAGES"];
+    
 }
 
 #pragma mark - custom form VCs
@@ -121,8 +130,7 @@
     [clientVariables registerFormVCClass:@"TSIFormVC" forId:@"DOT_FORM_CUSTOMER_COLLECTION"];
     
     
-    
-    
+    [clientVariables registerFormVCClass:@"InventoryFormVC" forId:@"DOT_FORM_INVENTORY_STOCK"];
     
     
 
