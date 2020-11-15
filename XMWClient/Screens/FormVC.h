@@ -235,6 +235,7 @@
 //  called after full form got initialized or renderd, and we may want
 // add some customization in the derived class
 -(void) postLayoutInitialization;
+-(void) postLayoutElement:(DotFormElement*) formElement;
 
 -(UIView*) rowFormInSameForm;
 

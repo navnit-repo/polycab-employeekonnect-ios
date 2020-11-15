@@ -284,6 +284,17 @@ UITextField* activeTextField = nil;
 
 -(void) postLayoutInitialization
 {
+    NSMutableDictionary *dotFormElements = (NSMutableDictionary *)[dotForm formElements];
+    NSMutableArray *sortedElements = [DotFormDraw sortFormComponents : dotFormElements];
+    for(int cntElement = 0; cntElement < [sortedElements count] ; cntElement++)
+    {
+        DotFormElement* dotFormElement = (DotFormElement *)[dotFormElements objectForKey:[sortedElements objectAtIndex:cntElement]];
+        [self postLayoutElement:dotFormElement];
+    }
+}
+
+-(void) postLayoutElement:(DotFormElement*) formElement
+{
     
 }
 

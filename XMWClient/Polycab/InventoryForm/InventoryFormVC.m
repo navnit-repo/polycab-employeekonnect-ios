@@ -27,11 +27,23 @@
 {
     NSLog(@"postLayoutInitialization");
     
+    [super postLayoutInitialization];
+    
+    
+}
+
+
+-(void) postLayoutElement:(DotFormElement*) formElement
+{
+    
     NSString* elementId = @"ORGANIZATION_NAME";
     
-    // we need to fetch data for organiztion_name, and then populate it
-    DotFormElement* contextElement = [self.dotForm.formElements objectForKey:elementId];
-    [self plantValuesFor:elementId element:contextElement];
+    if(formElement!=nil && [formElement.elementId isEqual:elementId]) {
+        // we need to fetch data for organiztion_name, and then populate it
+        DotFormElement* contextElement = [self.dotForm.formElements objectForKey:elementId];
+        [self plantValuesFor:elementId element:contextElement];
+    }
+    
 }
 
 -(void) plantValuesFor:(NSString*) elementId element:(DotFormElement*) element
