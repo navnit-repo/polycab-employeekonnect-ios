@@ -123,13 +123,11 @@
 
 -(void) initializeView
 {
-    ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
-    dotReport = [clientVariables.DOT_REPORT_MAP objectForKey:reportPostResponse.viewReportId];
+    [super initializeView];
     
     
-//    hScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 35, self.view.frame.size.width, self.view.frame.size.height-35)];
     
-     hScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, titleLblHeight + searchBar.frame.size.height, self.view.frame.size.width, self.view.frame.size.height-(searchBar.frame.size.height))];
+     hScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, titleLblHeight + searchBar.frame.size.height, self.view.frame.size.width, self.view.frame.size.height-(titleLblHeight + searchBar.frame.size.height))];
     
     hScrollView.scrollEnabled = YES;
     hScrollView.delegate = self;
@@ -137,7 +135,7 @@
     
     // default hScrollView content size is same its size
     
-    hScrollView.contentSize = CGSizeMake(self.view.frame.size.width, self.view.frame.size.height);
+    hScrollView.contentSize = CGSizeMake(self.view.frame.size.width, hScrollView.frame.size.height);
     
     
     [self.view addSubview:hScrollView];
@@ -146,22 +144,6 @@
 
 -(void) drawTitle:(NSString *)headerStr
 {
-    //    NSDictionary *textAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
-    //                                    [UIColor whiteColor],NSForegroundColorAttributeName,
-    //                                    [UIColor whiteColor],NSBackgroundColorAttributeName,nil];
-    //
-    //    self.navigationController.navigationBar.titleTextAttributes = textAttributes;
-    //    // self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
-    //    self.navigationController.navigationBar.translucent = NO;
-    //
-    //    UILabel*  titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 160, 40)];
-    //    titleLabel.text = dotReport.screenHeader;
-    //    titleLabel.textColor = [Styles headerTextColor];
-    //    titleLabel.textAlignment = NSTextAlignmentCenter;
-    //    titleLabel.backgroundColor = [UIColor clearColor];
-    //    [self.navigationItem setTitleView: titleLabel];
-    
-    
     
     NSDictionary *textAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
                                     [UIColor whiteColor],NSForegroundColorAttributeName,
@@ -171,54 +153,14 @@
     // self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.translucent = NO;
     
-    //    UILabel*  titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 160, 40)];
-    //    titleLabel.text = dotReport.screenHeader;
-    //    titleLabel.textColor = [UIColor blackColor];
-    //    titleLabel.textAlignment = NSTextAlignmentCenter;
-    //    titleLabel.backgroundColor = [UIColor clearColor];
-    
     
     UIImageView *polycabLogo = [[UIImageView alloc] initWithImage:[UIImage  imageNamed:@"polycab_logo"]];
     self.navigationItem.titleView.contentMode = UIViewContentModeCenter;
     self.navigationItem.titleView = polycabLogo;
     
-    //  [self.navigationItem setTitleView: titleLabel];
-    
-    
-    [self headerView:dotReport.screenHeader];
-    
 }
 
--(void)headerView:(NSString*)headername{
-    NSLog(@"Header Name : %@",headername);
-    
-    UILabel *label = [[UILabel alloc] initWithFrame: CGRectMake(0, 10, self.view.bounds.size.width, 35)];
-    [label setBackgroundColor:[UIColor clearColor]];
-    [label setTextColor: [UIColor blackColor]];
-    [label setFont:[UIFont fontWithName:@"Helvetica-Bold" size:18]];
-    [label setText: [headername uppercaseString]];
-    
-    [label setNumberOfLines: 0];
-    [label sizeToFit];
-    [label setCenter: CGPointMake(self.view.center.x, label.center.y)];
-    
-    CGSize maximumLabelSize = CGSizeMake(label.frame.size.width, FLT_MAX);
-    
-    CGSize expectedLabelSize = [headername sizeWithFont:label.font constrainedToSize:maximumLabelSize lineBreakMode:label.lineBreakMode];
-    
-    //adjust the label the the new height.
-    CGRect newFrame = label.frame;
-    newFrame.size.height = expectedLabelSize.height;
-    label.frame = newFrame;
-    
-    titleLblHeight = label.frame.size.height+10;
-    
-    
-    [self.view addSubview:label];
-   
-    
-    [self configureSearchBar];
-}
+
 -(void) makeReportScreenV2
 {
     
@@ -227,7 +169,7 @@
     
 //    self.reportTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 35, self.view.frame.size.width, self.view.frame.size.height-35)];
 
-     self.reportTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, titleLblHeight + searchBar.frame.size.height, self.view.frame.size.width, self.view.frame.size.height-(searchBar.frame.size.height))];
+     self.reportTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, hScrollView.frame.size.height)];
     
     sectionController.tableView = self.reportTableView;
     self.reportTableView.dataSource = sectionController;
@@ -303,36 +245,41 @@
     NSInteger totalDisplayElements = 0;
     NSMutableArray *lengthArray = nil;
     NSMutableArray* sortedElementIds = nil;
-        if(sectionFlag[kReportSectionTable] == 1) {
-             sortedElementIds =[DotReportDraw sortRptComponents : dotReport.reportElements : XmwcsConst_REPORT_PLACE_TABLE];
-            NSMutableArray *removeElementIdsFromSortedElementIds = [[NSMutableArray alloc] init];
+    
+    if(sectionFlag[kReportSectionTable] == 1) {
+         sortedElementIds =[DotReportDraw sortRptComponents : dotReport.reportElements : XmwcsConst_REPORT_PLACE_TABLE];
+        NSMutableArray *removeElementIdsFromSortedElementIds = [[NSMutableArray alloc] init];
 
-                for(int i=0; i<[sortedElementIds count]; i++) {
-                     DotReportElement* dotReportElement = [dotReport.reportElements  objectForKey:[sortedElementIds objectAtIndex:i]];
-
-                    if ([dotReportElement.componentType isEqualToString:@"CUSTOM_COLUMN"] || [dotReportElement.componentType isEqualToString:@"HIDDEN"]) {
-                        [removeElementIdsFromSortedElementIds addObject:dotReportElement.elementId];
-                        //remove object
-                    }
-                }
-            if ([removeElementIdsFromSortedElementIds count] >0) {
-                for (int i=0; i<removeElementIdsFromSortedElementIds.count; i++) {
-
-                    [sortedElementIds removeObject:[removeElementIdsFromSortedElementIds objectAtIndex:i]];
-                }
+        for(int i=0; i<[sortedElementIds count]; i++) {
+             DotReportElement* dotReportElement = [dotReport.reportElements  objectForKey:[sortedElementIds objectAtIndex:i]];
+            if ([dotReportElement.componentType isEqualToString:@"HIDDEN"]) {
+                [removeElementIdsFromSortedElementIds addObject:dotReportElement.elementId];
+                // remove object for hidden
             }
+            /*
+            if ([dotReportElement.componentType isEqualToString:@"CUSTOM_COLUMN"] || [dotReportElement.componentType isEqualToString:@"HIDDEN"]) {
+                [removeElementIdsFromSortedElementIds addObject:dotReportElement.elementId];
+                //remove object
+            }*/
+        }
+        
+        if ([removeElementIdsFromSortedElementIds count] >0) {
+            for (int i=0; i<removeElementIdsFromSortedElementIds.count; i++) {
 
+                [sortedElementIds removeObject:[removeElementIdsFromSortedElementIds objectAtIndex:i]];
+            }
+        }
 
-            if([sortedElementIds count]>0) {
-                NSInteger defaultColumnWidth = self.view.frame.size.width/[sortedElementIds count];
-                lengthArray = [[NSMutableArray alloc] init];
-                for(int i=0; i<[sortedElementIds count]; i++) {
-                    DotReportElement* dotReportElement = [dotReport.reportElements  objectForKey:[sortedElementIds objectAtIndex:i]];
-                    if(dotReportElement.length!=nil) {
-                       
-                        
-                        scrollWidth = scrollWidth +  [dotReportElement.length integerValue];
-                        [lengthArray addObject:dotReportElement.length];
+        if([sortedElementIds count]>0) {
+            NSInteger defaultColumnWidth = self.view.frame.size.width/[sortedElementIds count];
+            lengthArray = [[NSMutableArray alloc] init];
+            for(int i=0; i<[sortedElementIds count]; i++) {
+                DotReportElement* dotReportElement = [dotReport.reportElements  objectForKey:[sortedElementIds objectAtIndex:i]];
+                if(dotReportElement.length!=nil) {
+                   
+                    
+                    scrollWidth = scrollWidth +  [dotReportElement.length integerValue];
+                    [lengthArray addObject:dotReportElement.length];
 //                        if ([dotReportElement.length integerValue] <= 150) {
 //                            scrollWidth = scrollWidth + 150;
 //                            [lengthArray addObject:@"150"];
@@ -342,18 +289,18 @@
 //                          scrollWidth = scrollWidth +  [dotReportElement.length integerValue];
 //                          [lengthArray addObject:dotReportElement.length];
 //                        }
-                        
-                       
-                    }
-                    else
-                    {
-                      scrollWidth = scrollWidth + defaultColumnWidth;
-                    }
-
+                    
+                   
                 }
-                totalDisplayElements = lengthArray.count;
+                else
+                {
+                  scrollWidth = scrollWidth + defaultColumnWidth;
+                }
+
             }
+            totalDisplayElements = lengthArray.count;
         }
+    }
 
     // this will make tableView also scroll horizontally with the columns are more
     if(scrollWidth>self.view.frame.size.width) {
@@ -372,8 +319,8 @@
             scrollViewContentSizeWidth = scrollViewContentSizeWidth + columnWidth;
             
         }
-        hScrollView.contentSize = CGSizeMake(scrollViewContentSizeWidth, self.view.frame.size.height);
-        self.reportTableView.frame = CGRectMake(0, titleLblHeight + searchBar.frame.size.height, scrollWidth, self.view.frame.size.height-(titleLblHeight +searchBar.frame.size.height));
+        hScrollView.contentSize = CGSizeMake(scrollViewContentSizeWidth, hScrollView.frame.size.height);
+        self.reportTableView.frame = CGRectMake(0, 0, scrollWidth, hScrollView.frame.size.height);
     }
     
     [hScrollView addSubview : self.reportTableView];

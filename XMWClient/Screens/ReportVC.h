@@ -58,6 +58,8 @@
 }
 @property  float titleLblHeight;
 @property (strong, nonatomic) UISearchBar *searchBar;
+@property BOOL disableSearchBar;
+
 @property (strong, nonatomic) UITableView *reportTableView;
 
 @property (strong, nonatomic) NSMutableDictionary *menuDetailMap;

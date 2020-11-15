@@ -58,7 +58,10 @@ static DownloadHistoryMenuView* rightSlideMenu = nil;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {}
+    if (self) {
+        
+        self.disableSearchBar = NO;
+    }
     return self;
 }
 
@@ -67,6 +70,7 @@ static DownloadHistoryMenuView* rightSlideMenu = nil;
     if (self)
     {
         docIdData           = _docIdData;
+        self.disableSearchBar = NO;
     }
     return self;
 }
@@ -200,12 +204,11 @@ static DownloadHistoryMenuView* rightSlideMenu = nil;
 
     ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
     dotReport = [clientVariables.DOT_REPORT_MAP objectForKey:reportPostResponse.viewReportId];
+        
     
-     //reportTableView         = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight) style:UITableViewStylePlain];
+    [self headerView:dotReport.screenHeader];
     
-   // dotReportDraw = [[DotReportDraw alloc] init];
-	// [dotReportDraw  makeReportScreen :self :  dotReport :  reportPostResponse :  forwardedDataDisplay : forwardedDataPost];
-    
+    [self configureSearchBar];
 }
 
 -(void) drawTitle:(NSString *)headerStr
@@ -228,20 +231,14 @@ static DownloadHistoryMenuView* rightSlideMenu = nil;
     UIImageView *polycabLogo = [[UIImageView alloc] initWithImage:[UIImage  imageNamed:@"polycab_logo"]];
     self.navigationItem.titleView.contentMode = UIViewContentModeCenter;
     self.navigationItem.titleView = polycabLogo;
-    
-  //  [self.navigationItem setTitleView: titleLabel];
-    
-   
-    [self headerView:dotReport.screenHeader];
-    
-
 
 }
 
 
 
 
--(void)headerView:(NSString*)headername{
+-(void)headerView:(NSString*)headername
+{
     NSLog(@"Header Name : %@",headername);
     
     UILabel *label = [[UILabel alloc] initWithFrame: CGRectMake(0, 10, self.view.bounds.size.width, 35)];
@@ -264,15 +261,21 @@ static DownloadHistoryMenuView* rightSlideMenu = nil;
     newFrame.size.height = expectedLabelSize.height;
     label.frame = newFrame;
     
-    titleLblHeight = label.frame.size.height+10;
+    titleLblHeight = label.frame.size.height + 10;
     
     [self.view addSubview:label];
-    [self configureSearchBar];
+    
 }
 
 -(void)configureSearchBar
 {
-    searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(10, titleLblHeight, self.view.frame.size.width-20, 44*deviceHeightRation)];
+    CGFloat searchBarHeight = 44*deviceHeightRation;
+    
+    if(self.disableSearchBar == YES) {
+        searchBarHeight = 0.0f;
+    }
+    
+    searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(10, titleLblHeight, self.view.frame.size.width-20,  searchBarHeight)];
     //    searchBar.delegate = self;
     [searchBar setPlaceholder:@"Search"];
     [searchBar setReturnKeyType:UIReturnKeyDone];
@@ -311,6 +314,8 @@ static DownloadHistoryMenuView* rightSlideMenu = nil;
        }
     
 }
+
+
 -(void) makeReportScreenV2
 {
    

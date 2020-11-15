@@ -65,7 +65,7 @@
     [clientVariables registerReportVCClass:@"WideReportVC" forId:@"DOT_REPORT_COLLECTION_STATE_WISE"];
     [clientVariables registerReportVCClass:@"WideReportVC" forId:@"DOT_REPORT_COLLECTION_CUSTOMER_WISE"];
     
-    [clientVariables registerReportVCClass:@"WideReportVC" forId:@"DOT_REPORT_CHAT_HEAD"];
+    [clientVariables registerReportVCClass:@"ChatHeadReportVC" forId:@"DOT_REPORT_CHAT_HEAD"];
     
     [clientVariables registerReportVCClass:@"WideReportVC" forId:@"DOT_REPORT_CHAT_THREAD_MESSAGES"];
     

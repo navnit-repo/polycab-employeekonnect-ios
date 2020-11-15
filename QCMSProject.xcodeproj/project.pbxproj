@@ -32,6 +32,8 @@
 		270B774F2477B04D0024960F /* frame-9.png in Resources */ = {isa = PBXBuildFile; fileRef = 270B77382477B04D0024960F /* frame-9.png */; };
 		270B77522477B0900024960F /* download.png in Resources */ = {isa = PBXBuildFile; fileRef = 270B77502477B08F0024960F /* download.png */; };
 		270B77532477B0900024960F /* genrate.png in Resources */ = {isa = PBXBuildFile; fileRef = 270B77512477B0900024960F /* genrate.png */; };
+		27184CC42560DB0A00F3A37F /* ChatHeadReportVC.h in Headers */ = {isa = PBXBuildFile; fileRef = 27184CC22560DB0A00F3A37F /* ChatHeadReportVC.h */; };
+		27184CC52560DB0A00F3A37F /* ChatHeadReportVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 27184CC32560DB0A00F3A37F /* ChatHeadReportVC.m */; };
 		2724689E24C92DCD00B71C62 /* OrderAwaitingConfirmation.h in Headers */ = {isa = PBXBuildFile; fileRef = 2724689C24C92DCD00B71C62 /* OrderAwaitingConfirmation.h */; };
 		2724689F24C92DCD00B71C62 /* OrderAwaitingConfirmation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2724689D24C92DCD00B71C62 /* OrderAwaitingConfirmation.m */; };
 		2732587B2484CEA8003F979C /* ScreenMapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 273258792484CEA8003F979C /* ScreenMapper.h */; };
@@ -1207,6 +1209,8 @@
 		270B77382477B04D0024960F /* frame-9.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "frame-9.png"; sourceTree = "<group>"; };
 		270B77502477B08F0024960F /* download.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = download.png; path = "Polycab Assests/assests/download.png"; sourceTree = SOURCE_ROOT; };
 		270B77512477B0900024960F /* genrate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = genrate.png; path = "Polycab Assests/assests/genrate.png"; sourceTree = SOURCE_ROOT; };
+		27184CC22560DB0A00F3A37F /* ChatHeadReportVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ChatHeadReportVC.h; path = Polycab/ChatHead/ChatHeadReportVC.h; sourceTree = "<group>"; };
+		27184CC32560DB0A00F3A37F /* ChatHeadReportVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ChatHeadReportVC.m; path = Polycab/ChatHead/ChatHeadReportVC.m; sourceTree = "<group>"; };
 		2724689C24C92DCD00B71C62 /* OrderAwaitingConfirmation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OrderAwaitingConfirmation.h; path = Polycab/OrderConfirmation/OrderAwaitingConfirmation.h; sourceTree = "<group>"; };
 		2724689D24C92DCD00B71C62 /* OrderAwaitingConfirmation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = OrderAwaitingConfirmation.m; path = Polycab/OrderConfirmation/OrderAwaitingConfirmation.m; sourceTree = "<group>"; };
 		273258792484CEA8003F979C /* ScreenMapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ScreenMapper.h; path = Util/ScreenMapper.h; sourceTree = "<group>"; };
@@ -2481,6 +2485,15 @@
 				270B77382477B04D0024960F /* frame-9.png */,
 			);
 			path = "Spinner-0.8s-174px";
+			sourceTree = "<group>";
+		};
+		27184CC12560DA8F00F3A37F /* ChatHead */ = {
+			isa = PBXGroup;
+			children = (
+				27184CC22560DB0A00F3A37F /* ChatHeadReportVC.h */,
+				27184CC32560DB0A00F3A37F /* ChatHeadReportVC.m */,
+			);
+			name = ChatHead;
 			sourceTree = "<group>";
 		};
 		2724689B24C92D1600B71C62 /* OrderConfirmation */ = {
@@ -4546,6 +4559,7 @@
 		F0A358E820FC9EC300CE34AC /* Polycab */ = {
 			isa = PBXGroup;
 			children = (
+				27184CC12560DA8F00F3A37F /* ChatHead */,
 				27F1ADB3255F6B4800CAE856 /* InventoryForm */,
 				2724689B24C92D1600B71C62 /* OrderConfirmation */,
 				273259652484DA77003F979C /* BalanceConfirmationVC.h */,
@@ -4981,6 +4995,7 @@
 				8530E0671AC05965001E5E79 /* ProductSearchVC.h in Headers */,
 				F0B2FB2A218850F5006A7C6B /* TravellerController.h in Headers */,
 				F02E3526221542A70007573D /* NationalDashboardVC.h in Headers */,
+				27184CC42560DB0A00F3A37F /* ChatHeadReportVC.h in Headers */,
 				856B3E1F1DCA0F1E00096100 /* SimpleEditForm.h in Headers */,
 				279D43B524A58DFD0046BB33 /* DataManager.h in Headers */,
 				273259222484DA1E003F979C /* CreateOrderDisplayCell.h in Headers */,
@@ -6107,6 +6122,7 @@
 				901F6E2F180277B400293AB9 /* XMWAbout.m in Sources */,
 				8595B4EC190FCB790010C685 /* DVDateStruct.m in Sources */,
 				901F6E3C180282E500293AB9 /* XMWFaqWebViewController.m in Sources */,
+				27184CC52560DB0A00F3A37F /* ChatHeadReportVC.m in Sources */,
 				2732592D2484DA1E003F979C /* CreateOrderDisplayCell.m in Sources */,
 				7875EE0D2424845E0044A491 /* MultipleFileAttachmentView.m in Sources */,
 				F0B2FB4C218850F5006A7C6B /* BusinessVerticalReportVC.m in Sources */,

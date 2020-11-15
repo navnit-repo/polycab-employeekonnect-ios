@@ -45,6 +45,7 @@
 
 - (void)viewDidLoad {
     self.customRenderDelegate = self;
+    self.disableSearchBar = YES;
     
     pdfStatusList = [[NSMutableArray alloc] initWithCapacity:self.reportPostResponse.tableData.count];
     
