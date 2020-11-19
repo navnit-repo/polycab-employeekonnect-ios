@@ -812,6 +812,10 @@ NSString *chatPersonUserID;
     NSMutableDictionary *requstData = [[NSMutableDictionary alloc]init];
     
     [requstData setValue:@"45" forKey:@"requestId"];
+    [requstData setValue:clientVariables.CLIENT_LOGIN_RESPONSE.authToken forKey:@"authToken"];
+    [requstData setValue:[chatPersonUserID stringByAppendingString:@"@employee"] forKey:@"username"];
+    
+    
     NSMutableDictionary *data = [[NSMutableDictionary alloc]init];
     [data setValue:[chatPersonUserID stringByAppendingString:@"@employee"] forKey:@"userId"];
     [data setValue:@"1" forKey:@"apiVersion"];
@@ -834,8 +838,13 @@ NSString *chatPersonUserID;
     ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
     NSString * version = [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleShortVersionString"];
     NSMutableDictionary *chatThreadRequestData = [[NSMutableDictionary alloc]init];
-    NSMutableDictionary *reqstData = [[NSMutableDictionary alloc]init];
+    
     [chatThreadRequestData setValue:@"1" forKey:@"requestId"];
+    [chatThreadRequestData setValue:clientVariables.CLIENT_LOGIN_RESPONSE.authToken forKey:@"authToken"];
+    [chatThreadRequestData setValue:[chatPersonUserID stringByAppendingString:@"@employee"] forKey:@"username"];
+    
+    NSMutableDictionary *reqstData = [[NSMutableDictionary alloc] init];
+    
     [reqstData setValue:[chatPersonUserID stringByAppendingString:@"@employee"] forKey:@"userId"];
     [reqstData setValue:[[clientVariables.CLIENT_USER_LOGIN deviceInfoMap] valueForKey:@"IMEI"] forKey:@"deviceId"];
     [reqstData setValue:XmwcsConst_DEVICE_TYPE_IPHONE forKey:@"osType"];

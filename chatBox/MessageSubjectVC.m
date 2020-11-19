@@ -206,6 +206,10 @@
     NSMutableDictionary *messageData = [[NSMutableDictionary alloc]init];
     
     [sendSubjectData setValue:@"1" forKey:@"requestId"];
+    [sendSubjectData setValue:clientVariables.CLIENT_LOGIN_RESPONSE.authToken forKey:@"authToken"];
+    [sendSubjectData setValue:[chatPersonUserID stringByAppendingString:@"@employee"] forKey:@"username"];
+        
+        
     NSMutableDictionary *data = [[NSMutableDictionary alloc]init];
         
         NSString* username = [[NSUserDefaults standardUserDefaults] objectForKey:@"USERNAME"];

@@ -679,7 +679,7 @@ NSString *g_DeviceSessionId = nil;
     NSMutableURLRequest *request    = [NSMutableURLRequest requestWithURL:url];
     [request setHTTPMethod:@"POST"];
     [request setValue:postDataLength forHTTPHeaderField:@"Content-Length"];
-    [request setValue:@"application/json;" forHTTPHeaderField:@"Content-Type"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     
     [request setHTTPShouldHandleCookies:YES];
     

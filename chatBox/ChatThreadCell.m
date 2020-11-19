@@ -58,10 +58,15 @@
     ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
     NSString * version = [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleShortVersionString"];
     NSMutableDictionary *chatThreadRequestData = [[NSMutableDictionary alloc]init];
+    
+    [chatThreadRequestData setValue:@"1" forKey:@"requestId"];
+    [chatThreadRequestData setValue:clientVariables.CLIENT_LOGIN_RESPONSE.authToken forKey:@"authToken"];
+    [chatThreadRequestData setValue:[chatPersonUserID stringByAppendingString:@"@employee"] forKey:@"username"];
+    
     NSMutableDictionary *reqstData = [[NSMutableDictionary alloc]init];
     NSMutableArray *threadsArray = [[NSMutableArray alloc]init];
     [threadsArray addObject:chatThreadId];
-    [chatThreadRequestData setValue:@"1" forKey:@"requestId"];
+    
     
     NSString* username = [[NSUserDefaults standardUserDefaults] objectForKey:@"USERNAME"];
 

@@ -175,6 +175,10 @@
         NSMutableDictionary *requstData = [[NSMutableDictionary alloc]init];
         
         [requstData setValue:@"45" forKey:@"requestId"];
+        [requstData setValue:clientVariables.CLIENT_LOGIN_RESPONSE.authToken forKey:@"authToken"];
+        [requstData setValue:[chatPersonUserID stringByAppendingString:@"@employee"] forKey:@"username"];
+        
+        
         NSMutableDictionary *data = [[NSMutableDictionary alloc]init];
         [data setValue:[chatPersonUserID stringByAppendingString:@"@employee"] forKey:@"userId"];
         [data setValue:@"1" forKey:@"apiVersion"];
