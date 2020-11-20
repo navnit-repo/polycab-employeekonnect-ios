@@ -82,7 +82,7 @@
         innerView.itemIndex = [NSNumber numberWithInteger:rowIndex];
     }
     
-    if(colIndex == 16) {
+    if(colIndex == 15) {
         
         UILabel* textView = [innerView viewWithTag:kICON_TAG];
         [textView removeFromSuperview];
@@ -104,7 +104,7 @@
         [innerView addGestureRecognizer:tapGesture];
         
         
-    } else if(colIndex == 17) {
+    } else if(colIndex == 16) {
         
         UIImageView* iconView = [innerView viewWithTag:kICON_TAG];
         [iconView removeFromSuperview];
@@ -147,9 +147,11 @@
 {
     NSArray* rowData = [self.reportPostResponse.tableData objectAtIndex:rowIndex];
     
-    NSString* threadId = [rowData objectAtIndex:0];
-    NSString* spaNo = [rowData objectAtIndex:1];
-    NSString* from = [rowData objectAtIndex:3];
+    NSString* threadId = [rowData objectAtIndex:17];
+    NSString* spaNo = [rowData objectAtIndex:7];
+    NSString* from = [rowData objectAtIndex:2];
+    NSString* to = [rowData objectAtIndex:5];
+    
     
     NSMutableString* uri = [[NSMutableString alloc] init];
     [uri appendString:@"/chatpdf?threadid="];
@@ -160,6 +162,9 @@
     
     [uri appendString:@"&from="];
     [uri appendString:from];
+    
+    [uri appendString:@"&to="];
+    [uri appendString:to];
     
     [uri appendString:@"&authToken="];
     [uri appendString:[[NSUserDefaults standardUserDefaults] objectForKey:@"AUTH_TOKEN"]];
@@ -213,9 +218,9 @@
 {
     NSArray* rowData = [[self.reportPostResponse tableData] objectAtIndex:rowIndex];
     
-    NSString* threadId = [rowData objectAtIndex:0];
+    NSString* threadId = [rowData objectAtIndex:17];
     
-    NSString* from = [rowData objectAtIndex:3];
+    NSString* from = [rowData objectAtIndex:2];
     NSString* to = [rowData objectAtIndex:5];
     
     
