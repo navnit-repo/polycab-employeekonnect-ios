@@ -69,6 +69,11 @@
     
     [clientVariables registerReportVCClass:@"WideReportVC" forId:@"DOT_REPORT_CHAT_THREAD_MESSAGES"];
     
+    [clientVariables registerReportVCClass:@"ListPriceReport" forId:@"DOT_REPORT_LIST_PRICE"];
+    [clientVariables registerReportVCClass:@"ItemWiseSalesReport" forId:@"DOT_REPORT_ITEM_WISE_SALES"];
+   
+    
+    
 }
 
 #pragma mark - custom form VCs
@@ -119,16 +124,15 @@
     [clientVariables registerFormVCClass:@"GrowthIndicatorFormVC" forId:@"DOT_FORM_BU_SALES_CUSTOMER_WISE"];
     [clientVariables registerFormVCClass:@"GrowthIndicatorFormVC" forId:@"DOT_FORM_CUSTOMER_WISE_SALES"];
 
-    [clientVariables registerFormVCClass:@"TSIFormVC" forId:@"DOT_FORM_CREDIT_NOTES"];
     
+    [clientVariables registerFormVCClass:@"TSIFormVC" forId:@"DOT_FORM_CREDIT_NOTES"];
     [clientVariables registerFormVCClass:@"TSIFormVC" forId:@"DOT_REPORT_OVERDUE"];
     [clientVariables registerFormVCClass:@"TSIFormVC" forId:@"DOT_REPORT_PAYMENT_OUTSTANDING"];
     [clientVariables registerFormVCClass:@"TSIFormVC" forId:@"DOT_REPORT_CREDIT_DETAILS"];
     [clientVariables registerFormVCClass:@"TSIFormVC" forId:@"DOT_REPORT_SALES_ORDER_PENDENCY"];
     [clientVariables registerFormVCClass:@"TSIFormVC" forId:@"DOT_REPORT_DISPATCH_DETAILS"];
-    
-    [clientVariables registerFormVCClass:@"TSIFormVC" forId:@"DOT_FORM_CUSTOMER_COLLECTION"];
-    
+    [clientVariables registerFormVCClass:@"TSIFormVC" forId:@"DOT_FORM_LIST_PRICE"];
+    [clientVariables registerFormVCClass:@"TSIFormVC" forId:@"DOT_FORM_ITEM_WISE_SALES"];
     
     [clientVariables registerFormVCClass:@"InventoryFormVC" forId:@"DOT_FORM_INVENTORY_STOCK"];
     

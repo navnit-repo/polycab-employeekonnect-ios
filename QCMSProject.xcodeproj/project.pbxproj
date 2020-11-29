@@ -171,6 +171,10 @@
 		273259A2248502E3003F979C /* growth_arrow_up@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2732599E248502E2003F979C /* growth_arrow_up@2x.png */; };
 		273259A3248502E3003F979C /* growth_arrow_down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2732599F248502E3003F979C /* growth_arrow_down@2x.png */; };
 		273259A4248502E3003F979C /* growth_arrow_down.png in Resources */ = {isa = PBXBuildFile; fileRef = 273259A0248502E3003F979C /* growth_arrow_down.png */; };
+		277E640B25736D0D00C60607 /* ListPriceReport.h in Headers */ = {isa = PBXBuildFile; fileRef = 277E640925736D0D00C60607 /* ListPriceReport.h */; };
+		277E640C25736D0D00C60607 /* ListPriceReport.m in Sources */ = {isa = PBXBuildFile; fileRef = 277E640A25736D0D00C60607 /* ListPriceReport.m */; };
+		277E641125736D4400C60607 /* ItemWiseSalesReport.h in Headers */ = {isa = PBXBuildFile; fileRef = 277E640F25736D4400C60607 /* ItemWiseSalesReport.h */; };
+		277E641225736D4400C60607 /* ItemWiseSalesReport.m in Sources */ = {isa = PBXBuildFile; fileRef = 277E641025736D4400C60607 /* ItemWiseSalesReport.m */; };
 		279D43B524A58DFD0046BB33 /* DataManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 279D43B324A58DFD0046BB33 /* DataManager.h */; };
 		279D43B624A58DFD0046BB33 /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 279D43B424A58DFD0046BB33 /* DataManager.m */; };
 		27A7485E24D1958C00E87A76 /* MXTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A7485C24D1958C00E87A76 /* MXTextView.m */; };
@@ -1348,6 +1352,10 @@
 		2732599E248502E2003F979C /* growth_arrow_up@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "growth_arrow_up@2x.png"; path = "Images/growth_arrow_up@2x.png"; sourceTree = "<group>"; };
 		2732599F248502E3003F979C /* growth_arrow_down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "growth_arrow_down@2x.png"; path = "Images/growth_arrow_down@2x.png"; sourceTree = "<group>"; };
 		273259A0248502E3003F979C /* growth_arrow_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = growth_arrow_down.png; path = Images/growth_arrow_down.png; sourceTree = "<group>"; };
+		277E640925736D0D00C60607 /* ListPriceReport.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ListPriceReport.h; path = Polycab/CustomReports/ListPriceReport.h; sourceTree = "<group>"; };
+		277E640A25736D0D00C60607 /* ListPriceReport.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ListPriceReport.m; path = Polycab/CustomReports/ListPriceReport.m; sourceTree = "<group>"; };
+		277E640F25736D4400C60607 /* ItemWiseSalesReport.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ItemWiseSalesReport.h; path = Polycab/CustomReports/ItemWiseSalesReport.h; sourceTree = "<group>"; };
+		277E641025736D4400C60607 /* ItemWiseSalesReport.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ItemWiseSalesReport.m; path = Polycab/CustomReports/ItemWiseSalesReport.m; sourceTree = "<group>"; };
 		279D43B324A58DFD0046BB33 /* DataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataManager.h; sourceTree = "<group>"; };
 		279D43B424A58DFD0046BB33 /* DataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataManager.m; sourceTree = "<group>"; };
 		27A7485C24D1958C00E87A76 /* MXTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MXTextView.m; path = Views/TextView/MXTextView.m; sourceTree = "<group>"; };
@@ -2589,6 +2597,17 @@
 			);
 			name = SPACreateOrder;
 			path = Polycab/SPACreateOrder;
+			sourceTree = "<group>";
+		};
+		277E640825736C7300C60607 /* CustomReports */ = {
+			isa = PBXGroup;
+			children = (
+				277E640925736D0D00C60607 /* ListPriceReport.h */,
+				277E640A25736D0D00C60607 /* ListPriceReport.m */,
+				277E640F25736D4400C60607 /* ItemWiseSalesReport.h */,
+				277E641025736D4400C60607 /* ItemWiseSalesReport.m */,
+			);
+			name = CustomReports;
 			sourceTree = "<group>";
 		};
 		279D43B224A58DFD0046BB33 /* DataManager */ = {
@@ -4559,6 +4578,7 @@
 		F0A358E820FC9EC300CE34AC /* Polycab */ = {
 			isa = PBXGroup;
 			children = (
+				277E640825736C7300C60607 /* CustomReports */,
 				27184CC12560DA8F00F3A37F /* ChatHead */,
 				27F1ADB3255F6B4800CAE856 /* InventoryForm */,
 				2724689B24C92D1600B71C62 /* OrderConfirmation */,
@@ -4937,6 +4957,7 @@
 				F032190D2106F5C600C24A34 /* CreateSubUserRoleVC.h in Headers */,
 				F022CA28211AFCCB0048DEAD /* SalesAggregateCollectionView.h in Headers */,
 				F0A358F020FC9ECF00CE34AC /* LogInVC.h in Headers */,
+				277E640B25736D0D00C60607 /* ListPriceReport.h in Headers */,
 				2732594C2484DA5B003F979C /* SPACreateOrderCell.h in Headers */,
 				90EF3CA117AF7F9400F2663E /* DotReportListCellRenderer.h in Headers */,
 				F0B2FB41218850F5006A7C6B /* CustomeReportVC.h in Headers */,
@@ -5025,6 +5046,7 @@
 				8502701C19064604003A7E01 /* NotificationDeviceRegister.h in Headers */,
 				273258902484D945003F979C /* CreateOrderVC1.h in Headers */,
 				8558B3391D0730960017FA3A /* GoldCardTableFormDelegate.h in Headers */,
+				277E641125736D4400C60607 /* ItemWiseSalesReport.h in Headers */,
 				9000175A180D64860002F464 /* TimeTableViewCell.h in Headers */,
 				857A3ECA1A6CFC3500279931 /* DotMenuTreeCell.h in Headers */,
 				F0B425B822671C240011D3E4 /* ChatBoxVC.h in Headers */,
@@ -6011,6 +6033,7 @@
 				85CC35001DFA67900016F65C /* DVCheckBoxCell.m in Sources */,
 				F04B2F3420FF22CB00E6120A /* SWRevealViewController.m in Sources */,
 				85804F361A6916200093CDBB /* DotHorizontalBarCell.m in Sources */,
+				277E641225736D4400C60607 /* ItemWiseSalesReport.m in Sources */,
 				90E064471758B9DC00C13B78 /* ReportVC.m in Sources */,
 				8517FBB11E9751AD0027C27E /* PODFormUpdateVC.m in Sources */,
 				857A3EC91A6CFC3500279931 /* DotMenuObject.m in Sources */,
@@ -6075,6 +6098,7 @@
 				F088F5DE2105CF53000E26F4 /* FeedBackVC.m in Sources */,
 				859EED9C1E9CE330006D3D9C /* MTBBarcodeScanner.m in Sources */,
 				9036FDA8178A9017009DB2F2 /* RecentRequestStorage.m in Sources */,
+				277E640C25736D0D00C60607 /* ListPriceReport.m in Sources */,
 				F03219282107366500C24A34 /* ManageSubUserEdit.m in Sources */,
 				9018A3BC178BD88500F50059 /* DotRowContainer.m in Sources */,
 				90972AC5178D253C00BB6E89 /* AppConstants.m in Sources */,

@@ -705,7 +705,11 @@ int uiViewStartIdx = 1001;
             //this code for set selected regid
             if ([dropDownCell.dropDownField.elementId isEqualToString:@"REGISTRY_ID"] && regIDCheck ==YES) {
                 NSString *selectedRegisterID= [[NSUserDefaults standardUserDefaults] valueForKey:@"selectedRegisterID"];
-                dropDownCell.dropDownField.text = selectedRegisterID;
+                if(selectedRegisterID!=nil && [selectedRegisterID length]>0) {
+                    dropDownCell.dropDownField.text = selectedRegisterID;
+                    NSArray* parts = [selectedRegisterID  componentsSeparatedByString:@"-"];
+                    dropDownCell.dropDownField.keyvalue = [parts objectAtIndex:0];
+                }
                
             }
             
