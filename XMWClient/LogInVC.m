@@ -638,7 +638,7 @@ NSString *chatPersonUserID;
     [[NSUserDefaults standardUserDefaults] setObject:  [clientLoginResponse.clientMasterDetail.masterData valueForKey:@"SQAUREMM"]  forKey:@"SQAUREMM"];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
--(void)setUserCredentials_into_NSuserDefaultStorage :(ClientLoginResponse*)clientLoginResponse
+-(void)setUserCredentials_into_NSuserDefaultStorage :(ClientLoginResponse*)clientLoginResponse username:(NSString*) username
 {
     authToken = clientLoginResponse.authToken;
     NSLog(@"%@",authToken);
@@ -650,11 +650,11 @@ NSString *chatPersonUserID;
     menuDetailsDict =clientLoginResponse.menuDetail;
     
     KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:XmwcsConst_KEYCHAIN_IDENTIFIER accessGroup:nil];
-    [keychainItem setObject:m_username forKey:kSecAttrAccount];
+    [keychainItem setObject:username forKey:kSecAttrAccount];
     [keychainItem setObject:self.password.text forKey:kSecValueData];
-    [[NSUserDefaults standardUserDefaults] setObject:m_username forKey:@"CURRENT_USER_LOGEDIN_ID"];
+    [[NSUserDefaults standardUserDefaults] setObject:username forKey:@"CURRENT_USER_LOGEDIN_ID"];
     [masterDataForEmployee setDictionary:clientLoginResponse.clientMasterDetail.masterDataRefresh];
-    chatPersonUserID = m_username;
+    chatPersonUserID = username;
     
     
     //this code for remove firstly save username and password in userdefault than save in it.
@@ -662,54 +662,53 @@ NSString *chatPersonUserID;
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"PASSWORD"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
-    [[NSUserDefaults standardUserDefaults] setObject:m_username forKey:@"USERNAME"];
+    [[NSUserDefaults standardUserDefaults] setObject:username forKey:@"USERNAME"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     [[NSUserDefaults standardUserDefaults] setObject:self.password.text forKey:@"PASSWORD"];
     [[NSUserDefaults standardUserDefaults] setObject:@"YES" forKey:@"ISCHECKED"];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
-- (void) httpResponseObjectHandler : (NSString*) callName : (id) respondedObject : (id) requestedObject
+
+
+#pragma mark - HttpEventListener
+- (void) httpResponseObjectHandler:(NSString*) callName :(id) respondedObject :(id) requestedObject
 {
   
     if(respondedObject)
     {
-    if([callName isEqualToString: XmwcsConst_CALL_NAME_FOR_LOGIN]) {
+        if([callName isEqualToString: XmwcsConst_CALL_NAME_FOR_LOGIN]) {
             [loadingView removeView];
-        
-                    ClientLoginResponse* clientLoginResponse = (ClientLoginResponse*)respondedObject;
-                [LoginUtils setClientVariables :  clientLoginResponse : m_username];
-                    if([clientLoginResponse.userLoginStatus isEqualToString:@"0"])
-                    {
-                        UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Authentication!" message:clientLoginResponse.userLoginMessage delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil , nil];
-                        [myAlertView show];
-        
-                    }
-                    else {
+            ClientUserLogin* serverUpdatedLogin = (ClientUserLogin*)requestedObject;
+            ClientLoginResponse* clientLoginResponse = (ClientLoginResponse*)respondedObject;
+            [LoginUtils setClientVariables:  clientLoginResponse :serverUpdatedLogin.userName];
+            if([clientLoginResponse.userLoginStatus isEqualToString:@"0"])
+            {
+                UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Authentication!" message:clientLoginResponse.userLoginMessage delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil , nil];
+                [myAlertView show];
+
+            } else {
                         
-                        if([clientLoginResponse.passwrdState isEqualToString:@"1"])
-                        {
-                            // we need to show password change screen
-                            DotMenuObject *obj = [[DotMenuObject alloc]init];
-                            obj.FORM_ID =@"DOT_FORM_1" ;
-                            
-                            NSMutableDictionary*  attachedData = [[NSMutableDictionary alloc]init];
-                            [attachedData setObject:@"DOT_FORM_1" forKey:XmwcsConst_MENU_CONSTANT_FORM_ID];
-                            NSMutableDictionary* forwardedDataDisplay = [[NSMutableDictionary alloc]init];
-                            NSMutableDictionary* forwardedDataPost = [[NSMutableDictionary alloc]init];
-                            DotFormPost* dotFormPost = [[DotFormPost alloc]init];
-                            
-                            FormVC* formController = [[FormVC alloc] initWithData : obj
-                                                                                  : dotFormPost
-                                                                                  : false
-                                                                                  : forwardedDataDisplay
-                                                                                  : forwardedDataPost];
-                            
-                            [[self navigationController] pushViewController:formController  animated:YES];
-                            formController.headerStr    = @"Change Password";
-                        }
+                if([clientLoginResponse.passwrdState isEqualToString:@"1"])
+                {
+                    // we need to show password change screen
+                    DotMenuObject *obj = [[DotMenuObject alloc]init];
+                    obj.FORM_ID =@"DOT_FORM_1" ;
                     
-                    else
-                    {
+                    NSMutableDictionary*  attachedData = [[NSMutableDictionary alloc]init];
+                    [attachedData setObject:@"DOT_FORM_1" forKey:XmwcsConst_MENU_CONSTANT_FORM_ID];
+                    NSMutableDictionary* forwardedDataDisplay = [[NSMutableDictionary alloc]init];
+                    NSMutableDictionary* forwardedDataPost = [[NSMutableDictionary alloc]init];
+                    DotFormPost* dotFormPost = [[DotFormPost alloc]init];
+                    
+                    FormVC* formController = [[FormVC alloc] initWithData : obj
+                                                                          : dotFormPost
+                                                                          : false
+                                                                          : forwardedDataDisplay
+                                                                          : forwardedDataPost];
+                    
+                    [[self navigationController] pushViewController:formController  animated:YES];
+                    formController.headerStr    = @"Change Password";
+                } else {
                         // default context (MAIN)
                         // user now sucessfully logged in
                         dispatch_async(dispatch_get_main_queue(), ^{
@@ -717,7 +716,7 @@ NSString *chatPersonUserID;
                             [ScreenMapper registerCustomFormVC];
                             [self configureUserRole:clientLoginResponse];
                             [self set_RMA_Reason_UOMDESC_CORE_COLOR_SQAUREMM_into_NSuserDefaultStorage:clientLoginResponse];
-                            [self setUserCredentials_into_NSuserDefaultStorage:clientLoginResponse];
+                            [self setUserCredentials_into_NSuserDefaultStorage:clientLoginResponse username:serverUpdatedLogin.userName];
                         });
 
                         //this code for clear all chat DB file's
@@ -739,11 +738,8 @@ NSString *chatPersonUserID;
                             [self registerDeviceToken];
                         });
                     }
-                    }
-                }
-        
-        
-       else if ([callName isEqualToString:XmwcsConst_CALL_NAME_FOR_NOTIFY_DEVICE_REGISTER]) {
+            }
+        } else if ([callName isEqualToString:XmwcsConst_CALL_NAME_FOR_NOTIFY_DEVICE_REGISTER]) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 //code to be executed in the background
                 [self contactListNetworkCall];
@@ -767,10 +763,7 @@ NSString *chatPersonUserID;
             [self syncChatThreadListDB:respondedObject];
             
         });
-            }
-        
-        
-        else if ([callName isEqualToString:XmwcsConst_CALL_NAME_FOR_UPDATE_APP_VERSION])
+    } else if ([callName isEqualToString:XmwcsConst_CALL_NAME_FOR_UPDATE_APP_VERSION])
         {
             UpdateAppVersion* versionResponse = (UpdateAppVersion*) respondedObject;
             // versionResponse.majorVersion
@@ -801,6 +794,16 @@ NSString *chatPersonUserID;
     }
     
 }
+
+
+- (void) httpFailureHandler : (NSString*) callName : (NSString*) message {
+    [loadingView removeView];
+    UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Polycab Authentication!" message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil , nil];
+    [myAlertView show];
+    
+}
+
+
 #pragma  mark - fetch local db data from server
 -(void)contactListNetworkCall
 {
@@ -830,6 +833,8 @@ NSString *chatPersonUserID;
 //    networkHelper.serviceURLString = @"http://polycab.dotvik.com:8080/PushMessage/api/getContacts";
     [networkHelper genericJSONPayloadRequestWith:requstData :self :@"requestUserList"];
 }
+
+
 -(void)chatThreadListNetworkCall
 {
     NSString* username = [[NSUserDefaults standardUserDefaults] objectForKey:@"USERNAME"];
@@ -859,12 +864,7 @@ NSString *chatPersonUserID;
     [networkHelper genericJSONPayloadRequestWith:chatThreadRequestData :self :@"chatThreadRequestData"];
 }
 
-- (void) httpFailureHandler : (NSString*) callName : (NSString*) message {
-    [loadingView removeView];
-    UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Polycab Authentication!" message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil , nil];
-    [myAlertView show];
-    
-}
+
 -(void)registerDeviceToken
 {
    KeychainWrapper* keychainWrapper = [[KeychainWrapper alloc]init];

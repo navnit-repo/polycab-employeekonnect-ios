@@ -49,14 +49,56 @@ NSString *g_DeviceSessionId = nil;
     return self;
 }
 
+
+- (BOOL)connection:(NSURLConnection *)connection
+        canAuthenticateAgainstProtectionSpace:(NSURLProtectionSpace *)protectionSpace
+{
+    
+    NSLog(@"canAuthenticateAgainstProtectionSpace(): %d",  [protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust]);
+    
+    return [protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust];
+}
+
+- (void)connection:(NSURLConnection *)connection didCancelAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge {
+    
+    NSLog(@"Not implemented : - (void)connection:(NSURLConnection *)connection didCancelAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge ");
+    
+    
+    
+}
+
+
+- (void)connection:(NSURLConnection *)connection
+        didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge
+{
+    if ([challenge.protectionSpace.authenticationMethod
+         isEqualToString:NSURLAuthenticationMethodServerTrust])
+    {
+        // we only trust our own domain
+        if ([challenge.protectionSpace.host isEqualToString:@"pconnect.polycab.com"])
+        {
+            NSURLCredential *credential =
+                [NSURLCredential credentialForTrust:challenge.protectionSpace.serverTrust];
+            [challenge.sender useCredential:credential forAuthenticationChallenge:challenge];
+        }
+    }
+ 
+    [challenge.sender continueWithoutCredentialForAuthenticationChallenge:challenge];
+}
+
+
+
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
     
     // NSLog (@"Not implemented : - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error %@", [error description]);
     
-    NSMutableDictionary *dict = [[NSMutableDictionary alloc]init];
+    NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
     [dict setDictionary:error.userInfo];
-    [responseHandler httpFailureHandler:xmwRequestCallname :[dict valueForKey:@"NSLocalizedDescription"]];
+    // [responseHandler httpFailureHandler:xmwRequestCallname :[dict valueForKey:@"NSLocalizedDescription"]];
    // [responseHandler httpFailureHandler:xmwRequestCallname :[error description]];
+    
+    [error.userInfo objectForKey:@"NSLocalizedDescription"];
+    [error.userInfo objectForKey:@"NSLocalizedRecoverySuggestion"];
     
 }
 
@@ -267,8 +309,22 @@ NSString *g_DeviceSessionId = nil;
                 [[NSUserDefaults standardUserDefaults] setObject:@"NO" forKey:@"SERVER_UNDER_MAINTENANCE"];
                 [[NSUserDefaults standardUserDefaults]  synchronize];
 
-                if([responseHandler respondsToSelector:@selector(httpResponseObjectHandler:::)]) {
-                    [responseHandler httpResponseObjectHandler:xmwRequestCallname : networkReqResObj.responseData :xmwRequestObject];
+                // FOR_LOGIN, special note
+                // Pradeep: 2020-11-29, Specially in Polycab and Lixil server authentication
+                // User may enter login username, or email address or mobile number
+                // If user entered mobile number or email address, then server updates username
+                // in the request object, where ever in all API
+                // sending username, they should be sending username received from server
+                //
+                if([xmwRequestCallname isEqual:XmwcsConst_CALL_NAME_FOR_LOGIN]) {
+                    // networkReqResObj.requestData got the updated username from server
+                    if([responseHandler respondsToSelector:@selector(httpResponseObjectHandler:::)]) {
+                        [responseHandler httpResponseObjectHandler:xmwRequestCallname : networkReqResObj.responseData :networkReqResObj.requestData];
+                    }
+                } else {
+                    if([responseHandler respondsToSelector:@selector(httpResponseObjectHandler:::)]) {
+                        [responseHandler httpResponseObjectHandler:xmwRequestCallname : networkReqResObj.responseData :xmwRequestObject];
+                    }
                 }
             } else if( [networkReqResObj.status compare:@"FAIL" options:NSCaseInsensitiveSearch]==0) {
                 
