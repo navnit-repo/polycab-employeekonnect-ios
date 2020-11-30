@@ -24,6 +24,7 @@
 
 @protocol CustomRenderDelegate <NSObject>
 
+-(CGFloat) cellHeight:(DotReportElement*) element row:(NSInteger) rowIndex col:(NSInteger) colIndex data:(NSString*) text;
 -(void) renderElement:(DotReportElement*) element row:(NSInteger) rowIndex col:(NSInteger) colIndex data:(NSString*) text view:(UIView*) view;
 
 @end

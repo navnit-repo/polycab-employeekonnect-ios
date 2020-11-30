@@ -95,7 +95,7 @@
     reportSection = indexPath.section;
     CGFloat height=0.0f;
 //    return [ReportTabularDataSection tableRowHeight];  //this is default height
-    height = [self newCellHeight:[recordTableData objectAtIndex:indexPath.row]];
+    height = [self newCellHeight:[recordTableData objectAtIndex:indexPath.row] forRowIndex:indexPath.row];
 //    NSLog(@"Cell %ld height %f",(long)indexPath.row,height);
     return height;
 }
@@ -364,18 +364,16 @@
         
         int firstColTag = 1000 + i;
         
+        if (!heightComputeFlag) {
+            height = [self newCellHeight:[recordTableData objectAtIndex:indexPath.row] forRowIndex:indexPath.row];
+            heightComputeFlag = true;
+           // [self tableView:self heightForRowAtIndexPath:indexPath];
+        }
+        
         // A list item label, docked to the center, the text is set in updateItem.
         if([[elementType objectAtIndex:i] isEqualToString:XmwcsConst_DE_COMPONENT_LABEL])
         {
             //on going work
-            
-            if (!heightComputeFlag) {
-                height = [self newCellHeight:[recordTableData objectAtIndex:indexPath.row]];
-                heightComputeFlag = true;
-                [self tableView:self heightForRowAtIndexPath:indexPath];
-            }
-            
-            
             firstCol = [[UIView alloc] initWithFrame:CGRectMake(x, 0, columnWidth, height)];
             firstCol.tag = firstColTag;
             firstCol.backgroundColor = [UIColor clearColor];
@@ -967,7 +965,7 @@
 }
 
 #pragma -mark calculate cell height
--(NSUInteger)newCellHeight :(NSArray *)array
+-(NSUInteger)newCellHeight:(NSArray *)array  forRowIndex:(NSUInteger) rowIndex
 {
     NSMutableArray *columnWidthArray = [[NSMutableArray alloc]init];
     CGFloat screenWidth = self.tableView.frame.size.width;
@@ -1002,7 +1000,6 @@
         }
         
         
-        
         NSMutableArray *check = [cellComponent objectAtIndex:4];//for Polycab project in policy menu according to change UI
         if ([[check objectAtIndex:0] isEqualToString:@"Policy"]) {
             columnWidth = screenWidth;        }
@@ -1012,15 +1009,16 @@
         }
         
         [columnWidthArray addObject:[NSString stringWithFormat:@"%f",columnWidth]];
-        
     }
     
     NSMutableArray *elementType = (NSMutableArray *)[cellComponent objectAtIndex:0];
     NSMutableArray *allComponentHeightArray = [[NSMutableArray alloc] init];
     NSInteger height=0;
     
-    for (int i=0; i<elementType.count; i++) {
-        if ([[elementType objectAtIndex:i] isEqualToString:XmwcsConst_DE_COMPONENT_LABEL]) {
+    for(int i=0; i<[elementId count]; i++) {
+        DotReportElement* dotReportElement = (DotReportElement *) [reportElements objectForKey:[elementId objectAtIndex:i]];
+        
+        if ([dotReportElement.componentType isEqualToString:XmwcsConst_DE_COMPONENT_LABEL]) {
             float width = [[columnWidthArray objectAtIndex:i] floatValue];
             CGSize maximumLabelSize = CGSizeMake(width, FLT_MAX);
             
@@ -1033,7 +1031,6 @@
                 if (str == nil || [str isKindOfClass:[NSNull class]] || str.length<=0 || str == NULL || [str isEqualToString:@""]) {
                     str = @"";
                 }
-                
             }
             else
             {
@@ -1043,9 +1040,26 @@
             CGSize expectedLabelSize = [str sizeWithFont:[UIFont systemFontOfSize:FONT_SIZE_ROW] constrainedToSize:maximumLabelSize lineBreakMode:UILineBreakModeWordWrap];
             
             [allComponentHeightArray addObject:[NSString stringWithFormat:@"%f", expectedLabelSize.height]];
+        } else if([dotReportElement.componentType isEqualToString:XmwcsConst_DRE_COLUMN_TYPE_CUSTOM_COLUMN]) {
+            
+            if(self.reportVC.customRenderDelegate!=nil) {
+                if([self.reportVC.customRenderDelegate respondsToSelector:@selector(cellHeight: row: col: data:)]) {
+                    NSString* str = [array objectAtIndex:i];
+                    CGFloat cellHeight = [self.reportVC.customRenderDelegate cellHeight:dotReportElement row:rowIndex col:i data:str];
+                    
+                    [allComponentHeightArray addObject:[NSString stringWithFormat:@"%f", cellHeight]];
+                    
+                } else {
+                    [allComponentHeightArray addObject:[NSString stringWithFormat:@"%ld", (long)[ReportTabularDataSection tableRowHeight]]];
+                }
+            } else {
+                [allComponentHeightArray addObject:[NSString stringWithFormat:@"%ld", (long)[ReportTabularDataSection tableRowHeight]]];
+            }
+            
         }
         
     }
+    
     NSArray *sortedArray = [allComponentHeightArray  sortedArrayUsingComparator:
                             ^NSComparisonResult(id obj1, id obj2){
                                 if ([obj1 floatValue] > [obj2 floatValue])
@@ -1066,8 +1080,8 @@
     }
     return height;
     
-    
 }
+
 #pragma mark - searchBar handler
 -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
     [searchBar resignFirstResponder];
