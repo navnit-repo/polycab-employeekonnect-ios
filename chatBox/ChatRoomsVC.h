@@ -32,6 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UIView *lineView2;
 @property (weak, nonatomic) IBOutlet UILabel *nameLbl;
 @property (weak, nonatomic) IBOutlet UILabel *subjectLbl;
+@property (weak, nonatomic) IBOutlet UILabel *lmeNoteLbl;
 @property (weak, nonatomic) IBOutlet UIButton *acceptButtonOutlet;
 @property (weak, nonatomic) IBOutlet UITableView *chatRoomTableView;
 @property (weak, nonatomic) IBOutlet UIView *bottomView;

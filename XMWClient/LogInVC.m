@@ -544,11 +544,10 @@ NSString *chatPersonUserID;
             NSArray *contactListStorageData = [contactListStorage getContactDisplayName:@"False" :parseId];
             if (contactListStorageData.count==0) {
                 obj = [[ContactList_Object alloc]init];
-            }
-            else{
+            } else {
                 obj = (ContactList_Object*) [contactListStorageData objectAtIndex:0];
-                
             }
+             
             NSString *subjectString = [[chatThreadDict objectAtIndex:i] valueForKey:@"subject"];
             NSData *subjectData = [subjectString dataUsingEncoding:NSUTF8StringEncoding];
             NSString *base64SubjectString = [subjectData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
@@ -563,7 +562,13 @@ NSString *chatPersonUserID;
             BOOL flag = [[[chatThreadDict objectAtIndex:i] valueForKey:@"deleted"] boolValue];
             
             chatThreadList_Object.deletedFlag =[ NSString stringWithFormat:@"%@",flag ? @"YES" : @"NO"];
-            chatThreadList_Object.displayName = obj.userName;
+            
+            if(obj.userName!=nil) {
+                chatThreadList_Object.displayName = obj.userName;
+            } else {
+                chatThreadList_Object.displayName = [ NSString stringWithFormat:@"%@", [[chatThreadDict objectAtIndex:i] valueForKey:@"fromUserId"]];
+            }
+            
             chatThreadList_Object.unreadMessageCount =[[[chatThreadDict objectAtIndex:i] valueForKey:@"unreadMessageCount"] intValue] ;
             chatThreadList_Object.spaNo =[ NSString stringWithFormat:@"%@",[[chatThreadDict objectAtIndex:i] valueForKey:@"spaNo"]];
             [chatThreadListStorage insertDoc:chatThreadList_Object];
@@ -577,6 +582,7 @@ NSString *chatPersonUserID;
     }
 
 }
+
 -(void)configureUserRole :(ClientLoginResponse*)clientLoginResponse
 {
     NSMutableArray *roleList = [[NSMutableArray alloc]init];

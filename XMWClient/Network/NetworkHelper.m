@@ -285,7 +285,10 @@ NSString *g_DeviceSessionId = nil;
     
     
     NSString *jsonFormatDataString = [[NSString alloc] initWithData:[NetworkHelper cleanUTF8:responseData] encoding:NSUTF8StringEncoding];
+    
+#if TARGET_IPHONE_SIMULATOR
     NSLog(@"jsonFormatDataString: %@", jsonFormatDataString);
+#endif
         
     // now parse the content to get json data, and notify to response handler.
    //  NSString *jsonResponseStr = [[NSString alloc ] initWithData:[NetworkHelper cleanUTF8 : responseData] encoding:NSUTF8StringEncoding];

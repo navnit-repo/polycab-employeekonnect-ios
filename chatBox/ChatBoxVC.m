@@ -336,8 +336,15 @@ static NSString *const kCellSubCatIdentifier = @"kCellSubCatIdentifier";
     for (int i=0; i<chatThreadDict.count; i++) {
         ChatThreadList_Object *obj = (ChatThreadList_Object*) [chatThreadDict objectAtIndex:i];
         
-        if (![distinctName  containsObject:obj.displayName]) {
-            [distinctName addObject:obj.displayName];
+        if([obj.displayName isKindOfClass:[NSString class]] && ![obj.displayName isEqualToString:@"(null)"]) {
+            if (![distinctName  containsObject:obj.displayName]) {
+                [distinctName addObject:obj.displayName];
+            }
+        } else {
+            // if we have display name empty then club them in other Group Called Thread List
+            if (![distinctName  containsObject:@"Thread List"]) {
+                [distinctName addObject:@"Thread List"];
+            }
         }
     }
     
@@ -347,10 +354,14 @@ static NSString *const kCellSubCatIdentifier = @"kCellSubCatIdentifier";
         ExpendObjectClass * expendObj = [[ExpendObjectClass alloc]init];
         for (int j=0; j<chatThreadDict.count; j++) {
             ChatThreadList_Object *obj = (ChatThreadList_Object*) [chatThreadDict objectAtIndex:j];
-            if ([obj.displayName isEqualToString:[distinctName objectAtIndex:i]] ) {
+            
+            if([obj.displayName isKindOfClass:[NSString class]] && ![obj.displayName isEqualToString:@"(null)"]) {
+                if ([obj.displayName isEqualToString:[distinctName objectAtIndex:i]] ) {
+                    [array addObject:obj];
+                }
+            } else {
                 [array addObject:obj];
             }
-           
         }
         expendObj.MENU_NAME =[distinctName objectAtIndex:i];
         expendObj.childCategories = array;
@@ -875,7 +886,13 @@ static NSString *const kCellSubCatIdentifier = @"kCellSubCatIdentifier";
         vc.withChatPersonName = parseId;
         vc.chatThreadId =[NSString stringWithFormat:@"%d",obj.chatThreadId];
         vc.chatStatus = obj.status;
-        vc.nameLbltext = obj.displayName;
+    
+    if([obj.displayName isKindOfClass:[NSString class]] &&  ![obj.displayName isEqualToString:@"(null)"]) {
+            vc.nameLbltext = obj.displayName;
+        } else {
+            vc.nameLbltext = @"(NA)";
+        }
+    
         [[self navigationController ] pushViewController:vc animated:YES];
     
         ChatThreadCell *cellView =[( ChatThreadCell * ) self.view viewWithTag:obj.chatThreadId];

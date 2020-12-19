@@ -1002,8 +1002,8 @@
         
         NSMutableArray *check = [cellComponent objectAtIndex:4];//for Polycab project in policy menu according to change UI
         if ([[check objectAtIndex:0] isEqualToString:@"Policy"]) {
-            columnWidth = screenWidth;        }
-        else
+            columnWidth = screenWidth;
+        } else
         {
             columnWidth = screenWidth * normalized / 100;
         }

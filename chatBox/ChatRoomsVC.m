@@ -24,6 +24,10 @@
 #import "SBJsonWriter.h"
 #import "ReadUnreadService.h"
 #import "LogInVC.h"
+
+#import "XmwReportService.h"
+
+
 @interface ChatRoomsVC ()
 
 @end
@@ -102,9 +106,11 @@
         viewFrame =CGRectMake(0, yorigin, 320, totalViewHeight);
     }
     [self drawHeaderItem];
-     [self initializeView];
+    [self initializeView];
     // Do any additional setup after loading the view from its nib.
+    [self getLME_Data];
 }
+
 -(void)autoLayoutIphoneMax
 {
     self.headerView.frame =CGRectMake(self.headerView.frame.origin.x, 0, self.headerView.frame.size.width, self.headerView.frame.size.height);
@@ -170,8 +176,10 @@
     [LayoutClass setLayoutForIPhone6:self.lineView2];
     [LayoutClass labelLayout:self.nameLbl forFontWeight:UIFontWeightBold];
     [LayoutClass labelLayout:self.subjectLbl forFontWeight:UIFontWeightRegular];
+    [LayoutClass setLayoutForIPhone6:self.lmeNoteLbl];
     [LayoutClass setLayoutForIPhone6:self.chatRoomTableView];
     [LayoutClass setLayoutForIPhone6:self.bottomView];
+    
     
     remarkView.layer.borderColor =[UIColor colorWithRed:0.76 green:0.76 blue:0.76 alpha:1.0].CGColor;
     remarkView.layer.borderWidth = 1.0;
@@ -243,6 +251,7 @@
     [self chatHistory];
     [self unreadMessageNetworkCall];
 }
+
 -(void)unreadMessageNetworkCall
 {
      NSMutableArray *sendMessageIdsArray = [[NSMutableArray alloc]init];
@@ -309,6 +318,40 @@
     
    
 }
+
+-(void) getLME_Data
+{
+    DotFormPost* formPost = [[DotFormPost alloc] init];
+    
+    formPost.moduleId = AppConst_MOBILET_ID_DEFAULT;
+    
+    formPost.adapterId = @"DR_LME_DETAILS";
+    formPost.adapterType = @"CLASSLOADER";
+
+    XmwReportService* reportService = [[XmwReportService alloc] initWithPostData:formPost withContext:@"DR_LME_DETAILS"];
+    
+    
+    [reportService fetchReportUsingSuccess:^(DotFormPost* formPosted, ReportPostResponse* reportResponse) {
+        
+        NSString* copperRate = [reportResponse.headerData objectForKey:@"LME_COPPER"];
+        NSString* aluminiumRate = [reportResponse.headerData objectForKey:@"LME_ALUMINIUM"];
+        NSString* dollarRate = [reportResponse.headerData objectForKey:@"LME_DOLLAR_RATE"];
+        NSString* lastUpdateDate = [reportResponse.headerData objectForKey:@"LAST_UPDATE_DATE"];
+        NSString* validity = [reportResponse.headerData objectForKey:@"SPA_VALIDITY"];
+        
+        NSMutableString* lmeNote = [[NSMutableString alloc] init];
+        [lmeNote appendFormat:@"Price based on Copper %@", copperRate];
+        [lmeNote appendFormat:@" $/ton,\r\nAlluminium %@", aluminiumRate];
+        [lmeNote appendFormat:@" $/ton, $ Rate %@", dollarRate];
+        [lmeNote appendFormat:@" Rs. Valid for %@ days.", validity];        
+        self.lmeNoteLbl.text = lmeNote;
+        
+    }   fail:^(DotFormPost* formPosted, NSString* message) {
+        
+
+    }];
+}
+
 -(void)chatHistory
 {
     [ChatHistory_DB createInstance : @"ChatHistory_DB_STORAGE" : true :[chatThreadId integerValue]];
