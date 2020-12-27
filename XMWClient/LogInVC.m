@@ -59,6 +59,9 @@
 #import "UpdateAppVersion.h"
 #import "ScreenMapper.h"
 
+#import "JBCheck.h"
+#import "antireverse.h"
+
 
 @interface LogInVC ()
 {
@@ -103,6 +106,28 @@ NSString *chatPersonUserID;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+#if !(TARGET_IPHONE_SIMULATOR)
+    // If enabled the program should exit with code 055 in GDB
+    // Program exited with code 055.
+    debugger_ptrace();
+    NSLog(@"Bypassed ptrace()");
+    
+    // If enabled the program should exit with code 0377 in GDB
+    // Program exited with code 0377.
+    if (debugger_sysctl())
+    {
+        exit(-1);
+    } else {
+        NSLog(@"Bypassed sysctl()");
+    }
+#endif
+    
+    // Jail Broken check
+    if([JBCheck isJailbroken]) {
+        exit(1);
+    }
+    
     [self configureServerUrls];
     [self checkVersion];
     

@@ -50,40 +50,75 @@ NSString *g_DeviceSessionId = nil;
 }
 
 
-- (BOOL)connection:(NSURLConnection *)connection
-        canAuthenticateAgainstProtectionSpace:(NSURLProtectionSpace *)protectionSpace
+-(void)connection:(NSURLConnection *)connection willSendRequestForAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge
 {
-    
-    NSLog(@"canAuthenticateAgainstProtectionSpace(): %d",  [protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust]);
-    
-    return [protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust];
-}
+    if ([challenge.protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust]) {
+        
+        OSStatus                err;
+        NSURLProtectionSpace *  protectionSpace;
+        SecTrustRef             trust;
+        SecTrustResultType      trustResult;
+        BOOL                    trusted;
 
-- (void)connection:(NSURLConnection *)connection didCancelAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge {
-    
-    NSLog(@"Not implemented : - (void)connection:(NSURLConnection *)connection didCancelAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge ");
-    
-    
-    
-}
+        protectionSpace = [challenge protectionSpace];
+        assert(protectionSpace != nil);
 
-
-- (void)connection:(NSURLConnection *)connection
-        didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge
-{
-    if ([challenge.protectionSpace.authenticationMethod
-         isEqualToString:NSURLAuthenticationMethodServerTrust])
-    {
-        // we only trust our own domain
-        if ([challenge.protectionSpace.host isEqualToString:@"pconnect.polycab.com"])
-        {
-            NSURLCredential *credential =
-                [NSURLCredential credentialForTrust:challenge.protectionSpace.serverTrust];
-            [challenge.sender useCredential:credential forAuthenticationChallenge:challenge];
+        trust = [protectionSpace serverTrust];
+        assert(trust != NULL);
+    
+        err = SecTrustEvaluate(trust, &trustResult);
+        trusted = (err == noErr) && ((trustResult == kSecTrustResultProceed) || (trustResult == kSecTrustResultUnspecified));
+    
+        // though it is trusted, but still we need to check with our pinned certificate as
+        // as per VAPT recommendation
+    
+        // ([challenge.protectionSpace.host isEqualToString:@"pconnect.polycab.com"])
+       
+        // we need to optimize this code, as it is loading in every call.
+        SecCertificateRef  pinnedCert = [self localCertificateForHost: challenge.protectionSpace.host ];
+        assert(pinnedCert != NULL);
+            
+        if(pinnedCert!=nil) {
+            
+            // extract the expected public key
+            SecKeyRef expectedKey = NULL;
+            SecCertificateRef certRefs[1] = { pinnedCert };
+            CFArrayRef certArray = CFArrayCreate(kCFAllocatorDefault, (void *) certRefs, 1, NULL);
+            SecPolicyRef policy = SecPolicyCreateBasicX509();
+            SecTrustRef expTrust = NULL;
+            OSStatus status = SecTrustCreateWithCertificates(certArray, policy, &expTrust);
+            if (status == errSecSuccess) {
+              expectedKey = SecTrustCopyPublicKey(expTrust);
+            }
+            CFRelease(expTrust);
+            CFRelease(policy);
+            CFRelease(certArray);
+        
+            SecKeyRef actualKey = SecTrustCopyPublicKey(trust);
+            
+            // check a match
+            if (actualKey != NULL && expectedKey != NULL && [(__bridge id) actualKey isEqual:(__bridge id)expectedKey]) {
+              // public keys match, continue with other checks
+              [challenge.sender performDefaultHandlingForAuthenticationChallenge:challenge];
+            } else {
+              // public keys do not match
+              [challenge.sender cancelAuthenticationChallenge:challenge];
+            }
+        
+            if(expectedKey!=nil)
+                CFRelease(expectedKey);
+        
+            if(actualKey!=nil)
+                CFRelease(actualKey);
+            
+            CFRelease(pinnedCert);
+        } else {
+            NSLog(@"Pinned certificate not available in der extension for %@", challenge.protectionSpace.host);
         }
+    } else {
+        [challenge.sender performDefaultHandlingForAuthenticationChallenge:challenge];
+        // [challenge.sender continueWithoutCredentialForAuthenticationChallenge:challenge];
     }
- 
-    [challenge.sender continueWithoutCredentialForAuthenticationChallenge:challenge];
 }
 
 
@@ -980,8 +1015,7 @@ NSString *g_DeviceSessionId = nil;
     [request addValue:contentType forHTTPHeaderField:@"Content-Type"];
 //    [request addValue:@"gzip, deflate" forHTTPHeaderField:@"Accept-Encoding"];
   
-    
-    
+
     [body appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
     [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"file\"; filename=\"%@\"\r\n",imageName] dataUsingEncoding:NSUTF8StringEncoding]];
     [body appendData:[[NSString stringWithString:@"Content-Type: image/jpeg\r\n\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
@@ -1023,5 +1057,61 @@ NSString *g_DeviceSessionId = nil;
     
     
 }
+
+
+
+/**
+ *  Load the certificate from local storage.
+ *  This will attempt to find a local DER encoded certificate file for the specified host.
+ *
+ *  @param host The host
+ *
+ *  @return The certificate for this host, NULL if none could be found or decoded.
+ */
+
+-(SecCertificateRef) localCertificateForHost:(NSString *)host {
+    NSData              *certData       = nil;
+    SecCertificateRef   result          = NULL;
+    
+    // This will look for a file within the current bundle named hostname.der
+    // i.e. "www.google.com.der"
+    // The expectation is that the data is in OpenSSL DER format. This should be the server credential you expect for this host.
+    certData = [NSData dataWithContentsOfURL:[[NSBundle bundleForClass:[self class]] URLForResource:host withExtension:@"der" ] ];
+    if (certData != nil){
+        result = SecCertificateCreateWithData(kCFAllocatorDefault, (__bridge CFDataRef)certData);
+    }
+    return result;
+}
+
+// just keep this function, may needed to support self signed certficates
+-(void) unusedHelper:(SecTrustRef) trust
+{
+        CFIndex certCount = SecTrustGetCertificateCount(trust);
+        
+        for(int i=0; i<certCount; i++) {
+            SecCertificateRef cert = SecTrustGetCertificateAtIndex(trust,  i);
+            CFStringRef summary = SecCertificateCopySubjectSummary(cert);
+            fprintf(stderr, "%*ssummary = '%s'\n", 6, "", [(__bridge NSString *)summary UTF8String]);
+            CFRelease(summary);
+            
+            // SecCertificateCopyCommonName
+            // SecCertificateCopyEmailAddresses
+            // SecCertificateGetSubject
+            // SecCertificateGetIssuer
+        }
+        // CFErrorRef error;
+        // SecKeyCopyExternalRepresentation(actualKey, &error);
+        // SecKeyCopyAttributes(actualKey);
+        
+        /*
+         // for self signed certificates etc
+        err = SecTrustSetAnchorCertificates(trust, (CFArrayRef) [Credentials sharedCredentials].certificates);
+        if (err == noErr) {
+            err = SecTrustEvaluate(trust, &trustResult);
+        }
+        trusted = (err == noErr) && ((trustResult == kSecTrustResultProceed) || (trustResult == kSecTrustResultUnspecified));
+         */
+}
+
 @end
 

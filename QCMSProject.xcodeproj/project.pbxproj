@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2708C19A25989F3E00DBA84E /* JBCheck.h in Headers */ = {isa = PBXBuildFile; fileRef = 2708C19625989F3D00DBA84E /* JBCheck.h */; };
+		2708C19B25989F3E00DBA84E /* antireverse.h in Headers */ = {isa = PBXBuildFile; fileRef = 2708C19725989F3D00DBA84E /* antireverse.h */; };
+		2708C19C25989F3E00DBA84E /* antireverse.c in Sources */ = {isa = PBXBuildFile; fileRef = 2708C19825989F3E00DBA84E /* antireverse.c */; };
+		2708C19D25989F3E00DBA84E /* JBCheck.m in Sources */ = {isa = PBXBuildFile; fileRef = 2708C19925989F3E00DBA84E /* JBCheck.m */; };
+		2708C1A225989FCF00DBA84E /* Credentials.h in Headers */ = {isa = PBXBuildFile; fileRef = 2708C1A025989FCF00DBA84E /* Credentials.h */; };
+		2708C1A325989FCF00DBA84E /* Credentials.m in Sources */ = {isa = PBXBuildFile; fileRef = 2708C1A125989FCF00DBA84E /* Credentials.m */; };
+		2708C1A82598A07600DBA84E /* pconnect.polycab.com.der in Resources */ = {isa = PBXBuildFile; fileRef = 2708C1A72598A07600DBA84E /* pconnect.polycab.com.der */; };
 		270B77392477B04D0024960F /* frame-4.png in Resources */ = {isa = PBXBuildFile; fileRef = 270B77222477B04D0024960F /* frame-4.png */; };
 		270B773A2477B04D0024960F /* frame-22.png in Resources */ = {isa = PBXBuildFile; fileRef = 270B77232477B04D0024960F /* frame-22.png */; };
 		270B773B2477B04D0024960F /* frame-5.png in Resources */ = {isa = PBXBuildFile; fileRef = 270B77242477B04D0024960F /* frame-5.png */; };
@@ -1188,6 +1195,13 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2708C19625989F3D00DBA84E /* JBCheck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JBCheck.h; path = Util/JBCheck.h; sourceTree = "<group>"; };
+		2708C19725989F3D00DBA84E /* antireverse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = antireverse.h; path = Util/antireverse.h; sourceTree = "<group>"; };
+		2708C19825989F3E00DBA84E /* antireverse.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = antireverse.c; path = Util/antireverse.c; sourceTree = "<group>"; };
+		2708C19925989F3E00DBA84E /* JBCheck.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JBCheck.m; path = Util/JBCheck.m; sourceTree = "<group>"; };
+		2708C1A025989FCF00DBA84E /* Credentials.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Credentials.h; path = XMWClient/Network/Credentials.h; sourceTree = "<group>"; };
+		2708C1A125989FCF00DBA84E /* Credentials.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Credentials.m; path = XMWClient/Network/Credentials.m; sourceTree = "<group>"; };
+		2708C1A72598A07600DBA84E /* pconnect.polycab.com.der */ = {isa = PBXFileReference; lastKnownFileType = file; path = pconnect.polycab.com.der; sourceTree = "<group>"; };
 		270B77222477B04D0024960F /* frame-4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "frame-4.png"; sourceTree = "<group>"; };
 		270B77232477B04D0024960F /* frame-22.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "frame-22.png"; sourceTree = "<group>"; };
 		270B77242477B04D0024960F /* frame-5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "frame-5.png"; sourceTree = "<group>"; };
@@ -2465,6 +2479,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2708C1A62598A07600DBA84E /* certificates */ = {
+			isa = PBXGroup;
+			children = (
+				2708C1A72598A07600DBA84E /* pconnect.polycab.com.der */,
+			);
+			path = certificates;
+			sourceTree = "<group>";
+		};
 		270B77212477B04D0024960F /* Spinner-0.8s-174px */ = {
 			isa = PBXGroup;
 			children = (
@@ -2742,6 +2764,7 @@
 		8579E70E174CD04700D7945F /* XMWClient */ = {
 			isa = PBXGroup;
 			children = (
+				2708C1A62598A07600DBA84E /* certificates */,
 				279D43B224A58DFD0046BB33 /* DataManager */,
 				F038EF482150E2F400AFB080 /* Localizable.strings */,
 				F0A358E820FC9EC300CE34AC /* Polycab */,
@@ -3299,6 +3322,10 @@
 		9000C6A6175340A700A1DAF4 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				2708C19825989F3E00DBA84E /* antireverse.c */,
+				2708C19725989F3D00DBA84E /* antireverse.h */,
+				2708C19625989F3D00DBA84E /* JBCheck.h */,
+				2708C19925989F3E00DBA84E /* JBCheck.m */,
 				273258792484CEA8003F979C /* ScreenMapper.h */,
 				2732587A2484CEA8003F979C /* ScreenMapper.m */,
 				854304041B0DAD1000328DDD /* MarqueeLabel.h */,
@@ -3743,6 +3770,8 @@
 		9092BB3D1749FD3900320B1C /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				2708C1A025989FCF00DBA84E /* Credentials.h */,
+				2708C1A125989FCF00DBA84E /* Credentials.m */,
 				F07B39E620CEAE2A00740DF4 /* XmwSearchService.h */,
 				F07B39E720CEAE2B00740DF4 /* XmwSearchService.m */,
 				90DD12DB178ECBAC005F20D1 /* HttpEventListener.h */,
@@ -4940,6 +4969,7 @@
 				857A3EC41A6CFC3500279931 /* UIImage+animatedGIF.h in Headers */,
 				85DB6AAC1E632C7E0018710B /* BarCodeScanField.h in Headers */,
 				273258962484D945003F979C /* CreateOrderStatusCell.h in Headers */,
+				2708C1A225989FCF00DBA84E /* Credentials.h in Headers */,
 				85AC9661198FFDDF00AC0338 /* ReportLegendSection.h in Headers */,
 				F034774422781C180040A660 /* NewInstanceNsUserDefault.h in Headers */,
 				273259982484DB50003F979C /* NationalSalesAggregatePieView.h in Headers */,
@@ -4998,6 +5028,7 @@
 				2732599C2484DB50003F979C /* NationalSalesAggregateCollectionView.h in Headers */,
 				F07CC79E20E0EB41005917AC /* InvoiceView.h in Headers */,
 				F0224DFC21411CAA00D9A6E2 /* PolycabFooter.h in Headers */,
+				2708C19A25989F3E00DBA84E /* JBCheck.h in Headers */,
 				856DC9DC1D06613700B7F48E /* EditOrderTableFormDelegate.h in Headers */,
 				85162FDE1E8E477E003B05C8 /* PODFormVC.h in Headers */,
 				273258922484D945003F979C /* CreateOrderVC2.h in Headers */,
@@ -5084,6 +5115,7 @@
 				F0B4259E22671C240011D3E4 /* ContactList_Object.h in Headers */,
 				8595B4ED190FCB790010C685 /* DVDayNameCell.h in Headers */,
 				8595B4FA191004120010C685 /* DVCalendarController.h in Headers */,
+				2708C19B25989F3E00DBA84E /* antireverse.h in Headers */,
 				273259352484DA1E003F979C /* CustomCompareFormQV.h in Headers */,
 				F0B2FB34218850F5006A7C6B /* FeedbackDropDownVC.h in Headers */,
 				2732597B2484DA78003F979C /* RMACardCell.h in Headers */,
@@ -5659,6 +5691,7 @@
 				2732593E2484DA1E003F979C /* CompareReportTableCell.xib in Resources */,
 				270B774C2477B04D0024960F /* frame-8.png in Resources */,
 				273259772484DA78003F979C /* EmpolyeeSalesReportHeaderView.xib in Resources */,
+				2708C1A82598A07600DBA84E /* pconnect.polycab.com.der in Resources */,
 				857F8C5A1A828CBD0018A54C /* my_details_L.png in Resources */,
 				F0580217221D7D8500682D07 /* polycab_loading_logo.png in Resources */,
 				90F5F4E4179D55E7003BCA61 /* WorkFlowLoginScreen.xib in Resources */,
@@ -5991,6 +6024,7 @@
 				902D3F651755E92200E079AB /* ButtonTableViewCell.m in Sources */,
 				F0A358EF20FC9ECF00CE34AC /* SignUpVC.m in Sources */,
 				273259722484DA78003F979C /* RMAVC2.m in Sources */,
+				2708C1A325989FCF00DBA84E /* Credentials.m in Sources */,
 				85DB6AC31E634CB90018710B /* WideReportVC.m in Sources */,
 				F0B4259922671C240011D3E4 /* MessageSubjectVC.m in Sources */,
 				F0E1A0D0213E48C2005F4435 /* SalesCell.m in Sources */,
@@ -6091,6 +6125,7 @@
 				F0AFB6562126CA12005801B9 /* PolycabProductCatObject.m in Sources */,
 				9036FDA6178A9017009DB2F2 /* ObjectStorage.m in Sources */,
 				8595B4E8190FCB790010C685 /* DVCalendarConstants.m in Sources */,
+				2708C19C25989F3E00DBA84E /* antireverse.c in Sources */,
 				850357B31E8BB582005500B9 /* PODCustomDataSection.m in Sources */,
 				9051C51E1804226A002B6BBB /* DocumentScreenController.m in Sources */,
 				85E1D88D1B8DFFAE0034D949 /* BidirectionCollectionLayout.m in Sources */,
@@ -6105,6 +6140,7 @@
 				F07B39E920CEAE2B00740DF4 /* XmwSearchService.m in Sources */,
 				90DD12E0178ECBAC005F20D1 /* NetworkHelper.m in Sources */,
 				273258912484D945003F979C /* CreateOrderStatusVC.m in Sources */,
+				2708C19D25989F3E00DBA84E /* JBCheck.m in Sources */,
 				F033A0C320E637A000366E3B /* showInfoClaimVC.m in Sources */,
 				85DB6AAD1E632C7E0018710B /* BarCodeScanField.m in Sources */,
 				90DD12E1178ECBAC005F20D1 /* Reachability.m in Sources */,

@@ -283,10 +283,29 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 //    for notification count
         [[[NSUserDefaults standardUserDefaults] initWithSuiteName:XmwcsConst_APPGROUP_IDENTIFIER] setObject:[NSString stringWithFormat:@"%d",0] forKey:@"Notification_Count"];
+    
+    
+    // handling VAPT Scenario: Automatic background snapshot
+    UIImageView* bgImageView = [[UIImageView alloc] initWithImage: [UIImage imageNamed:@"01_splash.jpg"]];
+    bgImageView.frame = self.window.bounds;
+    bgImageView.contentMode = UIViewContentModeCenter;
+    bgImageView.tag = 1001;
+    
+    [self.window addSubview:bgImageView];
+    
+    // handling VAPT Scenario:  Side Channel Leakage Through Pasteboard
+    // UIPasteboard.general.items = []
+    [UIPasteboard generalPasteboard].items =  [[NSMutableArray alloc] init];
+    
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
+    
+    UIView* bgView =  [self.window viewWithTag:1001];
+    if(bgView!=nil) [bgView removeFromSuperview];
+ 
+    
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     
     
