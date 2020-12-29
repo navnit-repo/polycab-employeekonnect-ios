@@ -46,6 +46,8 @@
 #import "MultipleFileAttachmentView.h"
 #import "SPACreateOrderViewController.h"
 
+#import "NSString+HTML.h"
+
 @implementation DotFormPostUtil
 
 
@@ -626,7 +628,7 @@
     else if ([componentType isEqualToString : XmwcsConst_DE_COMPONENT_TEXTAREA])
     {
         MXTextField *textField = (MXTextField *)[baseForm getDataFromId:elementid];
-        valueToSubmit = valueToDisplay = textField.text;
+        valueToSubmit = valueToDisplay = [textField.text stringByEncodingHTMLEntities];
     }
     else if ([componentType isEqualToString : XmwcsConst_DE_COMPONENT_DROPDOWN] )
     {
