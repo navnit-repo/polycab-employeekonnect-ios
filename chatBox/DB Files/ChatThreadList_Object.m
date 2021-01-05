@@ -20,4 +20,7 @@
 @synthesize deletedFlag;
 @synthesize unreadMessageCount;
 @synthesize spaNo;
+@synthesize spaExpiry;
+@synthesize lmeNote;
+
 @end

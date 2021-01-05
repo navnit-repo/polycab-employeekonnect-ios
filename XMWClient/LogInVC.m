@@ -578,24 +578,41 @@ NSString *chatPersonUserID;
             NSString *base64SubjectString = [subjectData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
             
             ChatThreadList_Object* chatThreadList_Object = [[ChatThreadList_Object alloc] init];
-            chatThreadList_Object.chatThreadId =[[[chatThreadDict objectAtIndex:i] valueForKey:@"id"] integerValue] ;
-            chatThreadList_Object.from =   [ NSString stringWithFormat:@"%@", [[chatThreadDict objectAtIndex:i] valueForKey:@"fromUserId"]];
-            chatThreadList_Object.to =  [ NSString stringWithFormat:@"%@",[[chatThreadDict objectAtIndex:i] valueForKey:@"toUserId"]];
+            
+            NSDictionary* chatThreadJson = [chatThreadDict objectAtIndex:i];
+            
+            chatThreadList_Object.chatThreadId =[[chatThreadJson valueForKey:@"id"] integerValue] ;
+            chatThreadList_Object.from =   [ NSString stringWithFormat:@"%@", [chatThreadJson valueForKey:@"fromUserId"]];
+            chatThreadList_Object.to =  [ NSString stringWithFormat:@"%@", [chatThreadJson valueForKey:@"toUserId"]];
             chatThreadList_Object.subject =base64SubjectString;
-            chatThreadList_Object.lastMessageOn =[ NSString stringWithFormat:@"%@",[[chatThreadDict objectAtIndex:i] valueForKey:@"lastMessageOn"]];
-            chatThreadList_Object.status =[ NSString stringWithFormat:@"%@",[[chatThreadDict objectAtIndex:i] valueForKey:@"status"]];
-            BOOL flag = [[[chatThreadDict objectAtIndex:i] valueForKey:@"deleted"] boolValue];
+            chatThreadList_Object.lastMessageOn =[ NSString stringWithFormat:@"%@",[chatThreadJson valueForKey:@"lastMessageOn"]];
+            chatThreadList_Object.status =[ NSString stringWithFormat:@"%@",[chatThreadJson valueForKey:@"status"]];
+            BOOL flag = [[chatThreadJson valueForKey:@"deleted"] boolValue];
             
             chatThreadList_Object.deletedFlag =[ NSString stringWithFormat:@"%@",flag ? @"YES" : @"NO"];
             
             if(obj.userName!=nil) {
                 chatThreadList_Object.displayName = obj.userName;
             } else {
-                chatThreadList_Object.displayName = [ NSString stringWithFormat:@"%@", [[chatThreadDict objectAtIndex:i] valueForKey:@"fromUserId"]];
+                chatThreadList_Object.displayName = [ NSString stringWithFormat:@"%@", [chatThreadJson valueForKey:@"fromUserId"]];
             }
             
-            chatThreadList_Object.unreadMessageCount =[[[chatThreadDict objectAtIndex:i] valueForKey:@"unreadMessageCount"] intValue] ;
-            chatThreadList_Object.spaNo =[ NSString stringWithFormat:@"%@",[[chatThreadDict objectAtIndex:i] valueForKey:@"spaNo"]];
+            chatThreadList_Object.unreadMessageCount =[[chatThreadJson valueForKey:@"unreadMessageCount"] intValue] ;
+            chatThreadList_Object.spaNo = [ NSString stringWithFormat:@"%@",[chatThreadJson valueForKey:@"spaNo"]];
+            
+            NSObject* jObject = [chatThreadJson valueForKey:@"lmeNote"];
+            if(jObject!=nil && [jObject isKindOfClass:[NSNull class]]) {
+                chatThreadList_Object.lmeNote = @""; // setting empty
+            } else {
+                chatThreadList_Object.lmeNote = [jObject copy];
+            }
+            jObject =  [chatThreadJson valueForKey:@"spaExpiry"];
+            if(jObject!=nil && [jObject isKindOfClass:[NSNull class]]) {
+                chatThreadList_Object.spaExpiry = @""; // setting empty
+            } else {
+                chatThreadList_Object.spaExpiry = [(NSNumber*)jObject stringValue];
+            }
+            
             [chatThreadListStorage insertDoc:chatThreadList_Object];
             
         }

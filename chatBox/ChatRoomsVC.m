@@ -60,6 +60,7 @@
 @synthesize chatThreadId;
 @synthesize chatRoomTableView;
 @synthesize subject;
+@synthesize chatThreadObj;
 @synthesize bottomView;
 @synthesize chatHistoryArray;
 @synthesize remarkView;
@@ -321,6 +322,12 @@
 
 -(void) getLME_Data
 {
+    
+    if(self.chatThreadObj!=nil && self.chatThreadObj.lmeNote !=nil &&  [self.chatThreadObj.lmeNote length]>0)
+    {
+        self.lmeNoteLbl.text = self.chatThreadObj.lmeNote;
+        return;
+    }
     DotFormPost* formPost = [[DotFormPost alloc] init];
     
     formPost.moduleId = AppConst_MOBILET_ID_DEFAULT;

@@ -24,6 +24,8 @@ NS_ASSUME_NONNULL_BEGIN
     NSString *deletedFlag;
     int unreadMessageCount;
     NSString *spaNo;
+    NSString* spaExpiry;
+    NSString* lmeNote;
 }
 @property NSString *spaNo;
 @property int unreadMessageCount;
@@ -36,6 +38,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property int KEY_ID;
 @property NSString *subject;
 @property NSString *lastMessageOn;
+@property NSString* spaExpiry;
+@property NSString* lmeNote;
+
 @end
 
 NS_ASSUME_NONNULL_END

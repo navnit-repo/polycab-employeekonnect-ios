@@ -882,10 +882,11 @@ static NSString *const kCellSubCatIdentifier = @"kCellSubCatIdentifier";
             NSLog(@"Result: %@",originalString);
     
         ChatRoomsVC *vc = [[ChatRoomsVC alloc]init];
-        vc.subject =originalString;
+        vc.subject = originalString;
         vc.withChatPersonName = parseId;
-        vc.chatThreadId =[NSString stringWithFormat:@"%d",obj.chatThreadId];
+        vc.chatThreadId =[NSString stringWithFormat:@"%d", obj.chatThreadId];
         vc.chatStatus = obj.status;
+        vc.chatThreadObj = obj;
     
     if([obj.displayName isKindOfClass:[NSString class]] &&  ![obj.displayName isEqualToString:@"(null)"]) {
             vc.nameLbltext = obj.displayName;

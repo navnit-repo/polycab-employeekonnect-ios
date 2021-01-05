@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "PTSMessagingCell.h"
+#import "ChatThreadList_Object.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ChatRoomsVC : UIViewController <UITableViewDataSource,UITableViewDelegate,UITextViewDelegate,UITextFieldDelegate,UISearchBarDelegate>
@@ -18,7 +20,9 @@ NS_ASSUME_NONNULL_BEGIN
     NSString * chatStatus;
     NSMutableArray *chatHistoryArray;
     NSString *nameLbltext;
+    ChatThreadList_Object* chatThreadObj;
 }
+
 @property (weak, nonatomic) IBOutlet UIView *headerView;
 @property NSString *nameLbltext;
 @property NSMutableArray *chatHistoryArray;
@@ -28,6 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property NSString *withChatPersonName;
 @property NSString *chatThreadId;
 @property NSString *subject;
+@property ChatThreadList_Object* chatThreadObj;
 @property (weak, nonatomic) IBOutlet UIView *lineView1;
 @property (weak, nonatomic) IBOutlet UIView *lineView2;
 @property (weak, nonatomic) IBOutlet UILabel *nameLbl;
@@ -41,7 +46,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UIView *mainPopView;
 @property (weak, nonatomic) IBOutlet UIView *borderLineVIew;
 @property (weak, nonatomic) IBOutlet UITextView *remarkView;
+
 -(void)unreadMessageNetworkCall;
+
 @end
 
 NS_ASSUME_NONNULL_END

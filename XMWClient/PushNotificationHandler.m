@@ -136,6 +136,20 @@
             chatThreadList_Object.deletedFlag = @"NO";
             chatThreadList_Object.unreadMessageCount = 1;
             chatThreadList_Object.spaNo = [responsedict valueForKey:@"spaNo"];
+            
+            NSObject* jObject = [responsedict valueForKey:@"lmeNote"];
+            if(jObject!=nil && [jObject isKindOfClass:[NSNull class]]) {
+                chatThreadList_Object.lmeNote = @""; // setting empty
+            } else {
+                chatThreadList_Object.lmeNote = [jObject copy];
+            }
+            jObject =  [responsedict valueForKey:@"spaExpiry"];
+            if(jObject!=nil && [jObject isKindOfClass:[NSNull class]]) {
+                chatThreadList_Object.spaExpiry = @""; // setting empty
+            } else {
+                chatThreadList_Object.spaExpiry = [(NSNumber*)jObject stringValue];
+            }
+            
             [chatThreadListStorage insertDoc:chatThreadList_Object];
             [chatThreadListStorage updateDocLastMessageTime:chatThreadList_Object];
         }
@@ -151,10 +165,23 @@
             
             ChatThreadList_Object* chatThreadList_Object = [[ChatThreadList_Object alloc] init];
             chatThreadList_Object.chatThreadId =[[responsedict valueForKey:@"chatThreadId"] integerValue] ;
-            chatThreadList_Object.status =[responsedict valueForKey:@"status"];
+            chatThreadList_Object.status = [responsedict valueForKey:@"status"];
+            
+            NSObject* jObject = [responsedict valueForKey:@"lmeNote"];
+            if(jObject!=nil && [jObject isKindOfClass:[NSNull class]]) {
+                chatThreadList_Object.lmeNote = @""; // setting empty
+            } else {
+                chatThreadList_Object.lmeNote = [jObject copy];
+            }
+            jObject =  [responsedict valueForKey:@"spaExpiry"];
+            if(jObject!=nil && [jObject isKindOfClass:[NSNull class]]) {
+                chatThreadList_Object.spaExpiry = @""; // setting empty
+            } else {
+                chatThreadList_Object.spaExpiry = [(NSNumber*)jObject stringValue];
+            }
+            
             [chatThreadListStorage updateDoc:chatThreadList_Object];
     
-            
         }
         
     }

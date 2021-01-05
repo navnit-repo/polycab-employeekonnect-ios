@@ -77,6 +77,8 @@ static ChatThreadList_DB* DEFAULT_INSTANCE = 0;
     query = [query stringByAppendingString : @"deleteFlag TEXT, "];
     query = [query stringByAppendingString : @"unreadMessageCount INTEGER, "];
     query = [query stringByAppendingString : @"spaNo TEXT, "];
+    query = [query stringByAppendingString : @"spaExpiry TEXT, "];
+    query = [query stringByAppendingString : @"lmeNote TEXT, "];
     query =  [query stringByAppendingString : @"REC_TS DATETIME DEFAULT CURRENT_TIMESTAMP); "];
     
     // adding Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
@@ -98,7 +100,7 @@ static ChatThreadList_DB* DEFAULT_INSTANCE = 0;
     return isSuccess;
 }
 - (NSString*) getTableName {
-    NSString* tableName = @"CHATTHREAD";
+    NSString* tableName = @"CHAT_THREAD_V3_";
     tableName = [tableName stringByAppendingString: contextId];
     return tableName;
 }
@@ -182,13 +184,17 @@ static ChatThreadList_DB* DEFAULT_INSTANCE = 0;
     
     return false;
 }
--(BOOL) updateDoc : (ChatThreadList_Object*) chatThreadList_Object
+-(BOOL)updateDoc:(ChatThreadList_Object*) chatThreadList_Object
 {
     NSString* query = @"UPDATE ";
     query =  [query stringByAppendingString : [self getTableName]];
     //update  tableName set status = '212' where chatThreadId = 10;
     //  chatThreadId, fromId, toId, status, subject, lastMessageOn
-    query = [[[[query stringByAppendingString : @" SET "] stringByAppendingString:@" status ='"]stringByAppendingString:chatThreadList_Object.status] stringByAppendingString:@"'"];
+    query = [[[[query stringByAppendingString : @" SET "] stringByAppendingString:@" status ='"] stringByAppendingString:chatThreadList_Object.status] stringByAppendingString:@"'"];
+    
+    query = [query stringByAppendingString:@", spaExpiry = :spaExpiry "];
+    query = [query stringByAppendingString:@", lmeNote = :lmeNote "];
+    
     
     NSString *whereClaue = [[@" where chatThreadId =" stringByAppendingString:[NSString stringWithFormat:@"%d",chatThreadList_Object.chatThreadId]] stringByAppendingString:@";"];
     
@@ -198,6 +204,10 @@ static ChatThreadList_DB* DEFAULT_INSTANCE = 0;
     sqlite3_stmt *statement = nil;
     if (sqlite3_prepare_v2([self sqlConnection], [query UTF8String], -1, &statement, nil) == SQLITE_OK)
     {
+        sqlite3_bind_text(statement, sqlite3_bind_parameter_index(statement, ":spaExpiry"), [chatThreadList_Object.spaExpiry UTF8String], chatThreadList_Object.spaExpiry.length, nil);
+        
+        sqlite3_bind_text(statement, sqlite3_bind_parameter_index(statement, ":lmeNote"), [chatThreadList_Object.lmeNote UTF8String], chatThreadList_Object.lmeNote.length, nil);
+        
         sqlite3_bind_text(statement, sqlite3_bind_parameter_index(statement, ":KEY_READ"), [chatThreadList_Object.status UTF8String], chatThreadList_Object.status.length, nil);
         
         if (sqlite3_step(statement) == SQLITE_DONE)
@@ -222,8 +232,8 @@ static ChatThreadList_DB* DEFAULT_INSTANCE = 0;
     
     NSString* query = @"INSERT INTO ";
     query =  [query stringByAppendingString : [self getTableName]];
-    query = [query stringByAppendingString : @"(chatThreadId, fromId, toId, status, subject, lastMessageOn, displayName, filterByLatestTime, deleteFlag, unreadMessageCount, spaNo) "];
-    query = [query stringByAppendingString : @"VALUES(:chatThreadId, :fromId, :toId, :status, :subject, :lastMessageOn, :displayName, :filterByLatestTime, :deleteFlag, :unreadMessageCount, :spaNo);"];
+    query = [query stringByAppendingString : @"(chatThreadId, fromId, toId, status, subject, lastMessageOn, displayName, filterByLatestTime, deleteFlag, unreadMessageCount, spaNo, spaExpiry, lmeNote) "];
+    query = [query stringByAppendingString : @"VALUES(:chatThreadId, :fromId, :toId, :status, :subject, :lastMessageOn, :displayName, :filterByLatestTime, :deleteFlag, :unreadMessageCount, :spaNo, :spaExpiry, :lmeNote);"];
     
     sqlite3_stmt *statement = nil;
     if (sqlite3_prepare_v2([self sqlConnection], [query UTF8String], -1, &statement, nil) == SQLITE_OK)
@@ -249,6 +259,10 @@ static ChatThreadList_DB* DEFAULT_INSTANCE = 0;
         sqlite3_bind_int64(statement, sqlite3_bind_parameter_index(statement, ":unreadMessageCount"), chatThreadList_Object.unreadMessageCount);
      
          sqlite3_bind_text(statement, sqlite3_bind_parameter_index(statement, ":spaNo"), [chatThreadList_Object.spaNo UTF8String], chatThreadList_Object.spaNo.length, nil);
+        
+        sqlite3_bind_text(statement, sqlite3_bind_parameter_index(statement, ":spaExpiry"), [chatThreadList_Object.spaExpiry UTF8String], chatThreadList_Object.spaExpiry.length, nil);
+        
+        sqlite3_bind_text(statement, sqlite3_bind_parameter_index(statement, ":lmeNote"), [chatThreadList_Object.lmeNote UTF8String], chatThreadList_Object.lmeNote.length, nil);
         
         if (sqlite3_step(statement) == SQLITE_DONE)
         {
@@ -296,7 +310,7 @@ static ChatThreadList_DB* DEFAULT_INSTANCE = 0;
 {
     [NSThread sleepForTimeInterval:0.25];
     NSMutableArray* list = [[NSMutableArray alloc] init];
-    NSString* query = @"SELECT chatThreadId,  fromId, toId, status, subject, lastMessageOn, displayName, deleteFlag, unreadMessageCount, spaNo from ";
+    NSString* query = @"SELECT chatThreadId,  fromId, toId, status, subject, lastMessageOn, displayName, deleteFlag, unreadMessageCount, spaNo, spaExpiry, lmeNote from ";
     query = [[query stringByAppendingString : [self getTableName]]stringByAppendingString:@" where deleteFlag ='NO' ORDER BY filterByLatestTime DESC;"];
    // NSString* query = [@"SELECT * from " stringByAppendingString:[self getTableName]];
     
@@ -347,6 +361,11 @@ static ChatThreadList_DB* DEFAULT_INSTANCE = 0;
     chatThreadList_Object.deletedFlag  = [NSString stringWithFormat:@"%s",(const char*)sqlite3_column_text(statement, 7)];
     chatThreadList_Object.unreadMessageCount = sqlite3_column_int(statement, 8);
     chatThreadList_Object.spaNo = [NSString stringWithFormat:@"%s",(const char*)sqlite3_column_text(statement, 9)];
+    
+    chatThreadList_Object.spaExpiry = [NSString stringWithFormat:@"%s",(const char*)sqlite3_column_text(statement, 10)];
+    
+    chatThreadList_Object.lmeNote = [NSString stringWithFormat:@"%s",(const char*)sqlite3_column_text(statement, 11)];
+    
     return chatThreadList_Object;
 }
 
