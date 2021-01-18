@@ -50,6 +50,8 @@
     bool searchBarKeyboardShowFlag;
     NSMutableArray *originalChatHistoryArray;
     NSMutableArray *searchTextArray;
+    
+    CGSize keyboardSize;
 }
 @synthesize headerView;
 @synthesize popupTextView;
@@ -323,7 +325,9 @@
 -(void) getLME_Data
 {
     
-    if(self.chatThreadObj!=nil && self.chatThreadObj.lmeNote !=nil &&  [self.chatThreadObj.lmeNote length]>0)
+    if(self.chatThreadObj!=nil && self.chatThreadObj.lmeNote !=nil
+       &&  [self.chatThreadObj.lmeNote length]>0
+       && ![self.chatThreadObj.lmeNote isEqualToString:@"(null)"])
     {
         self.lmeNoteLbl.text = self.chatThreadObj.lmeNote;
         return;
@@ -449,6 +453,18 @@
         textView.text = @"Type your message here.";
         defaultTextViewText =@"Type your message here.";
         textView.delegate = self;
+    
+    // to hide the keyboard
+    /*
+    UIToolbar *keyboardDoneButtonView = [[UIToolbar alloc] init];
+    [keyboardDoneButtonView sizeToFit];
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done"
+                                                                   style:UIBarButtonItemStyleBordered target:self
+                                                                  action:@selector(doneClicked:)];
+    [keyboardDoneButtonView setItems:[NSArray arrayWithObjects:doneButton, nil]];
+    textView.inputAccessoryView  = keyboardDoneButtonView;
+     */
+
         [bottomView addSubview:textView];
         
         UIButton *sendButton = [[UIButton alloc]initWithFrame:CGRectMake(bottomView.frame.size.width-35,12, 30, 35)];
@@ -456,7 +472,7 @@
         sendButton.contentMode = UIViewContentModeScaleAspectFit;
         [sendButton addTarget:self action:@selector(sendButtonHandler:) forControlEvents:UIControlEventTouchUpInside];
         [bottomView addSubview:sendButton];
-        [self.view addSubview:bottomView];
+        // [self.view addSubview:bottomView];
     
     if ([chatStatus isEqualToString:@"Accept"] || [chatStatus isEqualToString:@"Close"]) {
 //          [acceptButtonOutlet removeFromSuperview];
@@ -568,27 +584,26 @@
     }
     
 }
--(NSMutableArray*)groupData :(NSArray*)dataArray
+-(NSMutableArray*)groupData:(NSArray*)dataArray
 {
-    NSMutableArray*distinctName = [[NSMutableArray alloc]init];
+    NSMutableArray* distinctName = [[NSMutableArray alloc]init];
     for (int i=0; i<dataArray.count; i++) {
-        ChatThreadList_Object *obj = (ChatThreadList_Object*) [dataArray objectAtIndex:i];
+        ChatThreadList_Object* obj = (ChatThreadList_Object*) [dataArray objectAtIndex:i];
         
         if (![distinctName  containsObject:obj.displayName]) {
             [distinctName addObject:obj.displayName];
         }
     }
     
-    NSMutableArray *groupObject = [[NSMutableArray alloc]init];
+    NSMutableArray* groupObject = [[NSMutableArray alloc]init];
     for (int i=0; i<distinctName.count; i++) {
-        NSMutableArray *array = [[NSMutableArray alloc]init];
-        ExpendObjectClass * expendObj = [[ExpendObjectClass alloc]init];
+        NSMutableArray* array = [[NSMutableArray alloc]init];
+        ExpendObjectClass* expendObj = [[ExpendObjectClass alloc]init];
         for (int j=0; j<dataArray.count; j++) {
             ChatThreadList_Object *obj = (ChatThreadList_Object*) [dataArray objectAtIndex:j];
             if ([obj.displayName isEqualToString:[distinctName objectAtIndex:i]] ) {
                 [array addObject:obj];
             }
-            
         }
         expendObj.MENU_NAME =[distinctName objectAtIndex:i];
         expendObj.childCategories = array;
@@ -926,39 +941,62 @@
     [searchBar resignFirstResponder];
 }
 #pragma mark - keyboard movements
+
+/*
+ https://stackoverflow.com/questions/42358783/keyboard-height-varies-when-appearing
+He is right you need to use UIKeyboardFrameEndUserInfoKey instead of UIKeyboardFrameBeginUserInfoKey because
+
+UIKeyboardFrameEndUserInfoKey gives you the final height according the prefences you have set in your setting.
+UIKeyboardFrameEndUserInfoKey returns you height two times first one is without the language prediction as you can see above the keyboard and next one with predicate if it is activated from the setting but UIKeyboardFrameBeginUserInfoKey returns without prediction bar.
+ 
+ */
+
 - (void)keyboardWillShow:(NSNotification *)notification
 {
     if (acceptTextView!=nil) {
-        [UIView animateWithDuration:0.3 animations:^{
-            CGRect f = self.view.frame;
-            f.origin.y = -120;
-            self.view.frame = f;
-        }];
+       // [UIView animateWithDuration:0.3 animations:^{
+            // CGRect f = self.view.frame;
+           //  f.origin.y = -120;
+           //  self.view.frame = f;
+       // }];
     }
   
     else if (searchBarKeyboardShowFlag == YES)
     {
         // do nothing 
     }
-    else{
-        CGSize keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    else {
         
-        [UIView animateWithDuration:0.3 animations:^{
+        if([[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey]!=nil) {
+            
+           // [textView.inputAccessoryView setHidden:NO];
+            
+            keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+            
             CGRect f = self.view.frame;
-            f.origin.y = -keyboardSize.height+yorigin;
-            self.view.frame = f;
-        }];
+            
+            NSLog(@"ChatRoomsVC.keyboardWillShow() self.view = %@", [self.view description]);
+            NSLog(@"ChatRoomsVC.keyboardWillShow() keyboardSize height = %f", keyboardSize.height );
+            
+            if(f.origin.y > 0) {
+                self.view.frame = CGRectMake(f.origin.x, f.origin.y - keyboardSize.height, f.size.width, f.size.height);
+                [self.view layoutSubviews];
+            }
+        }
     }
 }
 
 -(void)keyboardWillHide:(NSNotification *)notification
 {
-   
-        [UIView animateWithDuration:0.3 animations:^{
-            CGRect f = self.view.frame;
-            f.origin.y = yorigin;
-            self.view.frame = f;
-        }];
+        CGRect f = self.view.frame;
+            
+        NSLog(@"ChatRoomsVC.keyboardWillHide() self.view = %@", [self.view description]);
+        
+        if(f.origin.y < 0) {
+            // [textView.inputAccessoryView setHidden:YES];
+            self.view.frame = CGRectMake(f.origin.x, f.origin.y + keyboardSize.height, f.size.width, f.size.height);
+            [self.view layoutSubviews];
+        }
     
 }
 
@@ -1123,4 +1161,16 @@
     }
     
 }
+
+#pragma mark - InputAccessoryView
+
+- (IBAction)doneClicked:(id)sender
+{
+    //  [self.delegate textFieldValue:self.valueTxtFld :self.cancelButton.tag];
+    NSLog(@"Done Clicked.");
+    
+    [textView endEditing:YES];
+
+}
+
 @end

@@ -771,13 +771,14 @@ static NSString *const kCellSubCatIdentifier = @"kCellSubCatIdentifier";
 //    return  [chatThreadDict count];
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{   ExpendObjectClass* obj =( ExpendObjectClass *) [chatThreadDict objectAtIndex:section];
+{
+    
+    ExpendObjectClass* obj =( ExpendObjectClass *) [chatThreadDict objectAtIndex:section];
     
     if ([expendObjectOpenClosedStatusDict valueForKey:obj.MENU_NAME]==nil || [[expendObjectOpenClosedStatusDict valueForKey:obj.MENU_NAME] isEqualToString:@"close"]) {
     
         return 0;
-    }
-    
+    }    
     else
     {
          return [obj.childCategories count];

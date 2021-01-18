@@ -570,7 +570,10 @@ NSString *g_DeviceSessionId = nil;
     SBJsonWriter* jsonWriter = [[SBJsonWriter alloc] init];
     NSString* jsonStr = [jsonWriter stringWithObject: uljsonObj ];
     
+#if TARGET_IPHONE_SIMULATOR
     NSLog(@"Send Data : %@", jsonStr);
+#endif
+    
     // using our serialized object
     NSString *postData = jsonStr;
     //******************
@@ -670,7 +673,12 @@ NSString *g_DeviceSessionId = nil;
     
     
     NSString *jsonResponseStr = [[NSString alloc ] initWithData:[self cleanUTF8 : body] encoding:NSUTF8StringEncoding];
+    
+#if TARGET_IPHONE_SIMULATOR
     NSLog(@"%@",jsonResponseStr);
+#endif
+    
+    
     // set request body
     [request setHTTPBody:body];
     NSString *postDataLength        = [NSString stringWithFormat:@"%lu",(unsigned long)[body length]];
@@ -702,7 +710,10 @@ NSString *g_DeviceSessionId = nil;
     SBJsonWriter* jsonWriter = [[SBJsonWriter alloc] init];
     NSString* jsonStr = [jsonWriter stringWithObject: uljsonObj ];
     
+#if TARGET_IPHONE_SIMULATOR
     NSLog(@"Send Data : %@", jsonStr);
+#endif
+    
     // using our serialized object
     NSString *postData = jsonStr;
     //******************
@@ -756,7 +767,10 @@ NSString *g_DeviceSessionId = nil;
     SBJsonWriter* jsonWriter = [[SBJsonWriter alloc] init];
     NSString* jsonStr = [jsonWriter stringWithObject: xmwRequestObject ];
     
+#if TARGET_IPHONE_SIMULATOR
     NSLog(@"Send Data : %@", jsonStr);
+#endif
+    
     // using our serialized object
     NSString *postData = jsonStr;
     //******************
@@ -821,7 +835,10 @@ NSString *g_DeviceSessionId = nil;
     SBJsonWriter* jsonWriter = [[SBJsonWriter alloc] init];
     NSString* jsonStr = [jsonWriter stringWithObject: uljsonObj ];
     
+#if TARGET_IPHONE_SIMULATOR
     NSLog(@"Send Data : %@", jsonStr);
+#endif
+    
     // using our serialized object
     NSString *postData = jsonStr;
     //******************
@@ -1047,7 +1064,11 @@ NSString *g_DeviceSessionId = nil;
     
     
     NSString *jsonResponseStr = [[NSString alloc ] initWithData:[self cleanUTF8 : body] encoding:NSUTF8StringEncoding];
+    
+#if TARGET_IPHONE_SIMULATOR
     NSLog(@"%@",jsonResponseStr);
+#endif
+    
     // set request body
     [request setHTTPBody:body];
     NSString *postDataLength        = [NSString stringWithFormat:@"%lu",(unsigned long)[body length]];

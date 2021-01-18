@@ -82,6 +82,7 @@
                     NSMutableArray *chatThreadListStorageData = [chatThreadListStorage getRecentDocumentsData : @"False"];
                     if ([checkView isKindOfClass:[ChatBoxVC class]]) {
                         ChatBoxVC *vc =  (ChatBoxVC*) checkView;
+                        vc.chatThreadDict = [[NSMutableArray alloc]init];
                         [vc.chatThreadDict addObjectsFromArray:[self groupData:chatThreadListStorageData]];
                         [vc.threadListTableView reloadData];
                     }
@@ -97,7 +98,7 @@
 }
 -(NSMutableArray*)groupData :(NSArray*)dataArray
 {
-    NSMutableArray*distinctName = [[NSMutableArray alloc]init];
+    NSMutableArray* distinctName = [[NSMutableArray alloc]init];
     for (int i=0; i<dataArray.count; i++) {
         ChatThreadList_Object *obj = (ChatThreadList_Object*) [dataArray objectAtIndex:i];
         
@@ -106,12 +107,12 @@
         }
     }
     
-    NSMutableArray *groupObject = [[NSMutableArray alloc]init];
+    NSMutableArray* groupObject = [[NSMutableArray alloc]init];
     for (int i=0; i<distinctName.count; i++) {
         NSMutableArray *array = [[NSMutableArray alloc]init];
-        ExpendObjectClass * expendObj = [[ExpendObjectClass alloc]init];
+        ExpendObjectClass* expendObj = [[ExpendObjectClass alloc]init];
         for (int j=0; j<dataArray.count; j++) {
-            ChatThreadList_Object *obj = (ChatThreadList_Object*) [dataArray objectAtIndex:j];
+            ChatThreadList_Object* obj = (ChatThreadList_Object*) [dataArray objectAtIndex:j];
             if ([obj.displayName isEqualToString:[distinctName objectAtIndex:i]] ) {
                 [array addObject:obj];
             }

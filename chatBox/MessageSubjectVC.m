@@ -448,9 +448,9 @@
 }
 -(NSMutableArray*)groupData :(NSArray*)dataArray
 {
-    NSMutableArray*distinctName = [[NSMutableArray alloc]init];
+    NSMutableArray* distinctName = [[NSMutableArray alloc] init];
     for (int i=0; i<dataArray.count; i++) {
-        ChatThreadList_Object *obj = (ChatThreadList_Object*) [dataArray objectAtIndex:i];
+        ChatThreadList_Object* obj = (ChatThreadList_Object*) [dataArray objectAtIndex:i];
         
         if (![distinctName  containsObject:obj.displayName]) {
             [distinctName addObject:obj.displayName];
@@ -459,7 +459,7 @@
     
     NSMutableArray *groupObject = [[NSMutableArray alloc]init];
     for (int i=0; i<distinctName.count; i++) {
-        NSMutableArray *array = [[NSMutableArray alloc]init];
+        NSMutableArray* array = [[NSMutableArray alloc]init];
         ExpendObjectClass * expendObj = [[ExpendObjectClass alloc]init];
         for (int j=0; j<dataArray.count; j++) {
             ChatThreadList_Object *obj = (ChatThreadList_Object*) [dataArray objectAtIndex:j];

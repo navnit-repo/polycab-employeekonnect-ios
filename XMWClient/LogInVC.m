@@ -120,7 +120,7 @@ NSString *chatPersonUserID;
         exit(-1);
     } else {
         NSLog(@"Bypassed sysctl()");
-    }
+    }    
 #endif
     
     // Jail Broken check
@@ -362,9 +362,14 @@ NSString *chatPersonUserID;
     self.viewController = revealController;
 
     [UIApplication sharedApplication].keyWindow.rootViewController = self.viewController;
+    
+    [self unRegisterForKeyboardNotifications];
 }
 
 - (IBAction)forgotPasswordHandler:(id)sender {
+    
+    [self unRegisterForKeyboardNotifications];
+    
     ForgotPasswordVC *fpvc = [[ForgotPasswordVC alloc]init];
     [self.navigationController pushViewController:fpvc animated:YES];
 }
@@ -375,6 +380,9 @@ NSString *chatPersonUserID;
     
     
     if([userName.text isEqualToString:@"Polycab#123"]) {
+        
+        [self unRegisterForKeyboardNotifications];
+        
         SelectServerVC* selectServerVC =[[SelectServerVC alloc] initWithNibName:@"SelectServerVC" bundle:nil];
         [[self navigationController] pushViewController:selectServerVC  animated:YES];
         return;
@@ -465,16 +473,13 @@ NSString *chatPersonUserID;
         
         [fm removeItemAtPath:[url path] error:&err];
         
-        if(err)
-            
+        if(err)            
         {
             
             NSLog(@"File Manager: %@ %d %@", [err domain], [err code], [[err userInfo] description]);
             
         }
-        
         else
-            
         {
             
             NSLog(@"File :- %@ deleted",[dbNameArray objectAtIndex:i]);
@@ -484,6 +489,8 @@ NSString *chatPersonUserID;
     }
 
 }
+
+
 -(void)syncContactListDB :(id)respondedObject
 {
     NSMutableArray * contactsList = [[NSMutableArray alloc]init];
@@ -535,6 +542,7 @@ NSString *chatPersonUserID;
         [contactsList addObjectsFromArray:contactListStorageData];
     }
 }
+
 -(void)syncChatThreadListDB:(id)respondedObject
 {
     NSMutableArray *  chatThreadDict = [[NSMutableArray alloc]init];
@@ -543,8 +551,7 @@ NSString *chatPersonUserID;
         [ContactList_DB createInstance : @"ContactList_DB_STORAGE" : true];
         ContactList_DB *contactListStorage = [ContactList_DB getInstance];
         
-        
-        
+
         chatThreadDict = [[NSMutableArray alloc]init];
         [chatThreadDict addObjectsFromArray:[[respondedObject valueForKey:@"responseData"] valueForKey:@"list"]];
         // [threadListTableView reloadData];
@@ -747,6 +754,8 @@ NSString *chatPersonUserID;
                     NSMutableDictionary* forwardedDataDisplay = [[NSMutableDictionary alloc]init];
                     NSMutableDictionary* forwardedDataPost = [[NSMutableDictionary alloc]init];
                     DotFormPost* dotFormPost = [[DotFormPost alloc]init];
+                    
+                    [self unRegisterForKeyboardNotifications];
                     
                     FormVC* formController = [[FormVC alloc] initWithData : obj
                                                                           : dotFormPost
@@ -1003,6 +1012,17 @@ NSString *chatPersonUserID;
                                                  name:UIKeyboardWillHideNotification object:nil];
     
 }
+
+
+- (void)unRegisterForKeyboardNotifications
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidShowNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+
+}
+
+
 
 // Called when the UIKeyboardDidShowNotification is sent.
 - (void)keyboardWasShown:(NSNotification*)aNotification

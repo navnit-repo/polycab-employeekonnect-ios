@@ -178,6 +178,8 @@
 		273259A2248502E3003F979C /* growth_arrow_up@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2732599E248502E2003F979C /* growth_arrow_up@2x.png */; };
 		273259A3248502E3003F979C /* growth_arrow_down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2732599F248502E3003F979C /* growth_arrow_down@2x.png */; };
 		273259A4248502E3003F979C /* growth_arrow_down.png in Resources */ = {isa = PBXBuildFile; fileRef = 273259A0248502E3003F979C /* growth_arrow_down.png */; };
+		274811A825AEC4030089341C /* UncaughtExceptionHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 274811A625AEC4030089341C /* UncaughtExceptionHandler.h */; };
+		274811A925AEC4030089341C /* UncaughtExceptionHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 274811A725AEC4030089341C /* UncaughtExceptionHandler.m */; };
 		275F435B259AE1E700FAF27D /* GTMNSString+HTML.h in Headers */ = {isa = PBXBuildFile; fileRef = 275F4357259AE1E600FAF27D /* GTMNSString+HTML.h */; };
 		275F435C259AE1E700FAF27D /* NSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 275F4358259AE1E700FAF27D /* NSString+HTML.m */; };
 		275F435D259AE1E700FAF27D /* NSString+HTML.h in Headers */ = {isa = PBXBuildFile; fileRef = 275F4359259AE1E700FAF27D /* NSString+HTML.h */; };
@@ -1370,6 +1372,8 @@
 		2732599E248502E2003F979C /* growth_arrow_up@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "growth_arrow_up@2x.png"; path = "Images/growth_arrow_up@2x.png"; sourceTree = "<group>"; };
 		2732599F248502E3003F979C /* growth_arrow_down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "growth_arrow_down@2x.png"; path = "Images/growth_arrow_down@2x.png"; sourceTree = "<group>"; };
 		273259A0248502E3003F979C /* growth_arrow_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = growth_arrow_down.png; path = Images/growth_arrow_down.png; sourceTree = "<group>"; };
+		274811A625AEC4030089341C /* UncaughtExceptionHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UncaughtExceptionHandler.h; sourceTree = "<group>"; };
+		274811A725AEC4030089341C /* UncaughtExceptionHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UncaughtExceptionHandler.m; sourceTree = "<group>"; };
 		275F4357259AE1E600FAF27D /* GTMNSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "GTMNSString+HTML.h"; path = "Util/GTMNSString+HTML.h"; sourceTree = "<group>"; };
 		275F4358259AE1E700FAF27D /* NSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+HTML.m"; path = "Util/NSString+HTML.m"; sourceTree = "<group>"; };
 		275F4359259AE1E700FAF27D /* NSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+HTML.h"; path = "Util/NSString+HTML.h"; sourceTree = "<group>"; };
@@ -2629,6 +2633,15 @@
 			path = Polycab/SPACreateOrder;
 			sourceTree = "<group>";
 		};
+		274811A525AEC4030089341C /* UncaughtExceptionHandler */ = {
+			isa = PBXGroup;
+			children = (
+				274811A625AEC4030089341C /* UncaughtExceptionHandler.h */,
+				274811A725AEC4030089341C /* UncaughtExceptionHandler.m */,
+			);
+			path = UncaughtExceptionHandler;
+			sourceTree = "<group>";
+		};
 		277E640825736C7300C60607 /* CustomReports */ = {
 			isa = PBXGroup;
 			children = (
@@ -2772,6 +2785,7 @@
 		8579E70E174CD04700D7945F /* XMWClient */ = {
 			isa = PBXGroup;
 			children = (
+				274811A525AEC4030089341C /* UncaughtExceptionHandler */,
 				2708C1A62598A07600DBA84E /* certificates */,
 				279D43B224A58DFD0046BB33 /* DataManager */,
 				F038EF482150E2F400AFB080 /* Localizable.strings */,
@@ -5060,6 +5074,7 @@
 				F0B2FB2A218850F5006A7C6B /* TravellerController.h in Headers */,
 				F02E3526221542A70007573D /* NationalDashboardVC.h in Headers */,
 				27184CC42560DB0A00F3A37F /* ChatHeadReportVC.h in Headers */,
+				274811A825AEC4030089341C /* UncaughtExceptionHandler.h in Headers */,
 				856B3E1F1DCA0F1E00096100 /* SimpleEditForm.h in Headers */,
 				279D43B524A58DFD0046BB33 /* DataManager.h in Headers */,
 				273259222484DA1E003F979C /* CreateOrderDisplayCell.h in Headers */,
@@ -6080,6 +6095,7 @@
 				902D3F76175603E500E079AB /* ClientVariable.m in Sources */,
 				851F3AF61A768B7500B08BD8 /* DotHAxis.m in Sources */,
 				85CC35001DFA67900016F65C /* DVCheckBoxCell.m in Sources */,
+				274811A925AEC4030089341C /* UncaughtExceptionHandler.m in Sources */,
 				F04B2F3420FF22CB00E6120A /* SWRevealViewController.m in Sources */,
 				85804F361A6916200093CDBB /* DotHorizontalBarCell.m in Sources */,
 				277E641225736D4400C60607 /* ItemWiseSalesReport.m in Sources */,
@@ -6275,7 +6291,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 14600;
+				CURRENT_PROJECT_VERSION = 15000;
 				DEVELOPMENT_TEAM = QS92QH4FZ2;
 				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = YES;
 				ENABLE_BITCODE = NO;
@@ -6296,11 +6312,11 @@
 					"$(PROJECT_DIR)/RLMFramework/Alamofire.framework",
 					"$(PROJECT_DIR)/RLMFramework/SwiftyJSON.framework",
 				);
-				MARKETING_VERSION = 10.6;
+				MARKETING_VERSION = 13.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.polycab.xmw.employee.ent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = polycab_sales_connect_PK_machine;
+				PROVISIONING_PROFILE_SPECIFIER = "Polycab Employee Devlopment";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
@@ -6317,7 +6333,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 14600;
+				CURRENT_PROJECT_VERSION = 15000;
 				DEVELOPMENT_TEAM = QS92QH4FZ2;
 				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = YES;
 				ENABLE_BITCODE = NO;
@@ -6338,12 +6354,12 @@
 					"$(PROJECT_DIR)/RLMFramework/SwiftyJSON.framework",
 					"$(PROJECT_DIR)/RLMFramework/Alamofire.framework",
 				);
-				MARKETING_VERSION = 10.6;
+				MARKETING_VERSION = 13.1;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PRODUCT_BUNDLE_IDENTIFIER = com.polycab.xmw.employee.ent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = polycab_sales_connect_PK_machine;
+				PROVISIONING_PROFILE_SPECIFIER = "Polycab Employee Devlopment";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = YES;
@@ -6466,7 +6482,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 14600;
+				CURRENT_PROJECT_VERSION = 15000;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = QS92QH4FZ2;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -6475,12 +6491,12 @@
 				INFOPLIST_FILE = PushNotificationExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				MARKETING_VERSION = 10.6;
+				MARKETING_VERSION = 13.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.polycab.xmw.employee.ent.exten;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = polycab_sales_connect__extn_PK_machine;
+				PROVISIONING_PROFILE_SPECIFIER = "Polycab Employee Exten Development";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 2;
@@ -6507,7 +6523,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 14600;
+				CURRENT_PROJECT_VERSION = 15000;
 				DEVELOPMENT_TEAM = QS92QH4FZ2;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -6516,12 +6532,12 @@
 				INFOPLIST_FILE = PushNotificationExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				MARKETING_VERSION = 10.6;
+				MARKETING_VERSION = 13.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.polycab.xmw.employee.ent.exten;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = polycab_sales_connect__extn_PK_machine;
+				PROVISIONING_PROFILE_SPECIFIER = "Polycab Employee Exten Development";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 2;

@@ -47,6 +47,8 @@
 #import "ExpendObjectClass.h"
 #import "NationalDashboardVC.h"
 
+#import "UncaughtExceptionHandler.h"
+
 CGFloat deviceWidthRation;
 CGFloat deviceHeightRation;
 CGFloat bottomBarHeight;
@@ -91,6 +93,12 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
 
 @implementation DVAppDelegate
 @synthesize navController;
+
+
+- (void)installUncaughtExceptionHandler
+{
+    InstallUncaughtExceptionHandler();
+}
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -265,8 +273,8 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
         // opened app without a push notification.
     }
     
-    
-
+    // Uncomment if we need to install the uncaught exceptio handler
+    // [self performSelector:@selector(installUncaughtExceptionHandler) withObject:nil afterDelay:0];
     
     return YES;
 }
@@ -927,25 +935,24 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
 
 -(NSMutableArray*)groupData :(NSArray*)dataArray
 {
-    NSMutableArray*distinctName = [[NSMutableArray alloc]init];
+    NSMutableArray* distinctName = [[NSMutableArray alloc]init];
     for (int i=0; i<dataArray.count; i++) {
-        ChatThreadList_Object *obj = (ChatThreadList_Object*) [dataArray objectAtIndex:i];
+        ChatThreadList_Object* obj = (ChatThreadList_Object*) [dataArray objectAtIndex:i];
         
         if (![distinctName  containsObject:obj.displayName]) {
             [distinctName addObject:obj.displayName];
         }
     }
     
-    NSMutableArray *groupObject = [[NSMutableArray alloc]init];
+    NSMutableArray* groupObject = [[NSMutableArray alloc]init];
     for (int i=0; i<distinctName.count; i++) {
-        NSMutableArray *array = [[NSMutableArray alloc]init];
-        ExpendObjectClass * expendObj = [[ExpendObjectClass alloc]init];
+        NSMutableArray* array = [[NSMutableArray alloc]init];
+        ExpendObjectClass* expendObj = [[ExpendObjectClass alloc]init];
         for (int j=0; j<dataArray.count; j++) {
-            ChatThreadList_Object *obj = (ChatThreadList_Object*) [dataArray objectAtIndex:j];
+            ChatThreadList_Object* obj = (ChatThreadList_Object*) [dataArray objectAtIndex:j];
             if ([obj.displayName isEqualToString:[distinctName objectAtIndex:i]] ) {
                 [array addObject:obj];
             }
-            
         }
         expendObj.MENU_NAME =[distinctName objectAtIndex:i];
         expendObj.childCategories = array;
