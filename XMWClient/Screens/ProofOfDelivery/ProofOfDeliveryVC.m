@@ -282,7 +282,7 @@
     
     // Get the keyboard size
     CGRect keyboardBounds;
-    [[aNotification.userInfo valueForKey:UIKeyboardFrameBeginUserInfoKey] getValue: &keyboardBounds];
+    [[aNotification.userInfo valueForKey:UIKeyboardFrameEndUserInfoKey] getValue: &keyboardBounds];
     
     // Detect orientation
     UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
@@ -322,7 +322,7 @@
     
     // Get the keyboard size
     CGRect keyboardBounds;
-    [[aNotification.userInfo valueForKey:UIKeyboardFrameBeginUserInfoKey] getValue: &keyboardBounds];
+    [[aNotification.userInfo valueForKey:UIKeyboardFrameEndUserInfoKey] getValue: &keyboardBounds];
     
     // Detect orientation
     UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];

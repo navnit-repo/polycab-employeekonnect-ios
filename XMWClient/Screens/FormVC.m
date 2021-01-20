@@ -2932,7 +2932,7 @@ UITextField* activeTextField = nil;
 {
     NSLog(@"FormVC keyboardWasShown");
     NSDictionary* info = [aNotification userInfo];
-    keyboardSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    keyboardSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
 
     UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, keyboardSize.height, 0.0);
 

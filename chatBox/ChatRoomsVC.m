@@ -66,6 +66,7 @@
 @synthesize bottomView;
 @synthesize chatHistoryArray;
 @synthesize remarkView;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
      self.navigationController.navigationBar.translucent = NO;
@@ -112,6 +113,8 @@
     [self initializeView];
     // Do any additional setup after loading the view from its nib.
     [self getLME_Data];
+    
+    [self hideLME_NoteAndButton];
 }
 
 -(void)autoLayoutIphoneMax
@@ -954,14 +957,12 @@ UIKeyboardFrameEndUserInfoKey returns you height two times first one is without 
 - (void)keyboardWillShow:(NSNotification *)notification
 {
     if (acceptTextView!=nil) {
-       // [UIView animateWithDuration:0.3 animations:^{
-            // CGRect f = self.view.frame;
-           //  f.origin.y = -120;
-           //  self.view.frame = f;
-       // }];
-    }
-  
-    else if (searchBarKeyboardShowFlag == YES)
+        [UIView animateWithDuration:0.3 animations:^{
+             CGRect f = self.view.frame;
+             f.origin.y = -120;
+             self.view.frame = f;
+        }];
+    } else if (searchBarKeyboardShowFlag == YES)
     {
         // do nothing 
     }
@@ -994,8 +995,12 @@ UIKeyboardFrameEndUserInfoKey returns you height two times first one is without 
         
         if(f.origin.y < 0) {
             // [textView.inputAccessoryView setHidden:YES];
-            self.view.frame = CGRectMake(f.origin.x, f.origin.y + keyboardSize.height, f.size.width, f.size.height);
-            [self.view layoutSubviews];
+            if (acceptTextView!=nil) {
+                self.view.frame = CGRectMake(f.origin.x, f.origin.y + 120.0f, f.size.width, f.size.height);
+            } else {
+                self.view.frame = CGRectMake(f.origin.x, f.origin.y + keyboardSize.height, f.size.width, f.size.height);
+                [self.view layoutSubviews];
+            }
         }
     
 }
@@ -1120,6 +1125,32 @@ UIKeyboardFrameEndUserInfoKey returns you height two times first one is without 
 {
       [chatRoomTableView scrollToRowAtIndexPath:pathToLastRow atScrollPosition:UITableViewScrollPositionTop animated:NO];
 }
+
+
+-(void) hideLME_NoteAndButton
+{
+    if([chatThreadObj.from containsString:@"employee"]) {
+    
+        CGFloat adjustHeight = self.lmeNoteLbl.frame.size.height;
+        
+        
+        self.lmeNoteLbl.hidden  = YES;
+        
+        CGRect headerRect = self.headerView.frame;
+        self.headerView.frame = CGRectMake(headerRect.origin.x, headerRect.origin.y, headerRect.size.width, headerRect.size.height - adjustHeight);
+        
+        CGRect chatRect = chatRoomTableView.frame;
+        chatRoomTableView.frame = CGRectMake(chatRect.origin.x, chatRect.origin.y - adjustHeight, chatRect.size.width, chatRect.size.height + adjustHeight);
+        
+        
+        CGRect lineRect = self.lineView2.frame;
+        self.lineView2.frame = CGRectMake(lineRect.origin.x, lineRect.origin.y - adjustHeight, lineRect.size.width, lineRect.size.height);
+        
+    }
+    
+    
+}
+
 
 #pragma mark - searchBar handler
 -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{

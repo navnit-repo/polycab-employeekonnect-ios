@@ -358,7 +358,7 @@
 {
     
     NSDictionary* info = [aNotification userInfo];
-    keyboardSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    keyboardSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
     
 }
 

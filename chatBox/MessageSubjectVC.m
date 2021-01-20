@@ -252,7 +252,7 @@
         
     }
     else{
-  CGSize keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+  CGSize keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
    
     [UIView animateWithDuration:0.3 animations:^{
          CGRect f = self.view.frame;
@@ -422,6 +422,7 @@
             vc.chatThreadId =[NSString stringWithFormat:@"%d",chatThreadList_Object.chatThreadId];
             vc.chatStatus = chatThreadList_Object.status;
             vc.nameLbltext = chatThreadList_Object.displayName;
+            vc.chatThreadObj = chatThreadList_Object;
             
             [dummyViewControllers addObject:vc];
             [self.navigationController setViewControllers:dummyViewControllers animated:YES];
@@ -431,7 +432,7 @@
 //            vc.chatThreadDict = [[NSMutableArray alloc]init];
 //            [vc.chatThreadDict addObjectsFromArray:[self groupData:chatThreadListStorageData]];
 //            [vc.threadListTableView reloadData];
-        [[self navigationController] pushViewController:vc animated:YES];
+       //  [[self navigationController] pushViewController:vc animated:YES];
         }
         else
         {
