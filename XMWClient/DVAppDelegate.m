@@ -1120,6 +1120,7 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
             vc2.chatThreadId =[NSString stringWithFormat:@"%d",obj2.chatThreadId];
             vc2.chatStatus = obj2.status;
             vc2.nameLbltext = obj2.displayName;
+            vc2.chatThreadObj = obj2;
             [[checkView navigationController ] pushViewController:vc2 animated:YES];
         }
         
@@ -1266,6 +1267,7 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
             vc2.chatThreadId =[NSString stringWithFormat:@"%d",obj2.chatThreadId];
             vc2.chatStatus = obj2.status;
             vc2.nameLbltext = obj2.displayName;
+            vc2.chatThreadObj = obj2;
             [[checkView navigationController ] pushViewController:vc2 animated:YES];
         }
         
@@ -1449,6 +1451,7 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
         vc2.chatThreadId =[NSString stringWithFormat:@"%d",obj2.chatThreadId];
         vc2.chatStatus = obj2.status;
         vc2.nameLbltext = obj2.displayName;
+       vc2.chatThreadObj = obj2;
         [[checkView navigationController ] pushViewController:vc2 animated:YES];
         
     } else {

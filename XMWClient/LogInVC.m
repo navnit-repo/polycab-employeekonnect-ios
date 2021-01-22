@@ -800,7 +800,6 @@ NSString *chatPersonUserID;
             dispatch_async(dispatch_get_main_queue(), ^{
                 //code to be executed in the background
                 [self contactListNetworkCall];
-                [self chatThreadListNetworkCall];
                 [self revealViewControllConfig];
             });
         }
@@ -810,6 +809,7 @@ NSString *chatPersonUserID;
         [loadingView removeView];
         dispatch_async(dispatch_get_main_queue(), ^{
             [self syncContactListDB :respondedObject];
+            [self chatThreadListNetworkCall];
         });
         
     }
