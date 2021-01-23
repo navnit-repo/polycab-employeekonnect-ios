@@ -6,6 +6,8 @@
 //  Copyright © 2019 dotvik. All rights reserved.
 //
 
+#import <objc/runtime.h>
+
 #import "ChatRoomsVC.h"
 #import "LayoutClass.h"
 #import "NetworkHelper.h"
@@ -27,6 +29,22 @@
 
 #import "XmwReportService.h"
 
+
+@interface UIView (KeyBoardAction)
+@property NSNumber* keyboardAction;
+@end
+
+@implementation UIView (KeyBoardAction)
+- (NSNumber*)keyboardAction;
+{
+    return objc_getAssociatedObject(self, "keyboardAction");
+}
+
+- (void)setKeyboardAction:(NSNumber*)property;
+{
+    objc_setAssociatedObject(self, "keyboardAction", property, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+@end
 
 @interface ChatRoomsVC ()
 
@@ -185,6 +203,8 @@
     [LayoutClass setLayoutForIPhone6:self.lmeNoteLbl];
     [LayoutClass setLayoutForIPhone6:self.chatRoomTableView];
     [LayoutClass setLayoutForIPhone6:self.bottomView];
+    
+    self.bottomView.keyboardAction = [NSNumber numberWithBool:NO];
     
     
     remarkView.layer.borderColor =[UIColor colorWithRed:0.76 green:0.76 blue:0.76 alpha:1.0].CGColor;
@@ -956,52 +976,61 @@ UIKeyboardFrameEndUserInfoKey returns you height two times first one is without 
 
 - (void)keyboardWillShow:(NSNotification *)notification
 {
+    NSLog(@"keyboardWillShow");
+    
     if (acceptTextView!=nil) {
         [UIView animateWithDuration:0.3 animations:^{
-             CGRect f = self.view.frame;
-             f.origin.y = -120;
-             self.view.frame = f;
-        }];
-    } else if (searchBarKeyboardShowFlag == YES)
-    {
-        // do nothing 
-    }
-    else {
-        
-        if([[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey]!=nil) {
-            
-           // [textView.inputAccessoryView setHidden:NO];
-            
-            keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
-            
             CGRect f = self.view.frame;
-            
-            NSLog(@"ChatRoomsVC.keyboardWillShow() self.view = %@", [self.view description]);
-            NSLog(@"ChatRoomsVC.keyboardWillShow() keyboardSize height = %f", keyboardSize.height );
-            
-            if(f.origin.y > 0) {
-                self.view.frame = CGRectMake(f.origin.x, f.origin.y - keyboardSize.height, f.size.width, f.size.height);
-                [self.view layoutSubviews];
-            }
+            f.origin.y = -120;
+            self.view.frame = f;
+        }];
+    }
+  
+    else if (searchBarKeyboardShowFlag == YES)
+    {
+        // do nothing
+    }
+    else{
+         keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+        
+        UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, keyboardSize.height, 0.0);
+        self.chatRoomTableView.contentInset = contentInsets;
+        self.chatRoomTableView.scrollIndicatorInsets = contentInsets;
+
+        if([self.bottomView.keyboardAction boolValue] == NO) {
+            CGRect f = self.bottomView.frame;
+            self.bottomView.frame = CGRectMake(f.origin.x, f.origin.y - keyboardSize.height, f.size.width, f.size.height);
+            self.bottomView.keyboardAction = [NSNumber numberWithBool:YES];
         }
+        
+       // [UIView animateWithDuration:0.3 animations:^{
+        //    CGRect f = self.chatRoomTableView.frame;
+            // f.origin.y = -keyboardSize.height+yorigin;
+        //    f.size.height = f.size.height - keyboardSize.height;
+        //    self.chatRoomTableView.frame = f;
+      //  }];
     }
 }
 
 -(void)keyboardWillHide:(NSNotification *)notification
 {
-        CGRect f = self.view.frame;
-            
-        NSLog(@"ChatRoomsVC.keyboardWillHide() self.view = %@", [self.view description]);
-        
-        if(f.origin.y < 0) {
-            // [textView.inputAccessoryView setHidden:YES];
-            if (acceptTextView!=nil) {
-                self.view.frame = CGRectMake(f.origin.x, f.origin.y + 120.0f, f.size.width, f.size.height);
-            } else {
-                self.view.frame = CGRectMake(f.origin.x, f.origin.y + keyboardSize.height, f.size.width, f.size.height);
-                [self.view layoutSubviews];
-            }
-        }
+    NSLog(@"keyboardWillHide");
+    
+    UIEdgeInsets contentInsets = UIEdgeInsetsZero;
+
+    self.chatRoomTableView.contentInset = contentInsets;
+    self.chatRoomTableView.scrollIndicatorInsets = contentInsets;
+    
+    CGRect f = self.bottomView.frame;
+    self.bottomView.frame = CGRectMake(f.origin.x, f.origin.y + keyboardSize.height, f.size.width, f.size.height);
+    self.bottomView.keyboardAction = [NSNumber numberWithBool:NO];
+    
+    // in case main view has moved up
+    f = self.view.frame;
+    if(f.origin.y<0) {
+        f.origin.y = yorigin;
+        self.view.frame = f;
+    }
     
 }
 
@@ -1114,6 +1143,7 @@ UIKeyboardFrameEndUserInfoKey returns you height two times first one is without 
 
 }
 - (void) hideKeyboard {
+
     [textView resignFirstResponder];
     [searchBar resignFirstResponder];
     searchBarKeyboardShowFlag =NO;
