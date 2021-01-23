@@ -33,6 +33,10 @@
     UITextField *checkTextField;
     UITextField *subjectTextField;
     UITextView *textView;
+    
+    UIView * bottomView;
+    CGSize keyboardSize;
+    
     NSString *defaultTextViewText;
     NetworkHelper *networkHelper;
     LoadingView *loadingView;
@@ -151,6 +155,9 @@
     subjectTextField.layer.borderColor= [[UIColor lightGrayColor]CGColor];
     subjectTextField.layer.borderWidth= 1.0f;
     
+    subjectTextField.tag = 100;
+    
+    
     [headerView addSubview:subjectTextField];
     
     UIView *headerborderLine =  [[UIView alloc]initWithFrame:CGRectMake(0,headerView.frame.size.height-5, self.view.frame.size.width, 5)];
@@ -158,7 +165,7 @@
     [headerView addSubview:headerborderLine];
      [self.view addSubview:headerView];
     
-   UIView * bottomView = [[UIView alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height-(53*deviceHeightRation), self.view.frame.size.width, 53*deviceHeightRation)];
+    bottomView = [[UIView alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height-(53*deviceHeightRation), self.view.frame.size.width, 53*deviceHeightRation)];
     UIView *borderLine =  [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 5)];
     borderLine.backgroundColor = [UIColor colorWithRed:230.0/255 green:230.0/255 blue:230.0/255 alpha:1.0];
     [bottomView addSubview:borderLine];
@@ -172,6 +179,7 @@
     textView.text = @"Type your message here.";
     defaultTextViewText =@"Type your message here.";
     textView.delegate = self;
+    textView.tag = 200;
     [bottomView addSubview:textView];
 //    UIViewContentModeCenter
     UIButton *sendButton = [[UIButton alloc]initWithFrame:CGRectMake(bottomView.frame.size.width-35,12, 30, 35)];
@@ -252,13 +260,13 @@
         
     }
     else{
-  CGSize keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+        keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
    
-    [UIView animateWithDuration:0.3 animations:^{
-         CGRect f = self.view.frame;
-       f.origin.y = -keyboardSize.height+yorigin;
-        self.view.frame = f;
-    }];
+        [UIView animateWithDuration:0.3 animations:^{
+            CGRect f = bottomView.frame;
+            f.origin.y = f.origin.y -keyboardSize.height;
+            bottomView.frame = f;
+        }];
     }
 }
 
@@ -268,12 +276,12 @@
         
     }
   else{
-    [UIView animateWithDuration:0.3 animations:^{
-        CGRect f = self.view.frame;
-        f.origin.y = yorigin;
-        self.view.frame = f;
-    }];
-    }
+      [UIView animateWithDuration:0.3 animations:^{
+          CGRect f = bottomView.frame;
+          f.origin.y = f.origin.y + keyboardSize.height;
+          bottomView.frame = f;
+      }];
+  }
 }  
 
 #pragma -mark textview and textField Delagate
@@ -283,8 +291,14 @@
     return YES;
 }
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
-{ checkTextField = nil;
- return  [textField resignFirstResponder];
+{
+    checkTextField = nil;
+    if(textField.tag == 100) {
+        [textField resignFirstResponder];
+        [textView becomeFirstResponder];
+        return YES;
+    }
+    return  NO;
 }
 - (void)textViewDidEndEditing:(UITextView *)textView
 {
