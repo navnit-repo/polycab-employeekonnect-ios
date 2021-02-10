@@ -106,6 +106,7 @@
 
     if ([dropDownField.elementId isEqualToString:@"BUSINESS_VERTICAL"]) {
         [self verticalSelectionHandler:dropDownField code:code display:display];
+        
     }
  
 }
@@ -123,6 +124,7 @@
         [[NSUserDefaults standardUserDefaults] synchronize];
         //////////////
        
+        [self checkOverdueBlock:code];  // code is the registry id
         
         // Pradeep: 2020-06-26 username is logged in user, code is registry id.
         // [ClientVariable getInstance].CLIENT_USER_LOGIN.userName = code;
@@ -226,6 +228,9 @@
            
            // bill to & ship to netwrok call
            [self networkCall:registryID :codeLOB];
+    
+            [self checkAvailableLimitBlock:registryID :codeLOB];
+        
        }
 }
 
@@ -401,6 +406,12 @@
     } else if([callName isEqualToString:@"role_based_registry_ids_accounts"]){
         [self handleNonTSI_Response:respondedObject];
         [loadingView removeView];        
+    }  else if([callName isEqualToString:@"checkOverdueBlock"]) {
+        // {"status":"SUCCESS","message":"true"}
+        [self handleCheckOverdueBlockResponse:respondedObject];
+        
+    } else if([callName isEqualToString:@"checkAvailableLimitBlock"]) {
+        [self handleCL_BlockResponse:respondedObject];
     }
     
 }
@@ -571,6 +582,121 @@
         
     }
 
+}
+
+
+-(void)checkOverdueBlock:(NSString*) registryId
+{
+    ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
+    
+    NSMutableDictionary* data = [[NSMutableDictionary alloc] init];
+    [data setObject:registryId forKey:@"USERNAME"];
+    
+    
+    NSMutableDictionary *sendDict = [[NSMutableDictionary alloc] init];
+    
+    [sendDict setObject:data forKey:@"data"];
+    [sendDict setObject:clientVariables.CLIENT_LOGIN_RESPONSE.authToken forKey:@"authToken"];
+    [sendDict setObject:registryId forKey:@"USERNAME"];
+    [sendDict setValue:@"checkOverdueBlock" forKey:@"opcode"];
+    
+    
+    networkHelper = [[NetworkHelper alloc]init];
+    
+    NSString *url = XmwcsConst_OPCODE_URL;
+    networkHelper.serviceURLString = url;
+    [networkHelper genericJSONPayloadRequestWith:sendDict :self :@"checkOverdueBlock"];
+    
+}
+
+
+-(void)checkAvailableLimitBlock:(NSString*)registryId   :(NSString*)  customerNumber
+{
+    
+    ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
+    
+    NSMutableDictionary* data = [[NSMutableDictionary alloc] init];
+    [data setObject:registryId forKey:@"USERNAME"];
+    [data setObject:customerNumber forKey:@"ACCOUNT_NUMBER"];
+    
+    NSMutableDictionary *sendDict = [[NSMutableDictionary alloc] init];
+    
+    [sendDict setObject:data forKey:@"data"];
+    [sendDict setObject:clientVariables.CLIENT_LOGIN_RESPONSE.authToken forKey:@"authToken"];
+    [sendDict setObject:customerNumber forKey:@"ACCOUNT_NUMBER"];
+    [sendDict setObject:registryId forKey:@"USERNAME"];
+    [sendDict setValue:@"checkAvailableLimitBlock" forKey:@"opcode"];
+    
+    
+    networkHelper = [[NetworkHelper alloc]init];
+    
+    NSString *url = XmwcsConst_OPCODE_URL;
+    networkHelper.serviceURLString = url;
+    [networkHelper genericJSONPayloadRequestWith:sendDict :self :@"checkAvailableLimitBlock"];
+    
+}
+
+
+-(void) handleCheckOverdueBlockResponse:(NSDictionary*) odResponse
+{
+    NSString* status = [odResponse objectForKey:@"status"];
+    NSString* apiMessage = [odResponse objectForKey:@"message"];
+    // must equal to success to continue for booking
+    if( ![status isEqualToString:@"SUCCESS"]) {
+        
+        
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:apiMessage preferredStyle:UIAlertControllerStyleAlert];
+           
+       UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleDefault
+                   handler:^(UIAlertAction * action)
+                   {
+                        MXButton* nextButton = (MXButton*)[self getDataFromId:@"NEXT"];
+                       if(nextButton!=nil) {
+                           [nextButton setEnabled:NO];
+                       }
+                   }];
+       [alertController addAction:defaultAction];
+               
+       [self presentViewController:alertController animated:YES completion:nil];
+        
+    } else {
+        MXButton* nextButton = (MXButton*)[self getDataFromId:@"NEXT"];
+       if(nextButton!=nil) {
+           [nextButton setEnabled:YES];
+       }
+    }
+    
+}
+
+-(void) handleCL_BlockResponse:(NSDictionary*) clResponse
+{
+    NSString* status = [clResponse objectForKey:@"status"];
+    NSString* apiMessage = [clResponse objectForKey:@"message"];
+    
+    if( ![status isEqualToString:@"SUCCESS"]) {
+        
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:apiMessage preferredStyle:UIAlertControllerStyleAlert];
+           
+       UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleDefault
+                   handler:^(UIAlertAction * action)
+                   {
+                       MXButton* nextButton = (MXButton*)[self getDataFromId:@"NEXT"];
+                      if(nextButton!=nil) {
+                          [nextButton setEnabled:NO];
+                      }
+                         
+                   }];
+       [alertController addAction:defaultAction];
+               
+       [self presentViewController:alertController animated:YES completion:nil];
+        
+    } else {
+        MXButton* nextButton = (MXButton*)[self getDataFromId:@"NEXT"];
+       if(nextButton!=nil) {
+           [nextButton setEnabled:YES];
+       }
+    }
+    
 }
 
 @end
