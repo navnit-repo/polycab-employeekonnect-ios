@@ -110,6 +110,9 @@
         [dashCell autoLayout];
         dashCell.tag = 9999;
         
+        // Need to rearraged constantLbl1 , displayName  of sales
+        dashCell.constantLbl1.hidden = YES;
+        dashCell.displayName.frame = CGRectMake(10.0f, dashCell.displayName.frame.origin.y, dashCell.frame.size.width-20.0f, dashCell.displayName.frame.size.height);
 
         CGFloat xOffset = (self.view.frame.size.width - dashCell.frame.size.width)/2;
         CGRect oldFrame = dashCell.frame;
@@ -162,7 +165,10 @@
 
 -(NSString*) currencyDisplay:(NSString*) amountValue
 {
-    return [NSString stringWithFormat:@"%@%@", rupee, [currencyFormat formateCurrency:amountValue]];
+    NSString* cleanedString = [[amountValue stringByReplacingOccurrencesOfString:@"," withString:@""]
+    stringByTrimmingCharactersInSet: [NSCharacterSet symbolCharacterSet]];
+    
+    return [NSString stringWithFormat:@"%@%@", rupee, [currencyFormat formateCurrency:cleanedString]];
 }
 
 
