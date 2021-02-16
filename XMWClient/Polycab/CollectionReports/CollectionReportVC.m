@@ -15,14 +15,21 @@
 #import "ClientVariable.h"
 #import "AppConstants.h"
 #import "LayoutClass.h"
+#import "CurrencyConversationClass.h"
 
 @interface CollectionReportVC () <UITableViewDelegate, UITableViewDataSource>
-
+{
+    CurrencyConversationClass* currencyFormat;
+    NSString* rupee;
+}
 @end
 
 @implementation CollectionReportVC
 
 - (void)viewDidLoad {
+    currencyFormat = [[CurrencyConversationClass alloc] init];
+    rupee = @"\u20B9";
+    
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
@@ -124,39 +131,42 @@
         NSArray* rowData = [self.reportPostResponse.tableData objectAtIndex:indexPath.row];
         
         if([rowData count]==8) {
-            dashCell.constantLbl1.text = [rowData objectAtIndex:0];
-            dashCell.displayName.text = @"";
+            dashCell.constantLbl1.text = @"";
+            dashCell.displayName.text = [rowData objectAtIndex:0];
             
-            dashCell.lftdDisplacyLbl.text = [rowData objectAtIndex:1];
-            dashCell.ftdDataSetLbl.text = [rowData objectAtIndex:3];
+            dashCell.lftdDisplacyLbl.text = [self currencyDisplay:[rowData objectAtIndex:1]];
+            dashCell.ftdDataSetLbl.text = [self currencyDisplay:[rowData objectAtIndex:3]];
             
-            dashCell.lmtdDisplayLbl.text = [rowData objectAtIndex:4];
-            dashCell.mtdDataSetLbl.text = [rowData objectAtIndex:6];
+            dashCell.lmtdDisplayLbl.text = [self currencyDisplay:[rowData objectAtIndex:4]];
+            dashCell.mtdDataSetLbl.text = [self currencyDisplay:[rowData objectAtIndex:6]];
             
-            dashCell.ytdDataSetLbl.text = [rowData objectAtIndex:7];
+            dashCell.ytdDataSetLbl.text = [self currencyDisplay:[rowData objectAtIndex:7]];
             
         } else if([rowData count]==9) {
             // for customers
             NSString* displayLabel = [NSString stringWithFormat:@"%@ - %@", [rowData objectAtIndex:0], [rowData objectAtIndex:1]];
-            dashCell.constantLbl1.text = displayLabel;
-            dashCell.displayName.text = @"";
             
-            dashCell.lftdDisplacyLbl.text = [rowData objectAtIndex:2];
-            dashCell.ftdDataSetLbl.text = [rowData objectAtIndex:4];
+            dashCell.constantLbl1.text = @"";
+            dashCell.displayName.text = displayLabel ;
             
-            dashCell.lmtdDisplayLbl.text = [rowData objectAtIndex:5];
-            dashCell.mtdDataSetLbl.text = [rowData objectAtIndex:7];
+            dashCell.lftdDisplacyLbl.text = [self currencyDisplay:[rowData objectAtIndex:2]];
+            dashCell.ftdDataSetLbl.text = [self currencyDisplay:[rowData objectAtIndex:4]];
             
-            dashCell.ytdDataSetLbl.text = [rowData objectAtIndex:8];
+            dashCell.lmtdDisplayLbl.text = [self currencyDisplay:[rowData objectAtIndex:5]];
+            dashCell.mtdDataSetLbl.text = [self currencyDisplay:[rowData objectAtIndex:7]];
             
-            
+            dashCell.ytdDataSetLbl.text = [self currencyDisplay:[rowData objectAtIndex:8]];
         }
-        
-        
     }
 }
 
+-(NSString*) currencyDisplay:(NSString*) amountValue
+{
+    return [NSString stringWithFormat:@"%@%@", rupee, [currencyFormat formateCurrency:amountValue]];
+}
 
+
+#pragma mark - Drilldown
 
 -(void) handleDrillDown: (NSInteger) position :(NSMutableDictionary *) in_forwardedDataDisplay :(NSMutableDictionary *) in_forwardedDataPost
 {
