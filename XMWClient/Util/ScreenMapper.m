@@ -71,8 +71,15 @@
     
     [clientVariables registerReportVCClass:@"ListPriceReport" forId:@"DOT_REPORT_LIST_PRICE"];
     [clientVariables registerReportVCClass:@"ItemWiseSalesReport" forId:@"DOT_REPORT_ITEM_WISE_SALES"];
-   
     
+    [clientVariables registerReportVCClass:@"CollectionReportVC" forId:@"DR_COLLECTION_ANALYSIS_BU_WISE"];
+    
+    [clientVariables registerReportVCClass:@"CollectionReportVC" forId:@"DR_COLLECTION_ANALYSIS_REGION_WISE"];
+    
+    [clientVariables registerReportVCClass:@"CollectionReportVC" forId:@"DR_COLLECTION_ANALYSIS_STATE_WISE"];
+    
+    [clientVariables registerReportVCClass:@"CollectionReportVC" forId:@"DR_COLLECTION_ANALYSIS_CUSTOMER_WISE"];
+   
     
 }
 

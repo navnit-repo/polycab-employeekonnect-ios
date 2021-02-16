@@ -1596,11 +1596,7 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
         [chatButton.layer addSublayer:myLayer];
         
         
-    }
-    
-    
-    
-      else if ([checkView isKindOfClass:[ChatBoxVC class]]) {
+    } else if ([checkView isKindOfClass:[ChatBoxVC class]]) {
             // do this
             ChatBoxVC *vc = (ChatBoxVC*) checkView;
             vc.chatThreadDict = [[NSMutableArray alloc]init];
