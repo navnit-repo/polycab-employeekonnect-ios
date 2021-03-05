@@ -19,4 +19,7 @@
 +(UIColor*) barButtonTextColor;
 +(UIColor*) disableTextFieldColor;
 
++(UIColor*) themeLabelValueColor;
++(UIColor*) themeLabelColor;
+
 @end

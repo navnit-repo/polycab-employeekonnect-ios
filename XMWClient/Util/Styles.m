@@ -53,4 +53,16 @@
     return [UIColor colorWithRed:240.0/255.0 green:240.0/255.0 blue:240.0/255.0 alpha:1.0];
 }
 
+
+
++(UIColor*) themeLabelValueColor
+{
+    return [UIColor colorWithRed:204.0/255.0 green:43.0/255.0 blue:43.0/255.0 alpha:1];
+}
+
++(UIColor*) themeLabelColor
+{
+    return [UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:204.0/255.0 alpha:1];
+}
+
 @end
