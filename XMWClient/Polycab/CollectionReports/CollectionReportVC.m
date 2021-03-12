@@ -19,11 +19,16 @@
 #import "DotReportDraw.h"
 #import "Styles.h"
 
-@interface CollectionReportVC () <UITableViewDelegate, UITableViewDataSource>
+@interface CollectionReportVC () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate>
 {
     CurrencyConversationClass* currencyFormat;
     NSString* rupee;
     NSArray* headerElementIds;
+    
+    NSMutableArray* orignalReportTableData;
+    NSMutableArray* recordTableData;
+
+    
 }
 @end
 
@@ -44,6 +49,10 @@
 {
     // [super makeReportScreenV2];
     
+    recordTableData = self.reportPostResponse.tableData;
+    orignalReportTableData = [[NSMutableArray alloc] init];
+    orignalReportTableData = self.reportPostResponse.tableData;
+    
     headerElementIds = [DotReportDraw sortRptComponents: dotReport.reportElements :@"HEADER"];
     
     self.reportTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, titleLblHeight + searchBar.frame.size.height, self.view.frame.size.width, self.view.frame.size.height-(35+searchBar.frame.size.height))];
@@ -57,7 +66,10 @@
     self.reportTableView.dataSource = self;
     self.reportTableView.delegate = self;
   
+    
    [self.view addSubview : self.reportTableView];
+    
+    self.searchBar.delegate = self;
     
 }
 
@@ -85,7 +97,7 @@
     if(section==0) {
         return [headerElementIds count];
     } else if(section==1) {
-        return  [self.reportPostResponse.tableData count];
+        return  [recordTableData count];
     }
     
     return 0;
@@ -95,14 +107,21 @@
 {
     NSLog(@"didSelectRowAtIndexPath");
     
-    // NSArray* rowData = [self.reportPostResponse.tableData objectAtIndex:indexPath.row];
+    // we should not be enable drilldown when first filter or unfiltered row is @"All" or ""
     
-    if( (indexPath.section==1) &&  (indexPath.row > 0) ) {
-        if([self.dotReport isFindDrillDown]) {
-            [self handleDrillDown:indexPath.row :self.forwardedDataDisplay :self.forwardedDataPost];
+    if(indexPath.section==1) {
+        NSArray* rowData = [recordTableData objectAtIndex:indexPath.row];
+        NSString* firstColumnValue = [rowData objectAtIndex:0];
+        if( ![firstColumnValue isEqual:@""]
+           && ![firstColumnValue isEqual:@"All"]
+           && ![firstColumnValue isEqual:@"ALL"]
+           && ![firstColumnValue isEqual:@"all"]) {
+            if([self.dotReport isFindDrillDown]) {
+                [self handleDrillDown:indexPath.row :self.forwardedDataDisplay :self.forwardedDataPost];
+            }
         }
     }
-
+    
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -179,7 +198,7 @@
     } else if(indexPath.section == 1) {
         SalesCell* dashCell =  [cell.contentView viewWithTag:9999];
         if(dashCell!=nil) {
-            NSArray* rowData = [self.reportPostResponse.tableData objectAtIndex:indexPath.row];
+            NSArray* rowData = [recordTableData objectAtIndex:indexPath.row];
             
             if([rowData count]==8) {
                 dashCell.constantLbl1.text = @"";
@@ -195,7 +214,10 @@
                 
             } else if([rowData count]==9) {
                 // for customers
-                NSString* displayLabel = [NSString stringWithFormat:@"%@ - %@", [rowData objectAtIndex:0], [rowData objectAtIndex:1]];
+                NSString* displayLabel = [rowData objectAtIndex:1];
+                if([[rowData objectAtIndex:0] length]>0) {
+                    displayLabel = [NSString stringWithFormat:@"%@ - %@", [rowData objectAtIndex:0], [rowData objectAtIndex:1]];
+                }
                 
                 dashCell.constantLbl1.text = @"";
                 dashCell.displayName.text = displayLabel ;
@@ -233,7 +255,7 @@
     NSMutableArray *sortedElementIds = [DotReportDraw sortRptComponents:self.dotReport.reportElements :XmwcsConst_REPORT_PLACE_TABLE];
     
     
-   NSMutableArray *selectedRowElement = (NSMutableArray *)[self.reportPostResponse.tableData objectAtIndex:position];
+   NSMutableArray *selectedRowElement = (NSMutableArray *)[recordTableData objectAtIndex:position];
    // NSMutableArray *selectedRowElement = (NSMutableArray *) [recordTableData objectAtIndex:position]; // this code chanage because of search feature
     
     if (self.forwardedDataDisplay == nil)
@@ -460,4 +482,37 @@
     lblHeaderTitle.text = dotReportElement.displayText;
 }
 
+
+#pragma mark - searchBar handler
+-(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
+    [searchBar resignFirstResponder];
+}
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    if (searchText.length >0)
+    {
+        recordTableData = [[NSMutableArray alloc] init];
+        for (int i=0; i<orignalReportTableData.count; i++) {
+            NSMutableArray *array = [[NSMutableArray alloc] init];
+            [array addObjectsFromArray:[orignalReportTableData objectAtIndex:i]];
+            for (int j=0; j<array.count; j++) {
+                NSString *name  = [array objectAtIndex:j];
+                
+                NSRange nameRange = [name rangeOfString:searchText options:NSCaseInsensitiveSearch];
+                if (nameRange.location != NSNotFound) {
+                    [recordTableData addObject: [orignalReportTableData objectAtIndex:i]];
+                    break;
+                }
+            }
+        }
+         [self.reportTableView reloadData];
+    }
+    else
+    {
+        recordTableData = [[NSMutableArray alloc] init];
+        [recordTableData addObjectsFromArray:orignalReportTableData];
+        [self.reportTableView reloadData];
+    }
+}
 @end
