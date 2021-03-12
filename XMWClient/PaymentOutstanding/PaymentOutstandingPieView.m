@@ -149,7 +149,7 @@
             
             paymentOutstandingPieViewCellView = [PaymentOutstandingPieViewCellView createInstance];
             [paymentOutstandingPieViewCellView configure:dataArray];
-            [cell addSubview:paymentOutstandingPieViewCellView];
+            [cell.contentView addSubview:paymentOutstandingPieViewCellView];
             [blankView removeFromSuperview];
             cell.clipsToBounds = YES;
             

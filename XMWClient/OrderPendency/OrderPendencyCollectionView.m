@@ -301,7 +301,7 @@
             if (indexPath.row ==i) {
                 orderPendencyCell = [OrderPendencyCell createInstance];
                 [orderPendencyCell config:[dataArray objectAtIndex:i]];
-                [cell addSubview:orderPendencyCell];
+                [cell.contentView addSubview:orderPendencyCell];
                 cell.clipsToBounds = YES;
             }
         }

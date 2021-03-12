@@ -234,7 +234,7 @@
             
             nationalSalesAggregatePieCellView = [NationalSalesAggregatePieCellView createInstance];
             [nationalSalesAggregatePieCellView configure:dataArray];
-            [cell addSubview:nationalSalesAggregatePieCellView];
+            [cell.contentView addSubview:nationalSalesAggregatePieCellView];
             [blankView removeFromSuperview];
             cell.clipsToBounds = YES;
             

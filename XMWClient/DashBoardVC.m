@@ -603,7 +603,7 @@
         lble.rate = 30.0;
         lble.labelize = NO;
         lble.holdScrolling = NO;
-        [cell addSubview:lble];
+        [cell.contentView addSubview:lble];
         cell.clipsToBounds = YES;
 
     }
@@ -628,7 +628,7 @@
         cell.frame=CGRectMake(10, 0,salesAggregateSliderView.bounds.size.width-5 ,salesAggregateSliderView.bounds.size.height-5);
         cell.layer.cornerRadius = 5;
         cell.layer.masksToBounds = true;
-        [cell addSubview:salesAggregateSliderView];
+        [cell.contentView addSubview:salesAggregateSliderView];
         cell.clipsToBounds = YES;
         
         
@@ -640,7 +640,7 @@
         cell.frame=CGRectMake(10, 0,creditDetailsSliderView.bounds.size.width-5 ,creditDetailsSliderView.bounds.size.height-5);
         cell.layer.cornerRadius = 5;
         cell.layer.masksToBounds = true;
-        [cell addSubview:creditDetailsSliderView];
+        [cell.contentView addSubview:creditDetailsSliderView];
         cell.clipsToBounds = YES;
         
     }
@@ -652,7 +652,7 @@
        cell.frame=CGRectMake(10, 0,overdue.bounds.size.width-5 ,overdue.bounds.size.height-5);
         cell.layer.cornerRadius = 5;
         cell.layer.masksToBounds = true;
-        [cell addSubview:overdue];
+        [cell.contentView addSubview:overdue];
         cell.clipsToBounds = YES;
         
     }

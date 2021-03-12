@@ -104,7 +104,7 @@
     
     
 }
-- (IBAction)addFormCatalogueButton:(id)sender {
+-(IBAction)addFormCatalogueButton:(id)sender {
     long int tag = [sender tag];
     NSLog(@"%ld",tag);
     NSLog(@"Button Clicked");
@@ -547,7 +547,7 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     if(indexPath.section==0) {
-        [cell addSubview:mainView];
+        [cell.contentView addSubview:mainView];
         cell.clipsToBounds = YES;
         
         
@@ -605,7 +605,7 @@
     long int cellTag = indexPath.row +2000;
     displayCell.tag = cellTag;
     
-    [cell addSubview:displayCell];
+    [cell.contentView addSubview:displayCell];
     displayCell.clipsToBounds = YES;
     
     createOrderDynamicCellHeight =displayCell.titleLbl.frame.size.height+displayCell.descriptionLbl.frame.size.height+displayCell.mainDescLbl.frame.size.height+displayCell.priceLabel.frame.size.height+20;

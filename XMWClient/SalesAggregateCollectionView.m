@@ -883,7 +883,7 @@
                 salesCell = [SalesCell createInstance];
                 [salesCell configure:[ftdDataArray objectAtIndex:i] :[mtdDataArray objectAtIndex:i] :[ytdDataArray objectAtIndex:i] :[lftdDataArray objectAtIndex:i] :[lmtdDataArray objectAtIndex:i]];
 //                [salesCell configure:[ftdDataArray objectAtIndex:i]  :[mtdDataArray objectAtIndex:i] :[ytdDataArray objectAtIndex:i]];
-                [cell addSubview:salesCell];
+                [cell.contentView addSubview:salesCell];
                 cell.clipsToBounds = YES;
             }
             

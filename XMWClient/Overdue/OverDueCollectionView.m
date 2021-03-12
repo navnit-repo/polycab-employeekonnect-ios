@@ -243,7 +243,7 @@
             
             overdueCell = [OverDueCell createInstance];
             [overdueCell configure:dataArray];
-            [cell addSubview:overdueCell];
+            [cell.contentView addSubview:overdueCell];
              [blankView removeFromSuperview];
             cell.clipsToBounds = YES;
             

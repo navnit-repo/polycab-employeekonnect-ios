@@ -29,6 +29,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *orderRefNo;
 @property (weak, nonatomic) IBOutlet UILabel *dateofDelivery;
 @property id<PolyCabCreateOrderMultiSelectDelegate> PolyCabCreateOrderMultiSelectDelegate;
+
+-(IBAction)addFormCatalogueButton:(id)sender;
+-(IBAction)searchProductsButton:(id)sender;
+
 @end
 
 

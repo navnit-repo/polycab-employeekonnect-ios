@@ -244,7 +244,7 @@
         textLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 100, 32)];
         textLabel.tag = 101;
         textLabel.font = [UIFont systemFontOfSize:13.0f];
-        [cell addSubview:textLabel];
+        [cell.contentView addSubview:textLabel];
     }
     textLabel.text = [selectedDisplayItems objectAtIndex:indexPath.row];
     

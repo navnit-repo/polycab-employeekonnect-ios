@@ -85,7 +85,7 @@
         textLable.text = [self.downloadHistoryList objectAtIndex:indexPath.row];;
         
         [containerView addSubview:textLable];
-        [cell addSubview:containerView];
+        [cell.contentView addSubview:containerView];
         
                 
         

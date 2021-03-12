@@ -135,7 +135,7 @@
             
             overduePieCellView = [OverduePieCellView createInstance];
             [overduePieCellView configure:dataArray];
-            [cell addSubview:overduePieCellView];
+            [cell.contentView addSubview:overduePieCellView];
             [blankView removeFromSuperview];
             cell.clipsToBounds = YES;
             

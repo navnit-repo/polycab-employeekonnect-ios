@@ -449,7 +449,7 @@ int CHECKBOX_TAG_OFFSET = 9000;
         DVCheckbox* checkBox = [[DVCheckbox alloc] initWithFrame:CGRectMake(5, label1.frame.size.height/5, 40, 40) check:checkState enable:YES];
         checkBox.elementId  = searchData[indexPath.row][0];
         checkBox.checkboxDelegate = self;
-        [cell addSubview:checkBox];
+        [cell.contentView addSubview:checkBox];
         width = (screenWidth-50)/[row count];
         
         checkBox.tag = CHECKBOX_TAG_OFFSET + indexPath.row;

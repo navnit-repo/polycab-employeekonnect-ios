@@ -122,7 +122,7 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
 
-             [cell addSubview:[self drawView:indexPath.row]];
+             [cell.contentView addSubview:[self drawView:indexPath.row]];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
 
     return cell;

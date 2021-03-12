@@ -242,7 +242,7 @@
             
             createDetailsCell = [CreateDetailsCell createInstance];
             [createDetailsCell configure:dataArray];
-            [cell addSubview:createDetailsCell];
+            [cell.contentView addSubview:createDetailsCell];
             cell.clipsToBounds = YES;
             
         }

@@ -588,7 +588,7 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     if(indexPath.section==0) {
-        [cell addSubview:mainView];
+        [cell.contentView addSubview:mainView];
         cell.clipsToBounds = YES;
         
     
@@ -646,7 +646,7 @@
     [ displayCell configure:[alreadyAddDisplayCellData objectAtIndex:arrayObjectTag] :cancelButtonTag :name :quantity :spaPrice];
                long int cellTag = indexPath.row +2000;
                displayCell.tag = cellTag;
-              [cell addSubview:displayCell];
+              [cell.contentView addSubview:displayCell];
                displayCell.clipsToBounds = YES;
     
     

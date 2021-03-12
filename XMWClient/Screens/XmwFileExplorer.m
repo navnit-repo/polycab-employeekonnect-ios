@@ -247,7 +247,7 @@
         
     
     [containerView addSubview:textLable];
-    [cell addSubview:containerView];
+    [cell.contentView addSubview:containerView];
 
     }
     

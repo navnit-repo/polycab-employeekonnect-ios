@@ -338,7 +338,7 @@
         textLabel.tag = 1001;
         
         [containerView addSubview:textLabel];
-        [cell addSubview:containerView];
+        [cell.contentView addSubview:containerView];
         cell.contentView.backgroundColor = [UIColor clearColor];
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     }
