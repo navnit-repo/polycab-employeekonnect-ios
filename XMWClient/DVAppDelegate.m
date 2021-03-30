@@ -297,7 +297,7 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
     UIImageView* bgImageView = [[UIImageView alloc] initWithImage: [UIImage imageNamed:@"01_splash.jpg"]];
     bgImageView.frame = self.window.bounds;
     bgImageView.contentMode = UIViewContentModeCenter;
-    bgImageView.tag = 1001;
+    bgImageView.tag = 11111;
     
     [self.window addSubview:bgImageView];
     
@@ -310,7 +310,7 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     
-    UIView* bgView =  [self.window viewWithTag:1001];
+    UIView* bgView =  [self.window viewWithTag:11111];
     if(bgView!=nil) [bgView removeFromSuperview];
  
     

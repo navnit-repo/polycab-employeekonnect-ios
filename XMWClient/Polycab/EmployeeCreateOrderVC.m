@@ -40,6 +40,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     registryID = [[NSUserDefaults standardUserDefaults]valueForKey:@"selectedRegisterIDCode"];
+    NSString* displayRegistry =  [[NSUserDefaults standardUserDefaults]valueForKey:@"selectedRegisterID"];
     // Do any additional setup after loading the view from its nib.
     
     
@@ -88,7 +89,13 @@
     } else {
         [self initializeFiltersWithNonTSIData];
     }
-
+    
+    if( (registryID!=nil && [registryID length]>0) &&
+       (displayRegistry!=nil && [displayRegistry length]>0)) {
+       [self registryIdSelectionHandler:registryIdField code:registryID  display:displayRegistry ];
+    } else {
+        // reset the vertical dropdown
+    }
     
 }
 
