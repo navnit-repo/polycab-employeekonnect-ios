@@ -124,8 +124,8 @@
         viewFrame =CGRectMake(0, yorigin, 320, totalViewHeight);
     } else {
         // 0, 64, 320, 416
-        self.view.frame = CGRectMake(0, yorigin, 320, totalViewHeight-yorigin);
-        viewFrame =CGRectMake(0, yorigin, 320, totalViewHeight);
+        self.view.frame = CGRectMake(0, yorigin, [[UIScreen mainScreen] bounds].size.width, totalViewHeight-yorigin);
+        viewFrame =CGRectMake(0, yorigin, [[UIScreen mainScreen] bounds].size.width, totalViewHeight);
     }
     [self drawHeaderItem];
     [self initializeView];

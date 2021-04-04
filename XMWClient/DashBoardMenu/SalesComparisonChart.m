@@ -112,7 +112,7 @@
         self.view.frame = CGRectMake(0, 64, 320, 504);
     } else {
         // 0, 64, 320, 416
-        self.view.frame = CGRectMake(0, 64, 320, 416);
+        self.view.frame = CGRectMake(0, 64, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height - 64.0f);
     }
     
     // Do any additional setup after loading the view.
