@@ -27,16 +27,23 @@
   KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:XmwcsConst_KEYCHAIN_IDENTIFIER accessGroup:nil ];
     NSString *userId = [keychainItem objectForKey:kSecAttrAccount];
     
+    NSDictionary *mainDict = nil;
     
     // polycab notification code
-    NSString *jsonStr =[dict objectForKey:@"CONTENT_MSG"];
+    NSObject* contentMsg = [dict objectForKey:@"CONTENT_MSG"];
+    if(contentMsg!=nil) {
+        if([contentMsg isKindOfClass:[NSString class]]) {
+            NSString* jsonStr = (NSString*) contentMsg;
+            NSData *webData = [jsonStr dataUsingEncoding:NSUTF8StringEncoding];
+            NSError *error;
+            mainDict = [NSJSONSerialization JSONObjectWithData:webData options:0 error:&error];
+        } else if([contentMsg isKindOfClass:[NSDictionary class]]) {
+            mainDict = (NSDictionary*) contentMsg;
+        }
+    }
     
-    NSData *webData = [jsonStr dataUsingEncoding:NSUTF8StringEncoding];
-    NSError *error;
-    NSDictionary *mainDict = [NSJSONSerialization JSONObjectWithData:webData options:0 error:&error];
     NSLog(@"%@",mainDict);
-    
-    
+
     if ([[mainDict objectForKey:@"OPERATION"] isEqualToString:@"8"] ) {
         if ([[mainDict objectForKey:@"NOTIFY_CALLNAME"] isEqualToString:@"NEW_MESSAGE"]) {
             

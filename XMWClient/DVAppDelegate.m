@@ -226,13 +226,22 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
             NSLog(@"userInfo->%@", [userInfo objectForKey:@"aps"]);
             NSLog(@"didReceiveRemoteNotification :%@", userInfo);
             
-            // polycab notification code
-            NSString *jsonStr =[userInfo objectForKey:@"CONTENT_MSG"];
-            SBJsonParser* sbparser = [[SBJsonParser alloc] init];
-            NSDictionary* mainDict = [sbparser objectWithString:jsonStr];
-            // NSDictionary* mainDict = [userInfo objectForKey:@"CONTENT_MSG"];
-            NSLog(@"%@",mainDict);
+            NSDictionary *mainDict = nil;
             
+            // polycab notification code
+            NSObject* contentMsg = [userInfo objectForKey:@"CONTENT_MSG"];
+            if(contentMsg!=nil) {
+                if([contentMsg isKindOfClass:[NSString class]]) {
+                    NSString* jsonStr = (NSString*) contentMsg;
+                    NSData *webData = [jsonStr dataUsingEncoding:NSUTF8StringEncoding];
+                    NSError *error;
+                    mainDict = [NSJSONSerialization JSONObjectWithData:webData options:0 error:&error];
+                } else if([contentMsg isKindOfClass:[NSDictionary class]]) {
+                    mainDict = (NSDictionary*) contentMsg;
+                }
+            }
+            
+            NSLog(@"%@",mainDict);
             
             if ([[mainDict objectForKey:@"OPERATION"] isEqualToString:@"8"] ) {
                 if ([[mainDict objectForKey:@"NOTIFY_CALLNAME"] isEqualToString:@"NEW_MESSAGE"]) {
@@ -887,13 +896,21 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
 -(void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions options))completionHandler
 {
     NSLog(@"User Info : %@",notification.request.content.userInfo);
+    NSDictionary *mainDict = nil;
     
-    NSString *jsonStr =[notification.request.content.userInfo objectForKey:@"CONTENT_MSG"];
+    // polycab notification code
+    NSObject* contentMsg = [notification.request.content.userInfo objectForKey:@"CONTENT_MSG"];
+    if(contentMsg!=nil) {
+        if([contentMsg isKindOfClass:[NSString class]]) {
+            NSString* jsonStr = (NSString*) contentMsg;
+            NSData *webData = [jsonStr dataUsingEncoding:NSUTF8StringEncoding];
+            NSError *error;
+            mainDict = [NSJSONSerialization JSONObjectWithData:webData options:0 error:&error];
+        } else if([contentMsg isKindOfClass:[NSDictionary class]]) {
+            mainDict = (NSDictionary*) contentMsg;
+        }
+    }
     
-    NSData *webData = [jsonStr dataUsingEncoding:NSUTF8StringEncoding];
-    NSError *error;
-    NSDictionary *mainDict = [NSJSONSerialization JSONObjectWithData:webData options:0 error:&error];
-    NSLog(@"%@",mainDict);
     NSMutableDictionary *responsedict2 = [[NSMutableDictionary alloc]init];
     [responsedict2 setDictionary:[mainDict objectForKey:@"NOTIFY_MESSAGE_KEY"]];
     
@@ -917,13 +934,20 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
         [[NSUserDefaults standardUserDefaults] setObject:@"NO" forKey:@"launchOptions"];
         [[NSUserDefaults standardUserDefaults] synchronize];
     } else {
-    
-        NSString *jsonStr =[response.notification.request.content.userInfo objectForKey:@"CONTENT_MSG"];
+        NSDictionary *mainDict = nil;
         
-        NSData *webData = [jsonStr dataUsingEncoding:NSUTF8StringEncoding];
-        NSError *error;
-        NSDictionary *mainDict = [NSJSONSerialization JSONObjectWithData:webData options:0 error:&error];
-        NSLog(@"%@",mainDict);
+        // polycab notification code
+        NSObject* contentMsg = [response.notification.request.content.userInfo objectForKey:@"CONTENT_MSG"];
+        if(contentMsg!=nil) {
+            if([contentMsg isKindOfClass:[NSString class]]) {
+                NSString* jsonStr = (NSString*) contentMsg;
+                NSData *webData = [jsonStr dataUsingEncoding:NSUTF8StringEncoding];
+                NSError *error;
+                mainDict = [NSJSONSerialization JSONObjectWithData:webData options:0 error:&error];
+            } else if([contentMsg isKindOfClass:[NSDictionary class]]) {
+                mainDict = (NSDictionary*) contentMsg;
+            }
+        }
         
         if ([[mainDict objectForKey:@"OPERATION"] isEqualToString:@"8"] ) {
             [self handlePushChatMessageFromRecieve:mainDict];
