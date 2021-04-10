@@ -22,7 +22,11 @@
 @property (weak, nonatomic) IBOutlet UILabel *constantLbl2;
 @property (weak, nonatomic) IBOutlet UILabel *constantLbl3;
 @property (weak, nonatomic) IBOutlet UILabel *constantLbl4;
+
 -(void)configure:(NSArray*)ftdData :(NSArray*)mtdData :(NSArray*)ytdData :(NSArray*)lftdData :(NSArray*)lmtddData;
+
+-(void)configureFor:(NSString*) name ftd:(NSString*)ftd mtd:(NSString *)mtd ytd:(NSString *)ytd lftd:(NSString *)lftd lmtd:(NSString*)lmtd;
+
 -(void)autoLayout;
 -(NSString*)formateCurrency:(NSString *)actualAmount;
 @property (weak, nonatomic) IBOutlet UILabel *lmtdDisplayLbl;

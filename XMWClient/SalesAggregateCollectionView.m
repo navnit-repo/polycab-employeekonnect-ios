@@ -22,6 +22,29 @@
 #import "SWRevealViewController.h"
 #define CELL_WIDTH 320
 #define CELL_SPACING 10
+
+@interface SalesCardDataTuple : NSObject
+
+@property NSString* name;
+@property NSString* code; // if present
+@property NSString* ytdAmount;
+
+@property NSString* mtdAmount;
+@property NSString* lmtdAmount;
+
+@property NSString* ftdAmount;
+@property NSString* lftdAmount;
+
+
+
+@end
+
+@implementation SalesCardDataTuple
+
+
+
+@end
+
 @implementation SalesAggregateCollectionView
 {
 //    DotFormPost *ftdPost;
@@ -41,10 +64,13 @@
    // UIView *blankView;
    // BOOL sortDone;
     
-   // UIActivityIndicatorView *activityIndicatorView;
-//    UIView *  noDataView ;
+    // UIActivityIndicatorView *activityIndicatorView;
+    //    UIView *  noDataView ;
     
+    NSMutableDictionary* salesSliderData;
+    SalesCardDataTuple* summaryTuple;
 }
+
 @synthesize noDataView;
 @synthesize LMTD_TO_Date;
 @synthesize LMTD_From_Date;
@@ -53,6 +79,8 @@
 @synthesize collectionView;
 @synthesize pageIndicator;
 @synthesize underCellLbl;
+
+
 +(SalesAggregateCollectionView*) createInstance
 
 {
@@ -75,6 +103,7 @@
     numberOfCell = 0;
     pageIndicator.numberOfPages = numberOfCell;
     [collectionView reloadData];
+        
     [self netwrokCall];
     
 }
@@ -105,6 +134,7 @@
     self.mainView.layer.shadowOpacity = 5.0f;
 
 }
+
 -(void)configure{
     [self autoLayout];
     [self shadowView];
@@ -121,6 +151,10 @@
      [collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cellIdentifier"];
     collectionView.backgroundColor = [UIColor clearColor];
     collectionView.bounces = NO;
+    
+    salesSliderData = [[NSMutableDictionary alloc] init];
+    summaryTuple = [[SalesCardDataTuple alloc] init];
+    
     [self loadingView];
     [self netwrokCall];
 
@@ -201,8 +235,7 @@
     XmwReportService* reportService = [[XmwReportService alloc] initWithPostData:ftdPost withContext:@"ftdCall"];
     
     [reportService fetchReportUsingSuccess:^(DotFormPost* formPosted, ReportPostResponse* reportResponse) {
-        
-        
+
         // we should receive report response data here
         ftdDataArray = [[NSMutableArray alloc ] init];
         ftdResponseData = reportResponse;
@@ -210,6 +243,8 @@
             NSArray *array = [NSArray arrayWithArray:[ftdResponseData.tableData objectAtIndex:i]];
             [ftdDataArray addObject:array];
         }
+        
+        [self addReportData:ftdResponseData into:salesSliderData forColumn:@"FTD"];
         
         NSLog(@"FTD: %@",ftdDataArray);
         
@@ -293,6 +328,7 @@
             NSArray *array = [NSArray arrayWithArray:[mtdResponseData.tableData objectAtIndex:i]];
             [mtdDataArray addObject:array];
         }
+        [self addReportData:mtdResponseData into:salesSliderData forColumn:@"MTD"];
         
         NSLog(@"MTD: %@",mtdDataArray);
         
@@ -397,6 +433,9 @@
             NSArray *array = [NSArray arrayWithArray:[ytdResponseData.tableData objectAtIndex:i]];
             [ytdDataArray addObject:array];
         }
+        
+        [self addReportData:ytdResponseData into:salesSliderData forColumn:@"YTD"];
+        
         NSLog(@"YTD: %@",ytdDataArray);
         
         [self LFTD_NetworkCall];
@@ -440,6 +479,8 @@
             [lmtdDataArray addObject:array];
         }
         
+        [self addReportData:lmtdResponseData into:salesSliderData forColumn:@"LMTD"];
+        
         NSLog(@"LMTD: %@",lmtdDataArray);
         
         
@@ -478,6 +519,8 @@
             [lftdDataArray addObject:array];
         }
         
+        [self addReportData:lftdResponseData into:salesSliderData forColumn:@"LFTD"];
+        
         NSLog(@"LFTD: %@",lftdDataArray);
         
         [self LMTD_NetworkCall];
@@ -503,269 +546,23 @@
     return tempArray;
     
 }
+
 -(void)maintainArrayFTD_MTD_YTD{
-   
-
-    NSMutableArray*temp1 = [[NSMutableArray alloc]init];
-    [temp1 addObjectsFromArray:[self removeZero:ftdDataArray]];
-    
-    NSMutableArray*temp2 = [[NSMutableArray alloc]init];
-    [temp2 addObjectsFromArray:[self removeZero:mtdDataArray]];
-    
-    NSMutableArray*temp3 = [[NSMutableArray alloc]init];
-    [temp3 addObjectsFromArray:[self removeZero:ytdDataArray]];
-    
-    NSMutableArray*temp4 = [[NSMutableArray alloc]init];
-    [temp4 addObjectsFromArray:[self removeZero:lftdDataArray]];
-    
-    NSMutableArray*temp5 = [[NSMutableArray alloc]init];
-    [temp5 addObjectsFromArray:[self removeZero:lmtdDataArray]];
-    
-    ftdDataArray = [[NSMutableArray alloc]init];
-    [ftdDataArray addObjectsFromArray:temp1];
-    mtdDataArray = [[NSMutableArray alloc]init];
-    [mtdDataArray addObjectsFromArray:temp2];
-    ytdDataArray = [[NSMutableArray alloc]init];
-    [ytdDataArray addObjectsFromArray:temp3];
-    
-    lftdDataArray = [[NSMutableArray alloc]init];
-    [lftdDataArray addObjectsFromArray:temp4];
-    
-    lmtdDataArray = [[NSMutableArray alloc]init];
-    [lmtdDataArray addObjectsFromArray:temp5];
-    
-    NSLog(@"After FTD blank element object removed array: %@",ftdDataArray);
-    NSLog(@"After MTD blank element object removed array: %@",mtdDataArray);
-    NSLog(@"After YTD blank element object removed array: %@",ytdDataArray);
-    NSLog(@"After LFTD blank element object removed array: %@",lftdDataArray);
-    NSLog(@"After LMTD blank element object removed array: %@",lmtdDataArray);
-    
-    NSUInteger ftdCount= [ftdDataArray count];
-    NSUInteger mtdCount= [mtdDataArray count];
-    NSUInteger ytdCount= [ytdDataArray count];
-    NSUInteger lftdCount = [lftdDataArray count];
-    NSUInteger lmtdCount = [lmtdDataArray count];
-    
-   NSArray* arrayList = [NSArray arrayWithObjects:ftdDataArray, mtdDataArray, ytdDataArray, lftdDataArray, lmtdDataArray,  nil];
-    
-    arrayList = [arrayList sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-        NSArray* array1 = (NSArray*) obj1;
-        NSArray* array2 = (NSArray*) obj2;
-        if([array1 count] < [array2 count])  {
-            return NSOrderedAscending;
-        } else if([array1 count] == [array2 count]) {
-            return NSOrderedSame;
-        }
-        return NSOrderedDescending;
-    }];
-    
-    NSArray* largestArray = [arrayList objectAtIndex:4];
-    numberOfCell = (int) [largestArray count];
-    [maxCellArray addObjectsFromArray:largestArray];
-    
-     //count total number of cell draw
-    /*
-    if (ftdCount > mtdCount)
-    {
-        if (ftdCount > ytdCount)
-        {
-            NSLog(@"ftdCount is the greatest among three \n");
-            NSLog(@"Count :%lu",(unsigned long)ftdCount);
-            numberOfCell = (int)ftdCount;
-            [maxCellArray addObjectsFromArray:ftdDataArray];
-        }
-        else
-        {
-            NSLog(@"ytdCount is the greatest among three \n");
-            NSLog(@"Count :%lu",(unsigned long)ytdCount);
-            numberOfCell = (int)ytdCount;
-            [maxCellArray addObjectsFromArray:ytdDataArray];
-        }
-    }
-    else if (mtdCount > ytdCount)
-    {
-        NSLog(@"mtdCount is the greatest among three \n");
-        NSLog(@"Count :%lu",(unsigned long)mtdCount);
-        numberOfCell = (int)mtdCount;
-        [maxCellArray addObjectsFromArray:mtdDataArray];
-    }
-    else
-    {
-        NSLog(@"ytdCount is the greatest among three \n");
-        NSLog(@"Count :%lu",(unsigned long)ytdCount);
-        numberOfCell = (int)ytdCount;
-        [maxCellArray addObjectsFromArray:ytdDataArray];
-    }
-    */
-    
-    
-    //before add empty data
-    NSLog(@"FTD array: %@",ftdDataArray);
-    NSLog(@"MTD array: %@",mtdDataArray);
-    NSLog(@"YTD array: %@",ytdDataArray);
-    NSLog(@"Max Array: %@",maxCellArray);
-    NSLog(@"Number of cell: %d",numberOfCell);
-    
-    //add empty array when other array length is less then number of cell
-    
-        if (ftdCount < numberOfCell) {
-        
-            NSArray *addEmptyArray = [[NSArray alloc]initWithArray:[self distinct:ftdDataArray :maxCellArray]];
-            NSLog(@"%@",addEmptyArray);
-            for (int i=0; i<addEmptyArray.count; i++) {
-                NSMutableArray *emptyArray = [[NSMutableArray alloc]init];
-                [emptyArray addObject:[addEmptyArray objectAtIndex:i]];
-                [emptyArray addObject:@"0.0"];
-                [emptyArray addObject:@"0.0"];
-                [ftdDataArray insertObject:emptyArray atIndex:ftdCount];
-            }
-        
-        }
-    
-    if (mtdCount < numberOfCell) {
-        NSArray *addEmptyArray = [[NSArray alloc]initWithArray:[self distinct:mtdDataArray :maxCellArray]];
-        NSLog(@"%@",addEmptyArray);
-        for (int i=0; i<addEmptyArray.count; i++) {
-                        NSMutableArray *emptyArray = [[NSMutableArray alloc]init];
-                        [emptyArray addObject:[addEmptyArray objectAtIndex:i]];
-                        [emptyArray addObject:@"0.0"];
-                        [emptyArray addObject:@"0.0"];
-                        [mtdDataArray insertObject:emptyArray atIndex:mtdCount];
-                    }
-    }
-    
-    if (ytdCount < numberOfCell) {
-    
-        NSArray *addEmptyArray = [[NSArray alloc]initWithArray:[self distinct:ytdDataArray :maxCellArray]];
-        NSLog(@"%@",addEmptyArray);
-        for (int i=0; i<addEmptyArray.count; i++) {
-            NSMutableArray *emptyArray = [[NSMutableArray alloc]init];
-            [emptyArray addObject:[addEmptyArray objectAtIndex:i]];
-            [emptyArray addObject:@"0.0"];
-            [emptyArray addObject:@"0.0"];
-            [ytdDataArray insertObject:emptyArray atIndex:ytdCount];
-        }
-    
-    }
-    
-    if (lftdCount < numberOfCell) {
-        
-        NSArray *addEmptyArray = [[NSArray alloc]initWithArray:[self distinct:lftdDataArray :maxCellArray]];
-        NSLog(@"%@",addEmptyArray);
-        for (int i=0; i<addEmptyArray.count; i++) {
-            NSMutableArray *emptyArray = [[NSMutableArray alloc]init];
-            [emptyArray addObject:[addEmptyArray objectAtIndex:i]];
-            [emptyArray addObject:@"0.0"];
-            [emptyArray addObject:@"0.0"];
-            [lftdDataArray insertObject:emptyArray atIndex:lftdCount];
-        }
-        
-    }
-    
-    if (lmtdCount < numberOfCell) {
-        
-        NSArray *addEmptyArray = [[NSArray alloc]initWithArray:[self distinct:lmtdDataArray :maxCellArray]];
-        NSLog(@"%@",addEmptyArray);
-        for (int i=0; i<addEmptyArray.count; i++) {
-            NSMutableArray *emptyArray = [[NSMutableArray alloc]init];
-            [emptyArray addObject:[addEmptyArray objectAtIndex:i]];
-            [emptyArray addObject:@"0.0"];
-            [emptyArray addObject:@"0.0"];
-            [lmtdDataArray insertObject:emptyArray atIndex:lmtdCount];
-        }
-        
-    }
-    
- 
-    NSLog(@"FTD final array: %@",ftdDataArray);
-    NSLog(@"MTD final array: %@",mtdDataArray);
-    NSLog(@"YTD final array: %@",ytdDataArray);
-    NSLog(@"LFTD final array: %@",lftdDataArray);
-    NSLog(@"LMTD final array: %@",lmtdDataArray);
-    // NSArray *sortedArray, with the unsorted 'array' pulled from some other instance
-//    NSArray *sortedArray1= [[NSArray alloc]init];
-    NSMutableArray *tempFtdArray = [[NSMutableArray alloc]init];
-     NSMutableArray *tempMtdArray = [[NSMutableArray alloc]init];
-  NSMutableArray *tempLftdArray = [[NSMutableArray alloc]init];
-    NSMutableArray *tempLmtdArray = [[NSMutableArray alloc]init];
-    for (int i=0; i<ytdDataArray.count; i++) {
-        NSString *verticalName = [[ytdDataArray objectAtIndex:i]objectAtIndex:0];
-        for (int j=0;j<ytdDataArray.count; j++) {
-            NSString *findVerticalInFtdArray = [[ftdDataArray objectAtIndex:j]objectAtIndex:0];
-            if ([verticalName isEqualToString:findVerticalInFtdArray]) {
-              //  [tempFtdArray addObject:[ftdDataArray objectAtIndex:j]];
-                [tempFtdArray insertObject:[ftdDataArray objectAtIndex:j] atIndex:i];
-                break;
-            }
-        }
-    }
-    
-    for (int i=0; i<ytdDataArray.count; i++) {
-        NSString *verticalName = [[ytdDataArray objectAtIndex:i]objectAtIndex:0];
-        for (int j=0;j<ytdDataArray.count; j++) {
-            NSString *findVerticalInMtdArray = [[mtdDataArray objectAtIndex:j]objectAtIndex:0];
-            if ([verticalName isEqualToString:findVerticalInMtdArray]) {
-                //  [tempFtdArray addObject:[ftdDataArray objectAtIndex:j]];
-                [tempMtdArray insertObject:[mtdDataArray objectAtIndex:j] atIndex:i];
-                break;
-            }
-        }
-    }
-    
-    
-    for (int i=0; i<ytdDataArray.count; i++) {
-        NSString *verticalName = [[ytdDataArray objectAtIndex:i]objectAtIndex:0];
-        for (int j=0;j<ytdDataArray.count; j++) {
-            NSString *findVerticalInLftdArray = [[lftdDataArray objectAtIndex:j]objectAtIndex:0];
-            if ([verticalName isEqualToString:findVerticalInLftdArray]) {
-                //  [tempFtdArray addObject:[ftdDataArray objectAtIndex:j]];
-                [tempLftdArray insertObject:[lftdDataArray objectAtIndex:j] atIndex:i];
-                break;
-            }
-        }
-    }
-
-    for (int i=0; i<ytdDataArray.count; i++) {
-        NSString *verticalName = [[ytdDataArray objectAtIndex:i]objectAtIndex:0];
-        for (int j=0;j<ytdDataArray.count; j++) {
-            NSString *findVerticalInLmtdArray = [[lmtdDataArray objectAtIndex:j]objectAtIndex:0];
-            if ([verticalName isEqualToString:findVerticalInLmtdArray]) {
-                //  [tempFtdArray addObject:[ftdDataArray objectAtIndex:j]];
-                [tempLmtdArray insertObject:[lmtdDataArray objectAtIndex:j] atIndex:i];
-                break;
-            }
-        }
-    }
-    
-    
-    NSLog(@"Temp ftd Array :%@",tempFtdArray);
-    NSLog(@"Temp Mtd Array :%@",tempMtdArray);
-    NSLog(@"Temp Lftd Array :%@",tempLftdArray);
-     NSLog(@"Temp Lmtd Array :%@",tempLmtdArray);
-    //sorted array
-    ftdDataArray = [[NSMutableArray alloc]init];
-    [ftdDataArray addObjectsFromArray:tempFtdArray];
-    mtdDataArray = [[NSMutableArray alloc]init];
-    [mtdDataArray addObjectsFromArray:tempMtdArray];
-    lftdDataArray = [[NSMutableArray alloc]init];
-    [lftdDataArray addObjectsFromArray:tempLftdArray];
-    lmtdDataArray = [[NSMutableArray alloc]init];
-    [lmtdDataArray addObjectsFromArray:tempLmtdArray];
-//    ytdDataArray = [[NSMutableArray alloc]init];
-//    [ytdDataArray addObjectsFromArray:sortedArray3];
-    
     sortDone = true;
-    if (numberOfCell >15) {
+    
+    numberOfCell = [[salesSliderData allKeys] count];
+    
+    if (numberOfCell > 15) {
         numberOfCell = 15;
-   
     }
-    if (ytdDataArray.count>0) {
+    
+    // [salesSliderData allKeys];
+    
+    if ([[salesSliderData allKeys] count]>0) {
          [self.collectionView reloadData];//reload cell data
-    }
-  else
-  {
+    } else {
       [self addNoDataAvailableView];
-  }
+    }
 }
 
 -(void)addNoDataAvailableView
@@ -864,32 +661,35 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     
     UICollectionViewCell *cell=[collectionView dequeueReusableCellWithReuseIdentifier:@"cellIdentifier" forIndexPath:indexPath];
-    
 
-    
-    //after add empty data if needed.
-    NSLog(@"FTD array: %@",ftdDataArray);
-    NSLog(@"MTD array: %@",mtdDataArray);
-    NSLog(@"YTD array: %@",ytdDataArray);
-    NSLog(@"LFTD array: %@",lftdDataArray);
     if (sortDone== true) {
         [blankView removeFromSuperview];
     }
     
-        for (int i=0;i<numberOfCell; i++ ) {
-            
-            if (indexPath.row ==i) {
+        
+    NSArray* keys = [salesSliderData allKeys];
+    SalesCardDataTuple* tuple = [salesSliderData objectForKey:[keys objectAtIndex:indexPath.row]];
 
-                salesCell = [SalesCell createInstance];
-                [salesCell configure:[ftdDataArray objectAtIndex:i] :[mtdDataArray objectAtIndex:i] :[ytdDataArray objectAtIndex:i] :[lftdDataArray objectAtIndex:i] :[lmtdDataArray objectAtIndex:i]];
-//                [salesCell configure:[ftdDataArray objectAtIndex:i]  :[mtdDataArray objectAtIndex:i] :[ytdDataArray objectAtIndex:i]];
-                [cell.contentView addSubview:salesCell];
-                cell.clipsToBounds = YES;
-            }
+    salesCell = [SalesCell createInstance];
+   
+    NSString* displayName = @"";
+    
+    if([tuple.name length]>0) {
+        displayName =  [NSString stringWithFormat:@"%@-%@", tuple.code,  tuple.name];
+    } else {
+        displayName = tuple.code;
+    }
+    
+    [salesCell configureFor:displayName ftd:tuple.ftdAmount mtd:tuple.mtdAmount ytd:tuple.ytdAmount lftd:tuple.lftdAmount lmtd:tuple.lmtdAmount];
+    
+    NSInteger tagId = 1000 + indexPath.row;
+    salesCell.tag = tagId;
+
+    [[cell.contentView viewWithTag:tagId] removeFromSuperview];
+    
+    [cell.contentView addSubview:salesCell];
+    cell.clipsToBounds = YES;
             
-        }
-    
-    
    
     //set under lable text
     NSString *text = @"Above data is a representation Total Sales of";
@@ -906,13 +706,12 @@
     [underCellLbl removeFromSuperview];
     underCellLbl.text =[[[NSString stringWithFormat:@"%@",text]stringByAppendingString:@" "]stringByAppendingString:currentYear];
     
-    
-    
-    
     pageIndicator.numberOfPages = numberOfCell;
     pageIndicator.transform = CGAffineTransformMakeScale(0.7, 0.7);
+    
     return cell;
 }
+
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     
     PolycabSalesComparisonChat* salesComparisionChart = [[PolycabSalesComparisonChat alloc] initWithNibName:@"SalesComparisonChart" bundle:nil];
@@ -924,5 +723,57 @@
       [(UINavigationController*)reveal.frontViewController pushViewController:salesComparisionChart animated:YES];
 }
 
+
+-(void)addReportData:(ReportPostResponse*) reportData into:(NSMutableDictionary*) inDataSet forColumn:(NSString*) column
+{
+    // we need to reset data for first value of all tuple in the inDataSet
+    for(NSString* key in inDataSet.allKeys) {
+        SalesCardDataTuple* tupleObject = (SalesCardDataTuple*)[inDataSet objectForKey:key];
+        if(tupleObject!=nil) {
+            if([column isEqual:@"YTD"]) {
+                tupleObject.ytdAmount = @"0.0";
+            } else if([column isEqual:@"MTD"]) {
+                tupleObject.mtdAmount = @"0.0";
+            } if([column isEqual:@"LMTD"]) {
+                tupleObject.lmtdAmount = @"0.0";
+            } if([column isEqual:@"FTD"]) {
+                tupleObject.ftdAmount = @"0.0";
+            } if([column isEqual:@"LYTD"]) {
+                tupleObject.lftdAmount = @"0.0";
+            }
+        }
+    }
+    
+    NSArray* rowWiseTableData = reportData.tableData;
+    
+    for(NSArray* rowData in rowWiseTableData) {
+        NSString* fieldName = [rowData objectAtIndex:1];
+        SalesCardDataTuple* tupleObject = (SalesCardDataTuple*)[inDataSet objectForKey:fieldName];
+        if(tupleObject==nil) {
+            tupleObject = [[SalesCardDataTuple alloc] init];
+            tupleObject.ytdAmount = @"0.0";
+            tupleObject.mtdAmount = @"0.0";
+            tupleObject.lmtdAmount = @"0.0";
+            tupleObject.ftdAmount = @"0.0";
+            tupleObject.lftdAmount = @"0.0";
+            
+            [inDataSet setObject:tupleObject forKey:fieldName];
+        }
+        tupleObject.name = [rowData objectAtIndex:1];
+        tupleObject.code = [rowData objectAtIndex:0];
+        
+        if([column isEqual:@"YTD"]) {
+            tupleObject.ytdAmount = [rowData objectAtIndex:2];
+        } else if([column isEqual:@"MTD"]) {
+            tupleObject.mtdAmount = [rowData objectAtIndex:2];
+        } if([column isEqual:@"LMTD"]) {
+            tupleObject.lmtdAmount = [rowData objectAtIndex:2];
+        } if([column isEqual:@"FTD"]) {
+            tupleObject.ftdAmount = [rowData objectAtIndex:2];
+        } if([column isEqual:@"LYTD"]) {
+            tupleObject.lftdAmount = [rowData objectAtIndex:2];
+        }
+    }
+}
 
 @end

@@ -44,6 +44,7 @@
     
     
 }
+
 - (void)configure:(NSArray *)ftdData :(NSArray *)mtdData :(NSArray *)ytdData :(NSArray *)lftdData :(NSArray*)lmtddData
 {
     [self autoLayout];
@@ -67,6 +68,20 @@
     self.lftdDisplacyLbl.text = [[NSString stringWithFormat:@"%@",rupee]stringByAppendingString:lftd];
     self.lmtdDisplayLbl.text = [[NSString stringWithFormat:@"%@",rupee]stringByAppendingString:lmtd];
 }
+
+- (void)configureFor:(NSString*) name ftd:(NSString*)ftd mtd:(NSString *)mtd ytd:(NSString *)ytd lftd:(NSString *)lftd lmtd:(NSString*)lmtd
+{
+    [self autoLayout];
+    NSString *rupee=@"\u20B9";
+    
+    self.displayName.text   = name;
+    self.ftdDataSetLbl.text = [[NSString stringWithFormat:@"%@",rupee]stringByAppendingString:ftd];
+    self.mtdDataSetLbl.text = [[NSString stringWithFormat:@"%@",rupee]stringByAppendingString:mtd];
+    self.ytdDataSetLbl.text = [[NSString stringWithFormat:@"%@",rupee]stringByAppendingString:ytd];
+    self.lftdDisplacyLbl.text = [[NSString stringWithFormat:@"%@",rupee]stringByAppendingString:lftd];
+    self.lmtdDisplayLbl.text = [[NSString stringWithFormat:@"%@",rupee]stringByAppendingString:lmtd];
+}
+
 //- (void)configure:(NSArray *)ftdData :(NSArray *)mtdData :(NSArray *)ytdData{
 //    [self autoLayout];
 //    NSString *rupee=@"\u20B9";
