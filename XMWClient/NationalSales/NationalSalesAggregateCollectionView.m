@@ -11,10 +11,12 @@
 #import "NationalWisePolycabSalesComparisonChat.h"
 #import "AppConstants.h"
 #import "XmwcsConstant.h"
+
 @implementation NationalSalesAggregateCollectionView
 {
     NationalSalesAggregateCellView *salesCell;
 }
+
 +(NationalSalesAggregateCollectionView*) createInstance
 
 {
@@ -122,12 +124,7 @@
         // we should receive report response data here
         ftdDataArray = [[NSMutableArray alloc ] init];
         ftdResponseData = reportResponse;
-        for (int i=0; i<ftdResponseData.tableData.count; i++) {
-            NSArray *array = [NSArray arrayWithArray:[ftdResponseData.tableData objectAtIndex:i]];
-            [ftdDataArray addObject:array];
-        }
-        
-        NSLog(@"FTD: %@",ftdDataArray);
+        [self addReportData:ftdResponseData into:salesSliderData forColumn:@"FTD"];
         
         //when ftd call response sucess then hit mtd call
         [self mtdNetWorkCall];
@@ -204,12 +201,8 @@
         mtdDataArray = [[NSMutableArray alloc ] init];
         // we should receive report response data here
         mtdResponseData = reportResponse;
-        for (int i=0; i<mtdResponseData.tableData.count; i++) {
-            NSArray *array = [NSArray arrayWithArray:[mtdResponseData.tableData objectAtIndex:i]];
-            [mtdDataArray addObject:array];
-        }
         
-        NSLog(@"MTD: %@",mtdDataArray);
+        [self addReportData:mtdResponseData into:salesSliderData forColumn:@"MTD"];
         
         //when mtd call response sucess then hit ytd call
         [self ytdNetworkCAll];
@@ -217,8 +210,6 @@
         
     }   fail:^(DotFormPost* formPosted, NSString* message) {
         // we should receive error response here
-        
-        
         
     }];
     
@@ -310,11 +301,7 @@
         // we should receive report response data here
         ytdResponseData = reportResponse;
         
-        for (int i=0; i<ytdResponseData.tableData.count; i++) {
-            NSArray *array = [NSArray arrayWithArray:[ytdResponseData.tableData objectAtIndex:i]];
-            [ytdDataArray addObject:array];
-        }
-        NSLog(@"YTD: %@",ytdDataArray);
+        [self addReportData:ytdResponseData into:salesSliderData forColumn:@"YTD"];
         
         [self LFTD_NetworkCall];
         //[self maintainArrayFTD_MTD_YTD];
@@ -349,12 +336,9 @@
         
         
         // we should receive report response data here
-         lmtdDataArray = [[NSMutableArray alloc ] init];
+        lmtdDataArray = [[NSMutableArray alloc ] init];
         lmtdResponseData = reportResponse;
-        for (int i=0; i<lmtdResponseData.tableData.count; i++) {
-            NSArray *array = [NSArray arrayWithArray:[lmtdResponseData.tableData objectAtIndex:i]];
-            [lmtdDataArray addObject:array];
-        }
+        [self addReportData:lmtdResponseData into:salesSliderData forColumn:@"LMTD"];
         
         NSLog(@"LMTD: %@",lmtdDataArray);
         
@@ -389,13 +373,8 @@
         // we should receive report response data here
          lftdDataArray = [[NSMutableArray alloc ] init];
         lftdResponseData = reportResponse;
-        for (int i=0; i<lftdResponseData.tableData.count; i++) {
-            NSArray *array = [NSArray arrayWithArray:[lftdResponseData.tableData objectAtIndex:i]];
-            [lftdDataArray addObject:array];
-        }
         
-        NSLog(@"LFTD: %@",lftdDataArray);
-        
+        [self addReportData:lftdResponseData into:salesSliderData forColumn:@"LFTD"];
         
         [self LMTD_NetworkCall];
         
@@ -404,36 +383,55 @@
         
     }];
 }
+
+
+
+
+#pragma mark : Collection View Datasource
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
+    
+    return numberOfCell;
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    return CGSizeMake(self.collectionView.frame.size.width, 120*deviceHeightRation);
+}
+
+
+
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     
     UICollectionViewCell *cell=[collectionView dequeueReusableCellWithReuseIdentifier:@"cellIdentifier" forIndexPath:indexPath];
     
-    
-    
-    //after add empty data if needed.
-    NSLog(@"FTD array: %@",ftdDataArray);
-    NSLog(@"MTD array: %@",mtdDataArray);
-    NSLog(@"YTD array: %@",ytdDataArray);
-    NSLog(@"LFTD array: %@",lftdDataArray);
+
     if (sortDone== true) {
         [blankView removeFromSuperview];
     }
     
-    for (int i=0;i<numberOfCell; i++ ) {
-        
-        if (indexPath.row ==i) {
-            
-            salesCell = [NationalSalesAggregateCellView createInstance];
-            [salesCell configure:[ftdDataArray objectAtIndex:i] :[mtdDataArray objectAtIndex:i] :[ytdDataArray objectAtIndex:i] :[lftdDataArray objectAtIndex:i] : [lmtdDataArray objectAtIndex:i] ];
-//            [salesCell configure:[ftdDataArray objectAtIndex:i]  :[mtdDataArray objectAtIndex:i] :[ytdDataArray objectAtIndex:i]];
-            [cell.contentView addSubview:salesCell];
-            cell.clipsToBounds = YES;
-        }
-        
+    NSArray* keys = [salesSliderData allKeys];
+    SalesCardDataTuple* tuple = [salesSliderData objectForKey:[keys objectAtIndex:indexPath.row]];
+    
+    NSString* displayName = @"";
+    
+    if([tuple.code length]>0) {
+        displayName =  [NSString stringWithFormat:@"%@-%@", tuple.name,  tuple.code];
+    } else {
+        displayName = tuple.name;
     }
     
+    salesCell = [NationalSalesAggregateCellView createInstance];
     
+    [salesCell configureFor:displayName ftd:tuple.ftdAmount mtd:tuple.mtdAmount ytd:tuple.ytdAmount lftd:tuple.lftdAmount lmtd:tuple.lmtdAmount];
     
+    NSInteger tagId = 1000 + indexPath.row;
+    salesCell.tag = tagId;
+
+    [[cell.contentView viewWithTag:tagId] removeFromSuperview];
+
+    [cell.contentView addSubview:salesCell];
+    cell.clipsToBounds = YES;
+    
+
     //set under lable text
     NSString *text = @"Above data is a representation Total Sales of";
     
@@ -466,6 +464,59 @@
     
     SWRevealViewController *reveal = (SWRevealViewController*)root;
     [(UINavigationController*)reveal.frontViewController pushViewController:salesComparisionChart animated:YES];
+}
+
+
+-(void)addReportData:(ReportPostResponse*) reportData into:(NSMutableDictionary*) inDataSet forColumn:(NSString*) column
+{
+    // we need to reset data for first value of all tuple in the inDataSet
+    for(NSString* key in inDataSet.allKeys) {
+        SalesCardDataTuple* tupleObject = (SalesCardDataTuple*)[inDataSet objectForKey:key];
+        if(tupleObject!=nil) {
+            if([column isEqual:@"YTD"]) {
+                tupleObject.ytdAmount = @"0.0";
+            } else if([column isEqual:@"MTD"]) {
+                tupleObject.mtdAmount = @"0.0";
+            } if([column isEqual:@"LMTD"]) {
+                tupleObject.lmtdAmount = @"0.0";
+            } if([column isEqual:@"FTD"]) {
+                tupleObject.ftdAmount = @"0.0";
+            } if([column isEqual:@"LYTD"]) {
+                tupleObject.lftdAmount = @"0.0";
+            }
+        }
+    }
+    
+    NSArray* rowWiseTableData = reportData.tableData;
+    
+    for(NSArray* rowData in rowWiseTableData) {
+        NSString* fieldName = [rowData objectAtIndex:0];
+        SalesCardDataTuple* tupleObject = (SalesCardDataTuple*)[inDataSet objectForKey:fieldName];
+        if(tupleObject==nil) {
+            tupleObject = [[SalesCardDataTuple alloc] init];
+            tupleObject.ytdAmount = @"0.0";
+            tupleObject.mtdAmount = @"0.0";
+            tupleObject.lmtdAmount = @"0.0";
+            tupleObject.ftdAmount = @"0.0";
+            tupleObject.lftdAmount = @"0.0";
+            
+            [inDataSet setObject:tupleObject forKey:fieldName];
+        }
+        tupleObject.name = [rowData objectAtIndex:0];
+        tupleObject.code = [rowData objectAtIndex:1];
+        
+        if([column isEqual:@"YTD"]) {
+            tupleObject.ytdAmount = [rowData objectAtIndex:2];
+        } else if([column isEqual:@"MTD"]) {
+            tupleObject.mtdAmount = [rowData objectAtIndex:2];
+        } if([column isEqual:@"LMTD"]) {
+            tupleObject.lmtdAmount = [rowData objectAtIndex:2];
+        } if([column isEqual:@"FTD"]) {
+            tupleObject.ftdAmount = [rowData objectAtIndex:2];
+        } if([column isEqual:@"LYTD"]) {
+            tupleObject.lftdAmount = [rowData objectAtIndex:2];
+        }
+    }
 }
 
 @end

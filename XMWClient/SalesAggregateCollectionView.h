@@ -13,6 +13,21 @@
 #import "ReportPostResponse.h"
 #import "DVAppDelegate.h"
 
+
+@interface SalesCardDataTuple : NSObject
+
+@property NSString* name;
+@property NSString* code; // if present
+@property NSString* ytdAmount;
+
+@property NSString* mtdAmount;
+@property NSString* lmtdAmount;
+
+@property NSString* ftdAmount;
+@property NSString* lftdAmount;
+
+@end
+
 @interface SalesAggregateCollectionView : UIView<UICollectionViewDelegate,UICollectionViewDataSource>
 {
     DotFormPost *lmtdPost;
@@ -20,16 +35,24 @@
     DotFormPost *ftdPost;
     DotFormPost *mtdPost;
     DotFormPost *ytdPost;
+    
     ReportPostResponse* ftdResponseData;
     ReportPostResponse* lftdResponseData;
     ReportPostResponse* mtdResponseData;
     ReportPostResponse* ytdResponseData;
     ReportPostResponse* lmtdResponseData;
+    
     NSMutableArray *ftdDataArray;
     NSMutableArray *lftdDataArray;
     NSMutableArray *mtdDataArray;
     NSMutableArray *ytdDataArray;
     NSMutableArray *lmtdDataArray;
+    
+    NSMutableArray *maxCellArray;
+    
+    NSMutableDictionary* salesSliderData;
+    SalesCardDataTuple* summaryTuple;
+    
     BOOL sortDone;
     int numberOfCell;
     UILabel *underCellLbl;
@@ -80,4 +103,9 @@
 -(void)netwrokCall;
 -(void)loadingView;
 -(void)addNoDataAvailableView;
+
+-(NSArray*)removeZero:(NSArray*)array;
+-(NSArray*)distinct:(NSArray*)arrar1 :(NSArray*)array2;
+-(void)addReportData:(ReportPostResponse*) reportData into:(NSMutableDictionary*) inDataSet forColumn:(NSString*) column;
+
 @end

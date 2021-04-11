@@ -23,21 +23,7 @@
 #define CELL_WIDTH 320
 #define CELL_SPACING 10
 
-@interface SalesCardDataTuple : NSObject
 
-@property NSString* name;
-@property NSString* code; // if present
-@property NSString* ytdAmount;
-
-@property NSString* mtdAmount;
-@property NSString* lmtdAmount;
-
-@property NSString* ftdAmount;
-@property NSString* lftdAmount;
-
-
-
-@end
 
 @implementation SalesCardDataTuple
 
@@ -47,28 +33,9 @@
 
 @implementation SalesAggregateCollectionView
 {
-//    DotFormPost *ftdPost;
-//    DotFormPost *mtdPost;
-//    DotFormPost *ytdPost;
     LoadingView *loadingView;
- //   int numberOfCell;
-    NSMutableArray *maxCellArray;
-//    ReportPostResponse* ftdResponseData;
-//    ReportPostResponse* mtdResponseData;
-//    ReportPostResponse* ytdResponseData;
-//    NSMutableArray *ftdDataArray;
-//    NSMutableArray *mtdDataArray;
-//    NSMutableArray *ytdDataArray;
+ 
     SalesCell *salesCell;
-    
-   // UIView *blankView;
-   // BOOL sortDone;
-    
-    // UIActivityIndicatorView *activityIndicatorView;
-    //    UIView *  noDataView ;
-    
-    NSMutableDictionary* salesSliderData;
-    SalesCardDataTuple* summaryTuple;
 }
 
 @synthesize noDataView;
@@ -239,14 +206,8 @@
         // we should receive report response data here
         ftdDataArray = [[NSMutableArray alloc ] init];
         ftdResponseData = reportResponse;
-        for (int i=0; i<ftdResponseData.tableData.count; i++) {
-            NSArray *array = [NSArray arrayWithArray:[ftdResponseData.tableData objectAtIndex:i]];
-            [ftdDataArray addObject:array];
-        }
         
         [self addReportData:ftdResponseData into:salesSliderData forColumn:@"FTD"];
-        
-        NSLog(@"FTD: %@",ftdDataArray);
         
         //when ftd call response sucess then hit mtd call
         [self mtdNetWorkCall];
@@ -320,17 +281,11 @@
     
     [reportService fetchReportUsingSuccess:^(DotFormPost* formPosted, ReportPostResponse* reportResponse) {
         
-        
         mtdDataArray = [[NSMutableArray alloc ] init];
         // we should receive report response data here
         mtdResponseData = reportResponse;
-        for (int i=0; i<mtdResponseData.tableData.count; i++) {
-            NSArray *array = [NSArray arrayWithArray:[mtdResponseData.tableData objectAtIndex:i]];
-            [mtdDataArray addObject:array];
-        }
-        [self addReportData:mtdResponseData into:salesSliderData forColumn:@"MTD"];
         
-        NSLog(@"MTD: %@",mtdDataArray);
+        [self addReportData:mtdResponseData into:salesSliderData forColumn:@"MTD"];
         
         //when mtd call response sucess then hit ytd call
         [self ytdNetworkCAll];
@@ -429,14 +384,7 @@
         // we should receive report response data here
         ytdResponseData = reportResponse;
         
-        for (int i=0; i<ytdResponseData.tableData.count; i++) {
-            NSArray *array = [NSArray arrayWithArray:[ytdResponseData.tableData objectAtIndex:i]];
-            [ytdDataArray addObject:array];
-        }
-        
         [self addReportData:ytdResponseData into:salesSliderData forColumn:@"YTD"];
-        
-        NSLog(@"YTD: %@",ytdDataArray);
         
         [self LFTD_NetworkCall];
         
@@ -474,15 +422,8 @@
         // we should receive report response data here
          lmtdDataArray = [[NSMutableArray alloc ] init];
         lmtdResponseData = reportResponse;
-        for (int i=0; i<lmtdResponseData.tableData.count; i++) {
-            NSArray *array = [NSArray arrayWithArray:[lmtdResponseData.tableData objectAtIndex:i]];
-            [lmtdDataArray addObject:array];
-        }
         
         [self addReportData:lmtdResponseData into:salesSliderData forColumn:@"LMTD"];
-        
-        NSLog(@"LMTD: %@",lmtdDataArray);
-        
         
         [self maintainArrayFTD_MTD_YTD];
         
@@ -509,19 +450,11 @@
     XmwReportService* reportService = [[XmwReportService alloc] initWithPostData:lftdPost withContext:@"lftdCall"];
     
     [reportService fetchReportUsingSuccess:^(DotFormPost* formPosted, ReportPostResponse* reportResponse) {
-        
-        
         // we should receive report response data here
           lftdDataArray = [[NSMutableArray alloc ] init];
         lftdResponseData = reportResponse;
-        for (int i=0; i<lftdResponseData.tableData.count; i++) {
-            NSArray *array = [NSArray arrayWithArray:[lftdResponseData.tableData objectAtIndex:i]];
-            [lftdDataArray addObject:array];
-        }
         
         [self addReportData:lftdResponseData into:salesSliderData forColumn:@"LFTD"];
-        
-        NSLog(@"LFTD: %@",lftdDataArray);
         
         [self LMTD_NetworkCall];
 //          [self maintainArrayFTD_MTD_YTD];
@@ -531,7 +464,9 @@
         
     }];
 }
--(NSArray*)removeZero:(NSArray*)array{
+
+-(NSArray*)removeZero:(NSArray*)array
+{
     NSMutableArray *tempArray = [[NSMutableArray alloc]init];
     
     for (int i=0; i<array.count; i++) {
@@ -595,8 +530,8 @@
 }
 
 
-
--(NSArray*)distinct:(NSArray*)arrar1 :(NSArray*)array2{
+-(NSArray*)distinct:(NSArray*)arrar1 :(NSArray*)array2
+{
     NSMutableArray *minProductName = [[NSMutableArray alloc]init];
     NSMutableArray *maxProductName = [[NSMutableArray alloc]init];
     
@@ -652,7 +587,8 @@
     CGFloat width = scrollView.frame.size.width;
     NSInteger page = (scrollView.contentOffset.x + (0.5f * width)) / width;
     NSInteger moveToPage = page;
-    moveToPage = moveToPage % [ftdDataArray count];
+    
+    moveToPage = moveToPage % [[salesSliderData allKeys] count];
     pageIndicator.currentPage = moveToPage;
     
 }
