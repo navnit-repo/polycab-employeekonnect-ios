@@ -469,49 +469,32 @@
     [loadingView removeView];
     
     if ([callName isEqualToString:@"statusSalesOrder"]) {
-        
         NSString *status_flag = [[respondedObject valueForKey:@"so_header"]valueForKey:@"STATUS_FLAG"];
-        if ([status_flag isEqualToString:@"S"] || [status_flag isEqualToString:@"E"]) {
-            if ([status_flag isEqualToString:@"S"]) {
-                
-                // One exta time check if line item count  not line item count + 1
-               
-                    NSDictionary *so_lines = respondedObject[@"so_lines"];
-                    if (so_lines.count != (lineItemCount + 1)) {
-                        if (oneTimeSuccessFlagCheck) {
-                        oneTimeSuccessFlagCheck = false;
-                        loadingView= [LoadingView loadingViewInView:self.view];
-                        [self performSelector:@selector(trackNetworkCall) withObject:nil afterDelay:10.0];
-                                        
-                      }
-                        
-                        else
-                        {
-                           [self configureSummaryVC:respondedObject];
-                        }
-                                         
-                    }
-                
-                    else {
-                        [self configureSummaryVC:respondedObject];
-                    }
-
-                
+        if ([status_flag isEqualToString:@"S"]) {
+            // One exta time check if line item count  not line item count + 1
+            NSDictionary *so_lines = respondedObject[@"so_lines"];
+            if (so_lines.count != (lineItemCount + 1)) {
+                if (oneTimeSuccessFlagCheck) {
+                    oneTimeSuccessFlagCheck = false;
+                    loadingView= [LoadingView loadingViewInView:self.view];
+                    [self performSelector:@selector(trackNetworkCall) withObject:nil afterDelay:10.0];
+                                    
+                } else {
+                       [self configureSummaryVC:respondedObject];
+                }
+            } else {
+                [self configureSummaryVC:respondedObject];
             }
-            else
-            {
-                            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Polycab" message: [[respondedObject valueForKey:@"so_header"]valueForKey:@"ERROR_MESSAGE"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                            [alert show];
-            }
-        }
-        else
-        {
-            
+        } else if ([status_flag isEqualToString:@"E"]) {
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Polycab" message:[respondedObject valueForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alert show];
+        } else if ([status_flag isEqualToString:@"H"]) {
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Polycab" message:[respondedObject valueForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alert show];
+        } else {
             [self timer];
-           
         }
-        
-    }
+    }  // end of if statusSalesOrder
     
     
     if ([callName isEqualToString:@"createSalesOrder"]) {
