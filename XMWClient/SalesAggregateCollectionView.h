@@ -52,6 +52,7 @@
     
     NSMutableDictionary* salesSliderData;
     SalesCardDataTuple* summaryTuple;
+    NSArray* sortedCardKeys;
     
     BOOL sortDone;
     int numberOfCell;

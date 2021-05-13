@@ -39,6 +39,8 @@
 		270B774F2477B04D0024960F /* frame-9.png in Resources */ = {isa = PBXBuildFile; fileRef = 270B77382477B04D0024960F /* frame-9.png */; };
 		270B77522477B0900024960F /* download.png in Resources */ = {isa = PBXBuildFile; fileRef = 270B77502477B08F0024960F /* download.png */; };
 		270B77532477B0900024960F /* genrate.png in Resources */ = {isa = PBXBuildFile; fileRef = 270B77512477B0900024960F /* genrate.png */; };
+		270E2FB125DAF1B7004A8AE2 /* CollectionReportVC.h in Headers */ = {isa = PBXBuildFile; fileRef = 270E2FAF25DAF1B7004A8AE2 /* CollectionReportVC.h */; };
+		270E2FB225DAF1B7004A8AE2 /* CollectionReportVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 270E2FB025DAF1B7004A8AE2 /* CollectionReportVC.m */; };
 		27184CC42560DB0A00F3A37F /* ChatHeadReportVC.h in Headers */ = {isa = PBXBuildFile; fileRef = 27184CC22560DB0A00F3A37F /* ChatHeadReportVC.h */; };
 		27184CC52560DB0A00F3A37F /* ChatHeadReportVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 27184CC32560DB0A00F3A37F /* ChatHeadReportVC.m */; };
 		2724689E24C92DCD00B71C62 /* OrderAwaitingConfirmation.h in Headers */ = {isa = PBXBuildFile; fileRef = 2724689C24C92DCD00B71C62 /* OrderAwaitingConfirmation.h */; };
@@ -1233,6 +1235,8 @@
 		270B77382477B04D0024960F /* frame-9.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "frame-9.png"; sourceTree = "<group>"; };
 		270B77502477B08F0024960F /* download.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = download.png; path = "Polycab Assests/assests/download.png"; sourceTree = SOURCE_ROOT; };
 		270B77512477B0900024960F /* genrate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = genrate.png; path = "Polycab Assests/assests/genrate.png"; sourceTree = SOURCE_ROOT; };
+		270E2FAF25DAF1B7004A8AE2 /* CollectionReportVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CollectionReportVC.h; path = Polycab/CollectionReports/CollectionReportVC.h; sourceTree = "<group>"; };
+		270E2FB025DAF1B7004A8AE2 /* CollectionReportVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = CollectionReportVC.m; path = Polycab/CollectionReports/CollectionReportVC.m; sourceTree = "<group>"; };
 		27184CC22560DB0A00F3A37F /* ChatHeadReportVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ChatHeadReportVC.h; path = Polycab/ChatHead/ChatHeadReportVC.h; sourceTree = "<group>"; };
 		27184CC32560DB0A00F3A37F /* ChatHeadReportVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ChatHeadReportVC.m; path = Polycab/ChatHead/ChatHeadReportVC.m; sourceTree = "<group>"; };
 		2724689C24C92DCD00B71C62 /* OrderAwaitingConfirmation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OrderAwaitingConfirmation.h; path = Polycab/OrderConfirmation/OrderAwaitingConfirmation.h; sourceTree = "<group>"; };
@@ -2527,6 +2531,15 @@
 				270B77382477B04D0024960F /* frame-9.png */,
 			);
 			path = "Spinner-0.8s-174px";
+			sourceTree = "<group>";
+		};
+		270E2FAE25DAF14B004A8AE2 /* CollectionReports */ = {
+			isa = PBXGroup;
+			children = (
+				270E2FAF25DAF1B7004A8AE2 /* CollectionReportVC.h */,
+				270E2FB025DAF1B7004A8AE2 /* CollectionReportVC.m */,
+			);
+			name = CollectionReports;
 			sourceTree = "<group>";
 		};
 		27184CC12560DA8F00F3A37F /* ChatHead */ = {
@@ -4633,6 +4646,7 @@
 		F0A358E820FC9EC300CE34AC /* Polycab */ = {
 			isa = PBXGroup;
 			children = (
+				270E2FAE25DAF14B004A8AE2 /* CollectionReports */,
 				277E640825736C7300C60607 /* CustomReports */,
 				27184CC12560DA8F00F3A37F /* ChatHead */,
 				27F1ADB3255F6B4800CAE856 /* InventoryForm */,
@@ -5161,6 +5175,7 @@
 				854304061B0DAD1000328DDD /* MarqueeLabel.h in Headers */,
 				858082A31A5D88EB00207EAB /* DotHBarChart.h in Headers */,
 				F0B2FB46218850F5006A7C6B /* DispatchDetailsVC.h in Headers */,
+				270E2FB125DAF1B7004A8AE2 /* CollectionReportVC.h in Headers */,
 				2732588F2484D945003F979C /* CreateOrderStatusVC.h in Headers */,
 				F0B2FB1E218850F5006A7C6B /* SearchProductListVC.h in Headers */,
 				F0580211221D2E3200682D07 /* SearchProductByCatalogNextViewVC.h in Headers */,
@@ -5916,6 +5931,7 @@
 				F039CAE620F49AF2005CEC02 /* Records.m in Sources */,
 				8579E74B174CDBDC00D7945F /* SBJsonStreamWriter.m in Sources */,
 				8579E74D174CDBDC00D7945F /* SBJsonStreamWriterAccumulator.m in Sources */,
+				270E2FB225DAF1B7004A8AE2 /* CollectionReportVC.m in Sources */,
 				85CC35061DFA67900016F65C /* MultiSelectSearchViewCell.m in Sources */,
 				2732597F2484DA78003F979C /* TermsVC.m in Sources */,
 				F0B2FB4D218850F5006A7C6B /* DispatchDetailsMapVC.m in Sources */,
@@ -6291,7 +6307,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 15520;
+				CURRENT_PROJECT_VERSION = 15502;
 				DEVELOPMENT_TEAM = QS92QH4FZ2;
 				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = YES;
 				ENABLE_BITCODE = NO;
@@ -6312,7 +6328,7 @@
 					"$(PROJECT_DIR)/RLMFramework/Alamofire.framework",
 					"$(PROJECT_DIR)/RLMFramework/SwiftyJSON.framework",
 				);
-				MARKETING_VERSION = 15.52;
+				MARKETING_VERSION = 15.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.polycab.xmw.employee.ent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -6333,7 +6349,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 15520;
+				CURRENT_PROJECT_VERSION = 15502;
 				DEVELOPMENT_TEAM = QS92QH4FZ2;
 				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = YES;
 				ENABLE_BITCODE = NO;
@@ -6354,7 +6370,7 @@
 					"$(PROJECT_DIR)/RLMFramework/SwiftyJSON.framework",
 					"$(PROJECT_DIR)/RLMFramework/Alamofire.framework",
 				);
-				MARKETING_VERSION = 15.52;
+				MARKETING_VERSION = 15.5;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PRODUCT_BUNDLE_IDENTIFIER = com.polycab.xmw.employee.ent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -6482,7 +6498,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 15520;
+				CURRENT_PROJECT_VERSION = 15502;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = QS92QH4FZ2;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -6491,7 +6507,7 @@
 				INFOPLIST_FILE = PushNotificationExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				MARKETING_VERSION = 15.52;
+				MARKETING_VERSION = 15.5;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.polycab.xmw.employee.ent.exten;
@@ -6523,7 +6539,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 15520;
+				CURRENT_PROJECT_VERSION = 15502;
 				DEVELOPMENT_TEAM = QS92QH4FZ2;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -6532,7 +6548,7 @@
 				INFOPLIST_FILE = PushNotificationExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				MARKETING_VERSION = 15.52;
+				MARKETING_VERSION = 15.5;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.polycab.xmw.employee.ent.exten;

@@ -493,6 +493,24 @@
     
     // [salesSliderData allKeys];
     
+    NSArray* allKeys = [salesSliderData allKeys];
+    
+    sortedCardKeys  = [ allKeys sortedArrayUsingComparator:^NSComparisonResult(id  obj1, id obj2) {
+        NSString* str1 = (NSString*) obj1;
+        NSString* str2 = (NSString*) obj2;
+        
+        
+        if([str1 compare:@"All" options:NSCaseInsensitiveSearch] == NSOrderedSame) return NSOrderedAscending;
+        
+        if([str2 compare:@"All" options:NSCaseInsensitiveSearch] == NSOrderedSame) return NSOrderedDescending;
+        
+        if([str1 compare:@"OTHERS" options:NSCaseInsensitiveSearch] == NSOrderedSame) return NSOrderedDescending;
+        
+        if([str2 compare:@"OTHERS" options:NSCaseInsensitiveSearch] == NSOrderedSame) return NSOrderedAscending;
+        
+        return [str1 compare:str2];
+    }];
+    
     if ([[salesSliderData allKeys] count]>0) {
          [self.collectionView reloadData];//reload cell data
     } else {
@@ -602,9 +620,8 @@
         [blankView removeFromSuperview];
     }
     
-        
-    NSArray* keys = [salesSliderData allKeys];
-    SalesCardDataTuple* tuple = [salesSliderData objectForKey:[keys objectAtIndex:indexPath.row]];
+
+    SalesCardDataTuple* tuple = [salesSliderData objectForKey:[sortedCardKeys objectAtIndex:indexPath.row]];
 
     salesCell = [SalesCell createInstance];
    

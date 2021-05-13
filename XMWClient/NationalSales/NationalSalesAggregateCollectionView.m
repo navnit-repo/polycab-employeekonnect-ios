@@ -408,8 +408,7 @@
         [blankView removeFromSuperview];
     }
     
-    NSArray* keys = [salesSliderData allKeys];
-    SalesCardDataTuple* tuple = [salesSliderData objectForKey:[keys objectAtIndex:indexPath.row]];
+    SalesCardDataTuple* tuple = [salesSliderData objectForKey:[sortedCardKeys objectAtIndex:indexPath.row]];
     
     NSString* displayName = @"";
     
