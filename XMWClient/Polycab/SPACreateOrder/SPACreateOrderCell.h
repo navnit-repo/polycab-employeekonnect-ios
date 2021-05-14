@@ -32,9 +32,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UILabel *packSizeLabel;
 @property (weak, nonatomic) IBOutlet MXTextField *spaPriceTextField;
 
-
-
 @property(weak,nonatomic) id<DisplayCellButtonDelegate>delegate;
+
+-(BOOL) isPackingSizeRoundingEnabled:(NSString*) businessVertical;
+
 @end
 
 @protocol DisplayCellButtonDelegate <NSObject>

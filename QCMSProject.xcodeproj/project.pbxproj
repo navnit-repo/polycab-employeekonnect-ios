@@ -43,6 +43,9 @@
 		270E2FB225DAF1B7004A8AE2 /* CollectionReportVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 270E2FB025DAF1B7004A8AE2 /* CollectionReportVC.m */; };
 		27184CC42560DB0A00F3A37F /* ChatHeadReportVC.h in Headers */ = {isa = PBXBuildFile; fileRef = 27184CC22560DB0A00F3A37F /* ChatHeadReportVC.h */; };
 		27184CC52560DB0A00F3A37F /* ChatHeadReportVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 27184CC32560DB0A00F3A37F /* ChatHeadReportVC.m */; };
+		2720FE64264E6EA100718CB8 /* RoundingToPacksizeSummaryView.h in Headers */ = {isa = PBXBuildFile; fileRef = 2720FE62264E6EA000718CB8 /* RoundingToPacksizeSummaryView.h */; };
+		2720FE65264E6EA100718CB8 /* RoundingToPacksizeSummaryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2720FE63264E6EA000718CB8 /* RoundingToPacksizeSummaryView.m */; };
+		2720FE69264E6EFB00718CB8 /* RoundingToPacksizeSummaryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2720FE68264E6EFB00718CB8 /* RoundingToPacksizeSummaryView.xib */; };
 		2724689E24C92DCD00B71C62 /* OrderAwaitingConfirmation.h in Headers */ = {isa = PBXBuildFile; fileRef = 2724689C24C92DCD00B71C62 /* OrderAwaitingConfirmation.h */; };
 		2724689F24C92DCD00B71C62 /* OrderAwaitingConfirmation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2724689D24C92DCD00B71C62 /* OrderAwaitingConfirmation.m */; };
 		2732587B2484CEA8003F979C /* ScreenMapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 273258792484CEA8003F979C /* ScreenMapper.h */; };
@@ -731,14 +734,8 @@
 		90EF3CA217AF7F9400F2663E /* DotReportListCellRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 90EF3CA017AF7F9400F2663E /* DotReportListCellRenderer.m */; };
 		90F47D731796A69900C6B76C /* PageViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 8579E723174CD43100D7945F /* PageViewController.h */; };
 		90F47D741796A6B000C6B76C /* DVAppDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 8579E717174CD04700D7945F /* DVAppDelegate.h */; };
-		90F47F531796B47500C6B76C /* HavellsMenuScreenVC.h in Headers */ = {isa = PBXBuildFile; fileRef = 90F47F501796B47500C6B76C /* HavellsMenuScreenVC.h */; };
-		90F47F541796B47500C6B76C /* HavellsMenuScreenVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F47F511796B47500C6B76C /* HavellsMenuScreenVC.m */; };
-		90F47F551796B47500C6B76C /* HavellsMenuScreenVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90F47F521796B47500C6B76C /* HavellsMenuScreenVC.xib */; };
 		90F47F5D1796C24400C6B76C /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90DD12E2178ECC28005F20D1 /* SystemConfiguration.framework */; };
 		90F4E00E175C4EEB005FE7D7 /* MenuVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90F4E00D175C4EEB005FE7D7 /* MenuVC.xib */; };
-		90F5F4E2179D55E7003BCA61 /* WorkFlowLoginScreen.h in Headers */ = {isa = PBXBuildFile; fileRef = 90F5F4DF179D55E7003BCA61 /* WorkFlowLoginScreen.h */; };
-		90F5F4E3179D55E7003BCA61 /* WorkFlowLoginScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F5F4E0179D55E7003BCA61 /* WorkFlowLoginScreen.m */; };
-		90F5F4E4179D55E7003BCA61 /* WorkFlowLoginScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90F5F4E1179D55E7003BCA61 /* WorkFlowLoginScreen.xib */; };
 		90FA56D117D71753002B7601 /* SearchResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 90182A3117670C0D00B401E5 /* SearchResponse.m */; };
 		90FA56D217D71758002B7601 /* SearchResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 90182A3017670C0D00B401E5 /* SearchResponse.h */; };
 		90FA56DA17D727B3002B7601 /* SearchViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 90FA56D717D727B3002B7601 /* SearchViewController.h */; };
@@ -1239,6 +1236,9 @@
 		270E2FB025DAF1B7004A8AE2 /* CollectionReportVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = CollectionReportVC.m; path = Polycab/CollectionReports/CollectionReportVC.m; sourceTree = "<group>"; };
 		27184CC22560DB0A00F3A37F /* ChatHeadReportVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ChatHeadReportVC.h; path = Polycab/ChatHead/ChatHeadReportVC.h; sourceTree = "<group>"; };
 		27184CC32560DB0A00F3A37F /* ChatHeadReportVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ChatHeadReportVC.m; path = Polycab/ChatHead/ChatHeadReportVC.m; sourceTree = "<group>"; };
+		2720FE62264E6EA000718CB8 /* RoundingToPacksizeSummaryView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RoundingToPacksizeSummaryView.h; sourceTree = "<group>"; };
+		2720FE63264E6EA000718CB8 /* RoundingToPacksizeSummaryView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RoundingToPacksizeSummaryView.m; sourceTree = "<group>"; };
+		2720FE68264E6EFB00718CB8 /* RoundingToPacksizeSummaryView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RoundingToPacksizeSummaryView.xib; sourceTree = "<group>"; };
 		2724689C24C92DCD00B71C62 /* OrderAwaitingConfirmation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OrderAwaitingConfirmation.h; path = Polycab/OrderConfirmation/OrderAwaitingConfirmation.h; sourceTree = "<group>"; };
 		2724689D24C92DCD00B71C62 /* OrderAwaitingConfirmation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = OrderAwaitingConfirmation.m; path = Polycab/OrderConfirmation/OrderAwaitingConfirmation.m; sourceTree = "<group>"; };
 		273258792484CEA8003F979C /* ScreenMapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ScreenMapper.h; path = Util/ScreenMapper.h; sourceTree = "<group>"; };
@@ -2015,13 +2015,7 @@
 		90EF3CA017AF7F9400F2663E /* DotReportListCellRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DotReportListCellRenderer.m; path = Util/DotReportListCellRenderer.m; sourceTree = "<group>"; };
 		90F01B4317844E0000BBD5E8 /* AppConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppConstants.h; path = QCMSFile/constants/AppConstants.h; sourceTree = "<group>"; };
 		90F01B4417844E0000BBD5E8 /* AppConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppConstants.m; path = QCMSFile/constants/AppConstants.m; sourceTree = "<group>"; };
-		90F47F501796B47500C6B76C /* HavellsMenuScreenVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HavellsMenuScreenVC.h; sourceTree = "<group>"; };
-		90F47F511796B47500C6B76C /* HavellsMenuScreenVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HavellsMenuScreenVC.m; sourceTree = "<group>"; };
-		90F47F521796B47500C6B76C /* HavellsMenuScreenVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HavellsMenuScreenVC.xib; sourceTree = "<group>"; };
 		90F4E00D175C4EEB005FE7D7 /* MenuVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MenuVC.xib; path = Screens/MenuVC.xib; sourceTree = "<group>"; };
-		90F5F4DF179D55E7003BCA61 /* WorkFlowLoginScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorkFlowLoginScreen.h; sourceTree = "<group>"; };
-		90F5F4E0179D55E7003BCA61 /* WorkFlowLoginScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WorkFlowLoginScreen.m; sourceTree = "<group>"; };
-		90F5F4E1179D55E7003BCA61 /* WorkFlowLoginScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WorkFlowLoginScreen.xib; sourceTree = "<group>"; };
 		90FA56D717D727B3002B7601 /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SearchViewController.h; path = UITableViewCell/SearchViewController.h; sourceTree = "<group>"; };
 		90FA56D817D727B3002B7601 /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SearchViewController.m; path = UITableViewCell/SearchViewController.m; sourceTree = "<group>"; };
 		90FA56D917D727B3002B7601 /* SearchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SearchViewController.xib; path = UITableViewCell/SearchViewController.xib; sourceTree = "<group>"; };
@@ -2599,6 +2593,9 @@
 				273259022484DA1E003F979C /* CreateOrderStatusCell.h */,
 				273259032484DA1E003F979C /* CreateOrderVC1.m */,
 				273259042484DA1E003F979C /* CreateOrderDisplayCell.m */,
+				2720FE62264E6EA000718CB8 /* RoundingToPacksizeSummaryView.h */,
+				2720FE63264E6EA000718CB8 /* RoundingToPacksizeSummaryView.m */,
+				2720FE68264E6EFB00718CB8 /* RoundingToPacksizeSummaryView.xib */,
 			);
 			name = CreateOrder;
 			path = Polycab/CreateOrder;
@@ -2811,7 +2808,7 @@
 				905FFDB71999EEBB00E95BFB /* Toast */,
 				85AC964C198FFD7900AC0338 /* ReportSections */,
 				8595B4D8190FCB790010C685 /* DotCalendar */,
-				90F47F4F1796B47500C6B76C /* Havells */,
+				90F47F4F1796B47500C6B76C /* OldCode */,
 				9036FD99178A8FF8009DB2F2 /* Storage */,
 				902D3F4F1755E90700E079AB /* UITableViewCell */,
 				9000C6A6175340A700A1DAF4 /* Utils */,
@@ -3909,7 +3906,7 @@
 			name = Images;
 			sourceTree = "<group>";
 		};
-		90F47F4F1796B47500C6B76C /* Havells */ = {
+		90F47F4F1796B47500C6B76C /* OldCode */ = {
 			isa = PBXGroup;
 			children = (
 				F017D24320E202100063B89B /* CustomerClaims */,
@@ -3918,12 +3915,6 @@
 				8530E0641AC05965001E5E79 /* ProductSearchVC.h */,
 				8530E0651AC05965001E5E79 /* ProductSearchVC.m */,
 				8530E0661AC05965001E5E79 /* ProductSearchVC.xib */,
-				90F47F501796B47500C6B76C /* HavellsMenuScreenVC.h */,
-				90F47F511796B47500C6B76C /* HavellsMenuScreenVC.m */,
-				90F47F521796B47500C6B76C /* HavellsMenuScreenVC.xib */,
-				90F5F4DF179D55E7003BCA61 /* WorkFlowLoginScreen.h */,
-				90F5F4E0179D55E7003BCA61 /* WorkFlowLoginScreen.m */,
-				90F5F4E1179D55E7003BCA61 /* WorkFlowLoginScreen.xib */,
 				8516FED71B60697500E605A6 /* SelectServerVC.h */,
 				8516FED81B60697500E605A6 /* SelectServerVC.m */,
 				8516FED91B60697500E605A6 /* SelectServerVC.xib */,
@@ -3933,7 +3924,7 @@
 				F0FE2BA41F7141A600D8FCEF /* DivisionVC.h */,
 				F0FE2BA51F7141A600D8FCEF /* DivisionVC.m */,
 			);
-			name = Havells;
+			name = OldCode;
 			path = MainMenu;
 			sourceTree = "<group>";
 		};
@@ -4972,7 +4963,6 @@
 				F0E1A0D5213E4E5D005F4435 /* HamperSchemeCell.h in Headers */,
 				858F05001DEEC27A00398D46 /* EditSearchField.h in Headers */,
 				F02E356B22159E7D0007573D /* NationalWisePolycabSalesComparisonChat.h in Headers */,
-				90F47F531796B47500C6B76C /* HavellsMenuScreenVC.h in Headers */,
 				85E1D88C1B8DFFAE0034D949 /* BidirectionCollectionLayout.h in Headers */,
 				8558B3361D0730960017FA3A /* GoldCardSubFormVC.h in Headers */,
 				902B4B6218E0352A00797225 /* XmwWebViewController.h in Headers */,
@@ -5001,7 +4991,6 @@
 				857A3EF41A6CFC3500279931 /* SecondDashView.h in Headers */,
 				273258B22484D965003F979C /* OverDueCell.h in Headers */,
 				2732593B2484DA1E003F979C /* GrowthIndicatorReportVC.h in Headers */,
-				90F5F4E2179D55E7003BCA61 /* WorkFlowLoginScreen.h in Headers */,
 				2732591D2484DA1E003F979C /* TSIFormVC.h in Headers */,
 				F088F5D12105C38D000E26F4 /* ManageSubUserVC.h in Headers */,
 				851D93B61A81F9B100C61982 /* DualAxisHorizontalBarCell.h in Headers */,
@@ -5037,6 +5026,7 @@
 				273258D42484D9C9003F979C /* PaymentOutstandingTabbularSection.h in Headers */,
 				F04D564F21006F3900FF6CA8 /* RightVC.h in Headers */,
 				F07B39E320CE519600740DF4 /* CustomerClaimVC.h in Headers */,
+				2720FE64264E6EA100718CB8 /* RoundingToPacksizeSummaryView.h in Headers */,
 				85284F6C19D5FC600010ED87 /* XmwNotificationViewController.h in Headers */,
 				85CC35021DFA67900016F65C /* MultiSelectPopup.h in Headers */,
 				855A8E451B495022001152F2 /* CreateOrderVC.h in Headers */,
@@ -5379,6 +5369,7 @@
 				F03029642101B0280089A4E4 /* 01_splash.jpg in Resources */,
 				F036CDEC2282CBC8000F2448 /* close.png in Resources */,
 				85DB6AC41E634CB90018710B /* WideReportVC.xib in Resources */,
+				2720FE69264E6EFB00718CB8 /* RoundingToPacksizeSummaryView.xib in Resources */,
 				90E810B0174F451D003BDF77 /* back.png in Resources */,
 				F0B425AE22671C240011D3E4 /* chat_add.png in Resources */,
 				270B77392477B04D0024960F /* frame-4.png in Resources */,
@@ -5722,7 +5713,6 @@
 				273259A1248502E3003F979C /* growth_arrow_up.png in Resources */,
 				F059CCA0214F70D000E303F6 /* 11-policies.png in Resources */,
 				8530E0781AC2AABA001E5E79 /* refresh@2x.png in Resources */,
-				90F47F551796B47500C6B76C /* HavellsMenuScreenVC.xib in Resources */,
 				85BBB0101E710CD500169952 /* arrow_right@3x.png in Resources */,
 				F0B425B622671C240011D3E4 /* send@3x.png in Resources */,
 				85E738A51A8B7C6000FADD4C /* havells@2x.png in Resources */,
@@ -5738,7 +5728,6 @@
 				2708C1A82598A07600DBA84E /* pconnect.polycab.com.der in Resources */,
 				857F8C5A1A828CBD0018A54C /* my_details_L.png in Resources */,
 				F0580217221D7D8500682D07 /* polycab_loading_logo.png in Resources */,
-				90F5F4E4179D55E7003BCA61 /* WorkFlowLoginScreen.xib in Resources */,
 				F0B2FB58218851E1006A7C6B /* user_icon.png in Resources */,
 				273259332484DA1E003F979C /* CompareReportTableHeader.xib in Resources */,
 				85CC35011DFA67900016F65C /* DVCheckBoxCell.xib in Resources */,
@@ -6103,6 +6092,7 @@
 				8500DCF21A794D45002B534F /* XYPieChart.m in Sources */,
 				2732594B2484DA5B003F979C /* SPACreateOrderCell.m in Sources */,
 				902D3F6B1755E92200E079AB /* RadioTableViewCell.m in Sources */,
+				2720FE65264E6EA100718CB8 /* RoundingToPacksizeSummaryView.m in Sources */,
 				8558B3371D0730960017FA3A /* GoldCardSubFormVC.m in Sources */,
 				F02D142121197235001B1967 /* PolycabHeader.m in Sources */,
 				F0B2FB20218850F5006A7C6B /* FeedbackDropDownVC.m in Sources */,
@@ -6196,13 +6186,11 @@
 				90DD1309178EDE04005F20D1 /* LoadingView.m in Sources */,
 				90082D2B178FC48000C79212 /* MandatoryAlertDelegate.m in Sources */,
 				F0FE2BA71F7141A600D8FCEF /* DivisionVC.m in Sources */,
-				90F47F541796B47500C6B76C /* HavellsMenuScreenVC.m in Sources */,
 				F0B425A622671C240011D3E4 /* ChatHistory_Object.m in Sources */,
 				F0B425C322671C620011D3E4 /* PTSMessagingCell.m in Sources */,
 				F02E3527221542A70007573D /* NationalDashboardVC.m in Sources */,
 				902B4B6318E0352A00797225 /* XmwWebViewController.m in Sources */,
 				2732591E2484DA1E003F979C /* CreateOrderStatusVC.m in Sources */,
-				90F5F4E3179D55E7003BCA61 /* WorkFlowLoginScreen.m in Sources */,
 				85804F3C1A69166F0093CDBB /* DotVerticalBarCell.m in Sources */,
 				85D7DA9E18F749CB00CF7D94 /* DVTableFormView.m in Sources */,
 				85AC965E198FFDDF00AC0338 /* ReportFooterSection.m in Sources */,

@@ -224,7 +224,7 @@
 {
     MXTextField *quantityField = (MXTextField *) textField;
     
-    if ([packSizeFeatureVerticals containsObject:quantityField.elementId]) {
+    if ([self isPackingSizeRoundingEnabled:quantityField.elementId]) {
            [self packSizeMethodCall:quantityField.attachedData :quantityField.text];
        }
        else
@@ -267,13 +267,10 @@
                  {
                      // show alert
                      [self alertViewMethod:[NSString stringWithFormat:@"%d",finalQuantityValue]];
-                      [self.delegate returnPackSizeFlag:false];
-            
-                     
+                      [self.delegate returnPackSizeFlag:false];                     
                  }
              }
         }
-        
         else
         {
              [self alertViewMethod:[NSString stringWithFormat:@"%d",packSizeInt]];
@@ -322,5 +319,10 @@
          
      }
 
+
+-(BOOL) isPackingSizeRoundingEnabled:(NSString*) businessVertical
+{
+    return [packSizeFeatureVerticals containsObject:businessVertical];
+}
 
 @end

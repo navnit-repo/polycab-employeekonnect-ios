@@ -240,7 +240,7 @@
 {
     ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
     BOOL zeroQuantityFlag = true;
-    loadingView= [LoadingView loadingViewInView:self.view];
+    
     NSString *authToken= [[NSUserDefaults standardUserDefaults] valueForKey:@"AUTH_TOKEN"];
     NSMutableDictionary *data = [[NSMutableDictionary alloc]init];
     
@@ -251,13 +251,15 @@
     lineItemCount = 0;
     oneTimeSuccessFlagCheck = true;
     
+    NSMutableArray* roundingDetails = [[NSMutableArray alloc] init];
+    
     for (int i=0; i<alreadyAddDisplayCellData.count; i++) {
         
         int tag = i + 2000;
         NSLog(@"Place order button click Create Order Display Tag %d",tag);
-        CreateOrderDisplayCell *vc = [(CreateOrderDisplayCell*) self.view viewWithTag:tag];
+        CreateOrderDisplayCell *displayCell = [(CreateOrderDisplayCell*) self.view viewWithTag:tag];
         NSString *checkTextFiledEmpty =  [[NSString alloc]init];
-        MXTextField *textField = (MXTextField*) vc.valueTxtFld;
+        MXTextField *textField = (MXTextField*) displayCell.valueTxtFld;
         
         checkTextFiledEmpty = textField.text;
         
@@ -267,7 +269,7 @@
             // Tushar, Zero Quantity value check
             NSInteger value = [checkTextFiledEmpty integerValue];
             if (value <= 0) {
-                long int tag = vc.tag-2000;
+                long int tag = displayCell.tag-2000;
                 NSLog(@"Cell Tag: %ld",tag);
                 UIAlertView *alert = [[UIAlertView alloc]initWithTitle:[[alreadyAddDisplayCellData objectAtIndex:tag] objectAtIndex:0] message:@"Please enter quantity greater than zero." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                 [loadingView removeView];
@@ -277,8 +279,27 @@
             }
             else
             {
+                //
+                if([displayCell isPackingSizeRoundingEnabled:textField.elementId ]) {
+                    // we need to check the pack size rounding
+                    
+                   BOOL roundingApplied =  [self roundingForPacksize:textField.attachedData inputQuantity:&checkTextFiledEmpty];
+                
+                    if(roundingApplied) {
+                        // Packsize rounding applied
+                        NSMutableArray* roundingLine = [[NSMutableArray alloc] init];
+                        [roundingLine addObject:[NSString stringWithFormat:@"%d", i]];  // line n
+                        [roundingLine addObject:[[alreadyAddDisplayCellData objectAtIndex:i] objectAtIndex:0]];  // item code
+                        [roundingLine addObject:[[alreadyAddDisplayCellData objectAtIndex:i] objectAtIndex:1]];  // item desc
+                        [roundingLine addObject:[checkTextFiledEmpty copy]];  // rounding quantity
+                        [roundingDetails addObject:roundingLine];
+                        
+                        // update the textfield value
+                        textField.text = checkTextFiledEmpty;
+                    }
+                }
                 zeroQuantityFlag = true;
-                long int tag = vc.tag-2000;
+                long int tag = displayCell.tag-2000;
                 NSLog(@"Cell Tag: %ld",tag);
                 NSUInteger lenght =[[alreadyAddDisplayCellData objectAtIndex:tag] count];
                 
@@ -296,45 +317,39 @@
                 
                 lineItemCount = lineItemCount + 1;
             }
-            
-
-            
         }
-        
     }
     
     if (zeroQuantityFlag) {
-    [data setObject:array forKey:@"pc_so_line_items"];
-    if ([array count] != 0) {
-        
-        NSMutableDictionary *header = [[NSMutableDictionary alloc]init];
-        [header setObject:[[NSUserDefaults standardUserDefaults] valueForKey:@"selectedRegisterIDCode"] forKey:@"USERNAME"];
-        [header setObject:[[NSUserDefaults standardUserDefaults] valueForKey:@"selectedRegisterIDCustomerName"] forKey:@"CUSTOMER_NAME"];
-        [header setObject:[NSString stringWithFormat:@"%@", [forwardedDataPost valueForKey:@"BUSINESS_VERTICAL"]] forKey:@"ACCOUNT_NUMBER"];
-        [header setObject:[NSString stringWithFormat:@"%@", [forwardedDataPost valueForKey:@"BILL_TO"]] forKey:@"BILL_TO"];
-        [header setObject:[NSString stringWithFormat:@"%@", [forwardedDataPost valueForKey:@"SHIP_TO"]] forKey:@"SHIP_TO"];
-        [header setObject:@"" forKey:@"REMARK"];
-        [header setObject:[NSString stringWithFormat:@"%@", [forwardedDataDisplay valueForKey:@"DELIVERY_DATE"]] forKey:@"DELIVERY_DATE"];
-        [header setObject:[NSString stringWithFormat:@"%@", [forwardedDataDisplay valueForKey:@"PURCH_NO"]] forKey:@"PURCHASE_NUMBER"];
-        
-        
-        [data setObject:header forKey:@"pc_so_header"];
-        
-        NSMutableDictionary *sendDict = [[NSMutableDictionary alloc]init];
-        [sendDict setObject:data forKey:@"data"];
-        [sendDict setObject:clientVariables.CLIENT_LOGIN_RESPONSE.authToken forKey:@"authToken"];
-        [sendDict setValue:@"createSalesOrder" forKey:@"opcode"];
-        
-        
-        networkHelper = [[NetworkHelper alloc]init];
-        
-        NSString *url = XmwcsConst_OPCODE_URL;
-        networkHelper.serviceURLString = url;
-        [networkHelper genericJSONPayloadRequestWith:sendDict :self :@"createSalesOrder"];
-    }
-        
-    else{
+        [data setObject:array forKey:@"pc_so_line_items"];
+        if ([array count] != 0) {
             
+            NSMutableDictionary *header = [[NSMutableDictionary alloc]init];
+            [header setObject:[[NSUserDefaults standardUserDefaults] valueForKey:@"selectedRegisterIDCode"] forKey:@"USERNAME"];
+            [header setObject:[[NSUserDefaults standardUserDefaults] valueForKey:@"selectedRegisterIDCustomerName"] forKey:@"CUSTOMER_NAME"];
+            [header setObject:[NSString stringWithFormat:@"%@", [forwardedDataPost valueForKey:@"BUSINESS_VERTICAL"]] forKey:@"ACCOUNT_NUMBER"];
+            [header setObject:[NSString stringWithFormat:@"%@", [forwardedDataPost valueForKey:@"BILL_TO"]] forKey:@"BILL_TO"];
+            [header setObject:[NSString stringWithFormat:@"%@", [forwardedDataPost valueForKey:@"SHIP_TO"]] forKey:@"SHIP_TO"];
+            [header setObject:@"" forKey:@"REMARK"];
+            [header setObject:[NSString stringWithFormat:@"%@", [forwardedDataDisplay valueForKey:@"DELIVERY_DATE"]] forKey:@"DELIVERY_DATE"];
+            [header setObject:[NSString stringWithFormat:@"%@", [forwardedDataDisplay valueForKey:@"PURCH_NO"]] forKey:@"PURCHASE_NUMBER"];
+            
+            
+            [data setObject:header forKey:@"pc_so_header"];
+            
+            NSMutableDictionary *sendDict = [[NSMutableDictionary alloc]init];
+            [sendDict setObject:data forKey:@"data"];
+            [sendDict setObject:clientVariables.CLIENT_LOGIN_RESPONSE.authToken forKey:@"authToken"];
+            [sendDict setValue:@"createSalesOrder" forKey:@"opcode"];
+            
+            
+            if([roundingDetails count]>0) {
+                // display user about rounding to pack size lines
+                [self showAlertForRoundingMessage:sendDict roundingDetails:roundingDetails];
+            } else {
+                [self call_CreateSalesOrderAPI: sendDict];
+            }
+        } else {
             if (zeroQuantityFlag) {
                 UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"" message:@"Please enter atleast one item quantity to place the order." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                 [loadingView removeView];
@@ -344,13 +359,10 @@
             {
                 // do nothing, show zero validation alert
             }
-            
-            
         }
+    }
 }
-    
-    
-}
+
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     
@@ -798,6 +810,88 @@
         [searchButton setBackgroundImage:blueButtonImage forState:UIControlStateNormal];
         
     }
+}
+
+
+-(BOOL) roundingForPacksize:(NSString*) packsize inputQuantity:(NSString**) quantityValueString
+{
+    BOOL retVal = false;
+    
+    int packSizeInt = [packsize intValue];
+    int quantityValueInt = [(*quantityValueString) intValue];
+    
+    if (quantityValueInt >= packSizeInt) {
+        if (packSizeInt > 1) {
+             float theFloat = (float)quantityValueInt / (float)packSizeInt;
+             int rounded = round(theFloat);
+             int finalQuantityValue  = packSizeInt * rounded;
+            // using rounding function to round of the quantity
+             if (quantityValueInt != finalQuantityValue) {
+                 // finalQuantityValue is the value to be used
+                 *quantityValueString = [NSString stringWithFormat:@"%d", finalQuantityValue];
+                 retVal = true;
+             }
+         }
+    } else {
+        // return the pack size, minimum packsize
+        *quantityValueString = [packsize copy];
+        retVal = true;
+    }
+    return retVal;
+}
+
+
+
+// on continue, send requestPayload
+-(void) showAlertForRoundingMessage:(NSDictionary*) requestPayload roundingDetails:(NSMutableArray*) lineRoundingDetails
+{
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Polycab" message:@"Your Order Quantity is rounded off according to pack size." preferredStyle:UIAlertControllerStyleAlert];
+    
+       UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"Continue" style:UIAlertActionStyleDefault
+            handler:^(UIAlertAction * action)
+            {
+                // on continue call create Sales Order API
+                [self call_CreateSalesOrderAPI:requestPayload];
+            }];
+        [alertController addAction:defaultAction];
+    
+    
+    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel
+         handler:^(UIAlertAction * action)
+         {
+             // Do nothing just close
+         }];
+     [alertController addAction:cancelAction];
+    
+    
+     
+    UIViewController* root = [[[[UIApplication sharedApplication]windows]objectAtIndex:0] rootViewController];
+    
+     UIViewController *assignViewController = nil;
+     
+     if ([root isKindOfClass:[SWRevealViewController class]]) {
+                 SWRevealViewController *reveal = (SWRevealViewController*)root;
+                 UINavigationController *check =(UINavigationController*)reveal.frontViewController;
+                 NSArray* viewsList = check.viewControllers;
+                 UIViewController *checkView = (UIViewController *) [viewsList objectAtIndex:viewsList.count - 1];
+         assignViewController = checkView;
+     }
+     else
+     {
+         assignViewController = root;
+     }
+    
+     [assignViewController presentViewController:alertController animated:YES completion:nil];
+}
+
+
+-(void) call_CreateSalesOrderAPI:(NSDictionary*) requestPayload
+{
+    loadingView= [LoadingView loadingViewInView:self.view];
+    networkHelper = [[NetworkHelper alloc]init];
+    NSString *url = XmwcsConst_OPCODE_URL;
+    networkHelper.serviceURLString = url;
+    [networkHelper genericJSONPayloadRequestWith:requestPayload :self :@"createSalesOrder"];
 }
 
 @end

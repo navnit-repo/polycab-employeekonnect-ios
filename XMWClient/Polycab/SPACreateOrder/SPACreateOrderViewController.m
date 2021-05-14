@@ -276,21 +276,23 @@
         lineItemCount = 0;
         oneTimeSuccessFlagCheck = true;
         
+        NSMutableArray* roundingDetails = [[NSMutableArray alloc] init];
+        
         for (int i=0; i<alreadyAddDisplayCellData.count; i++) {
             
             int tag = i + 2000;
             NSLog(@"Place order button click Create Order Display Tag %d",tag);
-            SPACreateOrderCell *vc = [(SPACreateOrderCell*) self.view viewWithTag:tag];
+            SPACreateOrderCell *displayCell = [(SPACreateOrderCell*) self.view viewWithTag:tag];
             NSString *checkTextFiledEmpty =  [[NSString alloc]init];
             NSString *spaPriceText =  [[NSString alloc]init];
-            spaPriceText = vc.spaPriceTextField.text;
-            MXTextField *textField = (MXTextField*) vc.valueTxtFld;
+            spaPriceText = displayCell.spaPriceTextField.text;
+            MXTextField *textField = (MXTextField*) displayCell.valueTxtFld;
             
             checkTextFiledEmpty = textField.text;
             
              if (spaPriceText.length ==0 || [spaPriceText isEqualToString:@""]) {
                  NSLog(@"SPA Price:%@",spaPriceText);
-                 long int tag = vc.tag-2000;
+                 long int tag = displayCell.tag-2000;
                   UIAlertView *alert = [[UIAlertView alloc]initWithTitle:[[alreadyAddDisplayCellData objectAtIndex:tag] objectAtIndex:0] message:@"Please enter price to place the order." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                     [loadingView removeView];
                     [alert show];
@@ -303,7 +305,7 @@
                NSInteger value = [spaPriceText integerValue];
                 
                 if (value <= 0) {
-                                   long int tag = vc.tag-2000;
+                                   long int tag = displayCell.tag-2000;
                                    NSLog(@"Cell Tag: %ld",tag);
                                    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:[[alreadyAddDisplayCellData objectAtIndex:tag] objectAtIndex:0] message:@"Please enter price greater than zero." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                                    [loadingView removeView];
@@ -325,7 +327,7 @@
                 // Tushar, Zero Quantity value check
                 NSInteger value = [checkTextFiledEmpty integerValue];
                 if (value <= 0) {
-                    long int tag = vc.tag-2000;
+                    long int tag = displayCell.tag-2000;
                     NSLog(@"Cell Tag: %ld",tag);
                     UIAlertView *alert = [[UIAlertView alloc]initWithTitle:[[alreadyAddDisplayCellData objectAtIndex:tag] objectAtIndex:0] message:@"Please enter quantity greater than zero." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                     [loadingView removeView];
@@ -335,7 +337,26 @@
                 }
                 else
                 {
-                    long int tag = vc.tag-2000;
+                    if([displayCell isPackingSizeRoundingEnabled:textField.elementId ]) {
+                        // we need to check the pack size rounding
+                        
+                       BOOL roundingApplied =  [self roundingForPacksize:textField.attachedData inputQuantity:&checkTextFiledEmpty];
+                    
+                        if(roundingApplied) {
+                            // Packsize rounding applied
+                            NSMutableArray* roundingLine = [[NSMutableArray alloc] init];
+                            [roundingLine addObject:[NSString stringWithFormat:@"%d", i]];  // line n
+                            [roundingLine addObject:[[alreadyAddDisplayCellData objectAtIndex:i] objectAtIndex:0]];  // item code
+                            [roundingLine addObject:[[alreadyAddDisplayCellData objectAtIndex:i] objectAtIndex:1]];  // item desc
+                            [roundingLine addObject:[checkTextFiledEmpty copy]];  // rounding quantity
+                            [roundingDetails addObject:roundingLine];
+                            
+                            // update the textfield value
+                            textField.text = checkTextFiledEmpty;
+                        }
+                    }
+                    
+                    long int tag = displayCell.tag-2000;
                     NSLog(@"Cell Tag: %ld",tag);
                     NSUInteger lenght =[[alreadyAddDisplayCellData objectAtIndex:tag] count];
                     
@@ -391,8 +412,7 @@
                 NSString *url = XmwcsConst_OPCODE_URL;
                 networkHelper.serviceURLString = url;
                 [networkHelper genericJSONPayloadRequestWith:sendDict :self :@"createSalesOrder"];
-            }
-            
+            }            
             else{
                 
                 if (zeroQuantityFlag) {
@@ -740,8 +760,6 @@
 - (void)keyboardWasShown:(NSNotification*)aNotification
 {
     
-   
-    
     NSLog(@"FormVC keyboardWasShown");
     NSDictionary* info = [aNotification userInfo];
     keyboardSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
@@ -797,6 +815,7 @@
     [searchButton setBackgroundImage:nil forState:UIControlStateNormal];
     [searchButton setBackgroundColor:[UIColor lightGrayColor]];
 }
+
 - (void)textSPAFieldValue:(UITextField *)textfield :(long)cellIndex
 {
     // spa price pending
@@ -828,6 +847,34 @@
         [searchButton setBackgroundImage:blueButtonImage forState:UIControlStateNormal];
         
     }
+}
+
+
+-(BOOL) roundingForPacksize:(NSString*) packsize inputQuantity:(NSString**) quantityValueString
+{
+    BOOL retVal = false;
+    
+    int packSizeInt = [packsize intValue];
+    int quantityValueInt = [(*quantityValueString) intValue];
+    
+    if (quantityValueInt >= packSizeInt) {
+        if (packSizeInt > 1) {
+             float theFloat = (float)quantityValueInt / (float)packSizeInt;
+             int rounded = round(theFloat);
+             int finalQuantityValue  = packSizeInt * rounded;
+            // using rounding function to round of the quantity
+             if (quantityValueInt != finalQuantityValue) {
+                 // finalQuantityValue is the value to be used
+                 *quantityValueString = [NSString stringWithFormat:@"%d", finalQuantityValue];
+                 retVal = true;
+             }
+         }
+    } else {
+        // return the pack size, minimum packsize
+        *quantityValueString = [packsize copy];
+        retVal = true;
+    }
+    return retVal;
 }
 
 @end

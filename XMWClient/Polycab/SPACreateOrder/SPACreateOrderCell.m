@@ -268,7 +268,7 @@
     if ([quantityField.elementId isEqualToString:@"QUANTITY_FIELD"]
         || [packSizeFeatureVerticals containsObject:quantityField.elementId]) {
          
-    if ([packSizeFeatureVerticals containsObject:quantityField.elementId]) {
+    if ([self isPackingSizeRoundingEnabled:quantityField.elementId]) {
            [self packSizeMethodCall:quantityField.attachedData :quantityField.text];
        }
        else
@@ -481,4 +481,10 @@
     }
     return YES;
 }
+
+-(BOOL) isPackingSizeRoundingEnabled:(NSString*) businessVertical
+{
+    return [packSizeFeatureVerticals containsObject:businessVertical];
+}
+
 @end

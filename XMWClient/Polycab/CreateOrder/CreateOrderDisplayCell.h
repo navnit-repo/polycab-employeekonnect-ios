@@ -30,6 +30,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *packSizeLabel;
 
 @property(weak,nonatomic) id<DisplayCellButtonDelegate>delegate;
+
+-(BOOL) isPackingSizeRoundingEnabled:(NSString*) businessVertical;
+
 @end
 
 @protocol DisplayCellButtonDelegate <NSObject>
