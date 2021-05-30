@@ -50,4 +50,6 @@
 
 +(NSString*) nullSafeEmptyString:(NSObject*) jsonValue;
 
++(NSArray*) findNumbersInMessage:(NSString*) message;
+
 @end

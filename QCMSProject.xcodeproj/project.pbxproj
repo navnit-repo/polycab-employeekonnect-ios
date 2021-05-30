@@ -197,6 +197,12 @@
 		279D43B624A58DFD0046BB33 /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 279D43B424A58DFD0046BB33 /* DataManager.m */; };
 		27A7485E24D1958C00E87A76 /* MXTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A7485C24D1958C00E87A76 /* MXTextView.m */; };
 		27A7485F24D1958C00E87A76 /* MXTextView.h in Headers */ = {isa = PBXBuildFile; fileRef = 27A7485D24D1958C00E87A76 /* MXTextView.h */; };
+		27D42F682663379E00D6187C /* CreditLimitDetailsMessage.h in Headers */ = {isa = PBXBuildFile; fileRef = 27D42F662663379E00D6187C /* CreditLimitDetailsMessage.h */; };
+		27D42F692663379E00D6187C /* CreditLimitDetailsMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 27D42F672663379E00D6187C /* CreditLimitDetailsMessage.m */; };
+		27D42F6B266337BF00D6187C /* CreditLimitDetailsMessage.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27D42F6A266337BF00D6187C /* CreditLimitDetailsMessage.xib */; };
+		27D42F6F266342ED00D6187C /* NameValueTableCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 27D42F6C266342ED00D6187C /* NameValueTableCell.h */; };
+		27D42F70266342ED00D6187C /* NameValueTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 27D42F6D266342ED00D6187C /* NameValueTableCell.m */; };
+		27D42F71266342ED00D6187C /* NameValueTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27D42F6E266342ED00D6187C /* NameValueTableCell.xib */; };
 		27F1ADB6255F6B7C00CAE856 /* InventoryFormVC.h in Headers */ = {isa = PBXBuildFile; fileRef = 27F1ADB4255F6B7C00CAE856 /* InventoryFormVC.h */; };
 		27F1ADB7255F6B7C00CAE856 /* InventoryFormVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F1ADB5255F6B7C00CAE856 /* InventoryFormVC.m */; };
 		38A6BFEB1EFD1D3F00537D62 /* ImageUploadFormViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 38A6BFE81EFD1D3F00537D62 /* ImageUploadFormViewController.h */; };
@@ -1390,6 +1396,12 @@
 		279D43B424A58DFD0046BB33 /* DataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataManager.m; sourceTree = "<group>"; };
 		27A7485C24D1958C00E87A76 /* MXTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MXTextView.m; path = Views/TextView/MXTextView.m; sourceTree = "<group>"; };
 		27A7485D24D1958C00E87A76 /* MXTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MXTextView.h; path = Views/TextView/MXTextView.h; sourceTree = "<group>"; };
+		27D42F662663379E00D6187C /* CreditLimitDetailsMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CreditLimitDetailsMessage.h; sourceTree = "<group>"; };
+		27D42F672663379E00D6187C /* CreditLimitDetailsMessage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CreditLimitDetailsMessage.m; sourceTree = "<group>"; };
+		27D42F6A266337BF00D6187C /* CreditLimitDetailsMessage.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreditLimitDetailsMessage.xib; sourceTree = "<group>"; };
+		27D42F6C266342ED00D6187C /* NameValueTableCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NameValueTableCell.h; sourceTree = "<group>"; };
+		27D42F6D266342ED00D6187C /* NameValueTableCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NameValueTableCell.m; sourceTree = "<group>"; };
+		27D42F6E266342ED00D6187C /* NameValueTableCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NameValueTableCell.xib; sourceTree = "<group>"; };
 		27F1ADB4255F6B7C00CAE856 /* InventoryFormVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = InventoryFormVC.h; path = Polycab/InventoryForm/InventoryFormVC.h; sourceTree = "<group>"; };
 		27F1ADB5255F6B7C00CAE856 /* InventoryFormVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = InventoryFormVC.m; path = Polycab/InventoryForm/InventoryFormVC.m; sourceTree = "<group>"; };
 		38A6BFE81EFD1D3F00537D62 /* ImageUploadFormViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageUploadFormViewController.h; sourceTree = "<group>"; };
@@ -2596,6 +2608,12 @@
 				2720FE62264E6EA000718CB8 /* RoundingToPacksizeSummaryView.h */,
 				2720FE63264E6EA000718CB8 /* RoundingToPacksizeSummaryView.m */,
 				2720FE68264E6EFB00718CB8 /* RoundingToPacksizeSummaryView.xib */,
+				27D42F662663379E00D6187C /* CreditLimitDetailsMessage.h */,
+				27D42F672663379E00D6187C /* CreditLimitDetailsMessage.m */,
+				27D42F6A266337BF00D6187C /* CreditLimitDetailsMessage.xib */,
+				27D42F6C266342ED00D6187C /* NameValueTableCell.h */,
+				27D42F6D266342ED00D6187C /* NameValueTableCell.m */,
+				27D42F6E266342ED00D6187C /* NameValueTableCell.xib */,
 			);
 			name = CreateOrder;
 			path = Polycab/CreateOrder;
@@ -5161,6 +5179,7 @@
 				F036CDE42281869C000F2448 /* NewChatBoxVC.h in Headers */,
 				901F6E3B180282E500293AB9 /* XMWFaqWebViewController.h in Headers */,
 				85AC965B198FFDDF00AC0338 /* ReportBaseSection.h in Headers */,
+				27D42F6F266342ED00D6187C /* NameValueTableCell.h in Headers */,
 				F039CADA20F475D9005CEC02 /* TrackClaimVC.h in Headers */,
 				854304061B0DAD1000328DDD /* MarqueeLabel.h in Headers */,
 				858082A31A5D88EB00207EAB /* DotHBarChart.h in Headers */,
@@ -5173,6 +5192,7 @@
 				85DB6AC21E634CB90018710B /* WideReportVC.h in Headers */,
 				8502702019064625003A7E01 /* CommonRequestStruct.h in Headers */,
 				85CC35051DFA67900016F65C /* MultiSelectSearchViewCell.h in Headers */,
+				27D42F682663379E00D6187C /* CreditLimitDetailsMessage.h in Headers */,
 				F04B2F4420FF2B3D00E6120A /* LeftViewVC.h in Headers */,
 				F0B2FB5521885145006A7C6B /* LayoutClass.h in Headers */,
 				902416F71802DBC8000BCC7C /* RecentRequestController.h in Headers */,
@@ -5504,6 +5524,7 @@
 				F059CCA3214F70D000E303F6 /* 14-logout.png in Resources */,
 				F059CC96214F70D000E303F6 /* 01-dashboard.png in Resources */,
 				90E810B9174F451D003BDF77 /* login_background.png in Resources */,
+				27D42F6B266337BF00D6187C /* CreditLimitDetailsMessage.xib in Resources */,
 				F0B4259522671C240011D3E4 /* MessageSubjectVC.xib in Resources */,
 				F059CC90214F70D000E303F6 /* calendar.png in Resources */,
 				857A3EF31A6CFC3500279931 /* special_offer.png in Resources */,
@@ -5799,6 +5820,7 @@
 				857F8C5F1A828CBD0018A54C /* popular_scheme_L@2x.png in Resources */,
 				F036CDEE2282CBD2000F2448 /* close@2x.png in Resources */,
 				855A2A851A851C68003888ED /* SecondDashDataView.xib in Resources */,
+				27D42F71266342ED00D6187C /* NameValueTableCell.xib in Resources */,
 				85D5DA6618E6F5EF00BE344F /* Icon-Cal@2x.png in Resources */,
 				850357AF1E8B77EE005500B9 /* PODTableViewCell.xib in Resources */,
 				F059CD34214F710600E303F6 /* businessveritical@3x.png in Resources */,
@@ -6001,6 +6023,7 @@
 				F0FE2BA21F71406E00D8FCEF /* WebViewController.m in Sources */,
 				90272F27174DD11200115D7B /* MXButton.m in Sources */,
 				857A3EEA1A6CFC3500279931 /* HamBurgerMenuView.m in Sources */,
+				27D42F70266342ED00D6187C /* NameValueTableCell.m in Sources */,
 				273259712484DA78003F979C /* RMAVC.m in Sources */,
 				90272F2A174DD13000115D7B /* MXTextField.m in Sources */,
 				F055728621AE86EF00D1160C /* DependentDropDownClass.m in Sources */,
@@ -6046,6 +6069,7 @@
 				F0483D2F2242133000D1DFF8 /* ForgotPasswordVC.m in Sources */,
 				8555ED2219E75FCD00EB9507 /* MCSwipeTableViewCell.m in Sources */,
 				F0C76ED920DD0BF700390528 /* CustomerClaimInvoiceFetchDetailsVC.m in Sources */,
+				27D42F692663379E00D6187C /* CreditLimitDetailsMessage.m in Sources */,
 				F05E97E81FEA47FA00E06ADE /* CreateOrderDashView.m in Sources */,
 				2732593C2484DA1E003F979C /* GrowthIndicatorTableCell.m in Sources */,
 				F036CDE52281869C000F2448 /* NewChatBoxVC.m in Sources */,

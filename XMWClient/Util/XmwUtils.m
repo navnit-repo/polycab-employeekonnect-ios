@@ -391,4 +391,38 @@
     
 }
 
+
+#pragma mark - PatternMatch
+
++(NSArray*) findNumbersInMessage:(NSString*) message
+{
+    NSString* numberPattern = @"\\-?\\d+\\.?\\d+";
+    NSRegularExpression *testExpression = [NSRegularExpression regularExpressionWithPattern:numberPattern options:NSRegularExpressionCaseInsensitive error:nil];
+    NSArray *matches = [testExpression matchesInString:message
+                                            options:0
+                                            range:NSMakeRange(0, [message length])];
+    NSLog(@"%@",matches);
+
+    NSMutableArray *array = [@[] mutableCopy];
+    
+    [matches enumerateObjectsUsingBlock:^(NSTextCheckingResult *obj, NSUInteger idx, BOOL *stop) {
+         for (int i = 0; i< [obj numberOfRanges]; ++i) {
+             NSRange range = [obj rangeAtIndex:i];
+
+             NSString *string = [message substringWithRange:range];
+             if ([string rangeOfString:@";"].location == NSNotFound) {
+                 [array addObject: string];
+             } else {
+                 NSArray *a = [string componentsSeparatedByString:@";"];
+                 for (NSString *s  in a) {
+                     [array addObject: [s stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]]];
+                 }
+
+             }
+         }
+    }];
+    return array;
+}
+
+
 @end

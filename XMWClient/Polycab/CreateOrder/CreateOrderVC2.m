@@ -18,6 +18,7 @@
 #import "DVAppDelegate.h"
 #import "ClientVariable.h"
 #import "CreateOrderStatusVC.h"
+#import "CreditLimitDetailsMessage.h"
 
 /// create order cell tag start 2000
 /// add from catalog button tag 100
@@ -46,9 +47,11 @@
     int lineItemCount;
     bool oneTimeSuccessFlagCheck;
 }
+
 @synthesize itemName,orderRefNo,dateofDelivery;
 @synthesize mainView;
 @synthesize createOrderDynamicCellHeight;
+
 -(void)autoLayout{
     [LayoutClass labelLayout:self.itemName forFontWeight:UIFontWeightBold];
     [LayoutClass labelLayout:self.constant1 forFontWeight:UIFontWeightThin];
@@ -72,7 +75,19 @@
     [self setDataOwnCustomeView];
     [self addCustomeTableView];
     
+    
+    // if message is of below format, we need to show structured message
+    /*
+    NSString* message = @"Your account is either not having enough credit limit or has overdue invoices so order is not getting accepted.Total Credit Limit (Rs.370000), Utilized - Ledger Balance+Open Orders (Rs.433885.04), Balance Available Limit = Rs.-63885.04 and order Value is Rs. 530000";
+    NSArray* autoDoCheckNumbers = [XmwUtils findNumbersInMessage:message];
+    for(int i=0; i<[autoDoCheckNumbers count]; i++) {
+        NSLog(@"Number = %@", [autoDoCheckNumbers objectAtIndex:i]);
+    }
+    
+    [self showCreditLimitMessage:autoDoCheckNumbers];
+     */
 }
+
 -(void)addCustomeTableView{
     mainTableView = [[UITableView alloc]init];
     mainTableView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
@@ -409,6 +424,9 @@
         [alert show];
     }
 }
+
+#pragma mark - HttpEventListener
+
 - (void) httpResponseObjectHandler : (NSString*) callName : (id) respondedObject : (id) requestedObject
 {
     [loadingView removeView];
@@ -432,12 +450,21 @@
             } else {
                 [self configureSummaryVC:respondedObject];
             }
-        } else if ([status_flag isEqualToString:@"E"]) {
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Polycab" message:[respondedObject valueForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-            [alert show];
-        } else if ([status_flag isEqualToString:@"H"]) {
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Polycab" message:[respondedObject valueForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-            [alert show];
+        } else if ([status_flag isEqualToString:@"E"] || [status_flag isEqualToString:@"H"]) {
+            // if message is of below format, we need to show structured message
+            // var sample = "Your account is either not having enough credit limit or has overdue invoices so order is not getting accepted.Total Credit Limit (Rs.370000), Utilized - Ledger Balance+Open Orders (Rs.433885.04), Balance Available Limit = Rs.-63885.04 and order Value is Rs. 530000";
+            
+            NSArray* autoDoCheckNumbers = [XmwUtils findNumbersInMessage:[respondedObject valueForKey:@"message"]];
+
+            if(autoDoCheckNumbers!=nil && autoDoCheckNumbers.count==4) {
+                
+                // display custom message popup for AutoDO Failure
+                [self showCreditLimitMessage:autoDoCheckNumbers];
+                
+            } else {
+                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Polycab" message:[respondedObject valueForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                [alert show];
+            }
         } else
         {
             [self timer];
@@ -894,5 +921,40 @@
     [networkHelper genericJSONPayloadRequestWith:requestPayload :self :@"createSalesOrder"];
 }
 
+
+
+-(void) showCreditLimitMessage:(NSArray*)clNumbers
+{
+    NSMutableArray* tableRows = [[NSMutableArray alloc] init];
+    
+    if([clNumbers count]>3) {
+        NSMutableArray* row0 = [[NSMutableArray alloc] init];
+        [row0 addObject:@"Total Credit Limit"];
+        [row0 addObject:[clNumbers objectAtIndex:0]];
+        [tableRows addObject:row0];
+        
+        NSMutableArray* row1 = [[NSMutableArray alloc] init];
+        [row1 addObject:@"Utilized - Ledger Balance + Pending Orders"];
+        [row1 addObject:[clNumbers objectAtIndex:1]];
+        [tableRows addObject:row1];
+        
+        NSMutableArray* row2 = [[NSMutableArray alloc] init];
+        [row2 addObject:@"Balance Available Limit"];
+        [row2 addObject:[clNumbers objectAtIndex:2]];
+        [tableRows addObject:row2];
+        
+        NSMutableArray* row3 = [[NSMutableArray alloc] init];
+        [row3 addObject:@"Order Value"];
+        [row3 addObject:[clNumbers objectAtIndex:3]];
+        [tableRows addObject:row3];
+        
+        CreditLimitDetailsMessage* popup = [CreditLimitDetailsMessage createInstance];
+        popup.tableRows = tableRows;
+        popup.title = @"Your account is not having enough credit limit so order is not getting accepted.";
+        
+        [self.view addSubview:popup];
+    }
+    
+}
 @end
 
