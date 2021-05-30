@@ -11,6 +11,9 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface CreditLimitDetailsMessage : UIView <UITableViewDelegate, UITableViewDataSource>
+{
+    UIButton* bottomButton;
+}
 
 +(CreditLimitDetailsMessage*) createInstance;
 
@@ -21,7 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSString* title;
 @property (strong, nonatomic) NSArray* tableRows;
 
-@property (weak, nonatomic) UIButton* bottomButton;
+@property UIButton* bottomButton;
 
 @end
 

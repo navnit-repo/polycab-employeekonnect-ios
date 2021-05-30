@@ -9,9 +9,12 @@
 #import "CreditLimitDetailsMessage.h"
 #import "NameValueTableCell.h"
 #import "Styles.h"
+#import "LayoutClass.h"
 
 
 @implementation CreditLimitDetailsMessage
+
+@synthesize bottomButton;
 
 /*
 // Only override drawRect: if you perform custom drawing.
@@ -46,9 +49,21 @@
     
     [self.lineTable registerNib:[UINib nibWithNibName:@"NameValueTableCell" bundle:nil] forCellReuseIdentifier:@"NameValueTableCell"];
     
-    [self.buttonsView addSubview:[self  okButton]];
+    self.bottomButton = [self  okButton];
+    [self.buttonsView addSubview:self.bottomButton];
     
+    [self autoLayout];
 }
+
+
+-(void)autoLayout{
+    [LayoutClass setLayoutForIPhone6:self];
+    [LayoutClass setLayoutForIPhone6:self.centerPopup];
+    [LayoutClass setLayoutForIPhone6:self.lineTable];
+    [LayoutClass setLayoutForIPhone6:self.buttonsView];
+    [LayoutClass buttonLayout:self.bottomButton forFontWeight:UIFontWeightRegular];
+}
+
 
 -(UIButton*) okButton
 {
@@ -182,7 +197,7 @@
 
 -(void)okButtonHandler:(id) sender
 {
-    [self removeFromSuperview];    
+    [self removeFromSuperview];
 }
 
 @end
