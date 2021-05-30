@@ -81,9 +81,6 @@
     [super viewDidLoad];
     
     
- 
-   
-  
     NSLog(@"DashBoardVC Call");
     self.tabBar.delegate = self;
     
@@ -113,7 +110,6 @@
         self.view.frame = CGRectMake(0, 64, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height - 64.0f);
     }
 
-    
     
     [self initializeView];
     [self headerView];
@@ -345,14 +341,32 @@
     
     // this code for dashboard refresh
     autoRefreashTimeLimit = 5;
-    NSDate * now = [NSDate date];
+    
+    NSDate* now = [NSDate date];
     NSDateFormatter *outputFormatter = [[NSDateFormatter alloc] init];
     [outputFormatter setDateFormat:@"HH:mm:ss"];
     currentSyncTime = [outputFormatter stringFromDate:now];
     
     syncTime = [NSString stringWithFormat: @"Last Sync Time: %@",currentSyncTime];
-
+    
+    NSCalendar *gregorian = [[NSCalendar alloc]
+                             initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    NSDateComponents *dateComp =[gregorian components:(NSCalendarUnitDay | NSCalendarUnitWeekday | NSCalendarUnitMonth | NSCalendarUnitYear) fromDate:now];
+    
+    // for the first day of the month, server sends data till EOD of previous month
+    if(dateComp.day == 1) {
+        NSDateComponents *dateComponents = [[NSDateComponents alloc] init];
+        [dateComponents setDay:-1];
+        NSDate* yesterday = [gregorian dateByAddingComponents:dateComponents toDate:now options:0];
+        dateComp =[gregorian components:(NSCalendarUnitDay | NSCalendarUnitWeekday | NSCalendarUnitMonth | NSCalendarUnitYear) fromDate:yesterday];
+        
+        outputFormatter = [[NSDateFormatter alloc] init];
+        [outputFormatter setDateFormat:@"MMM d, yyyy"];
+        currentSyncTime = [outputFormatter stringFromDate:yesterday];
+        syncTime =  [NSString stringWithFormat:@"Displaying sync data till %@", currentSyncTime ];
+    }
 }
+
 -(void)loadCellView{
     
     salesAggregateSliderView = [SalesAggregateCollectionView createInstance];
@@ -613,11 +627,12 @@
         
         cell.backgroundColor = [UIColor clearColor];
         syncLbl = [[UILabel alloc] init];
-        syncLbl.frame = CGRectMake(rect.size.width-220, 0, 200, 20);
+        syncLbl.frame = CGRectMake(20, 0, rect.size.width - 40, 20);
         syncLbl.textAlignment = NSTextAlignmentRight;
         syncLbl.font = [ UIFont fontWithName: @"Helvetica-Light" size: 13.0 ];
         syncLbl.text = syncTime;
         syncLbl.textColor = [UIColor colorWithRed:204.0/255.0 green:43.0/255.0 blue:43.0/255.0 alpha:1];
+        syncLbl.textAlignment = NSTextAlignmentRight;
         
         [cell.contentView addSubview:syncLbl];
     }

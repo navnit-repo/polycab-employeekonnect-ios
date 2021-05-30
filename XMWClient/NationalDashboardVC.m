@@ -221,11 +221,12 @@
             
             cell.backgroundColor = [UIColor clearColor];
             syncLbl = [[UILabel alloc] init];
-            syncLbl.frame = CGRectMake(rect.size.width-220, 0, 200, 20);
+            syncLbl.frame = CGRectMake( 20, 0, rect.size.width-40, 20);
             syncLbl.textAlignment = NSTextAlignmentRight;
             syncLbl.font = [ UIFont fontWithName: @"Helvetica-Light" size: 13.0 ];
             syncLbl.text = syncTime;
             syncLbl.textColor = [UIColor colorWithRed:204.0/255.0 green:43.0/255.0 blue:43.0/255.0 alpha:1];
+            syncLbl.textAlignment = NSTextAlignmentRight;
             
             [cell.contentView addSubview:syncLbl];
         }
