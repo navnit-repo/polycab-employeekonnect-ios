@@ -691,7 +691,7 @@
                 tupleObject.lmtdAmount = @"0.0";
             } if([column isEqual:@"FTD"]) {
                 tupleObject.ftdAmount = @"0.0";
-            } if([column isEqual:@"LYTD"]) {
+            } if([column isEqual:@"LFTD"]) {
                 tupleObject.lftdAmount = @"0.0";
             }
         }
@@ -723,7 +723,7 @@
             tupleObject.lmtdAmount = [rowData objectAtIndex:2];
         } if([column isEqual:@"FTD"]) {
             tupleObject.ftdAmount = [rowData objectAtIndex:2];
-        } if([column isEqual:@"LYTD"]) {
+        } if([column isEqual:@"LFTD"]) {
             tupleObject.lftdAmount = [rowData objectAtIndex:2];
         }
     }
