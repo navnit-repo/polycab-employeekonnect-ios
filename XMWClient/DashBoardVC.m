@@ -343,16 +343,19 @@
     autoRefreashTimeLimit = 5;
     
     NSDate* now = [NSDate date];
-    NSDateFormatter *outputFormatter = [[NSDateFormatter alloc] init];
-    [outputFormatter setDateFormat:@"HH:mm:ss"];
-    currentSyncTime = [outputFormatter stringFromDate:now];
-    
-    syncTime = [NSString stringWithFormat: @"Last Sync Time: %@",currentSyncTime];
     
     NSCalendar *gregorian = [[NSCalendar alloc]
                              initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
     NSDateComponents *dateComp =[gregorian components:(NSCalendarUnitDay | NSCalendarUnitWeekday | NSCalendarUnitMonth | NSCalendarUnitYear) fromDate:now];
     
+    NSDateFormatter *outputFormatter = [[NSDateFormatter alloc] init];
+    [outputFormatter setDateFormat:@"MMM, HH:mm:ss"];
+    currentSyncTime = [outputFormatter stringFromDate:now];
+    
+    // Sales as on : Current date time (3rd May , 15:05:10)
+    syncTime = [NSString stringWithFormat: @"Sales as on: %ld%@ %@",  dateComp.day, [XmwUtils daySuffix:dateComp.day], currentSyncTime];
+    
+
     // for the first day of the month, server sends data till EOD of previous month
     if(dateComp.day == 1) {
         NSDateComponents *dateComponents = [[NSDateComponents alloc] init];
@@ -361,9 +364,9 @@
         dateComp =[gregorian components:(NSCalendarUnitDay | NSCalendarUnitWeekday | NSCalendarUnitMonth | NSCalendarUnitYear) fromDate:yesterday];
         
         outputFormatter = [[NSDateFormatter alloc] init];
-        [outputFormatter setDateFormat:@"MMM d, yyyy"];
+        [outputFormatter setDateFormat:@"MMM, 23:59:59"];
         currentSyncTime = [outputFormatter stringFromDate:yesterday];
-        syncTime =  [NSString stringWithFormat:@"Displaying sync data till %@", currentSyncTime ];
+        syncTime = [NSString stringWithFormat: @"Sales as on: %ld%@ %@",  dateComp.day, [XmwUtils daySuffix:dateComp.day], currentSyncTime];
     }
 }
 

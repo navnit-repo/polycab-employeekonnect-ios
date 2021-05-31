@@ -52,4 +52,6 @@
 
 +(NSArray*) findNumbersInMessage:(NSString*) message;
 
++(NSString*) daySuffix:(int) day;
+
 @end

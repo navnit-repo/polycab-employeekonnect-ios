@@ -425,4 +425,30 @@
 }
 
 
+
++(NSString*) daySuffix:(int) day
+{
+    NSString* daySuffix;
+
+    switch (day) {
+        case 11: daySuffix = @"th";
+            break;
+        case 12: daySuffix = @"th";
+            break;
+        case 13: daySuffix = @"th";
+            break;
+        default:
+        switch (day % 10) {
+            case 1: daySuffix = @"st";
+                    break;
+            case 2: daySuffix = @"nd";
+                    break;
+            case 3: daySuffix = @"rd";
+                    break;
+            default: daySuffix = @"th";
+                    break;
+        }
+    }
+    return daySuffix;
+}
 @end
