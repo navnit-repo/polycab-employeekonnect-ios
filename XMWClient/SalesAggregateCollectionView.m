@@ -591,7 +591,7 @@
 }
 
 
-#pragma mark : Collection View Datasource
+#pragma mark - Collection View Datasource
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     
     return numberOfCell;

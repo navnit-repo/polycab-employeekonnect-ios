@@ -197,6 +197,9 @@
 		279D43B624A58DFD0046BB33 /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 279D43B424A58DFD0046BB33 /* DataManager.m */; };
 		27A7485E24D1958C00E87A76 /* MXTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A7485C24D1958C00E87A76 /* MXTextView.m */; };
 		27A7485F24D1958C00E87A76 /* MXTextView.h in Headers */ = {isa = PBXBuildFile; fileRef = 27A7485D24D1958C00E87A76 /* MXTextView.h */; };
+		27B2AA1A266DA6A900DB13A9 /* CollectionCollectionView.h in Headers */ = {isa = PBXBuildFile; fileRef = 27B2AA18266DA6A900DB13A9 /* CollectionCollectionView.h */; };
+		27B2AA1B266DA6A900DB13A9 /* CollectionCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B2AA19266DA6A900DB13A9 /* CollectionCollectionView.m */; };
+		27B2AA1D266DA6BA00DB13A9 /* CollectionCollectionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27B2AA1C266DA6BA00DB13A9 /* CollectionCollectionView.xib */; };
 		27D42F682663379E00D6187C /* CreditLimitDetailsMessage.h in Headers */ = {isa = PBXBuildFile; fileRef = 27D42F662663379E00D6187C /* CreditLimitDetailsMessage.h */; };
 		27D42F692663379E00D6187C /* CreditLimitDetailsMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 27D42F672663379E00D6187C /* CreditLimitDetailsMessage.m */; };
 		27D42F6B266337BF00D6187C /* CreditLimitDetailsMessage.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27D42F6A266337BF00D6187C /* CreditLimitDetailsMessage.xib */; };
@@ -1396,6 +1399,9 @@
 		279D43B424A58DFD0046BB33 /* DataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataManager.m; sourceTree = "<group>"; };
 		27A7485C24D1958C00E87A76 /* MXTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MXTextView.m; path = Views/TextView/MXTextView.m; sourceTree = "<group>"; };
 		27A7485D24D1958C00E87A76 /* MXTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MXTextView.h; path = Views/TextView/MXTextView.h; sourceTree = "<group>"; };
+		27B2AA18266DA6A900DB13A9 /* CollectionCollectionView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CollectionCollectionView.h; sourceTree = "<group>"; };
+		27B2AA19266DA6A900DB13A9 /* CollectionCollectionView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CollectionCollectionView.m; sourceTree = "<group>"; };
+		27B2AA1C266DA6BA00DB13A9 /* CollectionCollectionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CollectionCollectionView.xib; sourceTree = "<group>"; };
 		27D42F662663379E00D6187C /* CreditLimitDetailsMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CreditLimitDetailsMessage.h; sourceTree = "<group>"; };
 		27D42F672663379E00D6187C /* CreditLimitDetailsMessage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CreditLimitDetailsMessage.m; sourceTree = "<group>"; };
 		27D42F6A266337BF00D6187C /* CreditLimitDetailsMessage.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreditLimitDetailsMessage.xib; sourceTree = "<group>"; };
@@ -2697,6 +2703,16 @@
 				27A7485C24D1958C00E87A76 /* MXTextView.m */,
 			);
 			name = TextView;
+			sourceTree = "<group>";
+		};
+		27B2AA17266DA52900DB13A9 /* CollectionCell */ = {
+			isa = PBXGroup;
+			children = (
+				27B2AA18266DA6A900DB13A9 /* CollectionCollectionView.h */,
+				27B2AA19266DA6A900DB13A9 /* CollectionCollectionView.m */,
+				27B2AA1C266DA6BA00DB13A9 /* CollectionCollectionView.xib */,
+			);
+			path = CollectionCell;
 			sourceTree = "<group>";
 		};
 		27F1ADB3255F6B4800CAE856 /* InventoryForm */ = {
@@ -4097,6 +4113,7 @@
 		F02D1415211970C2001B1967 /* Dash Board */ = {
 			isa = PBXGroup;
 			children = (
+				27B2AA17266DA52900DB13A9 /* CollectionCell */,
 				F02786C520FDC2CD00096AFB /* DashBoardVC.h */,
 				F02786C620FDC2CD00096AFB /* DashBoardVC.m */,
 				F02786C720FDC2CD00096AFB /* DashBoardVC.xib */,
@@ -5062,6 +5079,7 @@
 				8595B4EF190FCB790010C685 /* DVMonthView.h in Headers */,
 				F0B425AA22671C240011D3E4 /* ChatThreadCell.h in Headers */,
 				8595B4F3190FCB790010C685 /* DVTwoWeekView.h in Headers */,
+				27B2AA1A266DA6A900DB13A9 /* CollectionCollectionView.h in Headers */,
 				F0B2FB1F218850F5006A7C6B /* ReportQuantityValueTableCell.h in Headers */,
 				85AC9665198FFDDF00AC0338 /* ReportSubheaderSection.h in Headers */,
 				85804F641A6B63DA0093CDBB /* XmwReportService.h in Headers */,
@@ -5390,6 +5408,7 @@
 				F036CDEC2282CBC8000F2448 /* close.png in Resources */,
 				85DB6AC41E634CB90018710B /* WideReportVC.xib in Resources */,
 				2720FE69264E6EFB00718CB8 /* RoundingToPacksizeSummaryView.xib in Resources */,
+				27B2AA1D266DA6BA00DB13A9 /* CollectionCollectionView.xib in Resources */,
 				90E810B0174F451D003BDF77 /* back.png in Resources */,
 				F0B425AE22671C240011D3E4 /* chat_add.png in Resources */,
 				270B77392477B04D0024960F /* frame-4.png in Resources */,
@@ -6086,6 +6105,7 @@
 				2708C1A325989FCF00DBA84E /* Credentials.m in Sources */,
 				85DB6AC31E634CB90018710B /* WideReportVC.m in Sources */,
 				F0B4259922671C240011D3E4 /* MessageSubjectVC.m in Sources */,
+				27B2AA1B266DA6A900DB13A9 /* CollectionCollectionView.m in Sources */,
 				F0E1A0D0213E48C2005F4435 /* SalesCell.m in Sources */,
 				85804F651A6B63DA0093CDBB /* XmwReportService.m in Sources */,
 				85284F7019D5FC600010ED87 /* XmwNotificationWebViewController.m in Sources */,
@@ -6319,7 +6339,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 16100;
+				CURRENT_PROJECT_VERSION = 16200;
 				DEVELOPMENT_TEAM = QS92QH4FZ2;
 				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = YES;
 				ENABLE_BITCODE = NO;
@@ -6340,7 +6360,7 @@
 					"$(PROJECT_DIR)/RLMFramework/Alamofire.framework",
 					"$(PROJECT_DIR)/RLMFramework/SwiftyJSON.framework",
 				);
-				MARKETING_VERSION = 16.1;
+				MARKETING_VERSION = 16.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.polycab.xmw.employee.ent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -6361,7 +6381,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 16100;
+				CURRENT_PROJECT_VERSION = 16200;
 				DEVELOPMENT_TEAM = QS92QH4FZ2;
 				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = YES;
 				ENABLE_BITCODE = NO;
@@ -6382,7 +6402,7 @@
 					"$(PROJECT_DIR)/RLMFramework/SwiftyJSON.framework",
 					"$(PROJECT_DIR)/RLMFramework/Alamofire.framework",
 				);
-				MARKETING_VERSION = 16.1;
+				MARKETING_VERSION = 16.2;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PRODUCT_BUNDLE_IDENTIFIER = com.polycab.xmw.employee.ent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -6510,7 +6530,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 16100;
+				CURRENT_PROJECT_VERSION = 16200;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = QS92QH4FZ2;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -6519,7 +6539,7 @@
 				INFOPLIST_FILE = PushNotificationExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				MARKETING_VERSION = 16.1;
+				MARKETING_VERSION = 16.2;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.polycab.xmw.employee.ent.exten;
@@ -6551,7 +6571,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 16100;
+				CURRENT_PROJECT_VERSION = 16200;
 				DEVELOPMENT_TEAM = QS92QH4FZ2;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -6560,7 +6580,7 @@
 				INFOPLIST_FILE = PushNotificationExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				MARKETING_VERSION = 16.1;
+				MARKETING_VERSION = 16.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.polycab.xmw.employee.ent.exten;

@@ -14,6 +14,8 @@
 #import "NationalSalesAggregatePieView.h"
 #import "PaymentOutstandingPieView.h"
 #import "OverduePieView.h"
+#import "CollectionCollectionView.h"
+
 @interface NationalDashboardVC ()
 
 @end
@@ -25,12 +27,18 @@
     PaymentOutstandingPieView *   paymentOutstandingPieView;
         MarqueeLabel *lble;
     OverduePieView *overduePieView;
+    
+    CollectionCollectionView* paymentCollectionView;
+    
 }
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     NSLog(@"NationalDashboardVC call");
     // Do any additional setup after loading the view from its nib.
+    
 }
+
 - (void)loadCellView
 {
     nationalSalesAggregateCollectionView = [NationalSalesAggregateCollectionView createInstance];
@@ -46,6 +54,9 @@
     
     overduePieView = [OverduePieView createInstance];
     [overduePieView configure];
+    
+    paymentCollectionView = [CollectionCollectionView createInstance];
+    [paymentCollectionView configure];
     
 }
 - (void)dashboardForegroundRefresh
@@ -75,7 +86,7 @@
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 6;
+    return 7;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
@@ -97,6 +108,8 @@
     }
     else  if (section == 5) {
         return 1;
+    } else  if (section == 6) {
+        return 1;
     }
     return 0;
 }
@@ -113,7 +126,7 @@
     }
     
    else if (indexPath.section==2) {
-        
+        // Sales Slider
         UIView *currentView= [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 180)];
         CGRect viewFrame=currentView.frame;
         viewFrame.origin.x=deviceWidthRation*currentView.frame.origin.x;
@@ -124,6 +137,29 @@
         height=currentView.frame.size.height;
     }
   else  if (indexPath.section==3) {
+      // sales Pie chart
+        UIView *currentView= [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 271)];
+        CGRect viewFrame=currentView.frame;
+        viewFrame.origin.x=deviceWidthRation*currentView.frame.origin.x;
+        viewFrame.origin.y=deviceHeightRation*currentView.frame.origin.y;
+        viewFrame.size.width=deviceWidthRation*currentView.frame.size.width;
+        viewFrame.size.height=deviceHeightRation*currentView.frame.size.height;
+        currentView.frame=viewFrame;
+        
+        height=currentView.frame.size.height;
+    } else if (indexPath.section==4) {
+        // Collection
+        UIView *currentView= [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 180)];
+        CGRect viewFrame=currentView.frame;
+        viewFrame.origin.x=deviceWidthRation*currentView.frame.origin.x;
+        viewFrame.origin.y=deviceHeightRation*currentView.frame.origin.y;
+        viewFrame.size.width=deviceWidthRation*currentView.frame.size.width;
+        viewFrame.size.height=deviceHeightRation*currentView.frame.size.height;
+        currentView.frame=viewFrame;
+        height=currentView.frame.size.height;
+    }
+   else if (indexPath.section==5) {
+        // Payment outstanding
         UIView *currentView= [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 271)];
         CGRect viewFrame=currentView.frame;
         viewFrame.origin.x=deviceWidthRation*currentView.frame.origin.x;
@@ -134,19 +170,8 @@
         
         height=currentView.frame.size.height;
     }
-   else if (indexPath.section==4) {
-        
-        UIView *currentView= [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 271)];
-        CGRect viewFrame=currentView.frame;
-        viewFrame.origin.x=deviceWidthRation*currentView.frame.origin.x;
-        viewFrame.origin.y=deviceHeightRation*currentView.frame.origin.y;
-        viewFrame.size.width=deviceWidthRation*currentView.frame.size.width;
-        viewFrame.size.height=deviceHeightRation*currentView.frame.size.height;
-        currentView.frame=viewFrame;
-        
-        height=currentView.frame.size.height;
-    }
-  else  if (indexPath.section==5) {
+  else  if (indexPath.section==6) {
+      // overdue
         UIView *currentView= [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 271)];
         CGRect viewFrame=currentView.frame;
         viewFrame.origin.x=deviceWidthRation*currentView.frame.origin.x;
@@ -181,42 +206,42 @@
     {
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
 
-    if(indexPath.section==0) {
-        
-        cell.backgroundColor = [UIColor clearColor];
-        
-        NSString *text1 = @"Dear";
-        NSString *text2;
-        text2= [[NSUserDefaults standardUserDefaults] valueForKey:@"CUSTOMER_NAME"];
-        
-        if (text2 == NULL) {
-            text2 = @"";
+        if(indexPath.section==0) {
+            // Welcome
+            cell.backgroundColor = [UIColor clearColor];
+            
+            NSString *text1 = @"Dear";
+            NSString *text2;
+            text2= [[NSUserDefaults standardUserDefaults] valueForKey:@"CUSTOMER_NAME"];
+            
+            if (text2 == NULL) {
+                text2 = @"";
+            }
+            
+            NSString *text3 = @"Welcome to Polycab!";
+            UIFont *myFont = [ UIFont fontWithName: @"Helvetica-Regular" size: 15.0 ];
+            
+            lble = [cell viewWithTag:10];
+            [lble removeFromSuperview];
+            
+            lble = [[MarqueeLabel alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 20)];
+            lble.tag =10;
+            lble.text = [[[[[NSString stringWithFormat:@"%@",text1]stringByAppendingString:@" "]stringByAppendingString:text2]stringByAppendingString:@", "]stringByAppendingString:text3];
+            lble.font  = myFont;
+            lble.textColor = [UIColor colorWithRed:204.0/255.0 green:43.0/255.0 blue:43.0/255.0 alpha:1];
+            lble.marqueeType = MLContinuous;
+            lble.leadingBuffer = 20;
+            lble.rate = 30.0;
+            lble.labelize = NO;
+            lble.holdScrolling = NO;
+            [cell.contentView addSubview:lble];
+            cell.clipsToBounds = YES;
+            
         }
-        
-        NSString *text3 = @"Welcome to Polycab!";
-        UIFont *myFont = [ UIFont fontWithName: @"Helvetica-Regular" size: 15.0 ];
-        
-        lble = [cell viewWithTag:10];
-        [lble removeFromSuperview];
-        
-        lble = [[MarqueeLabel alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 20)];
-        lble.tag =10;
-        lble.text = [[[[[NSString stringWithFormat:@"%@",text1]stringByAppendingString:@" "]stringByAppendingString:text2]stringByAppendingString:@", "]stringByAppendingString:text3];
-        lble.font  = myFont;
-        lble.textColor = [UIColor colorWithRed:204.0/255.0 green:43.0/255.0 blue:43.0/255.0 alpha:1];
-        lble.marqueeType = MLContinuous;
-        lble.leadingBuffer = 20;
-        lble.rate = 30.0;
-        lble.labelize = NO;
-        lble.holdScrolling = NO;
-        [cell.contentView addSubview:lble];
-        cell.clipsToBounds = YES;
-        
-    }
         else if (indexPath.section == 1)
         {
+            // sync time label
             CGRect rect = [[UIScreen mainScreen] bounds];
             
             cell.backgroundColor = [UIColor clearColor];
@@ -229,55 +254,56 @@
             syncLbl.textAlignment = NSTextAlignmentRight;
             
             [cell.contentView addSubview:syncLbl];
+        }  else   if(indexPath.section==2) {
+        
+            cell.backgroundColor = [UIColor clearColor];
+            cell.frame=CGRectMake(10, 0,nationalSalesAggregateCollectionView.bounds.size.width-5 ,nationalSalesAggregateCollectionView.bounds.size.height-5);
+            cell.layer.cornerRadius = 5;
+            cell.layer.masksToBounds = true;
+            [cell.contentView addSubview:nationalSalesAggregateCollectionView];
+            cell.clipsToBounds = YES;
+        
+        } else  if (indexPath.section == 3) {
+            // sales Pie chart
+            cell.backgroundColor = [UIColor clearColor];
+            
+            cell.frame=CGRectMake(10, 0,nationalSalesAggregatePieView.bounds.size.width-5 ,nationalSalesAggregatePieView.bounds.size.height-5);
+            cell.layer.cornerRadius = 5;
+            cell.layer.masksToBounds = true;
+            [cell.contentView addSubview:nationalSalesAggregatePieView];
+            cell.clipsToBounds = YES;
+        
+        }  else  if (indexPath.section == 4) {
+            
+            cell.backgroundColor = [UIColor clearColor];
+            
+            cell.frame=CGRectMake(10, 0,paymentCollectionView.bounds.size.width-5, paymentCollectionView.bounds.size.height-5);
+            cell.layer.cornerRadius = 5;
+            cell.layer.masksToBounds = true;
+            [cell.contentView addSubview:paymentCollectionView];
+            cell.clipsToBounds = YES;
+        
+        } else  if (indexPath.section == 5) {
+            // Collection
+            cell.backgroundColor = [UIColor clearColor];
+            
+            cell.frame=CGRectMake(10, 0,paymentOutstandingPieView.bounds.size.width-5 ,nationalSalesAggregatePieView.bounds.size.height-5);
+            cell.layer.cornerRadius = 5;
+            cell.layer.masksToBounds = true;
+            [cell.contentView addSubview:paymentOutstandingPieView];
+            cell.clipsToBounds = YES;
+        
+        }  else if (indexPath.section == 6) {
+        
+            cell.backgroundColor = [UIColor clearColor];
+            
+            cell.frame=CGRectMake(10, 0,overduePieView.bounds.size.width-5 ,overduePieView.bounds.size.height-5);
+            cell.layer.cornerRadius = 5;
+            cell.layer.masksToBounds = true;
+            [cell.contentView addSubview:overduePieView];
+            cell.clipsToBounds = YES;
+        
         }
-    
- else   if(indexPath.section==2) {
-        
-        cell.backgroundColor = [UIColor clearColor];
-        cell.frame=CGRectMake(10, 0,nationalSalesAggregateCollectionView.bounds.size.width-5 ,nationalSalesAggregateCollectionView.bounds.size.height-5);
-        cell.layer.cornerRadius = 5;
-        cell.layer.masksToBounds = true;
-        [cell.contentView addSubview:nationalSalesAggregateCollectionView];
-        cell.clipsToBounds = YES;
-        
-        
-        
-    }
-  else  if (indexPath.section == 3) {
-        cell.backgroundColor = [UIColor clearColor];
-        
-        cell.frame=CGRectMake(10, 0,nationalSalesAggregatePieView.bounds.size.width-5 ,nationalSalesAggregatePieView.bounds.size.height-5);
-        cell.layer.cornerRadius = 5;
-        cell.layer.masksToBounds = true;
-        [cell.contentView addSubview:nationalSalesAggregatePieView];
-        cell.clipsToBounds = YES;
-        
-    }
-  else  if (indexPath.section == 4) {
-        
-        
-        cell.backgroundColor = [UIColor clearColor];
-        
-        cell.frame=CGRectMake(10, 0,paymentOutstandingPieView.bounds.size.width-5 ,paymentOutstandingPieView.bounds.size.height-5);
-        cell.layer.cornerRadius = 5;
-        cell.layer.masksToBounds = true;
-        [cell.contentView addSubview:paymentOutstandingPieView];
-        cell.clipsToBounds = YES;
-        
-    }
-    
- else   if (indexPath.section == 5) {
-        
-        
-        cell.backgroundColor = [UIColor clearColor];
-        
-        cell.frame=CGRectMake(10, 0,overduePieView.bounds.size.width-5 ,overduePieView.bounds.size.height-5);
-        cell.layer.cornerRadius = 5;
-        cell.layer.masksToBounds = true;
-        [cell.contentView addSubview:overduePieView];
-        cell.clipsToBounds = YES;
-        
-    }
     
     }
     return cell;
