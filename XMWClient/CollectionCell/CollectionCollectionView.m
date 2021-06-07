@@ -16,10 +16,13 @@
 #import "SalesCell.h"
 #import "LayoutClass.h"
 #import "CurrencyConversationClass.h"
+#import "CollectionReportVC.h"
+#import "ClientVariable.h"
 
 
 @interface CollectionCollectionView ()
 {
+    DotFormPost* formPost;
     ReportPostResponse* collectionResponse;
     NSMutableArray* collectionData;
     
@@ -150,7 +153,7 @@
 -(void) networkCall
 {
 
-    DotFormPost* formPost = [[DotFormPost alloc]init];
+    formPost = [[DotFormPost alloc]init];
     [formPost setAdapterId:@"DR_COLLECTION_ANALYSIS_BU_WISE"];
     [formPost setAdapterType:@"CLASSLOADER"];
     [formPost setModuleId:AppConst_MOBILET_ID_DEFAULT];
@@ -269,15 +272,20 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     
-    /*
-    PolycabSalesComparisonChat* salesComparisionChart = [[PolycabSalesComparisonChat alloc] initWithNibName:@"SalesComparisonChart" bundle:nil];
-    
     UIViewController *root;
-    root = [[[[UIApplication sharedApplication]windows]objectAtIndex:0]rootViewController];
+    root = [[[[UIApplication sharedApplication] windows]objectAtIndex:0]rootViewController];
+    
+    ClientVariable* clientVariable = [ClientVariable getInstance];
+    
+    ReportVC *reportVC = [clientVariable reportVCForId:formPost.adapterId];
+    
+    reportVC.screenId = AppConst_SCREEN_ID_REPORT;
+    reportVC.reportPostResponse = collectionResponse;
+    
     
     SWRevealViewController *reveal = (SWRevealViewController*)root;
-      [(UINavigationController*)reveal.frontViewController pushViewController:salesComparisionChart animated:YES];
-     */
+      [(UINavigationController*)reveal.frontViewController pushViewController:reportVC animated:YES];
+
 }
 
 
