@@ -32,6 +32,9 @@
     MXTextField *registryIdField;
     MXTextField *customerAccountField;
     
+    MXButton* regIdField_button;
+    MXButton* verticalField_button;
+    
     NSMutableArray *roleList; // json array of objects.
     NSMutableArray* roles;  // role name list
     
@@ -47,11 +50,11 @@
     registryIdField = (MXTextField *) [self getDataFromId:@"REGISTRY_ID"];
     customerAccountField = (MXTextField *) [self getDataFromId:@"BUSINESS_VERTICAL"];
     
-    MXButton* regIdField_button = (MXButton*)[self getDataFromId:@"REGISTRY_ID_button"];
+    regIdField_button = (MXButton*)[self getDataFromId:@"REGISTRY_ID_button"];
     
     // SHIP_TO_button.attachedData = dropDownData;
            
-    MXButton* verticalField_button = (MXButton*)[self getDataFromId:@"BUSINESS_VERTICAL_button"];
+    verticalField_button = (MXButton*)[self getDataFromId:@"BUSINESS_VERTICAL_button"];
     // BILL_TO_button.attachedData = dropDownData;
     
     
@@ -660,6 +663,7 @@
                         MXButton* nextButton = (MXButton*)[self getDataFromId:@"NEXT"];
                        if(nextButton!=nil) {
                            [nextButton setEnabled:NO];
+                           [verticalField_button setEnabled:NO];
                        }
                    }];
        [alertController addAction:defaultAction];
@@ -670,6 +674,7 @@
         MXButton* nextButton = (MXButton*)[self getDataFromId:@"NEXT"];
        if(nextButton!=nil) {
            [nextButton setEnabled:YES];
+           [verticalField_button setEnabled:YES];
        }
     }
     

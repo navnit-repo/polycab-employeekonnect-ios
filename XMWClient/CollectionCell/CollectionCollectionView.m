@@ -228,8 +228,9 @@
     NSArray* rowData = [collectionData objectAtIndex:indexPath.row];
     
     if([rowData count]==8) {
-        salesCell.constantLbl1.text = @"Collection";
+        salesCell.constantLbl1.text = @"Collection - ";
         salesCell.displayName.text = [rowData objectAtIndex:0];
+        
         
         salesCell.lftdDisplacyLbl.text = [self currencyDisplay:[rowData objectAtIndex:1]];
         salesCell.ftdDataSetLbl.text = [self currencyDisplay:[rowData objectAtIndex:3]];
