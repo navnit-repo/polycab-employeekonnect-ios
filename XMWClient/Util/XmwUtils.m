@@ -396,7 +396,21 @@
 
 +(NSArray*) findNumbersInMessage:(NSString*) message
 {
-    NSString* numberPattern = @"\\-?\\d+\\.?\\d+";
+    // NSString* numberPattern = @"\\-?\\d+\\.?\\d+";
+    
+    // below pattern to detect numbers like -.87 which above was not detecting it
+    NSString* numberPattern = @"\\-?(\\d+\\.?\\d+)|\\-?(\\.?\\d+)";
+
+    // Need to cleanup the message a little bit
+    message = [message stringByReplacingOccurrencesOfString:@"Rs." withString:@" "];
+    message = [message stringByReplacingOccurrencesOfString:@" - " withString:@" "];
+    // leaving -dddd.dd or -.dd
+    message = [message stringByReplacingOccurrencesOfString:@"- " withString:@" "];
+    
+    message = [message stringByReplacingOccurrencesOfString:@"(" withString:@" "];
+    message = [message stringByReplacingOccurrencesOfString:@")" withString:@" "];
+    
+    
     NSRegularExpression *testExpression = [NSRegularExpression regularExpressionWithPattern:numberPattern options:NSRegularExpressionCaseInsensitive error:nil];
     NSArray *matches = [testExpression matchesInString:message
                                             options:0
@@ -406,21 +420,16 @@
     NSMutableArray *array = [@[] mutableCopy];
     
     [matches enumerateObjectsUsingBlock:^(NSTextCheckingResult *obj, NSUInteger idx, BOOL *stop) {
-         for (int i = 0; i< [obj numberOfRanges]; ++i) {
+         for (int i = 0; i< [obj numberOfRanges]; i++) {
              NSRange range = [obj rangeAtIndex:i];
-
-             NSString *string = [message substringWithRange:range];
-             if ([string rangeOfString:@";"].location == NSNotFound) {
+             if(range.length>0 && range.location!= NSNotFound) {
+                 NSString *string = [message substringWithRange:range];
                  [array addObject: string];
-             } else {
-                 NSArray *a = [string componentsSeparatedByString:@";"];
-                 for (NSString *s  in a) {
-                     [array addObject: [s stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]]];
-                 }
-
+                 break;
              }
          }
     }];
+    
     return array;
 }
 
