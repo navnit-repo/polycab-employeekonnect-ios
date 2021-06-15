@@ -95,7 +95,8 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if(section==0) {
-        return [headerElementIds count];
+        return 0; // not showing header.
+       //  return [headerElementIds count];
     } else if(section==1) {
         return  [recordTableData count];
     }

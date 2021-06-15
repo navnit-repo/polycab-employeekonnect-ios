@@ -229,7 +229,17 @@
     
     if([rowData count]==8) {
         salesCell.constantLbl1.text = @"Collection - ";
+        
+        CGSize calcLeftSize = [salesCell.constantLbl1.text boundingRectWithSize:CGSizeMake(collectionView.frame.size.width-10, 1024) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{ NSFontAttributeName: salesCell.constantLbl1.font } context:nil].size;
+        
+        salesCell.displayName.frame = CGRectMake(calcLeftSize.width +
+                                                  salesCell.constantLbl1.frame.origin.x,
+                                                  salesCell.displayName.frame.origin.y,
+                                                  salesCell.displayName.frame.size.width,
+                                                 salesCell.displayName.frame.size.height);
         salesCell.displayName.text = [rowData objectAtIndex:0];
+        
+        
         
         
         salesCell.lftdDisplacyLbl.text = [self currencyDisplay:[rowData objectAtIndex:1]];
