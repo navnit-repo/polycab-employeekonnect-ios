@@ -59,7 +59,7 @@
     
     DotHAxis* hAxis = [[DotHAxis alloc] initWithFrame:CGRectMake(self.horizontalAxisView.frame.origin.x, self.horizontalAxisView.frame.origin.y, self.horizontalAxisView.frame.size.width, self.horizontalAxisView.frame.size.height)];
     
-    hAxis.displayText = @"All data in INR";
+    hAxis.displayText = @"All data in Lacs";
     hAxis.maxValue = 100;
     hAxis.minValue = 0;
     hAxis.parts = 4;
@@ -199,7 +199,7 @@
     
     hAxis = [[DotHAxis alloc] initWithFrame:CGRectMake(self.horizontalAxisView.frame.origin.x, self.horizontalAxisView.frame.origin.y, self.horizontalAxisView.frame.size.width, self.horizontalAxisView.frame.size.height)];
     
-    hAxis.displayText = @"All data in INR";
+    hAxis.displayText = @"All data in Lacs";
     hAxis.maxValue = maxValue;
     hAxis.minValue = minValue;
     hAxis.parts = 4;
