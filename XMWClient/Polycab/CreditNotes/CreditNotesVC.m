@@ -265,6 +265,7 @@
     [postData setObject:invoiceNumber forKey:@"invoicenumber"];
     [postData setObject:invoiceDate forKey:@"invoicedate"];
     [postData setObject:parts[1] forKey:@"bugroup"];
+    [postData setObject:[rowData objectAtIndex:9] forKey:@"docType"];
     
     
     NSMutableDictionary * postCall = [[NSMutableDictionary  alloc]init];
@@ -366,7 +367,7 @@
         // message format is Regenerate Request created: <Some Number>
         
         if(apiMessage!=nil && [apiMessage containsString:@"Regenerate Request"]) {
-            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Polycab" message:@"Credit Note PDF generation request is in process." preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Polycab" message:@"Document generation request queued." preferredStyle:UIAlertControllerStyleAlert];
             
             UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleDefault
                 handler:^(UIAlertAction * action)
@@ -534,6 +535,7 @@
     [postData setObject:invoiceNumber forKey:@"invoicenumber"];
     [postData setObject:invoiceDate forKey:@"invoicedate"];
     [postData setObject:parts[1] forKey:@"bugroup"];
+    [postData setObject:[rowData objectAtIndex:9] forKey:@"docType"];
     
     
     NSMutableDictionary * postCall = [[NSMutableDictionary  alloc]init];
