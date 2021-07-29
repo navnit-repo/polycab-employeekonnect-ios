@@ -16,6 +16,16 @@
 #import "OverduePieView.h"
 #import "CollectionCollectionView.h"
 
+#define SECTION_IDX_HEADING 0
+#define SECTION_IDX_TIME 1
+#define SECTION_IDX_SALES_CARD 2
+#define SECTION_IDX_SALES_PIE 3
+#define SECTION_IDX_COLLECTION 4
+#define SECTION_IDX_OUTSTANDING 5
+#define SECTION_IDX_OVERDUE 6
+#define SECTIONS_COUNT 7
+
+
 @interface NationalDashboardVC ()
 
 @end
@@ -30,12 +40,24 @@
     
     CollectionCollectionView* paymentCollectionView;
     
+    NSMutableArray* roles;
+    
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     NSLog(@"NationalDashboardVC call");
     // Do any additional setup after loading the view from its nib.
+    
+    ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
+    NSArray* roleList = [clientVariables.CLIENT_LOGIN_RESPONSE.clientMasterDetail.masterDataRefresh valueForKey:@"LEVEL_WISE_ROLES"];
+    
+    roles = [[NSMutableArray alloc] init];
+    
+    for (int i=0; i<roleList.count; i++) {
+        NSString* roleName = [[roleList objectAtIndex:i] valueForKey:@"rolename"];
+        [roles addObject:roleName];
+    }
     
 }
 
@@ -86,29 +108,32 @@
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 7;
+    return SECTIONS_COUNT;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    if (section==0) {
+    if (section==SECTION_IDX_HEADING) {
         return 1;
     }
-    else if (section==1) {
+    else if (section==SECTION_IDX_TIME) {
         return 1;
     }
     
-    else if (section ==2) {
+    else if (section ==SECTION_IDX_SALES_CARD) {
         return 1;
     }
-    else  if (section == 3) {
+    else  if (section == SECTION_IDX_SALES_PIE) {
         return 1;
     }
-    else  if (section == 4) {
-        return 1;
+    else  if (section == SECTION_IDX_COLLECTION) {
+        if([roles containsObject:@"NATIONAL_ALL"] || [roles containsObject:@"BU_HEAD"] )
+            return 1;
+        else
+            return 0;
     }
-    else  if (section == 5) {
+    else  if (section == SECTION_IDX_OUTSTANDING) {
         return 1;
-    } else  if (section == 6) {
+    } else  if (section == SECTION_IDX_OVERDUE) {
         return 1;
     }
     return 0;
@@ -118,14 +143,14 @@
     
     
     CGFloat height = 0.0;
-    if (indexPath.section ==0) {
+    if (indexPath.section ==SECTION_IDX_HEADING) {
         height = deviceHeightRation*20;
     }
-   else if (indexPath.section ==1) {
+   else if (indexPath.section ==SECTION_IDX_TIME) {
         height = 20;
     }
     
-   else if (indexPath.section==2) {
+   else if (indexPath.section==SECTION_IDX_SALES_CARD) {
         // Sales Slider
         UIView *currentView= [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 180)];
         CGRect viewFrame=currentView.frame;
@@ -136,7 +161,7 @@
         currentView.frame=viewFrame;
         height=currentView.frame.size.height;
     }
-  else  if (indexPath.section==3) {
+  else  if (indexPath.section==SECTION_IDX_SALES_PIE) {
       // sales Pie chart
         UIView *currentView= [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 271)];
         CGRect viewFrame=currentView.frame;
@@ -147,7 +172,7 @@
         currentView.frame=viewFrame;
         
         height=currentView.frame.size.height;
-    } else if (indexPath.section==4) {
+    } else if (indexPath.section==SECTION_IDX_COLLECTION) {
         // Collection
         UIView *currentView= [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 180)];
         CGRect viewFrame=currentView.frame;
@@ -158,7 +183,7 @@
         currentView.frame=viewFrame;
         height=currentView.frame.size.height;
     }
-   else if (indexPath.section==5) {
+   else if (indexPath.section==SECTION_IDX_OUTSTANDING) {
         // Payment outstanding
         UIView *currentView= [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 271)];
         CGRect viewFrame=currentView.frame;
@@ -170,7 +195,7 @@
         
         height=currentView.frame.size.height;
     }
-  else  if (indexPath.section==6) {
+  else  if (indexPath.section==SECTION_IDX_OVERDUE) {
       // overdue
         UIView *currentView= [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 271)];
         CGRect viewFrame=currentView.frame;
@@ -186,12 +211,18 @@
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if (section == 1) {
+    if (section == SECTION_IDX_TIME) {
         return 0;
-    }
-    else
+    } else if(section == SECTION_IDX_COLLECTION) {
+    
+        if([roles containsObject:@"NATIONAL_ALL"] || [roles containsObject:@"BU_HEAD"] )
+            return 16.0f;
+        else
+            return 0;
+    } else
     {
-    return 16;
+        
+        return 16;
     }
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -207,7 +238,7 @@
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
 
-        if(indexPath.section==0) {
+        if(indexPath.section==SECTION_IDX_HEADING) {
             // Welcome
             cell.backgroundColor = [UIColor clearColor];
             
@@ -239,7 +270,7 @@
             cell.clipsToBounds = YES;
             
         }
-        else if (indexPath.section == 1)
+        else if (indexPath.section == SECTION_IDX_TIME)
         {
             // sync time label
             CGRect rect = [[UIScreen mainScreen] bounds];
@@ -254,7 +285,7 @@
             syncLbl.textAlignment = NSTextAlignmentRight;
             
             [cell.contentView addSubview:syncLbl];
-        }  else   if(indexPath.section==2) {
+        }  else   if(indexPath.section==SECTION_IDX_SALES_CARD) {
         
             cell.backgroundColor = [UIColor clearColor];
             cell.frame=CGRectMake(10, 0,nationalSalesAggregateCollectionView.bounds.size.width-5 ,nationalSalesAggregateCollectionView.bounds.size.height-5);
@@ -263,7 +294,7 @@
             [cell.contentView addSubview:nationalSalesAggregateCollectionView];
             cell.clipsToBounds = YES;
         
-        } else  if (indexPath.section == 3) {
+        } else  if (indexPath.section == SECTION_IDX_SALES_PIE) {
             // sales Pie chart
             cell.backgroundColor = [UIColor clearColor];
             
@@ -273,7 +304,7 @@
             [cell.contentView addSubview:nationalSalesAggregatePieView];
             cell.clipsToBounds = YES;
         
-        }  else  if (indexPath.section == 4) {
+        }  else  if (indexPath.section == SECTION_IDX_COLLECTION) {
             
             cell.backgroundColor = [UIColor clearColor];
             
@@ -283,7 +314,7 @@
             [cell.contentView addSubview:paymentCollectionView];
             cell.clipsToBounds = YES;
         
-        } else  if (indexPath.section == 5) {
+        } else  if (indexPath.section == SECTION_IDX_OUTSTANDING) {
             // Collection
             cell.backgroundColor = [UIColor clearColor];
             
@@ -293,7 +324,7 @@
             [cell.contentView addSubview:paymentOutstandingPieView];
             cell.clipsToBounds = YES;
         
-        }  else if (indexPath.section == 6) {
+        }  else if (indexPath.section == SECTION_IDX_OVERDUE) {
         
             cell.backgroundColor = [UIColor clearColor];
             
@@ -311,25 +342,25 @@
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 0) {
+    if (indexPath.section == SECTION_IDX_HEADING) {
         [lble restartLabel];
     }
     
-   else if (indexPath.section == 2) {
+   else if (indexPath.section == SECTION_IDX_TIME) {
         
         UIActivityIndicatorView *act = [(UIActivityIndicatorView*)self.view viewWithTag:50000];
         [act startAnimating];
         
     }
-   else if (indexPath.section == 3) {
+   else if (indexPath.section == SECTION_IDX_SALES_CARD) {
         UIActivityIndicatorView *act = [(UIActivityIndicatorView*)self.view viewWithTag:50001];
         [act startAnimating];
     }
-   else if (indexPath.section == 4) {
+   else if (indexPath.section == SECTION_IDX_SALES_PIE) {
         UIActivityIndicatorView *act = [(UIActivityIndicatorView*)self.view viewWithTag:50002];
         [act startAnimating];
     }
-  else  if (indexPath.section == 5) {
+  else  if (indexPath.section == SECTION_IDX_COLLECTION) {
         UIActivityIndicatorView *act = [(UIActivityIndicatorView*)self.view viewWithTag:50003];
         [act startAnimating];
     }
