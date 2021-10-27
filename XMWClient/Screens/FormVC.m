@@ -245,8 +245,10 @@ UITextField* activeTextField = nil;
 {
     [super viewDidLoad];
     
-
-    if (isiPhoneXSMAX) {
+    if (isiPhone12PROMAX) {
+        self.view.frame = CGRectMake(0, 64, 414, 926);
+    }
+    else if (isiPhoneXSMAX) {
         self.view.frame = CGRectMake(0, 64, 414, 832);
     }
     else if(isiPhoneXR) {
@@ -279,7 +281,7 @@ UITextField* activeTextField = nil;
     [self registerForKeyboardNotifications];
 
     [self postLayoutInitialization];
-             
+    [self updateDropDownMasterData];
 }
 
 -(void) postLayoutInitialization
@@ -389,12 +391,20 @@ UITextField* activeTextField = nil;
     // mainFormContainer = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320 , 480)];
     
     
-    [dotFormDraw drawForm:dotForm :scrollFormView :self];
-   // [scrollFormView addSubview:mainFormContainer];
-    scrollFormView.contentSize = CGSizeMake(self.view.bounds.size.width, dotFormDraw.yArguForDrawComp);
+    //[dotFormDraw drawForm:dotForm :scrollFormView :self];
+   // //[scrollFormView addSubview:mainFormContainer];
+    //scrollFormView.contentSize = CGSizeMake(self.view.bounds.size.width, dotFormDraw.yArguForDrawComp);
     
-    // [scrollFormView setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleTopMargin];
+    //// [scrollFormView setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleTopMargin];
     
+    
+        mainFormContainer = [[UIView alloc]initWithFrame:CGRectMake(0, 0, scrollFormView.frame.size.width , scrollFormView.frame.size.height)];
+        [scrollFormView addSubview:mainFormContainer];
+        
+        [dotFormDraw drawForm:dotForm :mainFormContainer :self];
+        //[scrollFormView addSubview:mainFormContainer];
+        scrollFormView.contentSize = CGSizeMake(self.view.bounds.size.width, dotFormDraw.yArguForDrawComp+100);
+        mainFormContainer.frame = CGRectMake(mainFormContainer.frame.origin.x, mainFormContainer.frame.origin.y, mainFormContainer.frame.size.width, dotFormDraw.yArguForDrawComp);
 
 
 
@@ -473,6 +483,23 @@ UITextField* activeTextField = nil;
 //	[loadingView removeView];
 }
 
+-(void) updateDropDownMasterData{
+    NSMutableDictionary *dotFormElements = (NSMutableDictionary *)[dotForm formElements];
+    
+    NSMutableArray *sortedElements =[DotFormDraw sortFormComponents : dotFormElements];
+
+    for(int cntElement = 0; cntElement < [sortedElements count] ; cntElement++)
+    {
+        DotFormElement* dotFormElement = (DotFormElement *)[dotFormElements objectForKey:[sortedElements objectAtIndex:cntElement]];
+        if ([dotFormElement.componentType isEqualToString : XmwcsConst_DE_COMPONENT_DROPDOWN ] ) {
+//            MXTextField *dropDownCell = [self getDataFromId:dotFormElement.elementId];
+            printf(@"dropDownCell");
+            [self networkCallConfigureDropDown:dotFormElement.elementId forElement:dotFormElement];
+        }
+    
+    }
+    
+}
 -(IBAction) submitPressed:(id) sender
 {
     ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext]];
@@ -523,6 +550,55 @@ UITextField* activeTextField = nil;
     
 }
 
+-(void)networkCallConfigureDropDown :(NSString*)componentName forElement : (DotFormElement*) dotFormElement {
+//    loadingView = [LoadingView loadingViewInView:self.view];
+//    dotFormPost.setAdapterType("JDBC");
+//    dotFormPost.setAdapterId("SHIP_TO");
+//    dotFormPost.setModuleId("xmwpolycab");
+//    dotFormPost.setDocId("SHIP_TO");
+//    dotFormPost.setDocDesc("SHIP TO data");
+//    dotFormPost.setReportCacheRefresh("true");
+//    postData.put("SEARCH_TEXT", "");
+//    postData.put("SEARCH_BY", "SBC");
+//    postData.put("REGISTRY_ID", userRefId);
+//    postData.put("CUSTOMER_NUMBER", accountNumber);
+    
+ DotFormPost *dotFormPostShipTO = [[DotFormPost alloc]init];
+    [dotFormPostShipTO setAdapterType:@"SEARCH_JDBC"];
+    [dotFormPostShipTO setAdapterId:dotFormElement.masterValueMapping];
+    [dotFormPostShipTO setModuleId:@"xmwpolycab"];
+    [dotFormPostShipTO setDocId:dotFormElement.masterValueMapping];
+    [dotFormPostShipTO setDocDesc:@"SHIP TO data"];
+    [dotFormPostShipTO setReportCacheRefresh:@"true"];
+    [dotFormPostShipTO.postData setObject:@"" forKey:@"SEARCH_TEXT"];
+    [dotFormPostShipTO.postData setObject:@"SBC" forKey:@"SEARCH_BY"];
+    [dotFormPostShipTO.postData setObject:dotFormElement.elementId forKey:DROP_DOWN_REQUEST_ELEMENT_KEY];
+//    [dotFormPostShipTO.postData setObject:@"11602" forKey:@"REGISTRY_ID"];
+//    [dotFormPostShipTO.postData setObject:@"4811" forKey:@"CUSTOMER_NUMBER"];
+    
+    
+    
+    networkHelper = [[NetworkHelper alloc] init];
+    [networkHelper makeXmwNetworkCall:dotFormPostShipTO :self : nil :  XmwcsConst_CALL_NAME_FOR_SEARCH];
+    
+    
+//    DotFormPost *dotFormPostBillTO = [[DotFormPost alloc]init];
+//    [dotFormPostBillTO setAdapterType:@"JDBC"];
+//    [dotFormPostBillTO setAdapterId:@"BILL_TO"];
+//    [dotFormPostBillTO setModuleId:@"xmwpolycab"];
+//    [dotFormPostBillTO setDocId:@"BILL_TO"];
+//    [dotFormPostBillTO setDocDesc:@"Bill TO data"];
+//    [dotFormPostBillTO setReportCacheRefresh:@"true"];
+//
+//    [dotFormPostBillTO.postData setObject:@"" forKey:@"SEARCH_TEXT"];
+//    [dotFormPostBillTO.postData setObject:@"SBC" forKey:@"SEARCH_BY"];
+//    [dotFormPostBillTO.postData setObject:registryID forKey:@"REGISTRY_ID"];
+//    [dotFormPostBillTO.postData setObject:customerAccount forKey:@"CUSTOMER_NUMBER"];
+//    networkHelper = [[NetworkHelper alloc] init];
+//    [networkHelper makeXmwNetworkCall:dotFormPostBillTO :self : nil :  XmwcsConst_CALL_NAME_FOR_SEARCH];
+    
+    
+}
 
 - (void) networkCall : (id) requestObject : (NSString*) callName
 {
@@ -2762,7 +2838,27 @@ UITextField* activeTextField = nil;
     } else  if ([callName isEqualToString : XmwcsConst_CALL_NAME_FOR_VIEW_EDIT]) {
         
         
-        
+    } else if ([callName isEqualToString: XmwcsConst_CALL_NAME_FOR_SEARCH_MASTER]) {
+        DotFormPost* postReqs = (DotFormPost*)requestedObject;
+           LoadingView *removeLoadingView = (LoadingView *) [self loadingViewGetDataFromId:postReqs.docId];
+           
+           [removeLoadingView removeView];
+           [loadingView removeView];
+        DotFormPost* dotformPostReqs = (DotFormPost*)requestedObject;
+        for (int i=0; i<dotFormElements.count; i++) {
+            
+            DotFormElement * formElement = [dotFormElements objectAtIndex:i];
+            NSDictionary* extendedProperty = [XmwUtils getExtendedPropertyMap:formElement.extendedProperty];
+            
+            if ([extendedProperty[@"REQUEST_DOC_ID"] isEqualToString:dotformPostReqs.adapterId] && [dotformPostReqs.postData[DROP_DOWN_REQUEST_ELEMENT_KEY] isEqualToString:formElement.elementId]) {
+                // This code only work for Drop Down, as per current requriment
+                // set default value into drop down
+                if ([formElement.componentType isEqualToString:XmwcsConst_DE_COMPONENT_DROPDOWN]) {
+                    [self setDropDownResponseDefaultValue:respondedObject :formElement.elementId];
+                    break;
+                }
+            }
+        }
     } else if ([callName isEqualToString: XmwcsConst_CALL_NAME_FOR_SEARCH]) {
         DotFormPost* postReqs = (DotFormPost*)requestedObject;
            LoadingView *removeLoadingView = (LoadingView *) [self loadingViewGetDataFromId:postReqs.docId];

@@ -27,6 +27,9 @@
 #define isiPhoneXS  ([[UIScreen mainScreen] bounds].size.height == 812)?TRUE:FALSE
 #define isiPhoneXR  ([[UIScreen mainScreen] bounds].size.height == 896)?TRUE:FALSE
 #define isiPhoneXSMAX  ([[UIScreen mainScreen] bounds].size.height == 896)?TRUE:FALSE
+#define isiPhone12  ([[UIScreen mainScreen] bounds].size.height == 926)?TRUE:FALSE
+#define isiPhone12PRO  ([[UIScreen mainScreen] bounds].size.height == 926)?TRUE:FALSE
+#define isiPhone12PROMAX  ([[UIScreen mainScreen] bounds].size.height == 926)?TRUE:FALSE
 
 
 #define RELATIVE_FINANCIAL_YEAR @"RELATIVE_FINANCIAL_YEAR"

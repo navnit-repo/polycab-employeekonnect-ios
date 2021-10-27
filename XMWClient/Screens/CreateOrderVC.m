@@ -18,7 +18,6 @@
 {
     CGFloat columnOffsets[10];
 }
-
 @end
 
 
