@@ -77,15 +77,16 @@
     
     
     // if message is of below format, we need to show structured message
-    /*
-    NSString* message = @"Your account is either not having enough credit limit or has overdue invoices so order is not getting accepted.Total Credit Limit (Rs.370000), Utilized - Ledger Balance+Open Orders (Rs.433885.04), Balance Available Limit = Rs.-63885.04 and order Value is Rs. 530000";
+/*
+    NSString* message = @"Total Credit Limit (Rs.1), Utilized - Ledger Balance+Open Orders (Rs.4775036.764), Balance Available Limit = Rs.-4775035.764 and order Value is Rs. 79000";
     NSArray* autoDoCheckNumbers = [XmwUtils findNumbersInMessage:message];
     for(int i=0; i<[autoDoCheckNumbers count]; i++) {
         NSLog(@"Number = %@", [autoDoCheckNumbers objectAtIndex:i]);
     }
     
     [self showCreditLimitMessage:autoDoCheckNumbers];
-     */
+ */
+     
 }
 
 -(void)addCustomeTableView{
