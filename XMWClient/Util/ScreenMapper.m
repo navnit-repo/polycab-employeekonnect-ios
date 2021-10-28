@@ -79,6 +79,7 @@
     [clientVariables registerReportVCClass:@"CollectionReportVC" forId:@"DR_COLLECTION_ANALYSIS_STATE_WISE"];
     
     [clientVariables registerReportVCClass:@"CollectionReportVC" forId:@"DR_COLLECTION_ANALYSIS_CUSTOMER_WISE"];
+    [clientVariables registerReportVCClass:@"SPAReportVC" forId:@"DR_SPA_REQUESTS"];
    
     
 }
@@ -142,9 +143,8 @@
     [clientVariables registerFormVCClass:@"TSIFormVC" forId:@"DOT_FORM_ITEM_WISE_SALES"];
     
     [clientVariables registerFormVCClass:@"InventoryFormVC" forId:@"DOT_FORM_INVENTORY_STOCK"];
+    [clientVariables registerFormVCClass:@"SPAFormVC" forId:@"DF_SPA_APPROVAL_HEADER"];
     
-    
-
 }
 
 
