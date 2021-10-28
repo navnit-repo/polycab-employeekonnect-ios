@@ -17,7 +17,9 @@
 #import "ClientVariable.h"
 
 @interface GrowthIndicatorReportVC () <UITableViewDataSource, UITableViewDelegate>
-
+{
+    NSArray* forwardFilters;
+}
 @end
 
 @implementation GrowthIndicatorReportVC
@@ -62,6 +64,7 @@
     
     
      // [self drawHeaderItem];
+    
     
 }
 
@@ -393,6 +396,21 @@
     
 }
 
+-(NSArray*) displayFilters
+{
+    NSMutableArray* filters = [[NSMutableArray alloc] init];
+    
+    NSMutableArray *sortedElementIds = [DotReportDraw sortRptComponents:self.dotReport.reportElements :XmwcsConst_REPORT_PLACE_HEADER];
+    
+    for(int i=0; i<[sortedElementIds count]; i++) {
+        NSString* elementId = [sortedElementIds objectAtIndex:i];
+        if(![elementId containsString:@"TOTAL"]) {
+            [filters addObject:[elementId  copy]];
+        }
+    }
+    return filters;
+}
+
 -(NSString*) zeroColumnHeading
 {
     NSMutableArray *sortedElementIds = [DotReportDraw sortRptComponents:self.dotReport.reportElements :XmwcsConst_REPORT_PLACE_TABLE];
@@ -421,7 +439,12 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 44.0f * deviceHeightRation;
+    if(indexPath.section ==0) {
+        return 44.0f;
+    } if(indexPath.section ==1 ) {
+        return 44.0f * deviceHeightRation;
+    }
+    return 0.0f;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -480,14 +503,16 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if(section==0) {
-        return 0;
+        forwardFilters = [self displayFilters];
+        if(forwardFilters!=nil && [forwardFilters count]>0) {
+            return [forwardFilters count];
+        }
     } else if(section==1) {
         if(dataSet!=nil) {
             return [dataSet.allKeys count];
         }
-    } else {
-        return 0;
     }
+    return 0;
 }
 
 
@@ -497,6 +522,38 @@
     UITableViewCell* cell = nil;
     if(indexPath.section==0) {
         cell = [tableView dequeueReusableCellWithIdentifier:@"DefaultCell"];
+        if(self.firstResponse !=nil) {
+            NSString* key = [forwardFilters objectAtIndex:indexPath.row];
+            DotReportElement* reportElement = [self.dotReport.reportElements objectForKey:key];
+            NSString* leftLabelText = reportElement.displayText;
+            NSString* rightLabelValue = [self.firstResponse.headerData objectForKey:key];
+            
+            UILabel* leftLabel = [cell.contentView viewWithTag:101];
+            if(leftLabel==nil) {
+                leftLabel = [[UILabel alloc] initWithFrame:CGRectMake(10.0f, 5.0f, tableView.frame.size.width/2, 35.0f)];
+                leftLabel.tag = 101;
+                [cell.contentView addSubview:leftLabel];
+            }
+            leftLabel.text = leftLabelText;
+            
+            UILabel* rightLabel = [cell.contentView viewWithTag:102];
+            if(rightLabel==nil) {
+                rightLabel = [[UILabel alloc] initWithFrame:CGRectMake(tableView.frame.size.width/2 , 5.0f, (tableView.frame.size.width/2) - 10.0f, 35.0f)];
+                rightLabel.tag = 101;
+                [cell.contentView addSubview:rightLabel];
+            }
+            rightLabel.text = rightLabelValue;
+            
+            UIView* separator = [cell.contentView viewWithTag:200];
+            if(separator==nil) {
+                separator = [[UIView alloc] initWithFrame:CGRectMake(10.0f, 43.0f, tableView.frame.size.width - 20.0f, 1.0f)];
+                separator.tag = 200;
+                
+                separator.backgroundColor = [UIColor separatorColor];
+                [cell.contentView addSubview: separator];
+            }
+            
+        }
     } else if(indexPath.section==1) {
         cell = [tableView dequeueReusableCellWithIdentifier:@"GrowthIndicatorTableCell"];
     }

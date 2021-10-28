@@ -65,8 +65,14 @@
 @implementation CustomCompareReportVC
 @synthesize orignalThirdResponseData,orignalSortedDataSetKeys,orignalDataSet;
 
+@synthesize firstResponse;
+@synthesize secondResponse;
+@synthesize thirdResponse;
+
 @synthesize secondColumnText;
 @synthesize thirdColumnText;
+
+
 - (void)viewDidLoad {
     [LayoutClass setLayoutForIPhone6:self.mainTable];
 
