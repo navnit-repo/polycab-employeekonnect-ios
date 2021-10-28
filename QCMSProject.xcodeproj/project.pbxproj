@@ -750,6 +750,11 @@
 		90FA56DA17D727B3002B7601 /* SearchViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 90FA56D717D727B3002B7601 /* SearchViewController.h */; };
 		90FA56DB17D727B3002B7601 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90FA56D817D727B3002B7601 /* SearchViewController.m */; };
 		90FA56DC17D727B3002B7601 /* SearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90FA56D917D727B3002B7601 /* SearchViewController.xib */; };
+		BA6FBF552722A9F700100146 /* SPAReportVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BA6FBF542722A9F700100146 /* SPAReportVC.m */; };
+		BA74827727240A0A0016DC0A /* SPALinesFormVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BA74827627240A0A0016DC0A /* SPALinesFormVC.m */; };
+		BA77839A271ECD6600980E80 /* SPAFormVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BA778399271ECD6600980E80 /* SPAFormVC.m */; };
+		BAD2C1892722FE5000C2F91E /* SpaApprovalLineCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BAD2C1882722FE5000C2F91E /* SpaApprovalLineCell.xib */; };
+		BAD2C18E2722FEA100C2F91E /* SpaApprovalLineCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BAD2C18D2722FEA100C2F91E /* SpaApprovalLineCell.m */; };
 		F00849A322770EBA009E723C /* PushNotificationHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = F00849A122770EBA009E723C /* PushNotificationHandler.h */; };
 		F00849A422770EBA009E723C /* PushNotificationHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = F00849A222770EBA009E723C /* PushNotificationHandler.m */; };
 		F01549C2227065F8001570BE /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F01549C1227065F7001570BE /* UserNotifications.framework */; };
@@ -2038,6 +2043,15 @@
 		90FA56D817D727B3002B7601 /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SearchViewController.m; path = UITableViewCell/SearchViewController.m; sourceTree = "<group>"; };
 		90FA56D917D727B3002B7601 /* SearchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SearchViewController.xib; path = UITableViewCell/SearchViewController.xib; sourceTree = "<group>"; };
 		9D69B9DC1A317394B132FD86 /* Pods_XMWClient.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_XMWClient.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BA6FBF53272293F500100146 /* SPAReportVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPAReportVC.h; sourceTree = "<group>"; };
+		BA6FBF542722A9F700100146 /* SPAReportVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = SPAReportVC.m; path = Screens/SPAReportVC.m; sourceTree = "<group>"; };
+		BA748275272409E80016DC0A /* SPALinesFormVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPALinesFormVC.h; sourceTree = "<group>"; };
+		BA74827627240A0A0016DC0A /* SPALinesFormVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = SPALinesFormVC.m; path = Screens/SPALinesFormVC.m; sourceTree = "<group>"; };
+		BA778398271ECD3800980E80 /* SPAFormVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SPAFormVC.h; path = Screens/SPAFormVC.h; sourceTree = "<group>"; };
+		BA778399271ECD6600980E80 /* SPAFormVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = SPAFormVC.m; path = Screens/SPAFormVC.m; sourceTree = "<group>"; };
+		BAD2C1882722FE5000C2F91E /* SpaApprovalLineCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SpaApprovalLineCell.xib; sourceTree = "<group>"; };
+		BAD2C18C2722FE8D00C2F91E /* SpaApprovalLineCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SpaApprovalLineCell.h; sourceTree = "<group>"; };
+		BAD2C18D2722FEA100C2F91E /* SpaApprovalLineCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SpaApprovalLineCell.m; sourceTree = "<group>"; };
 		F00849A122770EBA009E723C /* PushNotificationHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PushNotificationHandler.h; sourceTree = "<group>"; };
 		F00849A222770EBA009E723C /* PushNotificationHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PushNotificationHandler.m; sourceTree = "<group>"; };
 		F0084B1522771EF4009E723C /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
@@ -3538,6 +3552,12 @@
 				855A8E421B495022001152F2 /* CreateOrderVC.h */,
 				855A8E431B495022001152F2 /* CreateOrderVC.m */,
 				855A8E441B495022001152F2 /* CreateOrderVC.xib */,
+				BA778398271ECD3800980E80 /* SPAFormVC.h */,
+				BA778399271ECD6600980E80 /* SPAFormVC.m */,
+				BA6FBF53272293F500100146 /* SPAReportVC.h */,
+				BA6FBF542722A9F700100146 /* SPAReportVC.m */,
+				BA748275272409E80016DC0A /* SPALinesFormVC.h */,
+				BA74827627240A0A0016DC0A /* SPALinesFormVC.m */,
 			);
 			name = Screens;
 			sourceTree = "<group>";
@@ -3962,6 +3982,16 @@
 			path = MainMenu;
 			sourceTree = "<group>";
 		};
+		BAD2C1812722FDB400C2F91E /* SpaApprovalCell */ = {
+			isa = PBXGroup;
+			children = (
+				BAD2C1882722FE5000C2F91E /* SpaApprovalLineCell.xib */,
+				BAD2C18C2722FE8D00C2F91E /* SpaApprovalLineCell.h */,
+				BAD2C18D2722FEA100C2F91E /* SpaApprovalLineCell.m */,
+			);
+			path = SpaApprovalCell;
+			sourceTree = "<group>";
+		};
 		E385886F8230F9F2A753600C /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -4113,6 +4143,7 @@
 		F02D1415211970C2001B1967 /* Dash Board */ = {
 			isa = PBXGroup;
 			children = (
+				BAD2C1812722FDB400C2F91E /* SpaApprovalCell */,
 				27B2AA17266DA52900DB13A9 /* CollectionCell */,
 				F02786C520FDC2CD00096AFB /* DashBoardVC.h */,
 				F02786C620FDC2CD00096AFB /* DashBoardVC.m */,
@@ -5275,7 +5306,6 @@
 				ORGANIZATIONNAME = dotvik;
 				TargetAttributes = {
 					8579E707174CD04600D7945F = {
-						DevelopmentTeam = QS92QH4FZ2;
 						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
@@ -5586,6 +5616,7 @@
 				F059CD30214F710600E303F6 /* polycab_logo1@3x.png in Resources */,
 				905FFDC8199A081300E95BFB /* downloadImage3.png in Resources */,
 				857A3EE51A6CFC3500279931 /* FirstDashView.xib in Resources */,
+				BAD2C1892722FE5000C2F91E /* SpaApprovalLineCell.xib in Resources */,
 				F059CD22214F710600E303F6 /* 03-order@3x.png in Resources */,
 				F036CDCC22815F4D000F2448 /* Tick_Mark.png in Resources */,
 				F059CC94214F70D000E303F6 /* polycab_notification.png in Resources */,
@@ -5882,7 +5913,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-XMWClient/Pods-XMWClient-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-XMWClient/Pods-XMWClient-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/ZXingObjC/ZXingObjC.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -5891,7 +5922,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-XMWClient/Pods-XMWClient-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-XMWClient/Pods-XMWClient-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		EB1A3B851CE8CC2C71ADD21B /* [CP] Check Pods Manifest.lock */ = {
@@ -6102,6 +6133,7 @@
 				902D3F651755E92200E079AB /* ButtonTableViewCell.m in Sources */,
 				F0A358EF20FC9ECF00CE34AC /* SignUpVC.m in Sources */,
 				273259722484DA78003F979C /* RMAVC2.m in Sources */,
+				BA77839A271ECD6600980E80 /* SPAFormVC.m in Sources */,
 				2708C1A325989FCF00DBA84E /* Credentials.m in Sources */,
 				85DB6AC31E634CB90018710B /* WideReportVC.m in Sources */,
 				F0B4259922671C240011D3E4 /* MessageSubjectVC.m in Sources */,
@@ -6163,6 +6195,7 @@
 				273259922484DB50003F979C /* NationalSalesAggregateCollectionView.m in Sources */,
 				90182A3817673FD700B401E5 /* MXBarButton.m in Sources */,
 				90B4659417731FCC00DB142B /* MXRadioButtonGroup.m in Sources */,
+				BAD2C18E2722FEA100C2F91E /* SpaApprovalLineCell.m in Sources */,
 				902FD74C1778728B00C4BD89 /* DotSearchComponent.m in Sources */,
 				85DB6AAF1E632C7E0018710B /* BarcodeScanVC.m in Sources */,
 				857A3EE71A6CFC3500279931 /* ForthDashView.m in Sources */,
@@ -6247,6 +6280,7 @@
 				90EF3CA217AF7F9400F2663E /* DotReportListCellRenderer.m in Sources */,
 				90FA56D117D71753002B7601 /* SearchResponse.m in Sources */,
 				85AC965C198FFDDF00AC0338 /* ReportBaseSection.m in Sources */,
+				BA74827727240A0A0016DC0A /* SPALinesFormVC.m in Sources */,
 				8595B4FB191004120010C685 /* DVCalendarController.m in Sources */,
 				F032191B2107067A00C24A34 /* RoleList.m in Sources */,
 				85CC35031DFA67900016F65C /* MultiSelectPopup.m in Sources */,
@@ -6254,6 +6288,7 @@
 				9000175B180D64860002F464 /* TimeTableViewCell.m in Sources */,
 				856DC9DF1D06613700B7F48E /* EditOrderVC.m in Sources */,
 				90FA56DB17D727B3002B7601 /* SearchViewController.m in Sources */,
+				BA6FBF552722A9F700100146 /* SPAReportVC.m in Sources */,
 				9022FC1F17F96071004373A4 /* SearchRequestItem.m in Sources */,
 				8595B4F2190FCB790010C685 /* DVMonthYearPicker.m in Sources */,
 				9022FC2317F960D0004373A4 /* SearchRequestStorage.m in Sources */,
@@ -6336,11 +6371,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = XMWClient/XMWClient.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 16700;
-				DEVELOPMENT_TEAM = QS92QH4FZ2;
+				DEVELOPMENT_TEAM = "";
 				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = YES;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -6364,7 +6399,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.polycab.xmw.employee.ent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "Polycab Employee Devlopment";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
@@ -6378,11 +6413,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = XMWClient/XMWClient.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 16700;
-				DEVELOPMENT_TEAM = QS92QH4FZ2;
+				DEVELOPMENT_TEAM = "";
 				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = YES;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -6407,7 +6442,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.polycab.xmw.employee.ent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "Polycab Employee Devlopment";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = YES;

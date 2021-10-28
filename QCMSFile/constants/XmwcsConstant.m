@@ -28,6 +28,7 @@ NSString *const  XmwcsConst_FORGOT_PWD_MODULE_ID = @"MODULE_ID";
 
 NSString* XmwcsConst_SERVICE_UPDATE_DROPDOWM_URL_NOTIFY_CONTEXT=@"https://pconnect.polycab.com:443/xmwpolycab/store";
 NSString* XmwcsConst_SERVICE_URL = @"https://pconnect.polycab.com:443/xmwpolycab/feed";
+NSString* XmwcsConst_SERVICE_EMPLOYEE_WEB_CONTEXT = @"https://pconnect.polycab.com:443/employee/";
 NSString* XmwcsConst_SERVICE_URL_NOTIFY_CONTEXT = @"https://pconnect.polycab.com:443/xmwpolycab/nms";
 NSString* XmwcsConst_PRODUCT_TREE_SERVICE_URL = @"https://pconnect.polycab.com:443/xmwpolycab/productsearch";
 NSString* XmwcsConst_SERVICE_URL_APP_CONTROL = @"https://pconnect.polycab.com:443/xmwpolycab/appControl";
@@ -137,6 +138,7 @@ NSString *const XmwcsConst_CALL_NAME_FOR_LOGIN = @"FOR_LOGIN";
 NSString *const XmwcsConst_CALL_NAME_FOR_SUBMIT = @"FOR_SUBMIT";
 NSString *const XmwcsConst_CALL_NAME_FOR_REPORT = @"FOR_REPORT";
 NSString *const XmwcsConst_CALL_NAME_FOR_SEARCH = @"FOR_SEARCH";
+NSString *const XmwcsConst_CALL_NAME_FOR_SEARCH_MASTER = @"FOR_SEARCH_MASTER";
 NSString *const XmwcsConst_CALL_NAME_FOR_CHANGE_PASSWORD = @"FOR_CHANGE_PASSWORD";
 NSString *const XmwcsConst_CALL_NAME_FOR_FORGOT_PASSWORD = @"FOR_FORGOT_PASSWORD";
 NSString *const XmwcsConst_CALL_NAME_FOR_UPDATE_APP_VERSION = @"FOR_UPDATE_APP_VERSION";
