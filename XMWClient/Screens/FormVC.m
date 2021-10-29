@@ -429,7 +429,9 @@ UITextField* activeTextField = nil;
     
     self.navigationController.navigationBar.titleTextAttributes = textAttributes;
     // self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
-    self.navigationController.navigationBar.translucent = NO;
+    self.navigationController.navigationBar.translucent = YES;
+    self.navigationController.navigationBar.opaque = YES;
+    // self.navigationController.navigationBar.backgroundColor = [UIColor whiteColor];
     
     UILabel*  titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 160, 40)];
     //titleLabel.text = title;
