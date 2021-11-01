@@ -109,7 +109,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
+    [[NSNotificationCenter defaultCenter]addObserver:self  selector:@selector(keyboardWillBeHidden:) name: UIKeyboardWillHideNotification object: nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardWasShown:) name: UIKeyboardWillShowNotification  object: nil];
     
     self.listItems = [[NSMutableArray alloc] init];
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0,0,self.view.frame.size.width,self.view.frame.size.height-130) style:UITableViewStylePlain];
@@ -147,6 +148,28 @@
     [self loadModelData];
 }
 
+- (void)keyboardWasShown:(NSNotification*)aNotification
+{
+    NSDictionary* info = [aNotification userInfo];
+    CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height, 0.0);
+    self.tableView.contentInset = contentInsets;
+    self.tableView.scrollIndicatorInsets = contentInsets;
+}
+
+// Called when the UIKeyboardWillHideNotification is sent
+- (void)keyboardWillBeHidden:(NSNotification*)aNotification
+{
+    UIEdgeInsets contentInsets = UIEdgeInsetsZero;
+    self.tableView.contentInset = contentInsets;
+    self.tableView.scrollIndicatorInsets = contentInsets;
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [super viewDidDisappear:animated];
+}
 - (void)approveBtnClicked:(UIButton*)button
 {
     NSString *str ;
@@ -539,9 +562,9 @@
     cell.rqDiscLbl.text = [NSString stringWithFormat:@"%f",discount];
     cell.quantityLbl.text = [NSString stringWithFormat:@"%@",self.itemListDetailModels.qty_mtr];
     [cell.rateTxt addTarget:self action:@selector(rateTxtDidChange:) forControlEvents:UIControlEventEditingChanged];
-    
+    [cell.rateTxt setKeyboardType:UIKeyboardTypeNumberPad];
     [cell.discountTxt addTarget:self action:@selector(discountTxtDidChange:) forControlEvents:UIControlEventEditingChanged];
-    
+    [cell.discountTxt setKeyboardType:UIKeyboardTypeNumberPad];
 //    [cell.quantityTxt addTarget:self action:@selector(quantityTxtDidChange:) forControlEvents:UIControlEventEditingChanged];
     
     if (singleDiscountTxt.text.length>0)
@@ -766,6 +789,7 @@
 - (void)tableView:(UITableView *)theTableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSLog(@"selected %d row", indexPath.row);
+    [self.view endEditing:YES];
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
  {
