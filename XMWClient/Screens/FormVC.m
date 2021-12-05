@@ -384,30 +384,19 @@ UITextField* activeTextField = nil;
 
     
     [self.view addSubview:scrollFormView];
-     [self headerView:headerStr];
+    [self headerView:headerStr];
     
     
-   
-    // mainFormContainer = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320 , 480)];
-    
-    
-    //[dotFormDraw drawForm:dotForm :scrollFormView :self];
-   // //[scrollFormView addSubview:mainFormContainer];
-    //scrollFormView.contentSize = CGSizeMake(self.view.bounds.size.width, dotFormDraw.yArguForDrawComp);
-    
-    //// [scrollFormView setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleTopMargin];
-    
-    
-        mainFormContainer = [[UIView alloc]initWithFrame:CGRectMake(0, 0, scrollFormView.frame.size.width , scrollFormView.frame.size.height)];
-        [scrollFormView addSubview:mainFormContainer];
-        
-        [dotFormDraw drawForm:dotForm :mainFormContainer :self];
-        //[scrollFormView addSubview:mainFormContainer];
-        scrollFormView.contentSize = CGSizeMake(self.view.bounds.size.width, dotFormDraw.yArguForDrawComp+100);
-        mainFormContainer.frame = CGRectMake(mainFormContainer.frame.origin.x, mainFormContainer.frame.origin.y, mainFormContainer.frame.size.width, dotFormDraw.yArguForDrawComp);
+    mainFormContainer = [[UIView alloc]initWithFrame:CGRectMake(0, 0, scrollFormView.frame.size.width , scrollFormView.frame.size.height)];
 
+    [scrollFormView addSubview:mainFormContainer];
+    
+    [dotFormDraw drawForm:dotForm :mainFormContainer :self];
+    
+    scrollFormView.contentSize = CGSizeMake(self.view.bounds.size.width, dotFormDraw.yArguForDrawComp+100);
 
-
+    mainFormContainer.frame = CGRectMake(mainFormContainer.frame.origin.x, mainFormContainer.frame.origin.y, mainFormContainer.frame.size.width, dotFormDraw.yArguForDrawComp);
+    
 }
 
 // make sure tag id used is 10000 in the DotFormDraw
@@ -2915,6 +2904,11 @@ UITextField* activeTextField = nil;
     
 }
 
+- (void) httpServerSessionExpired
+{
+    
+    
+}
 
 
 #pragma mark - UIAlertViewDelegate

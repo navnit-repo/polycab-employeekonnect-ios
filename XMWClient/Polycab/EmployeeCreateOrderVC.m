@@ -349,13 +349,14 @@
            [dropDownData addObject:key_value_Array];
            
            
-           
            MXButton *mxbutton = (MXButton*)[self getDataFromId:@"SHIP_TO_button"];
            mxbutton.attachedData = dropDownData;
            
-           MXTextField *SHIP_TO = (MXTextField *) [self getDataFromId:@"SHIP_TO"];
-           SHIP_TO.text = [key_value_Array objectAtIndex:0];
-           SHIP_TO.keyvalue =[[dropDownData objectAtIndex:0]objectAtIndex:0]; ///value check
+           if([key_value_Array count]>0) {
+               MXTextField *SHIP_TO = (MXTextField *) [self getDataFromId:@"SHIP_TO"];
+               SHIP_TO.text = [key_value_Array objectAtIndex:0];
+               SHIP_TO.keyvalue =[[dropDownData objectAtIndex:0]objectAtIndex:0]; ///value check
+           }
      
        }
            
@@ -407,9 +408,11 @@
            MXButton *mxbutton = (MXButton*)[self getDataFromId:@"BILL_TO_button"];
            mxbutton.attachedData = dropDownData;
 
-           MXTextField *BILL_TO = (MXTextField *) [self getDataFromId:@"BILL_TO"];
-           BILL_TO.text = [key_value_Array objectAtIndex:0];
-           BILL_TO.keyvalue =[[dropDownData objectAtIndex:0]objectAtIndex:0]; ///value check
+           if([key_value_Array count]>0) {
+               MXTextField *BILL_TO = (MXTextField *) [self getDataFromId:@"BILL_TO"];
+               BILL_TO.text = [key_value_Array objectAtIndex:0];
+               BILL_TO.keyvalue =[[dropDownData objectAtIndex:0]objectAtIndex:0]; ///value check
+           }
            [loadingView removeView];
        }
 
