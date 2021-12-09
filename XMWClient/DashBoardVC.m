@@ -210,6 +210,11 @@
 //self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:204.0/255 green:41.0/255 blue:43.0/255 alpha:1.0];
     self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:204.0/255 green:41.0/255 blue:43.0/255 alpha:1.0];
     
+    self.navigationController.navigationBar.translucent = YES;
+    self.navigationController.navigationBar.opaque = YES;
+    self.navigationController.navigationBar.backgroundColor = [UIColor colorWithRed:204.0/255 green:41.0/255 blue:43.0/255 alpha:1.0];
+    
+    
     SWRevealViewController *revealController = [self revealViewController];
     revealController.panGestureRecognizer.enabled = NO;
     [revealController panGestureRecognizer];
