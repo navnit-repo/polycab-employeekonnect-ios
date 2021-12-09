@@ -21,6 +21,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *rqDiscLbl;
 @property (weak, nonatomic) IBOutlet UITextField *rateTxt;
 @property (weak, nonatomic) IBOutlet UITextField *discountTxt;
+@property (weak, nonatomic) IBOutlet UILabel *totalSPAValue;
 
  
 @end

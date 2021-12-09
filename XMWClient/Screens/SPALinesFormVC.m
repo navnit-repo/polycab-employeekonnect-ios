@@ -486,19 +486,32 @@
     [view addSubview:label];
     [view setBackgroundColor:[UIColor colorWithRed:255/255.0 green:255/255.0 blue:255/255.0 alpha:1.0]];
     
-    UILabel *labelSub = [[UILabel alloc] initWithFrame:CGRectMake(10,label.frame.size.height+10, tableView.frame.size.width-20, 18)];
+    UILabel *labelSub = [[UILabel alloc] initWithFrame:CGRectMake(10,label.frame.size.height+10, tableView.frame.size.width-150, 18)];
     [labelSub setFont:[UIFont boldSystemFontOfSize:15]];
     [labelSub setTextAlignment: NSTextAlignmentLeft];
     [labelSub setText:[NSString stringWithFormat: @"SPA Request ID: %@",self.spahrefid]];
     [view addSubview:labelSub];
     
-    UILabel *subDisc = [[UILabel alloc] initWithFrame:CGRectMake(10, labelSub.frame.size.height*2+20, self.view.frame.size.width/3, 30)];
+    UIButton *remarksButton = [[UIButton alloc] initWithFrame:CGRectMake(labelSub.frame.size.width+ 20,label.frame.size.height+10, 80, 18)];
+        [remarksButton setFont:[UIFont boldSystemFontOfSize:15]];
+//        [remarksButton setTextAlignment: NSTextAlignmentLeft];
+//        [remarksButton setTitle:"Remarks" forState: UIControlState.]
+//    UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
+    remarksButton.backgroundColor = [UIColor redColor];
+        [remarksButton setTitle:@"Remarks" forState:UIControlStateNormal];
+    [remarksButton addTarget:self action:@selector(remarksButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+        
+//        [button sizeToFit];
+//        [remarksButton setText:[NSString stringWithFormat: @"Remarks",""]];
+        [view addSubview:remarksButton];
+    
+    UILabel *subDisc = [[UILabel alloc] initWithFrame:CGRectMake(10, labelSub.frame.size.height*2+20, self.view.frame.size.width/3+20, 30)];
     [subDisc setFont:[UIFont boldSystemFontOfSize:15]];
     [subDisc setTextAlignment: NSTextAlignmentLeft];
-    [subDisc setText:@"Single Discount:"];
+    [subDisc setText:@"Single Discount: "];
     [view addSubview:subDisc];
     
-    UITextField *discountTxt = [[UITextField alloc] initWithFrame:CGRectMake(subDisc.frame.size.width, labelSub.frame.size.height*2+20, self.view.frame.size.width/4+5, 30)];
+    UITextField *discountTxt = [[UITextField alloc] initWithFrame:CGRectMake(subDisc.frame.size.width+10, labelSub.frame.size.height*2+20, self.view.frame.size.width/4+5, 30)];
    
     discountTxt.tag = 100; // Set a constant for this
     discountTxt.font = [UIFont systemFontOfSize:14.0];
@@ -506,13 +519,24 @@
     discountTxt.layer.cornerRadius = 2.0f;
     discountTxt.placeholder = @"Discount";
     [view addSubview:discountTxt];
-    [discountTxt setKeyboardType:UIKeyboardTypeNumberPad];
+    [discountTxt setKeyboardType:UIKeyboardTypeNumbersAndPunctuation];
     discountTxt.delegate = self ;
     discountTxt.layer.sublayerTransform = CATransform3DMakeTranslation(5, 0, 0);
     [discountTxt addTarget:self action:@selector(SingleDiscountTxtDidChange:) forControlEvents:UIControlEventEditingChanged];
  
     return view;
 }
+
+-(void) remarksButtonAction:(UIButton*)sender
+ {
+     
+     NSString *customerRemarks = _spaRequestObject[@"data"][@"customer_remarks"];
+//     NSString *customerRemarks1 = _spaRequestObject[@"data"][@"customer_remarks1"];
+//     NSString *customerRemarks2 = _spaRequestObject[@"data"][@"customer_remarks2"];
+//        NSLog(@"you clicked on button %@", sender.tag);
+     UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Customer Remarks" message: customerRemarks delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                    [alert show];
+ }
 // number of section(s), now I assume there is only 1 section
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)theTableView
 {
@@ -580,6 +604,7 @@
      
         
           cell.rateTxt.text = [NSString stringWithFormat:@"%.2f",newRate];
+          cell.totalSPAValue.text = [NSString stringWithFormat:@"%.2f",newRate];
       }
       else
       {
@@ -821,6 +846,8 @@
       double newRate  = (actualRate - Rate);
          
       rateTxt.text = [NSString stringWithFormat:@"%.2f",newRate];
+        UILabel *totalSpaValueLbl = (UILabel *)[cell.contentView viewWithTag:11];
+      totalSpaValueLbl.text = [NSString stringWithFormat:@"%.2f",newRate];
       self.itemListDetailModels.spaapproved = [NSString stringWithFormat:@"%.2f",newRate];
        
     
