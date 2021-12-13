@@ -67,7 +67,7 @@ void drawAxisTextOnMajorTicks(CGContextRef context, CGPoint startPoint, CGPoint 
             [paragraphStyle setAlignment:NSTextAlignmentLeft];
             
             NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:paragraphStyle,
-                                        NSParagraphStyleAttributeName, NSFontAttributeName, [UIFont systemFontOfSize:12.0], nil];
+                                        NSParagraphStyleAttributeName, [UIFont systemFontOfSize:12.0], NSFontAttributeName, nil];
             
             NSString* textToDisplay  = [NSString stringWithFormat:@"%.00f", (minValue + i*(maxValue - minValue)/parts) ];
             [textToDisplay drawInRect:textFrame withAttributes:attributes];
@@ -76,7 +76,7 @@ void drawAxisTextOnMajorTicks(CGContextRef context, CGPoint startPoint, CGPoint 
             [paragraphStyle setAlignment:NSTextAlignmentRight];
             
             NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:paragraphStyle,
-                                        NSParagraphStyleAttributeName, NSFontAttributeName, [UIFont systemFontOfSize:12.0], nil];
+                                        NSParagraphStyleAttributeName, [UIFont systemFontOfSize:12.0], NSFontAttributeName, nil];
             
             NSString* textToDisplay  = [NSString stringWithFormat:@"%.00f", (minValue + i*(maxValue - minValue)/parts) ];
             [textToDisplay drawInRect:textFrame withAttributes:attributes];
@@ -85,7 +85,7 @@ void drawAxisTextOnMajorTicks(CGContextRef context, CGPoint startPoint, CGPoint 
             [paragraphStyle setAlignment:NSTextAlignmentRight];
             
             NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:paragraphStyle,
-                                        NSParagraphStyleAttributeName, NSFontAttributeName, [UIFont systemFontOfSize:12.0], nil];
+                                        NSParagraphStyleAttributeName, [UIFont systemFontOfSize:12.0], NSFontAttributeName, nil];
             
             NSString* textToDisplay  = [NSString stringWithFormat:@"%.00f", (minValue + i*(maxValue - minValue)/parts) ];
             [textToDisplay drawInRect:textFrame withAttributes:attributes];
@@ -110,7 +110,7 @@ void drawAxisTextOnFirstAndLastTick(CGContextRef context, CGPoint startPoint, CG
     [paragraphStyle setAlignment:NSTextAlignmentLeft];
     
     NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:paragraphStyle,
-                                NSParagraphStyleAttributeName, NSFontAttributeName, [UIFont systemFontOfSize:12.0], nil];
+                                NSParagraphStyleAttributeName, [UIFont systemFontOfSize:12.0], NSFontAttributeName, nil];
     
     NSString* textToDisplay  = [NSString stringWithFormat:@"%.00f", minValue ];
     [textToDisplay drawInRect:textFrame withAttributes:attributes];
@@ -123,7 +123,7 @@ void drawAxisTextOnFirstAndLastTick(CGContextRef context, CGPoint startPoint, CG
     [paragraphStyle setAlignment:NSTextAlignmentRight];
     
     attributes = [NSDictionary dictionaryWithObjectsAndKeys:paragraphStyle,
-                                NSParagraphStyleAttributeName, NSFontAttributeName, [UIFont systemFontOfSize:12.0], nil];
+                                NSParagraphStyleAttributeName, [UIFont systemFontOfSize:12.0], NSFontAttributeName, nil];
     
     textToDisplay  = [NSString stringWithFormat:@"%.00f", maxValue ];
     [textToDisplay drawInRect:textFrame withAttributes:attributes];
@@ -149,7 +149,7 @@ void drawAxisTextOnMinorTicks(CGContextRef context, CGPoint startPoint, CGPoint 
         [paragraphStyle setAlignment:NSTextAlignmentCenter];
         
         NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:paragraphStyle,
-                                    NSParagraphStyleAttributeName, NSFontAttributeName, [UIFont systemFontOfSize:12.0], nil];
+                                    NSParagraphStyleAttributeName, [UIFont systemFontOfSize:12.0], NSFontAttributeName, nil];
         
         NSString* textToDisplay  = [NSString stringWithFormat:@"%.00f", (minValue + i*(maxValue - minValue)/parts) ];
         [textToDisplay drawInRect:textFrame withAttributes:attributes];
@@ -226,20 +226,18 @@ void drawAxisTextOnMinorTicks(CGContextRef context, CGPoint startPoint, CGPoint 
             if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
                 // textFrame.origin.y += 5.0;
                 
-                NSDictionary *attributes;
+                NSDictionary *attributes = nil;
                 NSMutableParagraphStyle *paragraphStyle;
                 
                 paragraphStyle = [[NSMutableParagraphStyle alloc] init];
                 [paragraphStyle setAlignment:NSTextAlignmentCenter];
                 // paragraphStyle setLineBreakMode:NSLine
                 
-                attributes = [NSDictionary dictionaryWithObjectsAndKeys:paragraphStyle,
-                              NSParagraphStyleAttributeName, NSFontAttributeName, [UIFont systemFontOfSize:11.0], nil];
-                
+               attributes = [NSDictionary dictionaryWithObjectsAndKeys:paragraphStyle,
+                              NSParagraphStyleAttributeName, [UIFont systemFontOfSize:11.0], NSFontAttributeName,  nil];
                 
                 [self.displayText drawInRect:textFrame withAttributes:attributes];
             } else {
-                
                 [self.displayText drawInRect:textFrame
                                   withFont:[UIFont systemFontOfSize:11]
                              lineBreakMode:NSLineBreakByClipping
