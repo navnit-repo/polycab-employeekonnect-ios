@@ -1,10 +1,8 @@
-//
 //  SPALinesFormVC.m
 //  XMWClient
 //
 //  Created by Nit Navodit on 23/10/21.
 //  Copyright © 2021 dotvik. All rights reserved.
-//
 
 #import <Foundation/Foundation.h>
 #import "SPALinesFormVC.h"
@@ -577,13 +575,13 @@
     cell.coreLbl.text = [NSString stringWithFormat:@"%@",self.itemListDetailModels.core];
     cell.unitLbl.text = [NSString stringWithFormat:@"%@",self.itemListDetailModels.unit_mtr];
     
-    cell.lpLbl.text = [NSString stringWithFormat:@"%@",self.itemListDetailModels.listpricemtr];
+    cell.lpLbl.text = [NSString stringWithFormat:@"%@",self.itemListDetailModels.listprice];
 //    cell.totalValueLbl.text = [NSString stringWithFormat:@"%@",self.itemListDetailModels.listpricemtr];
     cell.rqRateLbl.text = [NSString stringWithFormat:@"%@",self.itemListDetailModels.spavalue];
     double newRateDiff  = ([self.itemListDetailModels.listpricemtr floatValue] - [self.itemListDetailModels.spavalue floatValue]);
     double discount =  (newRateDiff * 100)/[self.itemListDetailModels.listpricemtr floatValue];
     
-    cell.rqDiscLbl.text = [NSString stringWithFormat:@"%f",discount];
+    cell.rqDiscLbl.text = [NSString stringWithFormat:@"%.2f",discount];
     cell.quantityLbl.text = [NSString stringWithFormat:@"%@",self.itemListDetailModels.qty_mtr];
     [cell.rateTxt addTarget:self action:@selector(rateTxtDidChange:) forControlEvents:UIControlEventEditingChanged];
     [cell.rateTxt setKeyboardType:UIKeyboardTypeNumberPad];
@@ -604,7 +602,7 @@
      
         
           cell.rateTxt.text = [NSString stringWithFormat:@"%.2f",newRate];
-          cell.totalSPAValue.text = [NSString stringWithFormat:@"%.2f",newRate];
+          cell.totalSPAValue.text = [NSString stringWithFormat:@"%.2f",newRate* [self.itemListDetailModels.qty_mtr doubleValue]];
       }
       else
       {
@@ -818,7 +816,7 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
  {
-     return 250;
+     return 300;
  }
 
 
@@ -847,8 +845,9 @@
          
       rateTxt.text = [NSString stringWithFormat:@"%.2f",newRate];
         UILabel *totalSpaValueLbl = (UILabel *)[cell.contentView viewWithTag:11];
-      totalSpaValueLbl.text = [NSString stringWithFormat:@"%.2f",newRate];
-      self.itemListDetailModels.spaapproved = [NSString stringWithFormat:@"%.2f",newRate];
+    totalSpaValueLbl.text = [NSString stringWithFormat:@"%.2f", newRate *  [self.itemListDetailModels.qty_mtr doubleValue]];
+      
+    self.itemListDetailModels.spaapproved = [NSString stringWithFormat:@"%.2f",newRate];
        
     
 }
@@ -876,7 +875,9 @@
         NSLog(@"Display Int Value:%f",newDiscount);
         
         discountTxt.text = [NSString stringWithFormat:@"%.2f",newDiscount];
-  
+    UILabel *totalSpaValueLbl = (UILabel *)[cell.contentView viewWithTag:11];
+    totalSpaValueLbl.text = [NSString stringWithFormat:@"%.2f", myRate *  [self.itemListDetailModels.qty_mtr doubleValue]];
+
 }
 
 - (void)quantityTxtDidChange:(UITextField *)textField
@@ -975,6 +976,10 @@
                
                rateTxt.text = [NSString stringWithFormat:@"%.2f",newRate];
                self.itemListDetailModels.spaapproved = [NSString stringWithFormat:@"%.2f",newRate];
+                 
+                 UILabel *totalSpaValueLbl = (UILabel *)[cell.contentView viewWithTag:11];
+                 totalSpaValueLbl.text = [NSString stringWithFormat:@"%.2f", newRate *  [self.itemListDetailModels.qty_mtr doubleValue]];
+
              }
 //             else
 //             {
