@@ -73,7 +73,7 @@ FOUNDATION_EXPORT NSString *const XmwcsConst_SERVICE_URL_CHAT_SERVICE_DEV;
 FOUNDATION_EXPORT NSString* const XmwcsConst_DEALER_OPCODE_URL_DEV;
 
 
-FOUNDATION_EXPORT NSString *const XmwcsConst_HAVELLS_TRAVELLER_URL;
+FOUNDATION_EXPORT NSString *const XmwcsConst_TRAVELLER_URL;
 FOUNDATION_EXPORT NSString *const  XmwcsConst_MKONNECT_FAQ_URL;   // = @"http://mkonnect.havells.com:8080/xmwcshavells/faq.html";
 
 //for the CALL NAME

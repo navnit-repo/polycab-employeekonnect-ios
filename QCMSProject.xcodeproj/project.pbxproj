@@ -41,6 +41,9 @@
 		270B77532477B0900024960F /* genrate.png in Resources */ = {isa = PBXBuildFile; fileRef = 270B77512477B0900024960F /* genrate.png */; };
 		270E2FB125DAF1B7004A8AE2 /* CollectionReportVC.h in Headers */ = {isa = PBXBuildFile; fileRef = 270E2FAF25DAF1B7004A8AE2 /* CollectionReportVC.h */; };
 		270E2FB225DAF1B7004A8AE2 /* CollectionReportVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 270E2FB025DAF1B7004A8AE2 /* CollectionReportVC.m */; };
+		27166F7327D9B9E400A38422 /* latest.pconnect.polycab.com.der in Resources */ = {isa = PBXBuildFile; fileRef = 27166F7027D9B9E400A38422 /* latest.pconnect.polycab.com.der */; };
+		27166F7427D9B9E400A38422 /* qapconnect.polycab.com.der in Resources */ = {isa = PBXBuildFile; fileRef = 27166F7127D9B9E400A38422 /* qapconnect.polycab.com.der */; };
+		27166F7527D9B9E400A38422 /* latest.qapconnect.polycab.com.der in Resources */ = {isa = PBXBuildFile; fileRef = 27166F7227D9B9E400A38422 /* latest.qapconnect.polycab.com.der */; };
 		27184CC42560DB0A00F3A37F /* ChatHeadReportVC.h in Headers */ = {isa = PBXBuildFile; fileRef = 27184CC22560DB0A00F3A37F /* ChatHeadReportVC.h */; };
 		27184CC52560DB0A00F3A37F /* ChatHeadReportVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 27184CC32560DB0A00F3A37F /* ChatHeadReportVC.m */; };
 		2720FE64264E6EA100718CB8 /* RoundingToPacksizeSummaryView.h in Headers */ = {isa = PBXBuildFile; fileRef = 2720FE62264E6EA000718CB8 /* RoundingToPacksizeSummaryView.h */; };
@@ -1251,6 +1254,9 @@
 		270B77512477B0900024960F /* genrate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = genrate.png; path = "Polycab Assests/assests/genrate.png"; sourceTree = SOURCE_ROOT; };
 		270E2FAF25DAF1B7004A8AE2 /* CollectionReportVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CollectionReportVC.h; path = Polycab/CollectionReports/CollectionReportVC.h; sourceTree = "<group>"; };
 		270E2FB025DAF1B7004A8AE2 /* CollectionReportVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = CollectionReportVC.m; path = Polycab/CollectionReports/CollectionReportVC.m; sourceTree = "<group>"; };
+		27166F7027D9B9E400A38422 /* latest.pconnect.polycab.com.der */ = {isa = PBXFileReference; lastKnownFileType = file; path = latest.pconnect.polycab.com.der; sourceTree = "<group>"; };
+		27166F7127D9B9E400A38422 /* qapconnect.polycab.com.der */ = {isa = PBXFileReference; lastKnownFileType = file; path = qapconnect.polycab.com.der; sourceTree = "<group>"; };
+		27166F7227D9B9E400A38422 /* latest.qapconnect.polycab.com.der */ = {isa = PBXFileReference; lastKnownFileType = file; path = latest.qapconnect.polycab.com.der; sourceTree = "<group>"; };
 		27184CC22560DB0A00F3A37F /* ChatHeadReportVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ChatHeadReportVC.h; path = Polycab/ChatHead/ChatHeadReportVC.h; sourceTree = "<group>"; };
 		27184CC32560DB0A00F3A37F /* ChatHeadReportVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ChatHeadReportVC.m; path = Polycab/ChatHead/ChatHeadReportVC.m; sourceTree = "<group>"; };
 		2720FE62264E6EA000718CB8 /* RoundingToPacksizeSummaryView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RoundingToPacksizeSummaryView.h; sourceTree = "<group>"; };
@@ -2530,6 +2536,9 @@
 		2708C1A62598A07600DBA84E /* certificates */ = {
 			isa = PBXGroup;
 			children = (
+				27166F7027D9B9E400A38422 /* latest.pconnect.polycab.com.der */,
+				27166F7227D9B9E400A38422 /* latest.qapconnect.polycab.com.der */,
+				27166F7127D9B9E400A38422 /* qapconnect.polycab.com.der */,
 				2708C1A72598A07600DBA84E /* pconnect.polycab.com.der */,
 			);
 			path = certificates;
@@ -5480,6 +5489,7 @@
 				F01FCC1420F5F952001B0C4E /* ShowInvoice.xib in Resources */,
 				857F8C7B1A828D210018A54C /* popular_scheme@2x.png in Resources */,
 				F031563721269F92005DE7F2 /* SearchProductByCatalogVC.xib in Resources */,
+				27166F7527D9B9E400A38422 /* latest.qapconnect.polycab.com.der in Resources */,
 				857F8C781A828D210018A54C /* logout@2x.png in Resources */,
 				F0E1A0D2213E48DD005F4435 /* SalesCell.xib in Resources */,
 				270B774A2477B04D0024960F /* frame-11.png in Resources */,
@@ -5521,6 +5531,7 @@
 				F039CAE820F49B00005CEC02 /* Records.xib in Resources */,
 				85BBB0091E710CD500169952 /* arrow_up@1x.png in Resources */,
 				85B6A6D61E0E0DF500E0183E /* goods_return@3x.png in Resources */,
+				27166F7427D9B9E400A38422 /* qapconnect.polycab.com.der in Resources */,
 				F059CC9E214F70D000E303F6 /* 09-statutoryrequirement.png in Resources */,
 				85C4AD931D0FB30100D69383 /* undo_normal.png in Resources */,
 				F081178F21916CFF00149035 /* 16-balanceconfirmation@2x.png in Resources */,
@@ -5598,6 +5609,7 @@
 				857F8C721A828D210018A54C /* contact_us@2x.png in Resources */,
 				F059CC9D214F70D000E303F6 /* 08-stockmovement.png in Resources */,
 				F058021B221D7DC500682D07 /* polycab_loading_logo@2x.png in Resources */,
+				27166F7327D9B9E400A38422 /* latest.pconnect.polycab.com.der in Resources */,
 				F059CD32214F710600E303F6 /* black-showpasswordicon@3x.png in Resources */,
 				85D7DA9F18F749CB00CF7D94 /* minus_normal.png in Resources */,
 				857A3ED91A6CFC3500279931 /* category-menu@2x.png in Resources */,
@@ -6387,7 +6399,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 17500;
+				CURRENT_PROJECT_VERSION = 18000;
 				DEVELOPMENT_TEAM = QS92QH4FZ2;
 				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = YES;
 				ENABLE_BITCODE = NO;
@@ -6408,7 +6420,7 @@
 					"$(PROJECT_DIR)/RLMFramework/Alamofire.framework",
 					"$(PROJECT_DIR)/RLMFramework/SwiftyJSON.framework",
 				);
-				MARKETING_VERSION = 17.5;
+				MARKETING_VERSION = 18.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.polycab.xmw.employee.ent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -6429,7 +6441,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 17500;
+				CURRENT_PROJECT_VERSION = 18000;
 				DEVELOPMENT_TEAM = QS92QH4FZ2;
 				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = YES;
 				ENABLE_BITCODE = NO;
@@ -6450,7 +6462,7 @@
 					"$(PROJECT_DIR)/RLMFramework/SwiftyJSON.framework",
 					"$(PROJECT_DIR)/RLMFramework/Alamofire.framework",
 				);
-				MARKETING_VERSION = 17.5;
+				MARKETING_VERSION = 18.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PRODUCT_BUNDLE_IDENTIFIER = com.polycab.xmw.employee.ent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -6578,7 +6590,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 17400;
+				CURRENT_PROJECT_VERSION = 18000;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = QS92QH4FZ2;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -6587,7 +6599,7 @@
 				INFOPLIST_FILE = PushNotificationExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				MARKETING_VERSION = 17.4;
+				MARKETING_VERSION = 18.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.polycab.xmw.employee.ent.exten;
@@ -6619,7 +6631,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 17400;
+				CURRENT_PROJECT_VERSION = 18000;
 				DEVELOPMENT_TEAM = QS92QH4FZ2;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -6628,7 +6640,7 @@
 				INFOPLIST_FILE = PushNotificationExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				MARKETING_VERSION = 17.4;
+				MARKETING_VERSION = 18.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.polycab.xmw.employee.ent.exten;

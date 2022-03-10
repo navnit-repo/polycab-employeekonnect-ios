@@ -128,9 +128,8 @@ NSString* const XmwcsConst_DEALER_OPCODE_URL_DEV = @"http://polycab.dotvik.com:8
 #endif
 
 
-NSString *const XmwcsConst_HAVELLS_TRAVELLER_URL = @"http://polycab.dotvik.com/servlet/traveler";
+NSString *const XmwcsConst_TRAVELLER_URL = @"https://pconnect.polycab.com:9443/xmwpolycab/traveler";
 NSString *const  XmwcsConst_MKONNECT_FAQ_URL = @"http://polycab.dotvik.com:8080/xmwpolycab/faq.html";
-
 
 
 //for the CALL NAME

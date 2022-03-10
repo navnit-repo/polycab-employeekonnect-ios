@@ -100,7 +100,7 @@
 -(void)makeAuthCall
 {
     loadingView = [LoadingView loadingViewInView:self.view];
-    NSURL *url                      = [NSURL URLWithString: XmwcsConst_HAVELLS_TRAVELLER_URL];
+    NSURL *url                      = [NSURL URLWithString: XmwcsConst_TRAVELLER_URL];
     NSMutableURLRequest *request    = [NSMutableURLRequest requestWithURL:url];
     [request setHTTPMethod:@"GET"];
         

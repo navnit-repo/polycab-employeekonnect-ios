@@ -18,11 +18,16 @@
 #import "DVAppDelegate.h"
 #import "ClientVariable.h"
 #import "SWRevealViewController.h"
+
+
+NSString* g_DeviceSessionId = nil;
+NSMutableDictionary* g_CertificateCache = nil;
+
+
 @interface NetworkHelper ()
 {
     NSURLConnection* urlConnection;
    
-
 
 }
 
@@ -30,9 +35,6 @@
 
 @implementation NetworkHelper
 @synthesize AUTH_TOKEN_VALUE;
-
-
-NSString *g_DeviceSessionId = nil;
 
 
 - (id) init {
@@ -44,6 +46,10 @@ NSString *g_DeviceSessionId = nil;
         xmwRequestCallname = nil;
         sessionId = nil;
         self.serviceURLString = @"";
+        
+        if(g_CertificateCache==nil) {
+            g_CertificateCache = [[NSMutableDictionary alloc] init];
+        }
         
     }
     return self;
@@ -75,8 +81,19 @@ NSString *g_DeviceSessionId = nil;
         // ([challenge.protectionSpace.host isEqualToString:@"pconnect.polycab.com"])
        
         // we need to optimize this code, as it is loading in every call.
+        
+        // default
         SecCertificateRef  pinnedCert = [self localCertificateForHost: challenge.protectionSpace.host ];
+        
+        SecCertificateRef  latestPinnedCert = [self localCertificateForHost: [NSString stringWithFormat:@"latest.%@", challenge.protectionSpace.host]];
+        
+        if(latestPinnedCert==nil) {
+            latestPinnedCert = pinnedCert;
+        }
+        
+
         assert(pinnedCert != NULL);
+        
             
         if(pinnedCert!=nil) {
             
@@ -93,7 +110,24 @@ NSString *g_DeviceSessionId = nil;
             CFRelease(expTrust);
             CFRelease(policy);
             CFRelease(certArray);
-        
+            
+            
+            // extract the expected latest public key
+            // We are doing if default certificate expired then we will match with the latest
+            SecKeyRef expectedLatestKey = NULL;
+            SecCertificateRef latestCertRefs[1] = { latestPinnedCert };
+            certArray = CFArrayCreate(kCFAllocatorDefault, (void *) latestCertRefs, 1, NULL);
+            policy = SecPolicyCreateBasicX509();
+            expTrust = NULL;
+            status = SecTrustCreateWithCertificates(certArray, policy, &expTrust);
+            if (status == errSecSuccess) {
+                expectedLatestKey = SecTrustCopyPublicKey(expTrust);
+            }
+            CFRelease(expTrust);
+            CFRelease(policy);
+            CFRelease(certArray);
+            
+            
             SecKeyRef actualKey = SecTrustCopyPublicKey(trust);
             
             // check a match
@@ -101,8 +135,16 @@ NSString *g_DeviceSessionId = nil;
               // public keys match, continue with other checks
               [challenge.sender performDefaultHandlingForAuthenticationChallenge:challenge];
             } else {
-              // public keys do not match
-              [challenge.sender cancelAuthenticationChallenge:challenge];
+                
+                if (actualKey != NULL && expectedLatestKey != NULL && [(__bridge id) actualKey isEqual:(__bridge id)expectedLatestKey])
+                {
+                    // public keys match, continue with other checks
+                    [challenge.sender performDefaultHandlingForAuthenticationChallenge:challenge];
+                } else {
+                    // public keys do not match
+                    NSLog(@"Public Keys Not matching for the domain %@ ", challenge.protectionSpace.host);
+                    [challenge.sender cancelAuthenticationChallenge:challenge];
+                }
             }
         
             if(expectedKey!=nil)
@@ -1097,7 +1139,15 @@ NSString *g_DeviceSessionId = nil;
     // This will look for a file within the current bundle named hostname.der
     // i.e. "www.google.com.der"
     // The expectation is that the data is in OpenSSL DER format. This should be the server credential you expect for this host.
-    certData = [NSData dataWithContentsOfURL:[[NSBundle bundleForClass:[self class]] URLForResource:host withExtension:@"der" ] ];
+    if(g_CertificateCache!=nil) {
+        certData = [g_CertificateCache objectForKey:host];
+    }
+    
+    if(certData==nil) {
+        certData = [NSData dataWithContentsOfURL:[[NSBundle bundleForClass:[self class]] URLForResource:host withExtension:@"der" ] ];
+        [g_CertificateCache setObject:certData forKey:host];
+    }
+    
     if (certData != nil){
         result = SecCertificateCreateWithData(kCFAllocatorDefault, (__bridge CFDataRef)certData);
     }
