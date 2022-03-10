@@ -211,18 +211,16 @@
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if (section == SECTION_IDX_TIME) {
-        return 0;
+    if (section == SECTION_IDX_HEADING) {
+        return 1;
     } else if(section == SECTION_IDX_COLLECTION) {
-    
         if([roles containsObject:@"NATIONAL_ALL"] || [roles containsObject:@"BU_HEAD"] )
-            return 16.0f;
+            return 0.0f;
         else
             return 0;
     } else
     {
-        
-        return 16;
+        return 0;
     }
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
