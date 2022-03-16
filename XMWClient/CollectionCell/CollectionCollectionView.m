@@ -302,10 +302,14 @@
 
 -(NSString*) currencyDisplay:(NSString*) amountValue
 {
-    NSString* cleanedString = [[amountValue stringByReplacingOccurrencesOfString:@"," withString:@""]
-    stringByTrimmingCharactersInSet: [NSCharacterSet symbolCharacterSet]];
     
-    return [NSString stringWithFormat:@"%@%@", rupee, [currencyFormat formateCurrency:cleanedString]];
+    if([amountValue isKindOfClass:[NSString class]] && [amountValue length]>0) {
+        NSString* cleanedString = [[amountValue stringByReplacingOccurrencesOfString:@"," withString:@""]
+                                   stringByTrimmingCharactersInSet: [NSCharacterSet symbolCharacterSet]];
+    
+        return [NSString stringWithFormat:@"%@%@", rupee, [currencyFormat formateCurrency:cleanedString]];
+    } else
+        return @"";
 }
 
 
