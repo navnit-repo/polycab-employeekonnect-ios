@@ -101,6 +101,7 @@
     @property UITextView *remarksUITextView;
     @property UITextView *remarks2UITextView;
     @property UITextView *remarks3UITextView;
+    @property UITextField *subTotalSPAText;
 @end
 @implementation SPALinesFormVC
 @synthesize tableView,listItems,itemListDetailModels;
@@ -130,7 +131,7 @@
                action:@selector(approveBtnClicked:)
      forControlEvents:UIControlEventTouchUpInside];
     [buttonA setTitle:@"Approve" forState:UIControlStateNormal];
-    buttonA.frame = CGRectMake(self.view.frame.size.width/9,15, self.view.frame.size.width/3, 50.0);
+    buttonA.frame = CGRectMake(self.view.frame.size.width/10,15, self.view.frame.size.width/4, 50.0);
     buttonA.backgroundColor=[UIColor redColor];
     [self.footerView addSubview:buttonA];
 
@@ -139,9 +140,18 @@
                action:@selector(rejectBtnClicked:)
      forControlEvents:UIControlEventTouchUpInside];
     [buttonR setTitle:@"Reject" forState:UIControlStateNormal];
-    buttonR.frame = CGRectMake(buttonA.frame.size.width+buttonA.frame.origin.x*2,15, self.view.frame.size.width/3, 50.0);
+    buttonR.frame = CGRectMake(buttonA.frame.size.width+buttonA.frame.origin.x + 10,15, self.view.frame.size.width/4, 50.0);
     buttonR.backgroundColor=[UIColor redColor];
     [self.footerView addSubview:buttonR];
+    
+    UIButton *buttonRev = [UIButton buttonWithType:UIButtonTypeCustom];
+    [buttonRev addTarget:self
+               action:@selector(reviseBtnClicked:)
+     forControlEvents:UIControlEventTouchUpInside];
+    [buttonRev setTitle:@"Revise" forState:UIControlStateNormal];
+    buttonRev.frame = CGRectMake(buttonR.frame.size.width+buttonR.frame.origin.x + 10,15, self.view.frame.size.width/4, 50.0);
+    buttonRev.backgroundColor=[UIColor redColor];
+    [self.footerView addSubview:buttonRev];
 //    [self fetchData];
     [self loadModelData];
 }
@@ -201,6 +211,12 @@
    {
        NSLog(@"Button  clicked.");
        [self spaRejectNetworkCall];
+  }
+
+- (void)reviseBtnClicked:(UIButton*)button
+   {
+       NSLog(@"Button  clicked.");
+       [self spaReviseNetworkCall];
   }
 
 - (void)PopupView : (NSDictionary*)lmeDetails
@@ -503,7 +519,7 @@
 //        [remarksButton setText:[NSString stringWithFormat: @"Remarks",""]];
         [view addSubview:remarksButton];
     
-    UILabel *subDisc = [[UILabel alloc] initWithFrame:CGRectMake(10, labelSub.frame.size.height*2+20, self.view.frame.size.width/3+20, 30)];
+    UILabel *subDisc = [[UILabel alloc] initWithFrame:CGRectMake(10, labelSub.frame.size.height*2+20, self.view.frame.size.width/4+20, 30)];
     [subDisc setFont:[UIFont boldSystemFontOfSize:15]];
     [subDisc setTextAlignment: NSTextAlignmentLeft];
     [subDisc setText:@"Single Discount: "];
@@ -521,6 +537,27 @@
     discountTxt.delegate = self ;
     discountTxt.layer.sublayerTransform = CATransform3DMakeTranslation(5, 0, 0);
     [discountTxt addTarget:self action:@selector(SingleDiscountTxtDidChange:) forControlEvents:UIControlEventEditingChanged];
+    
+    UILabel *subTotalSPA = [[UILabel alloc] initWithFrame:CGRectMake(discountTxt.frame.origin.x + discountTxt.frame.size.width + 20, labelSub.frame.size.height*2+20, self.view.frame.size.width/3+20, 30)];
+    [subTotalSPA setFont:[UIFont boldSystemFontOfSize:15]];
+    [subTotalSPA setTextAlignment: NSTextAlignmentLeft];
+    [subTotalSPA setText:@"Total SPA: "];
+    [view addSubview:subTotalSPA];
+    
+    self.subTotalSPAText = [[UITextField alloc] initWithFrame:CGRectMake(subTotalSPA.frame.origin.x+subTotalSPA.frame.size.width+10, labelSub.frame.size.height*2+20, self.view.frame.size.width/4+5, 30)];
+   
+    self.subTotalSPAText.tag = 100; // Set a constant for this
+    self.subTotalSPAText.font = [UIFont systemFontOfSize:14.0];
+    self.subTotalSPAText.layer.borderWidth = 1.0f;
+    self.subTotalSPAText.layer.cornerRadius = 2.0f;
+    self.subTotalSPAText.text = @"";
+    self.subTotalSPAText.enabled = false;
+//    subTotalSPAText.placeholder = @"Discount";
+    [view addSubview:self.subTotalSPAText];
+    [self.subTotalSPAText setKeyboardType:UIKeyboardTypeNumbersAndPunctuation];
+    self.subTotalSPAText.delegate = self ;
+    self.subTotalSPAText.layer.sublayerTransform = CATransform3DMakeTranslation(5, 0, 0);
+    [self.subTotalSPAText addTarget:self action:@selector(SingleDiscountTxtDidChange:) forControlEvents:UIControlEventEditingChanged];
  
     return view;
 }
@@ -1000,6 +1037,10 @@
 -(void) spaRejectNetworkCall {
     [self spaActionNetworkCall:@"rejected" withLmeDetail:nil withShowLmeFlag:false withRemark:nil withRemark2:nil withRemark3:nil];
 }
+
+-(void) spaReviseNetworkCall {
+    [self spaReviseNetworkCall:@"revise remark"];
+}
 -(void) spaActionNetworkCall :(NSString*)approverActionStatus withLmeDetail:(NSDictionary*)lmeDetails withShowLmeFlag: (BOOL) showLmeToCustomer withRemark:(NSString*) remark withRemark2:(NSString*) remark2 withRemark3:(NSString*) remark3
 {
     loadingView = [LoadingView loadingViewInView:self.view];
@@ -1058,6 +1099,43 @@
     NSString *url = XmwcsConst_OPCODE_URL;
     networkHelper.serviceURLString = url;
     [networkHelper genericJSONPayloadRequestWith:opcodeRequestDict :self :@"SPA_REQUEST_APPROVE"];
+}
+
+
+-(void) spaReviseNetworkCall :(NSString*) remark
+{
+    loadingView = [LoadingView loadingViewInView:self.view];
+    ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
+    
+    NSMutableDictionary *requestDataDict = [[NSMutableDictionary alloc]init];
+    [requestDataDict setValue:self.spahrefid  forKey:@"spahrefid"];
+//    [requestDataDict setValue:self.spahrefid  forKey:@"spahrefid"];
+    [requestDataDict setValue:remark  forKey:@"remark"];
+    
+    
+    
+    [requestDataDict setValue:clientVariables.CLIENT_USER_LOGIN.userName  forKey:@"revisedBy"];
+//    [requestDataDict setObject:spaLines  forKey:@"spaLines"];
+//                        var username = "<%=(String)session.getAttribute("username")%>";
+//
+//
+//                        var OrderPingRequest = {"opcode":"SPA_REQUEST_APPROVE", "authToken": authToken, "status":status,"data":requestData};
+    
+    NSMutableDictionary *opcodeRequestDict = [[NSMutableDictionary alloc]init];
+    [opcodeRequestDict setValue:@"TO_BE_REVISE" forKey:@"opcode"];
+    [opcodeRequestDict setValue:clientVariables.CLIENT_LOGIN_RESPONSE.authToken forKey:@"authToken"];
+//    [opcodeRequestDict setValue:approverActionStatus forKey:@"status"];
+    [opcodeRequestDict setObject:requestDataDict forKey:@"data"];
+    
+    
+    // Pradeep, 2020-06-26 We need to disable back button
+    // so that user cannot go back
+    
+    networkHelper = [[NetworkHelper alloc]init];
+    
+    NSString *url = XmwcsConst_OPCODE_URL;
+    networkHelper.serviceURLString = url;
+    [networkHelper genericJSONPayloadRequestWith:opcodeRequestDict :self :@"TO_BE_REVISE"];
 }
 
 -(void) getLME_Data
@@ -1122,7 +1200,29 @@
 //                [alert show];
 //            }
         }
+    }else if ([callName isEqualToString:@"TO_BE_REVISE"]) {
+        
+        if ([respondedObject valueForKey:@"status"]!=nil) {
+             NSLog(@"Post Data = %@",respondedObject);
+            NSString *status_flag = [respondedObject valueForKey:@"status"];
+            if ([status_flag isEqualToString:@"SUCCESS"]) {
+                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"SPA Request Status" message: [respondedObject valueForKey:@"message"] delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+                [alert show];
+                NSArray *viewControllers = [self.navigationController viewControllers];
+                [self.navigationController popToViewController:viewControllers[viewControllers.count - 3] animated:YES];
+            }else{
+                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error : SPA Revision Unsuccessful" message: [respondedObject valueForKey:@"message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                [alert show];
+            }
+//            else
+//            {
+//                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Polycab" message: [[respondedObject valueForKey:@"so_header"]valueForKey:@"ERROR_MESSAGE"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+//                [alert show];
+//            }
+        }
     }
+        
+    
 
 }
 
