@@ -128,9 +128,7 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
          */
     }
 
-    
-    
-    
+
     [NSThread sleepForTimeInterval:3.0];
     [Crashlytics startWithAPIKey:@"cc9f075af7ebdd5493d67c5fc8b720e55f346463"];
     
@@ -165,9 +163,6 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
     // initializing SearchRequestStorage
     [SearchRequestStorage createInstance];
     [ObjectStorage createInstance : @"MAIN_OBJECT_STORAGE" : true];
-    
-    
-    
     
     
     //initializing RecentRequestStorage
@@ -275,15 +270,25 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
             }
             
         }
+        
+        NSDictionary* urlInfo = [launchOptions objectForKey:UIApplicationLaunchOptionsURLKey];
+        
+        if(urlInfo!=nil) {
+            NSLog(@"launching using url: %@" , [urlInfo description]);
+            
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:[urlInfo description] preferredStyle:UIAlertControllerStyleAlert];
+               
+            UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleDefault
+                       handler:^(UIAlertAction * action)
+                       {
+                            
+                       }];
+            [alertController addAction:defaultAction];
+            
+            [self.window.rootViewController presentViewController:alertController animated:YES completion:nil];
+        }
     }
-    else
-    {
-        // work pending
-        // opened app without a push notification.
-    }
-    
-    // Uncomment if we need to install the uncaught exceptio handler
-    // [self performSelector:@selector(installUncaughtExceptionHandler) withObject:nil afterDelay:0];
+   
     
     return YES;
 }
@@ -522,6 +527,88 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
     
 }
 
+
+
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey, id> *) options
+{
+    
+    NSLog(@"openURL: url =  %@", [url description]);
+    
+    NSLog(@"openURL: options %@", [options description]);
+    
+    return YES;
+}
+
+//
+// receives the launch event when click on the url from another app
+//
+- (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void(^)(NSArray<id<UIUserActivityRestoring>> *  restorableObjects))restorationHandler
+{
+    NSLog(@"continueUserActivity using url: %@" , [userActivity description]);
+    
+    NSLog(@"userActivity.activityType : %@" , userActivity.activityType);
+    
+    if([userActivity.activityType isEqualToString:NSUserActivityTypeBrowsingWeb]) {
+
+        if(userActivity.webpageURL !=nil) {
+            
+            NSString* deepLinkUrl = [userActivity.webpageURL absoluteString];
+            
+            [[NSUserDefaults standardUserDefaults] setObject:deepLinkUrl forKey:@"deepLinkUrl"];
+
+            /*
+            if([deepLinkUrl containsString:@"/employee/cobapproval"]) {
+                [[NSUserDefaults standardUserDefaults] setObject:deepLinkUrl forKey:@"/employee/cobapproval"];
+            }*/
+            
+            UIViewController* root = [[[[UIApplication sharedApplication] windows] objectAtIndex:0] rootViewController];
+            if ([root isKindOfClass:[SWRevealViewController class]]) {
+                SWRevealViewController *reveal = (SWRevealViewController*)root;
+                UINavigationController *check =(UINavigationController*)reveal.frontViewController;
+                NSArray* viewsList = check.viewControllers;
+                UIViewController *checkView = (UIViewController *) [viewsList objectAtIndex:viewsList.count - 1];
+                if ([checkView isKindOfClass:[DashBoardVC class]])
+                {
+                    DashBoardVC *vc = (DashBoardVC*) checkView;
+                    [vc viewWillAppear:false];
+                }
+                else
+                {
+                    // explicit open the URL in the WebView
+                    ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
+                    NSString* launchedUrl = [deepLinkUrl stringByAppendingFormat:@"&authToken=%@", clientVariables.CLIENT_LOGIN_RESPONSE.authToken ];
+                    [self pushNotificationNetworkCall: launchedUrl];
+                    // remove it
+                    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"deepLinkUrl"];
+                }
+            } else {
+                // Most likely use is on LoginVC screen, and trying to get logged in.
+                // then on post logged in, DashBoardVC shall take care of it.
+            }
+        }
+    }
+    
+#if 0
+    
+    // below code for testing only
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:[userActivity description] preferredStyle:UIAlertControllerStyleAlert];
+       
+    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleDefault
+               handler:^(UIAlertAction * action)
+               {
+                    
+               }];
+    [alertController addAction:defaultAction];
+    
+    [self.window.rootViewController presentViewController:alertController animated:YES completion:nil];
+#endif
+    
+    return YES;
+}
+
+
+#pragma mark - XMW
+
 //
 // to support multiple module so that we can use client variables based on the current module context
 //
@@ -536,6 +623,7 @@ static NSMutableArray*  DVAppDelegate_moduleContextStack = nil;
     
     return @"";
 }
+
 
 + (void) pushModuleContext : (NSString*) moduleCtx {
     if(DVAppDelegate_moduleContextStack == nil) {

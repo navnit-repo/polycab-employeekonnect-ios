@@ -43,6 +43,7 @@
 #import "ChatThreadList_DB.h"
 #import "LayoutClass.h"
 #import "DataManager.h"
+#import "XmwNotificationWebViewController.h"
 
 #define TAG_LOGOUT_DIALOG 1000
 @interface DashBoardVC () <HttpEventListener>
@@ -178,6 +179,28 @@
             [(UINavigationController*)reveal.frontViewController pushViewController:vc animated:YES];
         });
     }
+    
+    NSString* deepLinkUrl = [[NSUserDefaults standardUserDefaults] objectForKey:@"deepLinkUrl"];
+    
+    if(deepLinkUrl!=nil && [deepLinkUrl length]>0) {
+        // explicit open the URL in the WebView
+        ClientVariable* clientVariables = [ClientVariable getInstance : [DVAppDelegate currentModuleContext] ];
+        NSString* launchedUrl = [deepLinkUrl stringByAppendingFormat:@"&authToken=%@", clientVariables.CLIENT_LOGIN_RESPONSE.authToken ];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            // XmwWebViewController* webViewController = [[XmwWebViewController alloc] initWithNibName:@"XmwWebViewController" bundle:nil withAdURL:deepLinkUrl];
+            // [[self navigationController] pushViewController:webViewController  animated:YES];
+            
+            XmwNotificationWebViewController *notificationWebViewController = [[XmwNotificationWebViewController alloc]initWithNibName:@"XmwNotificationWebViewController" bundle:nil];
+            notificationWebViewController.urlString = launchedUrl;
+            [self.navigationController pushViewController:notificationWebViewController animated:YES];
+             
+        });
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"deepLinkUrl"];
+    }
+    
+    
 }
 -(void) fetchPendingNotifications
 {

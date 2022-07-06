@@ -484,7 +484,7 @@ UITextField* activeTextField = nil;
         DotFormElement* dotFormElement = (DotFormElement *)[dotFormElements objectForKey:[sortedElements objectAtIndex:cntElement]];
         if ([dotFormElement.componentType isEqualToString : XmwcsConst_DE_COMPONENT_DROPDOWN ] ) {
 //            MXTextField *dropDownCell = [self getDataFromId:dotFormElement.elementId];
-            printf(@"dropDownCell");
+             NSLog(@"dropDownCell");
             [self networkCallConfigureDropDown:dotFormElement.elementId forElement:dotFormElement];
         }
     
@@ -557,7 +557,7 @@ UITextField* activeTextField = nil;
  DotFormPost *dotFormPostShipTO = [[DotFormPost alloc]init];
     [dotFormPostShipTO setAdapterType:@"SEARCH_JDBC"];
     [dotFormPostShipTO setAdapterId:dotFormElement.masterValueMapping];
-    [dotFormPostShipTO setModuleId:@"xmwpolycab"];
+    [dotFormPostShipTO setModuleId:[DVAppDelegate currentModuleContext]];
     [dotFormPostShipTO setDocId:dotFormElement.masterValueMapping];
     [dotFormPostShipTO setDocDesc:@"SHIP TO data"];
     [dotFormPostShipTO setReportCacheRefresh:@"true"];
@@ -747,13 +747,8 @@ UITextField* activeTextField = nil;
         NSMutableArray *keys = button.attachedData[0];
         NSMutableArray *values =button.attachedData[1];
 
-
         [dropDownListKey addObjectsFromArray : keys];
-
         [dropDownList addObjectsFromArray : values];
-
-
-
 
       // dropDownList = [[NSMutableArray alloc] initWithArray: ((MXButton*)sender).attachedData[1]];
 

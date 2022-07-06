@@ -34,6 +34,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     //urlString = @"http://timesofindia.indiatimes.com";
+    
+    NSLog(@"XmwNotificationWebViewController: urlString = %@", urlString);
+    
     [self setUrlInWebView : urlString];
 }
 
