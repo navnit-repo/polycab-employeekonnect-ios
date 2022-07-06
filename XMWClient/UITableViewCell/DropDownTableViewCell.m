@@ -33,7 +33,7 @@
         self.mandatoryLabel.textAlignment = UITextAlignmentLeft;
         self.mandatoryLabel.text = @"*";
         
-        self.titleLabel = [[MXLabel alloc] initWithFrame:CGRectMake(24, 11, 137, 20)];
+        self.titleLabel = [[MXLabel alloc] initWithFrame:CGRectMake(24, 11, 240, 20)];
         self.titleLabel.textColor = [UIColor colorWithRed:119.0/255 green:119.0/255 blue:119.0/255 alpha:1.0];
         self.titleLabel.backgroundColor = [UIColor clearColor];
         self.titleLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
