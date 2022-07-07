@@ -1826,6 +1826,8 @@ UITextField* activeTextField = nil;
     if ([element.componentType isEqualToString:XmwcsConst_DE_COMPONENT_DROPDOWN]) {
         NSString *buttonElementID = [fieldElementId stringByAppendingString:@"_button"];
         
+        MXTextField *dropDownField = [self getDataFromId:fieldElementId];
+        
         
         // add All key value in drop down master data if dotformElement is Enable All
         if( element.isEnableAll == true)
@@ -1844,6 +1846,20 @@ UITextField* activeTextField = nil;
             [keysArray insertObject:postValue atIndex:0];
             [valuesArray insertObject:displayValue atIndex:0];
         }
+        
+        
+        if(element.defaultVal !=nil && [element.defaultVal length]>0) {
+            NSDictionary* defMap = [XmwUtils getExtendedPropertyMap:element.defaultVal];
+            NSString* displayValue = [defMap objectForKey:@"VALUE"];
+            NSString* postValue = [defMap objectForKey:@"KEY"];
+            
+            
+            
+            dropDownField.text = displayValue;   // this is display value
+            dropDownField.keyvalue = postValue;
+        }
+        
+        
         
         MXButton *mxbutton = (MXButton*)[self getDataFromId:buttonElementID];
         mxbutton.attachedData = dropDownData;

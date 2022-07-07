@@ -637,9 +637,6 @@ int uiViewStartIdx = 1001;
 -(UIView*)drawDropDown : (FormVC *) formController :(DotFormElement*) dotFormElement 
 {
 
-    
-    
-    
     UIView *subContainer = [[UIView alloc]initWithFrame:CGRectMake(0, yArguForDrawComp, screenWidth, formLineHeight)];
 
     NSString *currentCompName = dotFormElement.elementId;
@@ -686,14 +683,6 @@ int uiViewStartIdx = 1001;
             if([dotFormElement masterValueMapping] != nil)
             {
                 NSArray* sortedMasterValues = [DotFormDraw getSortedMasterValueForComponent:[dotFormElement elementId] : [dotFormElement masterValueMapping]];
-                // hook for division_wise sale report form 'DOT_FORM_26', 23, 24 and elementId = SPART, we need to add "All"  "".
-                if( ([formController.dotForm.formId isEqualToString:@"DOT_FORM_26"] ||
-                     [formController.dotForm.formId isEqualToString:@"DOT_FORM_23"] ||
-                     [formController.dotForm.formId isEqualToString:@"DOT_FORM_24"]) &&
-                   [currentCompName isEqualToString:@"SPART"])
-                {
-          	
-                }
                 
                 dropDownCell.dropDownButton.attachedData = sortedMasterValues;
             } else {
@@ -725,11 +714,11 @@ int uiViewStartIdx = 1001;
             [subContainer addSubview: dropDownCell];
              yArguForDrawComp =yArguForDrawComp+formLineHeight;
             return subContainer;
+        } else {
+            return subContainer;
         }
     } else {
-        
         return [self dependentDrawDropDown:formController :dotFormElement];
-        
         //return [self drawTextField : formController : dotFormElement : false];
     }
 }
@@ -1429,10 +1418,10 @@ int uiViewStartIdx = 1001;
     
     NSMutableDictionary* ddKeyValue =[clientVariables.CLIENT_APP_MASTER_DATA objectForKey: elementId ];
     
-    NSArray* keysMap = [ddKeyValue allKeys];
-    
-    
     if( [ddKeyValue count] > 0) {
+        
+        NSArray* keysMap = [ddKeyValue allKeys];
+        
         NSMutableArray* arrayValue = [[NSMutableArray alloc]init];
         NSMutableArray* arrayKey = [[NSMutableArray alloc]init];
         
