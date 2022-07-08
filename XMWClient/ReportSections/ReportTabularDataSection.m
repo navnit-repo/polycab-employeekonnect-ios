@@ -941,8 +941,9 @@
             // ReportVC *reportVC = [[ReportVC alloc] initWithNibName:@"ReportVC" bundle:nil];
             reportVC.screenId = AppConst_SCREEN_ID_REPORT;
             reportVC.reportPostResponse = reportPostResponse;
-            reportVC.forwardedDataDisplay = self.forwardedDataDisplay;
-            reportVC.forwardedDataPost =  self.forwardedDataPost;
+            reportVC.forwardedDataDisplay = [[NSMutableDictionary alloc] initWithDictionary:self.forwardedDataDisplay];
+            reportVC.forwardedDataPost =  [[NSMutableDictionary alloc] initWithDictionary:self.forwardedDataPost];
+            
             [[self.reportVC navigationController] pushViewController:reportVC  animated:YES];
             return;
         }
