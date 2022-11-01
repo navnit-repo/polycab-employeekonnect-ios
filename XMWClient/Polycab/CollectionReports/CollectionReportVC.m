@@ -23,6 +23,7 @@
 {
     CurrencyConversationClass* currencyFormat;
     NSString* rupee;
+    NSString* currencyHeaderText;
     NSArray* headerElementIds;
     
     NSMutableArray* orignalReportTableData;
@@ -54,7 +55,8 @@
     orignalReportTableData = self.reportPostResponse.tableData;
     
     headerElementIds = [DotReportDraw sortRptComponents: dotReport.reportElements :@"HEADER"];
-    
+    DotReportElement *dre = [dotReport.reportElements objectForKey:@"HEADER_CURRENCY"];
+    currencyHeaderText = dre.displayText;
     self.reportTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, titleLblHeight + searchBar.frame.size.height, self.view.frame.size.width, self.view.frame.size.height-(35+searchBar.frame.size.height))];
     self.reportTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
@@ -166,7 +168,7 @@
             dashCell.tag = 9999;
             
             // Need to rearraged constantLbl1 , displayName  of sales
-            dashCell.constantLbl1.hidden = YES;
+//            dashCell.constantLbl1.hidden = YES;
             dashCell.displayName.frame = CGRectMake(10.0f, dashCell.displayName.frame.origin.y, dashCell.frame.size.width-20.0f, dashCell.displayName.frame.size.height);
 
             CGFloat xOffset = (self.view.frame.size.width - dashCell.frame.size.width)/2;
@@ -202,7 +204,7 @@
             NSArray* rowData = [recordTableData objectAtIndex:indexPath.row];
             
             if([rowData count]==8) {
-                dashCell.constantLbl1.text = @"";
+                dashCell.constantLbl1.text = currencyHeaderText;
                 dashCell.displayName.text = [rowData objectAtIndex:0];
                 
                 dashCell.lftdDisplacyLbl.text = [self currencyDisplay:[rowData objectAtIndex:1]];
@@ -239,10 +241,10 @@
 
 -(NSString*) currencyDisplay:(NSString*) amountValue
 {
-    NSString* cleanedString = [[amountValue stringByReplacingOccurrencesOfString:@"," withString:@""]
-    stringByTrimmingCharactersInSet: [NSCharacterSet symbolCharacterSet]];
+//    NSString* cleanedString = [[amountValue stringByReplacingOccurrencesOfString:@"," withString:@""]
+//    stringByTrimmingCharactersInSet: [NSCharacterSet symbolCharacterSet]];
     
-    return [NSString stringWithFormat:@"%@%@", rupee, [currencyFormat formateCurrency:cleanedString]];
+    return [NSString stringWithFormat:@"%@%@", rupee, amountValue];
 }
 
 
