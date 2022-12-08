@@ -111,6 +111,8 @@
     [[NSNotificationCenter defaultCenter]addObserver:self  selector:@selector(keyboardWillBeHidden:) name: UIKeyboardWillHideNotification object: nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardWasShown:) name: UIKeyboardWillShowNotification  object: nil];
     
+
+    
     self.listItems = [[NSMutableArray alloc] init];
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0,0,self.view.frame.size.width,self.view.frame.size.height-130) style:UITableViewStylePlain];
     self.tableView.delegate = self;
@@ -221,22 +223,49 @@
 
 - (void)PopupView : (NSDictionary*)lmeDetails
 {
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self                                                selector:@selector(keyboardWillShow:)
+                                                   name:UIKeyboardWillShowNotification
+                                                 object:nil];
+
+      [[NSNotificationCenter defaultCenter] addObserver:self
+                                               selector:@selector(keyboardWillHide:)
+                                                   name:UIKeyboardWillHideNotification
+                                                 object:nil];
     self.lmeDetails = lmeDetails;
     NSString* copperRate = [lmeDetails objectForKey:@"LME_COPPER"];
     NSString* aluminiumRate = [lmeDetails objectForKey:@"LME_ALUMINIUM"];
     NSString* dollarRate = [lmeDetails objectForKey:@"LME_DOLLAR_RATE"];
     NSString* lastUpdateDate = [lmeDetails objectForKey:@"LAST_UPDATE_DATE"];
     NSString* validity = [lmeDetails objectForKey:@"SPA_VALIDITY"];
+    
+    UIScrollView *popupScrollview = [[UIScrollView alloc] init];
+    
+    popupScrollview.frame = [UIScreen mainScreen].bounds;
+    
+    popupScrollview.backgroundColor =[UIColor whiteColor];
+    popupScrollview.pagingEnabled = YES;
+    popupScrollview.tag = 1 ;
+    popupScrollview.scrollEnabled = YES;
+    popupScrollview.contentSize = CGSizeMake(popupScrollview.frame.size.width, popupScrollview.frame.size.height + 100);
+   
+    [self.view addSubview:popupScrollview];
+    
+    [self.view bringSubviewToFront:popupScrollview];
+    
+    
+    
     UIView *popupview = [[UIView alloc] init];
     
-    popupview.frame = [UIScreen mainScreen].bounds;
+    popupview.frame = popupScrollview.bounds;
+    popupview.tag = 2 ;
     popupview.backgroundColor =[UIColor whiteColor];
-    [self.view addSubview:popupview];
+    [popupScrollview addSubview:popupview];
     
-    [self.view bringSubviewToFront:popupview];
+    //[popupScrollview bringSubviewToFront:popupview];
     
     
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 50, popupview.frame.size.width/2, 18)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 100, popupview.frame.size.width/2, 18)];
     [label setFont:[UIFont boldSystemFontOfSize:18]];
     [label setTextAlignment: NSTextAlignmentLeft];
     [label setText:@"LME Details:"];
@@ -303,6 +332,7 @@
     remarksTxt.layer.borderWidth = 1.0f;
     remarksTxt.layer.cornerRadius = 2.0f;
     remarksTxt.font = [UIFont systemFontOfSize:14.0];
+   
     remarksTxt.delegate = self;
 //    remarksTxt.text = @"Remarks";
 //    remarksTxt.textColor = [UIColor lightGrayColor];
@@ -351,8 +381,68 @@
     btnApprove.backgroundColor=[UIColor redColor];
        [popupview addSubview:btnApprove];
    
+     
+}
 
+- (BOOL)textViewShouldBeginEditing:(UITextView *)textView
+{
+    UIToolbar *toolBar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)]; //toolbar is uitoolbar object
+    toolBar.barStyle = UIBarStyleBlackOpaque;
+    UIBarButtonItem *btnDone = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(btnClickedDone)];
+    [toolBar setItems:[NSArray arrayWithObject:btnDone]];
+
+
+     [textView setInputAccessoryView:toolBar];
+     return YES;
+}
+
+- (void)btnClickedDone{
     
+    id scrollview = [self.view viewWithTag:1];
+    if([scrollview isKindOfClass:[UIScrollView class]])
+    {
+        id scrollsubview = [scrollview viewWithTag:2];
+        if([scrollsubview isKindOfClass:[UIView class]])
+        {
+            for (UITextView *subView in [scrollsubview subviews]) {
+                        if ([subView isKindOfClass:[UITextView class]])
+                        {
+                            [subView resignFirstResponder];
+                        }
+                    }
+        }
+      
+    }
+   
+    
+}
+//- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+//
+//    if([text isEqualToString:@"\n"]) {
+//        [textView resignFirstResponder];
+//        return NO;
+//    }
+//
+//    return YES;
+//}
+- (void)keyboardWillShow:(NSNotification *)notification
+{
+    CGSize keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+
+    [UIView animateWithDuration:0.3 animations:^{
+        CGRect f = self.view.frame;
+        f.origin.y = -keyboardSize.height / 2;
+        self.view.frame = f;
+    }];
+}
+
+-(void)keyboardWillHide:(NSNotification *)notification
+{
+    [UIView animateWithDuration:0.3 animations:^{
+        CGRect f = self.view.frame;
+        f.origin.y = 0.0f;
+        self.view.frame = f;
+    }];
 }
 
 - (void) switchIsChanged:(UISwitch *)paramSender{
